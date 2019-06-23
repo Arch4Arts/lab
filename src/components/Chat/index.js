@@ -6,8 +6,8 @@ const defaultComponentName = 'beautiful-chat'
 const Plugin = {
   install (Vue, options = {}) {
     /**
-     * Makes sure that plugin can be installed only once
-     */ 
+    * Makes sure that plugin can be installed only once
+    */ 
     if (this.installed) {
       return
     }
