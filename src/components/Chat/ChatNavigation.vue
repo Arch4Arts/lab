@@ -43,86 +43,54 @@ const _ = require('lodash'); // Библиотека для упрощения �
   export default {
     data () {
       return {
-        items: [
-          {
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-            title: 'Brunch this weekend?',
-            subtitle: "I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
-          },
-          {
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-            title: 'Summer BBQ',
-            subtitle: "Wish I could come, but I'm out of town this weekend."
-          },
-          {
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-            title: 'Oui oui',
-            subtitle: "Do you have Paris recommendations? Have you ever been?"
-          },
-          {
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-            title: 'Birthday gift',
-            subtitle: "Have any ideas about what we should get Heidi for her birthday?"
-          },
-          {
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
-            title: 'Recipe to try',
-            subtitle: "We should eat this: Grate, Squash, Corn, and tomatillo Tacos."
-          },
-          {
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-            title: 'Brunch this weeken23',
-            subtitle: "I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
-          },
-          {
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-            title: 'Summer B23BQ',
-            subtitle: "Wish I could come, but I'm out of town this weekend."
-          },
-          {
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-            title: 'Oui o23ui',
-            subtitle: "Do you have Paris recommendations? Have you ever been?"
-          },
-          {
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-            title: 'Birthda23y gift',
-            subtitle: "Have any ideas about what we should get Heidi for her birthday?"
-          },
-          {
-            avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
-            title: 'Recipe dsto try',
-            subtitle: "We should eat this: Grate, Squash, Corn, and tomatillo Tacos."
-          }
-        ]
+        // items: [
+        //   {
+        //     avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+        //     title: 'Brunch this weekend?',
+        //     subtitle: "I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
+        //   },
+        //   {
+        //     avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+        //     title: 'Summer BBQ',
+        //     subtitle: "Wish I could come, but I'm out of town this weekend."
+        //   },
+        //   {
+        //     avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+        //     title: 'Oui oui',
+        //     subtitle: "Do you have Paris recommendations? Have you ever been?"
+        //   },
+        //   {
+        //     avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
+        //     title: 'Birthday gift',
+        //     subtitle: "Have any ideas about what we should get Heidi for her birthday?"
+        //   },
+        //   {
+        //     avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
+        //     title: 'Recipe to try',
+        //     subtitle: "We should eat this: Grate, Squash, Corn, and tomatillo Tacos."
+        //   },
+        // ]
       }
     },
     computed: {
         ContactList: {
         get() {
-            // console.log(this.$store.state)
-            var contacts = this.$store.state.chat.currentContacts
-            var users = this.$store.state.chatUsers;
-            var contactsList = []
-            // console.log(users)
-            // console.log(contacts)
-            for (let i = 0; i < contacts.length; i++) {
-              for (let user of users) {
-                if (user.id === contacts[i]) {
-                  // console.log(i)
-                  // console.log(user)
-                  contactsList.push(user)
-                  var lastMessage = _.findLast(user.messagesHistory, function(item) {
-                    // console.log(item)
-                    if (item.type === 'text') return item.data.text;
-                  })
-                  contactsList[i].messagesHistory = lastMessage.data.text
-                  }
+          var contacts = this.$store.state.chat.currentContacts
+          var users = this.$store.state.chatUsers;
+          var contactsList = []
+          for (let i = 0; i < contacts.length; i++) {
+            for (let user of users) {
+              if (user.id === contacts[i]) {
+                contactsList.push(user)
+                _.findLast(user.messagesHistory, function(item) {
+                  if (item.type === 'text') contactsList[i].messagesHistory = item.data.text;
+                })
               }
             }
-            return contactsList
+          }
+          return contactsList
         },
-    }
+      }
     },
   }
 </script>

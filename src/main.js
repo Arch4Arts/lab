@@ -20,7 +20,7 @@ Vue.use(Chat, {})
 import vueScrollBehavior from 'vue-scroll-behavior' // Сохранение положения прокрутки
 Vue.use(vueScrollBehavior, { router: router })
 
-import extractNumbers from 'extract-numbers' // Для ColorPickera
+import extractNumbers from 'extract-numbers' // Для ColorPicker'a
 
 import VueIziToast from 'vue-izitoast'; // Уведомления
 import 'izitoast/dist/css/iziToast.min.css';
