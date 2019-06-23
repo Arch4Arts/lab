@@ -2,8 +2,8 @@
   <div class="smartphone" :class="{opened: $store.state.chat.isChatOpen, closed: !$store.state.chat.isChatOpen}">
     <img src="../../assets/Samsung Galaxy S7 Black.png" class="smartphone">
     <img src="../../assets/Samsung Galaxy S7 Black_bottom.png" class="smartphone close-area" @click.prevent="closeChat()">
-    <Chat-Navigation class="vlist"></Chat-Navigation>
-    <!-- <div class="sc-chat-window">
+    <!-- <Chat-Navigation class="vlist"></Chat-Navigation> -->
+    <div class="sc-chat-window">
       <UserList 
         v-if="showUserList"
         :participants="participants"
@@ -27,7 +27,7 @@
         :placeholder="placeholder"
         @onType="$emit('onType')"
         :colors="colors" />
-     </div>    -->
+     </div>
   </div>
 </template>
 
