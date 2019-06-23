@@ -17,9 +17,6 @@ Vue.use(VuePlyr) // Видео/Аудио плеер
 import Chat from './components/Chat/index' // Чат
 Vue.use(Chat, {})
 
-import VueResizeText from 'vue-resize-text'; // Динамическое изменение размера текста
-Vue.use(VueResizeText)
-
 import vueScrollBehavior from 'vue-scroll-behavior' // Сохранение положения прокрутки
 Vue.use(vueScrollBehavior, { router: router })
 

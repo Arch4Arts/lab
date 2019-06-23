@@ -24,10 +24,8 @@
     "vue-izitoast": "^1.1.2",
     "vue-message": "^1.4.3",
     "vue-plyr": "^5.1.3",
-    "vue-resize-text": "^0.1.0",
     "vue-router": "^3.0.6",
     "vue-scroll-behavior": "^0.2.0",
-    "vue-smooth-scrollbar": "^0.1.2",
     "vuetify": "^1.5.5",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.4"
