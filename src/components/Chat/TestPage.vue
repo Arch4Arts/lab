@@ -81,7 +81,7 @@
 import messageHistory from './messageHistory'
 // import chatParticipants from './chatProfiles'
 import TestArea from './TestArea.vue'
-import availableColors from './colors'
+// import availableColors from './colors'
 
 export default {
   name: 'App',
@@ -105,9 +105,9 @@ export default {
       userIsTyping: false
     }
   },
-  created() {
-    this.setColor('blue')
-  },
+  // created() {
+  //   this.setColor('blue')
+  // },
   methods: {
     sendMessage(text) {
       if (text.length > 0) {

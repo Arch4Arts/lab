@@ -1,5 +1,5 @@
 <template>
-  <div class="typing-indicator" :style="messageColors">
+  <div class="typing-indicator">
     <span></span>
     <span></span>
     <span></span>
@@ -8,10 +8,7 @@
 <script>
 export default {
   props: {
-    messageColors: {
-      type: Object,
-      required: true
-    }
+    
   }
 }
 </script>

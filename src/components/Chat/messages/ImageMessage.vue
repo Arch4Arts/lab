@@ -1,7 +1,7 @@
 <template>
 <section v-viewer="options">
   <img class="image-message" :src="data.src"> 
-  <p v-if="data.meta" class='message-meta' :style="{color: messageColors.color}">{{data.meta}}</p>
+  <p v-if="data.meta" class='message-meta'>{{data.meta}}</p>
 </section>
 </template>
 
@@ -29,10 +29,6 @@ export default {
   },
   props: {
     data: {
-      type: Object,
-      required: true
-    },
-    messageColors: {
       type: Object,
       required: true
     },

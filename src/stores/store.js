@@ -2,8 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 
-import chat from './modules/Chat'
+import chat from './modules/chat'
 import chatUsers from './modules/chatUsers'
+import chars from './modules/chars'
 
 var CryptoJS = require("crypto-js");
 
@@ -44,32 +45,6 @@ const store = new Vuex.Store({
     diarySound: true, // Вкл/Выкл звука
     phoneSound: true, // Вкл/Выкл звука
     lang: true, // true: en / false: ru
-
-    // ПЕРСОНАЖИ
-
-    mcName: 'Artur', // Для английского варианта
-    mcIm:   'Артур',
-    mcRod:  'Артура',
-    mcDat:  'Артуру',
-    mcVin:  'Артура',
-    mcTvor: 'Артуром',
-    mcPred: 'Артуре',
-    mcColor: 'hsl(100, 100%, 50%)', // Цвет диалогов
-
-    sisterName: 'Adelina',
-    sisterIm:   'Аделина',
-    sisterRod:  'Аделина',
-    sisterDat:  'Аделине',
-    sisterVin:  'Аделину',
-    sisterTvor: 'Аделиной',
-    sisterPred: 'Аделине',
-    sisterColor: 'hsl(200, 100%, 50%)',
-
-    girlfriendName: '',
-    girlfriendColor: 'hsl(100, 100%, 50%)',
-
-    roommateName: '',
-    roommateColor: 'hsl(100, 100%, 50%)',
 
     patreon_link: 'https://patreon',
     tfgames_link: 'https://tfgames.site',
@@ -151,15 +126,22 @@ const store = new Vuex.Store({
         this.state.sisterVin = this.state.sisterVin;
         this.state.sisterTvor = this.state.sisterTvor;
         this.state.sisterPred = this.state.sisterPred;
-      } else { // просто английские имена
+
+        // Обновление имен для чата
+
+        state.chatUsers[0].name = this.state.mcIm
+      } else { // простые английские имена
         this.state.mcName = this.state.mcName;
         this.state.sisterName = this.state.sisterName;
+
+        // Обновление имен для чата
       }
     },
   },
   modules: {
     chat,
     chatUsers,
+    chars,
   }
 })
 

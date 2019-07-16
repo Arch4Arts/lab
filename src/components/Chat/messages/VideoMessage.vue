@@ -1,10 +1,8 @@
 <template>
-  <vue-plyr :options="options">
-    <audio>
-      <source :src="data.src" :type="data.type"/> 
-      <!-- audio/mp3 -->
-    </audio>
-    
+<div @mouseenter="play" class="video"> 
+  <vue-plyr ref="plyr" class="video" :options="options">
+    <video :poster="data.img" :src="data.src"></video>
+
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <symbol id="plyr-airplay">
             <path d="M16 1H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3v-2H3V3h12v8h-2v2h3a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
@@ -61,16 +59,20 @@
             <path d="M11.282 5.282a.909.909 0 0 0 0 1.316c.735.735.995 1.458.995 2.402 0 .936-.425 1.917-.995 2.487a.909.909 0 0 0 0 1.316c.145.145.636.262 1.018.156a.725.725 0 0 0 .298-.156C13.773 11.733 14.13 10.16 14.13 9c0-.17-.002-.34-.011-.51-.053-.992-.319-2.005-1.522-3.208a.909.909 0 0 0-1.316 0zm-7.496.726H.714C.286 6.008 0 6.31 0 6.76v4.512c0 .452.286.752.714.752h3.072l4.071 3.858c.5.3 1.143 0 1.143-.602V2.752c0-.601-.643-.977-1.143-.601L3.786 6.008z" />
         </symbol>
     </svg>
-
+    
   </vue-plyr>
+</div>
 </template>
 
 <script>
+
 export default {
   data() {
     return {
       options: {
         loadSprite: false,
+        controls: ['play','progress','play-large','volume','pip','airplay','fullscreen'],
+        loop: { active: true },
         volume: '0.5'
       }
     };
@@ -81,13 +83,29 @@ export default {
       required: true
     },
   },
+  methods: {
+    play(){
+      if (this.$store.state.chat.autoplayChatVideo) this.$refs.plyr.player.play()
+    },
+    pause(){
+      this.$refs.plyr.player.pause()
+    }
+  }
 };
 </script>
 
 <style scoped>
 
 svg {
-  display: none
+  display: none;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.video {
+  width: inherit;
+  /* border-radius: 20px;
+  overflow: hidden; */
 }
 
 </style>

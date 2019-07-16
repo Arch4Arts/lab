@@ -27,6 +27,9 @@ import 'izitoast/dist/css/iziToast.min.css';
 import iziToast from 'izitoast/dist/js/iziToast.min.js';
 Vue.use(VueIziToast);
 
+import VueVirtualScroller from 'vue-virtual-scroller'
+Vue.use(VueVirtualScroller)
+
 new Vue({
   router,
   store,
@@ -74,8 +77,45 @@ new Vue({
         h: parseFloat(hsl[0]), 
         s: parseFloat(hsl[1]),
         l: parseFloat(hsl[2]) * 2, // умножаем на 2, т.к в ColorPicker'e l всегда возвращается делённой на 2 (т.к l:50% - максимум для цвета 100% уже просто былеый цвет)
-    };
+      };
     },
+    sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
+    sendMessage(chatID ,author, type, data, suggestions) { // Для suggestion ONLY нужно указать type: suggestion и data: undefined
+      this.$store.state.chat.newMessagesCount = this.isChatOpen ? this.$store.state.chat.newMessagesCount : this.$store.state.chat.newMessagesCount + 1
+
+      // setTimeout можно заменить на sleep(ms)
+      if (this.$store.state.chat.TypingIndicator && type !== 'suggestion' && this.$store.state.chat.UserListShow === false){
+        this.onMessageWasSent(chatID, {author: author, type: 'typing', data: undefined, suggestions: undefined});
+        (type === 'text' && data.text.length <= '8') 
+        ? setTimeout(() => this.onMessageWasSent(chatID, {author: author, type: type, data: data, suggestions: suggestions}), 500) 
+        : (type === 'text' && data.text.length <= '20') 
+        ? setTimeout(() => this.onMessageWasSent(chatID, {author: author, type: type, data: data, suggestions: suggestions}), 1000)
+        : setTimeout(() => this.onMessageWasSent(chatID, {author: author, type: type, data: data, suggestions: suggestions}), 3000)
+      }
+      else this.onMessageWasSent(chatID, {author: author, type: type, data: data, suggestions: suggestions})
+    },
+    onMessageWasSent(chatID, message){ // Импорт для userInput (Suggestions)
+      // this.messageList = [...this.messageList, message]
+      var users = this.$store.state.chatUsers; // Не копируем массив, чтобы изменять оригинал
+      for (let user of users) { // Перебираем для каждого пользователя
+        if (user.chatID === chatID) {
+          user.unreadMSGCount += 1
+          // Удаляем сообщение typing, если используется имитация набора
+          if (user.messagesHistory[user.messagesHistory.length - 1].type === 'typing') user.messagesHistory.splice([user.messagesHistory.length - 1], 1)
+          user.messagesHistory = [...user.messagesHistory, message]
+        }
+      }
+    },
+    addContactToChatList(newContact){
+      let doubleDetect = false;
+      let contacts = this.$store.state.chat.currentContacts
+      for (let contact of contacts) {
+        if (contact === newContact) doubleDetect = true;
+      }
+      if (doubleDetect === false) this.$store.state.chat.currentContacts.push(newContact)
+    }
   },
   render: function (h) { return h(App) }
 }).$mount('#app')

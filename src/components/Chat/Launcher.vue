@@ -16,10 +16,6 @@
       :messageList="messageList"
       :onUserInputSubmit="onMessageWasSent"
       :participants="participants"
-      :title="chatWindowTitle"
-      :titleImageUrl="titleImageUrl"
-      :showEmoji="showEmoji"
-      :showFile="showFile"
       :placeholder="placeholder"
       :showTypingIndicator="showTypingIndicator"
       :colors="colors"
@@ -34,31 +30,8 @@
 <script>
 import ChatFrame from './ChatFrame.vue'
 
-import CloseIcon from './assets/close-icon.png'
-import OpenIcon from './assets/logo-no-bg.svg'
-
 export default {
   props: {
-    icons:{
-      type: Object,
-      required: false,
-      default: function () {
-        return {
-            open: {
-              img: OpenIcon,
-              name: 'default',
-            },
-            close: {
-              img: CloseIcon,
-              name: 'default',
-            },
-        }
-      }
-    },
-    showEmoji: {
-      type: Boolean,
-      default: false
-    },
     // isOpen: {
     //   type: Boolean,
     //   required: true
@@ -71,22 +44,18 @@ export default {
     //   type: Function,
     //   required: true
     // },
-    showFile: { // Не трогать, для отображения иконки скрепки (прикрепить файл)
-      type: Boolean,
-      default: false
-    },
     participants: {
       type: Array,
       required: true
     },
-    title: {
-      type: String,
-      default: () => ''
-    },
-    titleImageUrl: {
-      type: String,
-      default: () => ''
-    },
+    // title: {
+    //   type: String,
+    //   default: () => ''
+    // },
+    // titleImageUrl: {
+    //   type: String,
+    //   default: () => ''
+    // },
     onMessageWasSent: {
       type: Function,
       required: true
@@ -167,21 +136,21 @@ export default {
       default: false
     }
   },
-  computed: {
-    chatWindowTitle() {
-      if (this.title !== '') {
-        return this.title
-      }
+  // computed: {
+  //   chatWindowTitle() {
+  //     if (this.title !== '') {
+  //       return this.title
+  //     }
 
-      if (this.participants.length === 0) {
-        return 'You'
-      } else if (this.participants.length > 1) {
-        return 'You, ' + this.participants[0].name + ' & others'
-      } else {
-        return 'You & ' + this.participants[0].name
-      }
-    }
-  },
+  //     if (this.participants.length === 0) {
+  //       return 'You'
+  //     } else if (this.participants.length > 1) {
+  //       return 'You, ' + this.participants[0].name + ' & others'
+  //     } else {
+  //       return 'You & ' + this.participants[0].name
+  //     }
+  //   }
+  // },
   methods: {
     openChat() {
       this.$store.state.chat.isChatOpen = true

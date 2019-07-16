@@ -6,10 +6,10 @@
             <section v-if="$store.state.lang">
 
                 <!-- ВЫБОР ЯЗЫКА -->
-                <p v-if="faq === true"> The game is available in Russian (the author’s native language) and English, before starting, select a language. </p>
-                <v-btn v-if="faq === true" color="grey darken-2" dark to="/InitialSettings" @click="$store.commit('langChange')"> English </v-btn>
+                <p> The game is available in Russian (the author’s native language) and English, before starting, select a language. </p>
+                <v-btn color="grey darken-2" dark to="/InitialSettings" @click="$store.commit('langChange')"> English </v-btn>
                 <!-- ОБ ИГРЕ -->
-                <p v-if="faq === true"></p>
+                <p></p>
                 <hr>
                 <h1> About the game </h1>
                 <hr>
@@ -34,16 +34,16 @@
                 <p> If you have suggestions for improving the game, ideas or questions, you can visit our <a :href="$store.state.discord_link" class="discord">Discord</a> </p>
                 <p> Also visit these resources: <a :href="$store.state.tfgames_link" class="tfgames">TFGames</a> and <a :href="$store.state.f95zone_link" class="f95">F95</a><a :href="$store.state.f95zone_link" class="f95-zone">Zone</a> there you can also find useful information in discussions. </p>
                 
-                <v-btn v-if="faq === true" round color="red lighten-1" dark to="/InitialSettings" @click=ClickStart()> Continue </v-btn>
+                <v-btn round color="red lighten-1" dark to="/InitialSettings" @click=ClickStart()> Continue </v-btn>
 
             </section>
 
             <section v-else>
                 <!-- ВЫБОР ЯЗЫКА -->
-                <p v-if="faq === true"> Игра доступна на русском (родной язык автора) и английском языке, перед началом, выберите язык. </p>
-                <v-btn v-if="faq === true" color="grey darken-2" dark to="/InitialSettings" @click="$store.commit('langChange')"> Русский </v-btn>
+                <p> Игра доступна на русском (родной язык автора) и английском языке, перед началом, выберите язык. </p>
+                <v-btn color="grey darken-2" dark to="/InitialSettings" @click="$store.commit('langChange')"> Русский </v-btn>
                 <!-- ОБ ИГРЕ -->
-                <p v-if="faq === true"></p>
+                <p></p>
                 <hr>
                 <h1> Об игре </h1>
                 <hr>
@@ -68,7 +68,7 @@
                 <p> Если у вас есть предложения по улучшению игры, идеи или вопросы, вы можете посетить наш <a :href="$store.state.discord_link" class="discord">Discord</a> </p>
                 <p> Также посетите данные ресурсы: <a :href="$store.state.tfgames_link" class="tfgames">TFGames</a> and <a :href="$store.state.f95zone_link" class="f95">F95</a><a :href="$store.state.f95zone_link" class="f95-zone">Zone</a> там вы также можете найти полезную информацию в обсуждениях. </p>
                 
-                <v-btn v-if="faq === true" round color="red lighten-1" dark to="/InitialSettings" @click=ClickStart()> Продолжить </v-btn>
+                <v-btn round color="red lighten-1" dark to="/InitialSettings" @click=ClickStart()> Продолжить </v-btn>
                  
              </section>
          </v-flex>
@@ -78,7 +78,6 @@
 
 <script>
 export default {
-    props: ['faq'], // Проверка передаётся ли компонент в FAQ (для отключения кнопок)
     data(){
         return {
             genres: [

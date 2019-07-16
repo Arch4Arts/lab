@@ -6,31 +6,24 @@
       {{file.name}}
       <span class='delete-file-message' @click="cancelFile()" ><img :src="icons.closeSvg.img"  :alt="icons.closeSvg.name" height="10" title='Remove the file' /></span>
     </div> -->
-    <form class="sc-user-input" :class="{active: inputActive}" :style="{background: colors.userInput.bg}">
+    <form class="sc-user-input">
       <div
         role="button"
         tabIndex="0"
-        @focus="setInputActive(true)"
-        @blur="setInputActive(false)"
-        @keydown="handleKey"
         contentEditable="false"
-        :placeholder="placeholder"
+        placeholder="Write a message..."
         class="sc-user-input--text"
         ref="userInput"
         :style="{color: colors.userInput.text}"
       ></div>
-      <!-- <v-text-field value="write a message" label="Solo" solo disabled></v-text-field> -->
       <div class="sc-user-input--buttons">
         <div class="sc-user-input--button"></div>
-        <div v-if="showEmoji" class="sc-user-input--button">
-          <EmojiIcon :onEmojiPicked="_handleEmojiPicked" :color="colors.userInput.text" />
+        <div class="sc-user-input--button">
+          <v-icon>fal fa-smile</v-icon>
         </div>
-        <div v-if="showFile" class="sc-user-input--button">
-          <FileIcons :onChange="_handleFileSubmit" :color="colors.userInput.text" />
+        <div class="sc-user-input--button">
+          <v-icon>fal fa-paperclip</v-icon>
         </div>
-        <!-- <div class="sc-user-input--button sc-user-input--button--send">
-          <SendIcon :onClick="_submitText" :color="colors.userInput.text" />
-        </div> -->
       </div>
     </form>
   </div>
@@ -38,56 +31,20 @@
 
 
 <script>
-import EmojiIcon from './btn-icons/EmojiIcon.vue'
-import FileIcons from './btn-icons/FileIcons.vue'
-import SendIcon from './btn-icons/SendIcon.vue'
 import Suggestions from './Suggestions.vue'
-import FileIcon from './assets/file.svg'
-import CloseIconSvg from './assets/close.svg'
 
 export default {
   components: {
-    EmojiIcon,
-    FileIcons,
-    SendIcon,
     Suggestions
   },
   props: {
-    icons:{
-      type: Object,
-      required: false,
-      default: function () {
-        return {
-          file:{
-            img: FileIcon,
-            name: 'default',
-          },
-          closeSvg:{
-            img: CloseIconSvg,
-            name: 'default',
-          },
-        }
-      }
-    },
-    showEmoji: {
-      type: Boolean,
-      default: () => false
-    },
     suggestions: {
       type: Array,
       default: () => []
     },
-    showFile: {
-      type: Boolean,
-      default: () => false
-    },
     onSubmit: {
       type: Function,
       required: true
-    },
-    placeholder: {
-      type: String,
-      default: 'Write a message...'
     },
     colors: {
       type: Object,
@@ -101,63 +58,47 @@ export default {
     }
   },
   methods: {
-    cancelFile () {
-      this.file = null
-    },
-    setInputActive (onoff) {
-      this.inputActive = onoff
-    },
-    handleKey (event) {
-      if (event.keyCode === 13 && !event.shiftKey) {
-        this._submitText(event)
-        event.preventDefault()
-      }
-      this.$emit('onType')
-    },
+    // handleKey (event) {
+    //   if (event.keyCode === 13 && !event.shiftKey) {
+    //     this._submitText(event)
+    //     event.preventDefault()
+    //   }
+    //   this.$emit('onType')
+    // },
     _submitSuggestion(suggestion) {
       this.onSubmit({author: 'me', type: 'text', data: { text: suggestion }})
     },
-    _submitText (event) {
-      const text = this.$refs.userInput.textContent
-      const file = this.file
-      if (file) {
-        if (text && text.length > 0) {
-          this.onSubmit({
-            author: 'me',
-            type: 'file',
-            data: { text, file }
-          })
-          this.file = null
-          this.$refs.userInput.innerHTML = ''
-        } else {
-          this.onSubmit({
-            author: 'me',
-            type: 'file',
-            data: { file }
-          })
-          this.file = null
-        }
-      } else {
-        if (text && text.length > 0) {
-          this.onSubmit({
-            author: 'me',
-            type: 'text',
-            data: { text }
-          })
-          this.$refs.userInput.innerHTML = ''
-        }
-      }
-    },
-    _handleEmojiPicked (emoji) {
-      this.onSubmit({
-        author: 'me',
-        type: 'emoji',
-        data: { emoji }
-      })
-    },
-    _handleFileSubmit (file) {
-      this.file = file
-    }
+    // _submitText (event) {
+    //   const text = this.$refs.userInput.textContent
+    //   const file = this.file
+    //   if (file) {
+    //     if (text && text.length > 0) {
+    //       this.onSubmit({
+    //         author: 'me',
+    //         type: 'file',
+    //         data: { text, file }
+    //       })
+    //       this.file = null
+    //       this.$refs.userInput.innerHTML = ''
+    //     } else {
+    //       this.onSubmit({
+    //         author: 'me',
+    //         type: 'file',
+    //         data: { file }
+    //       })
+    //       this.file = null
+    //     }
+    //   } else {
+    //     if (text && text.length > 0) {
+    //       this.onSubmit({
+    //         author: 'me',
+    //         type: 'text',
+    //         data: { text }
+    //       })
+    //       this.$refs.userInput.innerHTML = ''
+    //     }
+    //   }
+    // },
   }
 }
 </script>
@@ -222,6 +163,7 @@ export default {
   padding-left: 20px;
   margin-left: 2px;
   margin-right: 3px;
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: center;

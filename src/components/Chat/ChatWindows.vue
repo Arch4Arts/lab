@@ -1,11 +1,10 @@
 <template>
   <div class="sc-chat-window" :class="{opened: isOpen, closed: !isOpen}">
-      <UserList 
+      <!-- <UserList 
         v-if="showUserList"
         :participants="participants"
-      />
-      <MessageList
-        v-if="!showUserList"
+      /> -->
+      <!-- <MessageList
         :messages="messages"
         :participants="participants"
         :showTypingIndicator="showTypingIndicator"
@@ -15,14 +14,10 @@
         @scrollToTop="$emit('scrollToTop')"
       />
       <UserInput
-        v-if="!showUserList"
-        :showEmoji="showEmoji"
         :onSubmit="onUserInputSubmit"
         :suggestions="getSuggestions()"
-        :showFile="showFile"
-        :placeholder="placeholder"
         @onType="$emit('onType')"
-        :colors="colors" />
+        :colors="colors" /> -->
   </div>
 </template>
 
@@ -38,14 +33,6 @@ export default {
     UserList
   },
   props: {
-    showEmoji: {
-      type: Boolean,
-      default: false
-    },
-    showFile: { // Не трогать, для отображения иконки скрепки (прикрепить файл)
-      type: Boolean,
-      default: false
-    },
     participants: {
       type: Array,
       required: true
@@ -73,10 +60,6 @@ export default {
     isOpen: {
       type: Boolean,
       default: () => false
-    },
-    placeholder: {
-      type: String,
-      default: 'Write a reply'
     },
     showTypingIndicator: {
       type: String,

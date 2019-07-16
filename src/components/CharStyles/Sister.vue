@@ -1,5 +1,5 @@
 <template>
-    <p :style="{'color': $store.state.sisterColor}"><slot></slot></p>
+    <p :style="{'color': $store.state.chars.sisterColor}"><slot></slot></p>
 </template>
 
 <script>

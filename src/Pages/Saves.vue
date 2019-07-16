@@ -231,7 +231,7 @@ export default {
         var listSaves = [] // массив с ключами сохранений
         var saves = []
         for (let i = 0; i < localStorage.length; i++) {
-          if (Keys[i].includes('save')) listSaves.push(Keys[i]); // Если найден ключ с сохранением, записываем в массив Keys
+          if (Keys[i].includes('save-')) listSaves.push(Keys[i]); // Если найден ключ с сохранением, записываем в массив Keys
         }
         (listSaves.length > 0) ? this.saveCount = 1 : this.saveCount = 0 // Проверка на наличие сейвов
         if (this.saveCount === 1) {

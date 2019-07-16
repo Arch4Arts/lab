@@ -2,15 +2,34 @@
   <div class="smartphone" :class="{opened: $store.state.chat.isChatOpen, closed: !$store.state.chat.isChatOpen}">
     <img src="../../assets/Samsung Galaxy S7 Black.png" class="smartphone">
     <img src="../../assets/Samsung Galaxy S7 Black_bottom.png" class="smartphone close-area" @click.prevent="closeChat()">
-    <!-- <Chat-Navigation class="vlist"></Chat-Navigation> -->
-    <div class="sc-chat-window">
-      <UserList 
+    <Chat-users-list class="vlist" v-if="$store.state.chat.UserListShow"></Chat-users-list>
+    <div v-if="!$store.state.chat.UserListShow" class="sc-chat-window">
+      <!-- <UserList 
         v-if="showUserList"
         :participants="participants"
-      />
+      /> -->
+      <v-toolbar color="cyan" dark height="50" flat>
+        <v-btn icon @click="backToUserList()">
+          <v-icon size="18"> fas fa-arrow-left </v-icon>
+        </v-btn>
+        <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
+        <v-toolbar-title> 
+        <!-- ЗАГОЛОВОК ЧАТА преобразует tailor в Tailor -->
+          {{ this.$store.state.chat.ContactOnClikedName }} 
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon>
+          <v-icon size="18"> fas fa-phone </v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon size="18"> fas fa-video </v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon size="18"> fas fa-ellipsis-v </v-icon>
+        </v-btn>
+      </v-toolbar>
       <MessageList
-        v-if="!showUserList"
-        :messages="messages"
+        :messages="messageList"
         :participants="participants"
         :showTypingIndicator="showTypingIndicator"
         :colors="colors"
@@ -19,11 +38,8 @@
         @scrollToTop="$emit('scrollToTop')"
       />
       <UserInput
-        v-if="!showUserList"
-        :showEmoji="showEmoji"
-        :onSubmit="onUserInputSubmit"
+        :onSubmit="onSubmitSuggestion"
         :suggestions="getSuggestions()"
-        :showFile="showFile"
         :placeholder="placeholder"
         @onType="$emit('onType')"
         :colors="colors" />
@@ -34,50 +50,34 @@
 <script>
 import MessageList from './MessageList.vue'
 import UserInput from './UserInput.vue'
-import UserList from './UserList.vue'
+// import UserList from './UserList.vue'
 
-import ChatNavigation from './ChatNavigation'
+import ChatUsersList from './ChatUsersList'
 
 export default {
   components: {
     MessageList,
     UserInput,
-    UserList,
-    ChatNavigation
+    // UserList,
+    ChatUsersList
   },
   props: {
-    showEmoji: {
-      type: Boolean,
-      default: false
-    },
-    showFile: { // Не трогать, для отображения иконки скрепки (прикрепить файл)
-      type: Boolean,
-      default: false
-    },
     participants: {
       type: Array,
       required: true
     },
-    title: {
-      type: String,
-      required: true
-    },
-    titleImageUrl: {
-      type: String,
-      default: ''
-    },
-    onUserInputSubmit: {
-      type: Function,
-      required: true
-    },
+    // onUserInputSubmit: {
+    //   type: Function,
+    //   required: true
+    // },
     // onClose: {
     //   type: Function,
     //   required: true
     // },
-    messageList: {
-      type: Array,
-      default: () => []
-    },
+    // messageList: {
+    //   type: Array,
+    //   default: () => []
+    // },
     // isOpen: {
     //   type: Boolean,
     //   default: () => false
@@ -107,28 +107,47 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      showUserList: false
-    }
-  },
   computed: {
-    messages() {
-      let messages = this.messageList
+    messageList() {
+      // let messages = this.messageList
+      this.$store.state.chat.UserListShow // обновляет список сообщений при каждом открытии и закрытии списка пользователей
 
-      return messages
+      let messages;
+      var users = this.$store.state.chatUsers;
+      var selectedUser = this.$store.state.chat.ContactOnClikedID
+      for (let user of users) { // Перебираем для каждого пользователя
+        if (user.id === selectedUser) {
+          user.unreadMSGCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
+          console.log(user.messagesHistory.length)
+          return messages = user.messagesHistory
+        }
+      }
     }
   },
   methods: {
-    handleUserListToggle(showUserList) {
-      this.showUserList = showUserList
+    onSubmitSuggestion(suggestion){ // Импорт для userInput (Suggestions)
+      // this.messageList = [...this.messageList, message]
+      var users = this.$store.state.chatUsers; // Не копируем массив, чтобы изменять оригинал
+      var selectedUser = this.$store.state.chat.ContactOnClikedID
+      for (let user of users) { // Перебираем для каждого пользователя
+        if (user.id === selectedUser) {
+          // если отправляемый suggestion автономен, то нужно удалить его запись из истории, и добавить уже в виде ответа от ME
+          if (user.messagesHistory[user.messagesHistory.length - 1].type === 'suggestion') user.messagesHistory.splice([user.messagesHistory.length - 1], 1)
+          // В противном случае просто отправить ответ от ME, т.к suggestion был привязан к THEM
+          user.messagesHistory = [...user.messagesHistory, suggestion]
+        }
+      }
     },
     getSuggestions(){
-      return this.messages.length > 0 ? this.messages[this.messages.length - 1].suggestions : []
+      return this.messageList.length > 0 ? this.messageList[this.messageList.length - 1].suggestions : []
     },
     closeChat() {
       this.$store.state.chat.isChatOpen = false
+      this.$store.state.chat.newMessagesCount = 0
     },
+    backToUserList(){
+      this.$store.state.chat.UserListShow = !this.$store.state.chat.UserListShow
+    }
   }
 }
 </script>
@@ -195,6 +214,14 @@ export default {
 }
 
 @media (max-width: 450px) {
+  .vlist {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    right: 0px;
+    bottom: 0px;
+  }
+
   .sc-chat-window {
     width: 100%;
     height: 100%;
@@ -203,9 +230,11 @@ export default {
     bottom: 0px;
     border-radius: 0px;
   }
+
   .sc-chat-window {
     transition: 0.1s ease-in-out;
   }
+  
   .sc-chat-window.closed {
     bottom: 0px;
   }

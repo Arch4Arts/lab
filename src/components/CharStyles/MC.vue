@@ -1,5 +1,5 @@
 <template>
-    <p :style="{'color': $store.state.mcColor}"><slot></slot></p>
+    <p :style="{'color': $store.state.chars.mcColor}"><slot></slot></p>
 </template>
 
 <script>

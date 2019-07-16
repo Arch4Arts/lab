@@ -15,7 +15,7 @@ export default [
   { type: 'text', author: `mattmezza`, data: { text: `No story?` } },
   { type: 'system', data: { text: 'You have been transferred to another operator', meta: '04-07-2018 15:57' } },
   { type: 'text', author: `support`, data: { text: `You've got to have a story. You've got to have a story. You've got to have a story. You've got to have a story. You've got to have a story. You've got to have a story. ` } },
-  { type: 'emoji', author: `me`, data: { emoji: `😋` } },
+  { type: 'emoji', author: `me`, data: { src: require('../../Media/img/smiling-face.png') } },
   { type: 'text', author: `me`, data: { text: `Do you read me...`, meta: '✓✓ Read' } },
   { type: 'image', author: `mattmezza`, data: { src: require('../../Media/img/2.gif'), meta: '✓✓ Read' } },
   { type: 'image', author: `me`, data: { src: require('../../Media/img/1.jpg'), meta: '✓✓ Read' } },

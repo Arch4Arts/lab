@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <!-- Скрываем бар, когда открывается окно чата -->
+    <div>  
         <!-- ВЫПАДАЮЩИЙ СПИСКОК --> 
         <v-navigation-drawer width="180" fixed v-model="$store.state.DrawerVisible">
             <v-list>

@@ -48,12 +48,12 @@
             <v-layout align-start row>
             <!-- EN ЦИТАТА В БЛОКЕ -->
             <v-flex xs12 md6>
-            <p v-if="character.Declination == 'mc'" :style="{'color': $store.state.mcColor}"> {{ character.quote }} </p>
-            <p v-if="character.Declination == 'sister'" :style="{'color': $store.state.sisterColor}"> {{ character.quote }} </p>
+            <p v-if="character.Declination == 'mc'" :style="{'color': $store.state.chars.mcColor}"> {{ character.quote }} </p>
+            <p v-if="character.Declination == 'sister'" :style="{'color': $store.state.chars.sisterColor}"> {{ character.quote }} </p>
             </v-flex>
             <!-- EN ВЫБОР ЦВЕТА ЦИТАТЫ (РЕПЛИК) -->
             <v-flex d-flex lg1 md1 sm1 xs1>
-                <color-picker :change="mcUpdateColor" :extColor="this.$root.convertColor(this.$store.state.mcColor)"></color-picker>
+                <color-picker :change="mcUpdateColor" :extColor="this.$root.convertColor(this.$store.state.chars.mcColor)"></color-picker>
             </v-flex>
             </v-layout>
             <!-- EN ЗАПОЛНЕНИЕ ИМЕНИ -->
@@ -117,11 +117,11 @@
             <v-layout align-start row>
             <!-- ЦИТАТА В БЛОКЕ -->
             <v-flex xs12 md6>
-            <p :style="{'color': $store.state.mcColor}"> {{ character_ru.quote }} </p>
+            <p :style="{'color': $store.state.chars.mcColor}"> {{ character_ru.quote }} </p>
             </v-flex>
             <!-- ВЫБОР ЦВЕТА ЦИТАТЫ (РЕПЛИК) -->
             <v-flex d-flex lg1 md1 sm1 xs1>
-                <color-picker :change="mcUpdateColor" :extColor="this.$root.convertColor(this.$store.state.mcColor)"></color-picker>
+                <color-picker :change="mcUpdateColor" :extColor="this.$root.convertColor(this.$store.state.chars.mcColor)"></color-picker>
             </v-flex>
             </v-layout>
             <!-- ЗАПОЛНЕНИЕ ИМЕНИ -->
@@ -172,27 +172,27 @@ export default {
       ],
      character: {
           avatar:      'https://avatars0.githubusercontent.com/u/9064066?v=4&s=460',
-          name:         this.$store.state.mcName,
+          name:         this.$store.state.chars.mcName,
           title:       'Main character',
           quote:       'My name is Arthur. nice to meet you.',
           changeColor:  this.$root.mcUpdateColor,
-          color:        this.$root.convertColor(this.$store.state.mcColor),
-          Im:           this.$store.state.mcName,
+          color:        this.$root.convertColor(this.$store.state.chars.mcColor),
+          Im:           this.$store.state.chars.mcName,
         },
      character_ru: {
           avatar:      'https://avatars0.githubusercontent.com/u/9064066?v=4&s=460',
-          name:         this.$store.state.mcIm,
+          name:         this.$store.state.chars.mcIm,
           title:       'Главный герой',
           quote:       'Меня зовут Артур , приятно познакомиться',
           changeColor:  this.$root.mcUpdateColor,
-          color:        this.$root.convertColor(this.$store.state.mcColor),
+          color:        this.$root.convertColor(this.$store.state.chars.mcColor),
           manualDeclination: false,
-          Im:           this.$store.state.mcIm,
-          Rod:          this.$store.state.mcRod,
-          Dat:          this.$store.state.mcDat,
-          Vin:          this.$store.state.mcVin,
-          Tvor:         this.$store.state.mcTvor,
-          Pred:         this.$store.state.mcPred,
+          Im:           this.$store.state.chars.mcIm,
+          Rod:          this.$store.state.chars.mcRod,
+          Dat:          this.$store.state.chars.mcDat,
+          Vin:          this.$store.state.chars.mcVin,
+          Tvor:         this.$store.state.chars.mcTvor,
+          Pred:         this.$store.state.chars.mcPred,
         },
       }
     },
@@ -200,29 +200,29 @@ export default {
       // АНГЛИЙСКАЯ ВЕРСИЯ 
       mc: {
         get: function () {
-          return this.$store.state.mcName;
+          return this.$store.state.chars.mcName;
         },
         set: function (text) {
-          this.$store.state.mcName = text;
-          this.character.name = this.$store.state.mcName
-          this.character.Im = this.$store.state.mcName
+          this.$store.state.chars.mcName = text;
+          this.character.name = this.$store.state.chars.mcName
+          this.character.Im = this.$store.state.chars.mcName
           this.$store.commit('saveCharNames', 'en')
         }
       },
       // ДЛЯ РУССКОЙ ВЕРСИИ С ФУНКЦИЕЙ СКЛОНЕНИЯ ИМЁН
       Declination: {
         get: function () {
-          return this.$store.state.mcIm;
+          return this.$store.state.chars.mcIm;
         },
         set: function (text) {
-          this.$store.state.mcIm = text;
-          var name = new RussianName(this.$store.state.mcIm); // Склоняем
+          this.$store.state.chars.mcIm = text;
+          var name = new RussianName(this.$store.state.chars.mcIm); // Склоняем
           // Записываем слоненные значение в Store
-          this.$store.state.mcRod = name.fullName(name.gcaseRod)
-          this.$store.state.mcDat = name.fullName(name.gcaseDat)
-          this.$store.state.mcVin = name.fullName(name.gcaseVin)
-          this.$store.state.mcTvor = name.fullName(name.gcaseTvor)
-          this.$store.state.mcPred = name.fullName(name.gcasePred)
+          this.$store.state.chars.mcRod = name.fullName(name.gcaseRod)
+          this.$store.state.chars.mcDat = name.fullName(name.gcaseDat)
+          this.$store.state.chars.mcVin = name.fullName(name.gcaseVin)
+          this.$store.state.chars.mcTvor = name.fullName(name.gcaseTvor)
+          this.$store.state.chars.mcPred = name.fullName(name.gcasePred)
           // Обновляем данные в characters_ru, для реактивность на странице
           this.character_ru.name = name.fullName(name.gcaseIm)
           this.character_ru.Im = name.fullName(name.gcaseIm)
@@ -239,7 +239,7 @@ export default {
     mcUpdateColor(event) { // Обновляет цвет ColorPicker'ом
       // console.log('2' + event.color)
       this.color = event.color;
-      this.$store.state.mcColor = this.color;
+      this.$store.state.chars.mcColor = this.color;
       this.$store.commit('saveColorsChar');
     },
     },

@@ -1,5 +1,5 @@
 <template>
-  <div class="sc-message--system" :style="messageColors">{{data.text}}<p v-if="data.meta" class='sc-message--meta' :style="{color: messageColors.color}">{{data.meta}}</p>
+  <div class="sc-message--system" >{{data.text}}<p v-if="data.meta" class='sc-message--meta'>{{data.meta}}</p>
   </div>
 </template>
 
@@ -10,16 +10,13 @@ export default {
       type: Object,
       required: true
     },
-    messageColors: {
-      type: Object,
-      required: true
-    },
   }
 }
 </script>
 
 <style scoped>
 .sc-message--system {
+  background-color: rgb(240, 240, 240);
   padding: 8px 20px;
   border-radius: 12px;
   font-weight: 300;

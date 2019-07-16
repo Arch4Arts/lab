@@ -1,7 +1,5 @@
 <template>
-  <div :style="messageColors">
-      {{ data.time }}
-  </div>
+  <img class="emoji-img-size" :src="data.src" />
 </template>
 
 <script>
@@ -10,15 +8,15 @@ export default {
     data: {
       type: Object,
       required: true
-    },
-    messageColors: {
-      type: Object,
-      required: true
-    },
+    }
   }
 }
 </script>
 
 <style scoped>
+
+.emoji-img-size {
+  max-height: 50px;
+}
 
 </style>

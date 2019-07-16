@@ -4,7 +4,7 @@
     <v-content>
     <first-dialog></first-dialog>
     <app-header v-if="$store.state.Header"></app-Header>
-    <General-Info :faq="true" v-if="$store.state.firstStart"></General-Info>
+    <General-Info v-if="$store.state.firstStart"></General-Info>
       <router-view v-if="!$store.state.firstStart"/>
     </v-content>
   </v-app>
@@ -22,8 +22,13 @@ export default {
       SwipeRight(){
         if (this.$store.state.appHeaderEnable) { // Включено ли меню (Отключается при выборе палитры цвета диалогов)
           if (this.$route.path != '/Diary') // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
-          if (this.$store.state.chat.isChatOpen) // проверка открыт ли чат
-            this.$store.state.chat.isChatOpen = !this.$store.state.chat.isChatOpen // закрываемокно чата
+          if (this.$store.state.chat.isChatOpen) { // проверка открыт ли чат
+            if (this.$store.state.chat.UserListShow) { // проверка открыт ли контакт
+              this.$store.state.chat.isChatOpen = !this.$store.state.chat.isChatOpen // закрываем окно чата
+              if (screen.width <= 450) this.$store.state.Header = !this.$store.state.Header // Включаем бар при закрытии чата
+            }
+            else this.$store.state.chat.UserListShow = !this.$store.state.chat.UserListShow // Закрывает текущий контакт если он открыт
+          }
           else 
             this.$store.state.DrawerVisible = !this.$store.state.DrawerVisible; // если окно чата не открыто, открываем меню
         }
@@ -33,8 +38,10 @@ export default {
           if (this.$route.path != '/Diary') // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
           if (this.$store.state.DrawerVisible) // Отключаем открытие меню при свайпе влево, если меню не открыто
             this.$store.state.DrawerVisible = !this.$store.state.DrawerVisible;
-          else
+          else {
             this.$store.state.chat.isChatOpen = !this.$store.state.chat.isChatOpen // открываем окно чата
+            if (screen.width <= 450) this.$store.state.Header = !this.$store.state.Header // Отключаем бар при закрытии чата
+          }
         }
       }
    },

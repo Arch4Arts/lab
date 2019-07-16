@@ -6,18 +6,32 @@
 </section>
 
 <section v-else>
-<p>В комнате царил полумрак, внутри которого был лишь один источник света, а именно смартфон, находящийся в руках юноши, возраст которого невозможно было разобрать из-за царившей вокруг темноты. Прямо сейчас он пристально вглядывался в экран, почти не дыша. <br><br> Сейчас вы находитесь в ожидании момента, который изменит всю вашу жизнь. И этот момент настал.
-</p>
-<p>- <MC>Да!!! Я сделал это! У меня получилось!</MC> - прокричал он, настолько громко, что наверняка все обитатели дома услышали его.
-</p>
-<p>- <MC>Мои старания не прошли зря! Поверить не могу! Последние несколько месяцев стоило того,</MC> – очень радостным тоном проговорил юноша.
-</p>
-<p>Вашей радости не было предела, а всё, потому что, вам приходилось работать как проклятый в течении нескольких месяцев. Без преувеличения можно сказать, что, эти несколько месяцев были самыми тяжкими в вашей жизни, а всё началось с момента переезда сюда.
-</p>
-<p>Видите ли, вы переехали сюда несколько месяцев назад, для подготовки к вступительным экзаменам в университет, в котором, к слову, учится ваша любимая старшая сестра, в этом году, она уже переходит на третий курс. Собственно, именно из-за неё ваш выбор пал на этот университет. Просто для меня вас она особенная… Как тёплые лечи солнца в холодные дни… Э-это сложно объяснить, хотя, впрочем, это и не нужно, главное, что вы здесь и добились успеха.
-</p>
-<p>- <MC>новые знакомства, возможности, интересные события и красивые девушки, особенно девушки, одним словом – новая жи…</MC> - не успели вы договорить заветную фразу, как внезапно были прерваны шумом открывшийся двери. <a class="a">А вот и неприятная часть истории.</a>
-</p>
+<br><br>
+<v-card class="bg_elemen">
+<v-card-text class="font-color">
+          <v-text-field
+            v-model="chatID"
+            placeholder="mc_support"
+            label="chatID"
+          ></v-text-field>
+          <v-text-field
+            v-model="author"
+            placeholder="support"
+            label="author"
+          ></v-text-field>
+  </v-card-text>
+ </v-card>
+ <v-btn @click='$root.sendMessage("mc_support", "support", "text", { text: "Шлюха!" })'>Support short text...</v-btn>
+<v-btn @click='$root.sendMessage("mc_support", "support", "text", { text: "Пиздец ты сиси шлюха" })'>Support text...</v-btn>
+<v-btn @click='$root.sendMessage("mc_support", "support", "text", { text: "Хочешь получить в попку а шлюха? Будешь кончать как девочка!" })'>Support long text...</v-btn>
+<v-btn @click='$root.sendMessage("mc_support", "support", "image", { src: require("../../Media/img/2.gif") })'>Support image gif...</v-btn>
+<v-btn @click='$root.sendMessage("mc_support", "support", "video", { src: require("../../Media/video/Carmelita.mp4") })'>Support video...</v-btn>
+<v-btn @click='$root.sendMessage("mc_support", "support", "audio", { src: require("../../Media/audio/Achievements.mp3") })'>Support audio..</v-btn>
+<v-btn @click='$root.sendMessage("mc_support", "support", "emoji", { src: require("../../Media/img/smiling-face.png") })'>Support emoji..</v-btn>
+<v-btn @click='$root.sendMessage("mc_support", "support", "suggestion", undefined, ["slut", "Yes, i sissy!"])'>Support suggetion...</v-btn>
+<v-btn @click="$root.addContactToChatList('mc')">Добавить mc в контакты</v-btn>
+<v-btn @click="">test</v-btn>
+<br><br>
 {{ this.$store.state.mcIm }}
 <mcSettings/>
 </section>
@@ -33,6 +47,8 @@ import mcSettings from '../../components/CharSettings/mcSettings'
 export default {
     data(){
         return {
+            author: '',
+            chatID: ''
         }
     },
     components: {
@@ -44,5 +60,9 @@ export default {
 </script>
 
 <style scoped>
+
+.bg_elemen {
+  background: white
+}
 
 </style>

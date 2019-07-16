@@ -1,13 +1,19 @@
 <template>
 <div class="sc-message-list" ref="scrollList" :style="{backgroundColor: colors.messageList.bg}" @scroll="handleScroll">
+  <!-- <virtual-list class="sc-message-list" :size="65" :remain="8"> -->
+  <RecycleScroller class="scroller" :items="messages" :item-size="1" key-field="idx">
   <Message v-for="(message, idx) in messages" :message="message" :chatImageUrl="chatImageUrl(message.author)" :authorName="authorName(message.author)" :key="idx" :colors="colors" :messageStyling="messageStyling" />
-  <Message v-show="showTypingIndicator !== ''" :message="{author: showTypingIndicator, type: 'typing'}" :chatImageUrl="chatImageUrl(showTypingIndicator)" :colors="colors" :messageStyling="messageStyling" />
+  </RecycleScroller>
+  <!-- </virtual-list> -->
+  <!-- <Message v-show="showTypingIndicator !== ''" :message="{author: showTypingIndicator, type: 'typing'}" :chatImageUrl="chatImageUrl(showTypingIndicator)" :colors="colors" :messageStyling="messageStyling" /> -->
 </div>
 
 </template>
 <script>
 import Message from './Message.vue'
 import chatIcon from './assets/user-default-avatar.svg'
+
+import virtualList from 'vue-virtual-scroll-list'
 
 export default {
   components: {
@@ -80,6 +86,10 @@ export default {
 </script>
 
 <style scoped>
+.scroller {
+  height: 100%;
+}
+
 .sc-message-list {
   height: 100%;
   overflow-y: auto;

@@ -5,28 +5,28 @@
         from_them: message.author !== 'me' && message.type !== 'system',
         system: message.type === 'system'  // Свой стиль
       }">
-      <div v-if="message.type !== 'system'" :title="authorName" class="avatar" :style="{
+      <div v-if="message.type !== 'system' && message.type !== 'suggestion'" :title="authorName" class="avatar" :style="{
         backgroundImage: `url(${chatImageUrl})` // Аватарки
       }" v-tooltip="authorName"></div>
-      <TextMessage v-if="message.type === 'text'" :data="message.data" :messageColors="determineMessageColors()" :messageStyling="messageStyling" />
+      <TextMessage v-if="message.type === 'text'" :data="message.data" />
       <EmojiMessage v-else-if="message.type === 'emoji'" :data="message.data" />
-      <TypingMessage v-else-if="message.type === 'typing'" :messageColors="determineMessageColors()" />
-      <SystemMessage v-else-if="message.type === 'system'" :data="message.data" :messageColors="determineMessageColors()" />
-      <ImageMessage v-else-if="message.type === 'image'"  :data="message.data" :messageColors="determineMessageColors()" />
-      <VideoMessage v-else-if="message.type === 'video'" :data="message.data" :messageColors="determineMessageColors()" />
-      <AudioMessage v-else-if="message.type === 'audio'" :data="message.data" :messageColors="determineMessageColors()" />
+      <TypingMessage v-else-if="message.type === 'typing'" />
+      <SystemMessage v-else-if="message.type === 'system'" :data="message.data" />
+      <ImageMessage v-else-if="message.type === 'image'"  :data="message.data" />
+      <VideoMessage v-else-if="message.type === 'video'" :data="message.data" />
+      <AudioMessage v-else-if="message.type === 'audio'" :data="message.data" />
     </div>
   </div>
 </template>
 
 <script>
-import TextMessage from './TextMessage.vue'
-import EmojiMessage from './EmojiMessage.vue'
-import TypingMessage from './TypingMessage.vue'
-import SystemMessage from './SystemMessage.vue'
-import ImageMessage from './ImageMessage.vue'
-import VideoMessage from './VideoMessage.vue'
-import AudioMessage from './AudioMessage.vue'
+import TextMessage from './messages/TextMessage'
+import EmojiMessage from './messages/EmojiMessage.vue'
+import TypingMessage from './messages/TypingMessage.vue'
+import SystemMessage from './messages/SystemMessage.vue'
+import ImageMessage from './messages/ImageMessage.vue'
+import VideoMessage from './messages/VideoMessage.vue'
+import AudioMessage from './messages/AudioMessage.vue'
 import chatIcon from './assets/user-default-avatar.svg'
 
 export default {
@@ -53,10 +53,6 @@ export default {
       type: String,
       default: chatIcon // Аватарка по умолчанию, если у пользователя она не назначенна.
     },
-    colors: {
-      type: Object,
-      required: true
-    },
     authorName: {
       type: String
     },
@@ -66,21 +62,21 @@ export default {
     }
   },
   methods: {
-    sentColorsStyle() {
-      return {
-        color: this.colors.sentMessage.text,
-        backgroundColor: this.colors.sentMessage.bg
-      }
-    },
-    receivedColorsStyle() {
-      return {
-        color: this.colors.receivedMessage.text,
-        backgroundColor: this.colors.receivedMessage.bg
-      }
-    },
-    determineMessageColors() {
-      return this.message.author === 'me' ? this.sentColorsStyle() : this.receivedColorsStyle()
-    }
+    // sentColorsStyle() {
+    //   return {
+    //     color: this.colors.sentMessage.text,
+    //     backgroundColor: this.colors.sentMessage.bg
+    //   }
+    // },
+    // receivedColorsStyle() {
+    //   return {
+    //     color: this.colors.receivedMessage.text,
+    //     backgroundColor: this.colors.receivedMessage.bg
+    //   }
+    // },
+    // determineMessageColors() {
+    //   return this.message.author === 'me' ? this.sentColorsStyle() : this.receivedColorsStyle()
+    // }
   }
 }
 </script>
@@ -119,6 +115,7 @@ export default {
 		justify-content: flex-start;
 		.message { // стиль сообщения
 			margin-right: 25%;
+      max-width: 200px;
 			background-color: #eee;
 			position: relative;
 			&:before { // Хвостик
@@ -153,6 +150,7 @@ export default {
 		.message { // Стиль сообщения
 			color: white;
 			margin-left: 25%;
+      max-width: 200px;
 			background: linear-gradient(to bottom, #00D0EA 0%, #00D0EA 100%);
 			background-attachment: fixed;
 			position: relative;
