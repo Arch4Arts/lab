@@ -41,7 +41,6 @@
         :onSubmit="onSubmitSuggestion"
         :suggestions="getSuggestions()"
         :placeholder="placeholder"
-        @onType="$emit('onType')"
         :colors="colors" />
      </div>
   </div>

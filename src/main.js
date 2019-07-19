@@ -30,6 +30,12 @@ Vue.use(VueIziToast);
 import VueVirtualScroller from 'vue-virtual-scroller'
 Vue.use(VueVirtualScroller)
 
+import AsyncComputed from 'vue-async-computed'
+Vue.use(AsyncComputed)
+
+import SmoothScrollbar from 'vue-smooth-scrollbar'
+Vue.use(SmoothScrollbar)
+
 new Vue({
   router,
   store,
@@ -78,6 +84,11 @@ new Vue({
         s: parseFloat(hsl[1]),
         l: parseFloat(hsl[2]) * 2, // умножаем на 2, т.к в ColorPicker'e l всегда возвращается делённой на 2 (т.к l:50% - максимум для цвета 100% уже просто былеый цвет)
       };
+    },
+    errNotify(error){
+      this.$store.state.lang 
+      ? iziToast.info({message: `Error: ${error}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
+      : iziToast.info({message: `Ошибка: ${error}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
     },
     sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));

@@ -7,6 +7,7 @@ import chatUsers from './modules/chatUsers'
 import chars from './modules/chars'
 
 var CryptoJS = require("crypto-js");
+import localforage from 'localforage'
 
 // const persistPlugin = store => {
 //   store.subscribe((mutations, state) => {
@@ -15,6 +16,13 @@ var CryptoJS = require("crypto-js");
 // }
 
 Vue.use(Vuex)
+
+import SecureLS from 'secure-ls'
+var ls = new SecureLS({
+	encodingType: 'aes',
+  isCompression: true,
+  encryptionSecret: '3F4428472B4B6250'
+});
 
 const store = new Vuex.Store({
   state: {
@@ -52,18 +60,30 @@ const store = new Vuex.Store({
     discord_link: 'https://discordapp.com'
   },
   plugins: [createPersistedState({
-    setState(key, state, storage) {
-      return storage.setItem(key, CryptoJS.AES.encrypt(JSON.stringify(state), keyGen(key)));
-    },
-    getState(key, storage, value) {
-      try {
-        return (value = storage.getItem(key).toString()) && typeof value !== 'undefined'
-          ? JSON.parse(CryptoJS.AES.decrypt(value, keyGen(key)).toString(CryptoJS.enc.Utf8))
-          : undefined;
-      } catch (err) {}
+    // setState(key, state, storage) {
+    //   return storage.setItem(key, CryptoJS.AES.encrypt(JSON.stringify(state), keyGen(key)));
+    // },
+    // getState(key, storage, value) {
+    //   try {
+    //     return (value = storage.getItem(key).toString()) && typeof value !== 'undefined'
+    //       ? JSON.parse(CryptoJS.AES.decrypt(value, keyGen(key)).toString(CryptoJS.enc.Utf8))
+    //       : undefined;
+    //   } catch (error) {}
   
-      return undefined;
-    }
+    //   return undefined;
+    // }
+    // setState(key, state, storage) {
+    //   return ls.set(key, {state})
+    // },
+    // getState(key, storage, value) {
+    //   try {
+    //     return (value = ls.get(key)) && typeof value !== 'undefined'
+    //       ? value.state
+    //       : undefined;
+    //   } catch (err) {}
+  
+    //   return undefined;
+    // }
   })],
   mutations:{
     firstDialog() {
@@ -157,59 +177,59 @@ function keyGen(saveName){ // Генерация уникального ключ
 
 // initializeApp()
 
-// // Генерация уникального ключа на основе имени сохранения
-// async function genEncryptionKey(saveName, mode, length) {
-//   var algo = {
-//   name: 'PBKDF2',
-//   hash: 'SHA-512',
-//   salt: new TextEncoder().encode('a-unique-salt-for-save'),
-//   iterations: 1000
-//   };
-//   var derived = { name: mode, length: length };
-//   var encoded = new TextEncoder().encode(saveName);
-//   var key = await crypto.subtle.importKey('raw', encoded, { name: 'PBKDF2' }, false, ['deriveKey']);
+// Генерация уникального ключа на основе имени сохранения
+async function genEncryptionKey(saveName, mode, length) {
+  var algo = {
+  name: 'PBKDF2',
+  hash: 'SHA-512',
+  salt: new TextEncoder().encode('a-unique-salt-for-save'),
+  iterations: 1000
+  };
+  var derived = { name: mode, length: length };
+  var encoded = new TextEncoder().encode(saveName);
+  var key = await crypto.subtle.importKey('raw', encoded, { name: 'PBKDF2' }, false, ['deriveKey']);
   
-//   return crypto.subtle.deriveKey(algo, key, derived, false, ['encrypt', 'decrypt']);
-// };
+  return crypto.subtle.deriveKey(algo, key, derived, false, ['encrypt', 'decrypt']);
+};
 
-// // Шифрование
-// async function encrypt (saveName, saveData) {
-//   var algo = {
-//   name: 'AES-GCM',
-//   length: 256,
-//   iv: crypto.getRandomValues(new Uint8Array(12))
-//   };
-//   var key = await genEncryptionKey(saveName, 'AES-GCM', 256);
-//   var encoded = new TextEncoder().encode(saveData);
+// Шифрование
+async function encrypt (saveName, saveData) {
+  var algo = {
+  name: 'AES-GCM',
+  length: 256,
+  iv: crypto.getRandomValues(new Uint8Array(12))
+  };
+  var key = await genEncryptionKey(saveName, 'AES-GCM', 256);
+  var encoded = new TextEncoder().encode(saveData);
   
-//   return {
-//   cipherData: await crypto.subtle.encrypt(algo, key, encoded),
-//   iv: algo.iv
-//   };
-// }
+  return {
+  cipherData: await crypto.subtle.encrypt(algo, key, encoded),
+  iv: algo.iv
+  };
+}
 
-// // Дешифрование
-// async function decrypt (saveName,encryptedData) {
-//   var algo = {
-//   name: 'AES-GCM',
-//   length: 256,
-//   iv: encryptedData.iv
-//   };
-//   var key = await genEncryptionKey(saveName, 'AES-GCM', 256);
-//   var decrypted = await crypto.subtle.decrypt(algo, key, encryptedData.cipherData);
+// Дешифрование
+async function decrypt (saveName,encryptedData) {
+  var algo = {
+  name: 'AES-GCM',
+  length: 256,
+  iv: encryptedData.iv
+  };
+  var key = await genEncryptionKey(saveName, 'AES-GCM', 256);
+  var decrypted = await crypto.subtle.decrypt(algo, key, encryptedData.cipherData);
 
-//   return new TextDecoder().decode(decrypted);
-// }
+  return new TextDecoder().decode(decrypted);
+}
 
-// export async function WebCrypto(saveName, saveData){
-//   if ( typeof saveName !== 'undefined' && typeof saveData !== 'undefined') {
-//     return await encrypt(saveName, saveData).then(encryptedData => localforage.setItem(saveName, encryptedData))
-//   } else {
-//     var Data;
-//     await localforage.getItem(saveName).then(encryptedData => Data = encryptedData)
-//     return await decrypt(saveName, Data)
-//   }
-// }
+export async function WebCrypto(saveName, saveData){
+  if ( typeof saveName !== 'undefined' && typeof saveData !== 'undefined') {
+    return await encrypt(saveName, saveData).then(encryptedData => localforage.setItem(saveName, encryptedData))
+  } else {
+    var Data;
+    await localforage.getItem(saveName).then(encryptedData => Data = encryptedData)
+    return await decrypt(saveName, Data).then(DecryptedData => JSON.parse(DecryptedData))
+  }
+}
 
 export default store
 // Копия начального состояния игры

@@ -4,7 +4,7 @@
         <v-flex md8 class="Page" style="padding: 0px">
           <div>
             <v-card dark elevation="0">
-            <v-list two-line subheader class="bg_element">
+            <v-list two-line subheader class="bg_element" >
               <v-list-tile>
                 <v-list-tile-content>  
                 <!-- ТЕКСТОВОЕ ПОЛЕ ДЛЯ ВВОДА ИМЕНИ СЕЙВА -->
@@ -36,6 +36,9 @@
                 <v-divider v-show="saveCount == 1"/>
 
               <!-- СПИСОК СОХРАНЕНИЙ -->
+              <div v-if="saveCount == 1" id="scroll-area">
+              <smooth-scrollbar>
+              <div v-if="saveCount == 1" id="scroll-content">
               <v-list-tile
                 v-for="save in SaveList"
                 :key="save.saveID"
@@ -75,12 +78,16 @@
                   </v-tooltip>
                 </v-list-tile-action>
               </v-list-tile>
+              </div>
+              </smooth-scrollbar>
+              </div>
               <v-divider/>
             </v-list>
           </v-card>
           </div>
             <!-- СОХР НА ДИСК / ЗАГР С ДИСКА / ПЕРЕЗАПУСК / УДАЛЕНИЕ ВСЕХ СОХРАНЕНИЙ -->
             <div class="text-xs-right">
+              Количество сохранений: 
             <v-tooltip top>
               <template v-slot:activator="{ on }">
                 <v-btn @click="" v-on="on" icon ripple>
@@ -195,13 +202,21 @@
 
 <script>
 import moment from 'moment' // библиотека для работы с временем
-import { resetState }  from '../stores/store'
+import { resetState, WebCrypto }  from '../stores/store'
 
 const _ = require('lodash'); // Библиотека для упрощения работы со строками, таблицами и т д.
 
-var CryptoJS = require("crypto-js");
+// var CryptoJS = require("crypto-js");
 
 import iziToast from 'izitoast/dist/js/iziToast.min.js';
+
+import virtualList from 'vue-virtual-scroll-list'
+
+import localforage from 'localforage'
+localforage.config({
+    name: 'vuex',
+    storeName: 'saves'
+});
 
 iziToast.settings({
   progressBar: false,
@@ -222,26 +237,23 @@ export default {
         defaultName: 'New save',
         defaultName_ru: 'Новое сохранение',
         saveName: '',
+        newSave: 0,
+        newSaveName: '',
         saves: [],
     }),
-  computed: {
+  asyncComputed: {
     SaveList: {
-      get() {
-        var Keys = Object.keys(localStorage) // все ключи из localStorage
-        var listSaves = [] // массив с ключами сохранений
-        var saves = []
-        for (let i = 0; i < localStorage.length; i++) {
-          if (Keys[i].includes('save-')) listSaves.push(Keys[i]); // Если найден ключ с сохранением, записываем в массив Keys
-        }
-        (listSaves.length > 0) ? this.saveCount = 1 : this.saveCount = 0 // Проверка на наличие сейвов
-        if (this.saveCount === 1) {
-        for (let i = 0; i < listSaves.length; i++) {
-          if (listSaves.length > 0) this.saves.push(
-            JSON.parse(CryptoJS.AES.decrypt(
-              localStorage.getItem(listSaves[i]).toString(), this.keyGen(listSaves[i])).toString(CryptoJS.enc.Utf8)))
-        }}
-
-        return _.orderBy(this.saves, 'saveTime', 'desc')
+      async get() {
+          var listSaves = await localforage.keys().then(keysList => this.listSaves = keysList); // все ключи из localStorage
+          var length = await localforage.length().then(lf_length => this.length = lf_length);
+          var saves = [];
+          (this.length > 0) ? this.saveCount = 1 : this.saveCount = 0 // Проверка на наличие сейвов
+          if (this.saveCount === 1) {
+          for (let i = 0; i < length; i++) {
+            if (length > 0) this.saves.push(await WebCrypto(listSaves[i]))
+          }}
+          console.log(length)
+          return _.orderBy(this.saves, 'saveTime', 'desc')
       },
   }
   },
@@ -250,64 +262,91 @@ export default {
         var salt = '3F4428472B4B6250';
         return CryptoJS.PBKDF2(saveName, salt, { keySize: 256 / 32 , iterations: 1}).toString();
     },
-    saveGame(name){
-      if (name === '') // Проверка введенно ли имя сохранения, если нет, назначаем стандартное
-        (this.$store.state.lang) ? name = 'New Save' : name = 'Новое сохранение'
-      this.$store.state.saveName = name;
-      this.$store.state.saveTime = moment().format("DD.MM.YYYY - kk:mm"); // Время сохранения
-      var newSaveID = _.random (0, 999999); // генерация ID
-      this.$store.state.saveID = newSaveID;
-      localStorage.setItem(
-        `save-${newSaveID}`, //ID
-        CryptoJS.AES.encrypt( // Шифрование и генерация уникального ключа
-          JSON.stringify(this.$store.state), this.keyGen(`save-${newSaveID}`)))
-      this.$store.state.lang 
-      ? iziToast.info({message: 'Game successfully saved', position: 'bottomCenter'})
-      : iziToast.info({message: 'Игра успешно сохранена', position: 'bottomCenter'})
-      this.saves = [] // Обновляет список сохранений
+    async saveGame(name){
+      try {
+        if (name === '') // Проверка введенно ли имя сохранения, если нет, назначаем стандартное
+          (this.$store.state.lang) ? name = 'New Save' : name = 'Новое сохранение'
+        this.$store.state.saveName = name;
+        this.$store.state.saveTime = moment().format("DD.MM.YYYY - kk:mm"); // Время сохранения
+        var newSaveID = _.random (0, 999999); // генерация ID
+        this.$store.state.saveID = newSaveID;
+        await WebCrypto(`save-${newSaveID}`, JSON.stringify(this.$store.state))
+        this.$store.state.lang 
+        ? iziToast.info({message: 'Game successfully saved', position: 'bottomCenter'})
+        : iziToast.info({message: 'Игра успешно сохранена', position: 'bottomCenter'})
+
+        this.saves = []
+        this.$asyncComputed.SaveList.update()
+      }
+      catch(error) {
+        this.$root.errNotify(error)
+      }
     },
     overwriteSave(saveID){
-      this.$store.state.saveTime = moment().format("DD.MM.YYYY - kk:mm"); // Обновляем время сохранения
-      this.$store.state.saveName = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem(`save-${saveID}`).toString(), this.keyGen(`save-${saveID}`)).toString(CryptoJS.enc.Utf8)).saveName
-      this.$store.state.saveID = saveID
-      localStorage.setItem(
-        `save-${saveID}`, CryptoJS.AES.encrypt(
-          JSON.stringify(this.$store.state), this.keyGen(`save-${saveID}`)))
-      this.$store.state.lang 
-        ? iziToast.info({message: 'Saving successfully overwritten', position: 'bottomCenter'})
-        : iziToast.info({message: 'Сохранение успешно перезаписано', position: 'bottomCenter'})
-      this.saves = [] // Обновляет список сохранений
+      try {
+        this.$store.state.saveTime = moment().format("DD.MM.YYYY - kk:mm"); // Обновляем время сохранения
+        this.$store.state.saveName = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem(`save-${saveID}`).toString(), this.keyGen(`save-${saveID}`)).toString(CryptoJS.enc.Utf8)).saveName
+        this.$store.state.saveID = saveID
+        localStorage.setItem(
+          `save-${saveID}`, CryptoJS.AES.encrypt(
+            JSON.stringify(this.$store.state), this.keyGen(`save-${saveID}`)))
+        this.$store.state.lang 
+          ? iziToast.info({message: 'Saving successfully overwritten', position: 'bottomCenter'})
+          : iziToast.info({message: 'Сохранение успешно перезаписано', position: 'bottomCenter'})
+        this.saves = [] // Обновляет список сохранений
+      }
+      catch(error) {
+        this.$root.errNotify(error)
+      }
     },
     loadSave(saveID){
-      this.$store.replaceState(
-        JSON.parse(CryptoJS.AES.decrypt(
-          localStorage.getItem(
-            `save-${saveID}`).toString(), this.keyGen(`save-${saveID}`)).toString(CryptoJS.enc.Utf8)));
-        this.$store.state.lang 
-        ? iziToast.info({message: 'Game loaded successfully', position: 'bottomCenter', backgroundColor: 'rgb(255, 254, 173)'})
-        : iziToast.info({message: 'Игра загружена успешно', position: 'bottomCenter', backgroundColor: 'rgb(255, 254, 173)'})
+      console.log(CryptoJS.AES.decrypt(
+            localStorage.getItem(
+              `save-${saveID}`).toString(), this.keyGen(`save-${saveID}`)).toString(CryptoJS.enc.Utf8))
+      try {
+        this.$store.replaceState(
+          JSON.parse(CryptoJS.AES.decrypt(
+            localStorage.getItem(
+              `save-${saveID}`).toString(), this.keyGen(`save-${saveID}`)).toString(CryptoJS.enc.Utf8)));
+          this.$store.state.lang 
+          ? iziToast.info({message: 'Game loaded successfully', position: 'bottomCenter', backgroundColor: 'rgb(255, 254, 173)'})
+          : iziToast.info({message: 'Игра загружена успешно', position: 'bottomCenter', backgroundColor: 'rgb(255, 254, 173)'})
+      }
+      catch(error) {
+        this.$root.errNotify(error)
+      }
     },
     deleteSave(saveID) {
-      localStorage.removeItem(`save-${saveID}`) // Удаление сейва
-      this.saves = [] // Обновляет список сохранений
-      this.$store.state.lang 
-      ? iziToast.info({message: 'Saving has been deleted!', position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
-      : iziToast.info({message: 'Сохранение было удалено!', position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
+      try {
+        localStorage.removeItem(`save-${saveID}`) // Удаление сейва
+        this.saves = [] // Обновляет список сохранений
+        this.$store.state.lang 
+        ? iziToast.info({message: 'Saving has been deleted!', position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
+        : iziToast.info({message: 'Сохранение было удалено!', position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
+      }
+      catch(error) {
+        this.$root.errNotify(error)
+      }
     },
     DeleteAllSaves(){
-      var Keys = Object.keys(localStorage) // все ключи из localStorage
-      var listSaves = [] // массив с ключами сохранений
-      for (let i = 0; i < localStorage.length; i++) {
-        if (Keys[i].includes('save')) listSaves.push(Keys[i]); // Если найден ключ с сохранением, записываем в массив Keys
+      try {
+        var Keys = Object.keys(localStorage) // все ключи из localStorage
+        var listSaves = [] // массив с ключами сохранений
+        for (let i = 0; i < localStorage.length; i++) {
+          if (Keys[i].includes('save')) listSaves.push(Keys[i]); // Если найден ключ с сохранением, записываем в массив Keys
+        }
+        for (let i = 0; i < listSaves.length; i++) {
+          if (listSaves.length > 0) localStorage.removeItem(listSaves[i])
+        }
+        this.$store.state.lang 
+        ? iziToast.warning({message: 'All saves have been deleted!', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
+        : iziToast.warning({message: 'Всё сохранения были удалены!', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
+        this.deleteAll = false
+        this.saves = [] // Обновляет список сохранений
       }
-      for (let i = 0; i < listSaves.length; i++) {
-        if (listSaves.length > 0) localStorage.removeItem(listSaves[i])
+      catch(error) {
+        this.$root.errNotify(error)
       }
-      this.$store.state.lang 
-      ? iziToast.warning({message: 'All saves have been deleted!', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
-      : iziToast.warning({message: 'Всё сохранения были удалены!', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
-      this.deleteAll = false
-      this.saves = [] // Обновляет список сохранений
     },
     async restartGame(){
       this.$router.push('/')
@@ -322,6 +361,16 @@ export default {
 </script>
 
 <style scoped>
+
+#scroll-area {
+  width: inherit;
+  height: 550px;
+}
+
+#scroll-content {
+  width: inherit;
+  height: inherit;
+}
 
 .tip {
   color: rgb(255, 102, 102);
@@ -355,6 +404,16 @@ export default {
 
   .save-btn-right {
     margin-right: 0px;
+  }
+
+  #scroll-area {
+    width: inherit;
+    height: 300px;
+  }
+
+  #scroll-content {
+    width: inherit;
+    height: inherit;
   }
 }
 
