@@ -36,6 +36,63 @@ Vue.use(AsyncComputed)
 import SmoothScrollbar from 'vue-smooth-scrollbar'
 Vue.use(SmoothScrollbar)
 
+import * as Sentry from '@sentry/browser';
+import * as Integrations from '@sentry/integrations';
+
+if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена
+  Sentry.init({
+    dsn: 'https://6b82c070a6874f70ad6e9fe5ebcb9fb8@sentry.io/1509214',
+    integrations: [new Integrations.Vue({Vue, attachProps: true})],
+    release: store.state.version, // Версия ПО
+    beforeSend(event, hint) {
+      if (event.exception && store.state.lang) {
+        Sentry.showReportDialog({ 
+          eventId: event.event_id,
+          lang: 'en',
+          title: 'It looks like the game crashed',
+          subtitle: 'The game developer has been notified.',
+          subtitle2: 'If you’d like to help, tell what happened below.',
+          user: {
+            name: 'Player',
+            email: 'Player@example.com'
+          },
+        });
+      }
+      else {
+        Sentry.showReportDialog({ 
+          eventId: event.event_id,
+          lang: 'ru',
+          title: 'Произошел сбой игры',
+          subtitle: 'Разработчик игры был уведомлён.',
+          subtitle2: 'Если хочешь помочь, расскажи, что произошло',
+          labelName: 'Имя',
+          labelEmail: 'Почта',
+          labelComments: 'Что произошло?',
+          errorGeneric: 'При отправке отчета произошла неизвестная ошибка. Пожалуйста, попробуйте еще раз',
+          errorFormEntry: 'Заполни все поля, и попробуй еще раз',
+          successMessage: 'Спасибо! Отчёт был отправлен',
+          user: {
+            name: 'Player',
+            email: 'Player@example.ru'
+          },
+        });
+      }
+      return event;
+    }
+  })
+};
+
+Vue.config.errorHandler = function(err, vm, info) { // Обработчик ошибок Vue
+  if (process.env.NODE_ENV === 'production') Sentry.captureException(err, vm, info);
+  store.state.lang 
+  ? iziToast.info({message: `Error: ${err.toString()} Info: ${info}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
+  : iziToast.info({message: `Ошибка: ${err.toString()} Инфо: ${info}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
+}
+
+// window.onerror = function(message, source, line, column, error) {
+//   console.log(`Error: ${error} ${message} ${source} ${line}`);
+// }
+
 new Vue({
   router,
   store,
@@ -86,6 +143,7 @@ new Vue({
       };
     },
     errNotify(error){
+      Sentry.captureException(error); // Отправка ошибки черезе Sentry
       this.$store.state.lang 
       ? iziToast.info({message: `Error: ${error}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
       : iziToast.info({message: `Ошибка: ${error}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})

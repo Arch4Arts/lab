@@ -17,13 +17,6 @@ import localforage from 'localforage'
 
 Vue.use(Vuex)
 
-import SecureLS from 'secure-ls'
-var ls = new SecureLS({
-	encodingType: 'aes',
-  isCompression: true,
-  encryptionSecret: '3F4428472B4B6250'
-});
-
 const store = new Vuex.Store({
   state: {
     saveName: '', // Название сохранения
@@ -60,18 +53,18 @@ const store = new Vuex.Store({
     discord_link: 'https://discordapp.com'
   },
   plugins: [createPersistedState({
-    // setState(key, state, storage) {
-    //   return storage.setItem(key, CryptoJS.AES.encrypt(JSON.stringify(state), keyGen(key)));
-    // },
-    // getState(key, storage, value) {
-    //   try {
-    //     return (value = storage.getItem(key).toString()) && typeof value !== 'undefined'
-    //       ? JSON.parse(CryptoJS.AES.decrypt(value, keyGen(key)).toString(CryptoJS.enc.Utf8))
-    //       : undefined;
-    //   } catch (error) {}
+    setState(key, state, storage) {
+      return storage.setItem(key, CryptoJS.AES.encrypt(JSON.stringify(state), keyGen(key)));
+    },
+    getState(key, storage, value) {
+      try {
+        return (value = storage.getItem(key).toString()) && typeof value !== 'undefined'
+          ? JSON.parse(CryptoJS.AES.decrypt(value, keyGen(key)).toString(CryptoJS.enc.Utf8))
+          : undefined;
+      } catch (error) {}
   
-    //   return undefined;
-    // }
+      return undefined;
+    }
     // setState(key, state, storage) {
     //   return ls.set(key, {state})
     // },

@@ -30,7 +30,7 @@
 <v-btn @click='$root.sendMessage("mc_support", "support", "emoji", { src: require("../../Media/img/smiling-face.png") })'>Support emoji..</v-btn>
 <v-btn @click='$root.sendMessage("mc_support", "support", "suggestion", undefined, ["slut", "Yes, i sissy!"])'>Support suggetion...</v-btn>
 <v-btn @click="$root.addContactToChatList('mc')">Добавить mc в контакты</v-btn>
-<v-btn @click="">test</v-btn>
+<v-btn @click="df()">test</v-btn>
 <br><br>
 {{ this.$store.state.mcIm }}
 <mcSettings/>

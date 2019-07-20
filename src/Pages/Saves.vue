@@ -31,14 +31,13 @@
 
               </v-list-tile>
 
-                <div v-if="$store.state.lang" v-show="saveCount == 0" class="text-xs-center"><v-divider/><br>No saves<br><br><v-divider/></div>
-                <div v-else v-show="saveCount == 0" class="text-xs-center"><v-divider/><br>Сохранения отсутствуют<br><br><v-divider/></div>
-                <v-divider v-show="saveCount == 1"/>
-
               <!-- СПИСОК СОХРАНЕНИЙ -->
-              <div v-if="saveCount == 1" id="scroll-area">
+              <div id="scroll-area">
               <smooth-scrollbar>
-              <div v-if="saveCount == 1" id="scroll-content">
+              <div id="scroll-content">
+                <div v-if="$store.state.lang" v-show="saveCount == 0" class="text-xs-center"><v-divider/><br>No saves<br><br><v-divider/></div>
+                <div v-else v-show="saveCount == 0" class="text-xs-center"><v-divider/><br>Сохранения отсутствуют<br><br></div>
+                <v-divider v-show="saveCount == 1"/>
               <v-list-tile
                 v-for="save in SaveList"
                 :key="save.saveID"
@@ -252,7 +251,7 @@ export default {
           for (let i = 0; i < length; i++) {
             if (length > 0) this.saves.push(await WebCrypto(listSaves[i]))
           }}
-          console.log(length)
+
           return _.orderBy(this.saves, 'saveTime', 'desc')
       },
   }
@@ -269,11 +268,11 @@ export default {
         this.$store.state.saveName = name;
         this.$store.state.saveTime = moment().format("DD.MM.YYYY - kk:mm"); // Время сохранения
         var newSaveID = _.random (0, 999999); // генерация ID
-        this.$store.state.saveID = newSaveID;
+        this.$store.state.saveID = newSaveID22;
         await WebCrypto(`save-${newSaveID}`, JSON.stringify(this.$store.state))
         this.$store.state.lang 
-        ? iziToast.info({message: 'Game successfully saved', position: 'bottomCenter'})
-        : iziToast.info({message: 'Игра успешно сохранена', position: 'bottomCenter'})
+          ? iziToast.info({message: 'Game successfully saved', position: 'bottomCenter'})
+          : iziToast.info({message: 'Игра успешно сохранена', position: 'bottomCenter'})
 
         this.saves = []
         this.$asyncComputed.SaveList.update()
@@ -282,33 +281,28 @@ export default {
         this.$root.errNotify(error)
       }
     },
-    overwriteSave(saveID){
+    async overwriteSave(saveID){
       try {
         this.$store.state.saveTime = moment().format("DD.MM.YYYY - kk:mm"); // Обновляем время сохранения
-        this.$store.state.saveName = JSON.parse(CryptoJS.AES.decrypt(localStorage.getItem(`save-${saveID}`).toString(), this.keyGen(`save-${saveID}`)).toString(CryptoJS.enc.Utf8)).saveName
+        var saveData = await WebCrypto(`save-${saveID}`)
+        this.$store.state.saveName = saveData.saveName
         this.$store.state.saveID = saveID
-        localStorage.setItem(
-          `save-${saveID}`, CryptoJS.AES.encrypt(
-            JSON.stringify(this.$store.state), this.keyGen(`save-${saveID}`)))
+        await WebCrypto(`save-${saveID}`, JSON.stringify(this.$store.state))
         this.$store.state.lang 
           ? iziToast.info({message: 'Saving successfully overwritten', position: 'bottomCenter'})
           : iziToast.info({message: 'Сохранение успешно перезаписано', position: 'bottomCenter'})
-        this.saves = [] // Обновляет список сохранений
+
+        this.saves = []
+        this.$asyncComputed.SaveList.update()
       }
       catch(error) {
         this.$root.errNotify(error)
       }
     },
-    loadSave(saveID){
-      console.log(CryptoJS.AES.decrypt(
-            localStorage.getItem(
-              `save-${saveID}`).toString(), this.keyGen(`save-${saveID}`)).toString(CryptoJS.enc.Utf8))
+    async loadSave(saveID){
       try {
-        this.$store.replaceState(
-          JSON.parse(CryptoJS.AES.decrypt(
-            localStorage.getItem(
-              `save-${saveID}`).toString(), this.keyGen(`save-${saveID}`)).toString(CryptoJS.enc.Utf8)));
-          this.$store.state.lang 
+        await this.$store.replaceState(await WebCrypto(`save-${saveID}`));
+        this.$store.state.lang 
           ? iziToast.info({message: 'Game loaded successfully', position: 'bottomCenter', backgroundColor: 'rgb(255, 254, 173)'})
           : iziToast.info({message: 'Игра загружена успешно', position: 'bottomCenter', backgroundColor: 'rgb(255, 254, 173)'})
       }
@@ -318,31 +312,29 @@ export default {
     },
     deleteSave(saveID) {
       try {
-        localStorage.removeItem(`save-${saveID}`) // Удаление сейва
+        localforage.removeItem(`save-${saveID}`) // Удаление сейва
         this.saves = [] // Обновляет список сохранений
         this.$store.state.lang 
-        ? iziToast.info({message: 'Saving has been deleted!', position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
-        : iziToast.info({message: 'Сохранение было удалено!', position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
+          ? iziToast.info({message: 'Saving has been deleted!', position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
+          : iziToast.info({message: 'Сохранение было удалено!', position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
+      
+        this.saves = []
+        this.$asyncComputed.SaveList.update()
       }
       catch(error) {
         this.$root.errNotify(error)
       }
     },
-    DeleteAllSaves(){
+    async DeleteAllSaves(){
       try {
-        var Keys = Object.keys(localStorage) // все ключи из localStorage
-        var listSaves = [] // массив с ключами сохранений
-        for (let i = 0; i < localStorage.length; i++) {
-          if (Keys[i].includes('save')) listSaves.push(Keys[i]); // Если найден ключ с сохранением, записываем в массив Keys
-        }
-        for (let i = 0; i < listSaves.length; i++) {
-          if (listSaves.length > 0) localStorage.removeItem(listSaves[i])
-        }
+        await localforage.clear()
         this.$store.state.lang 
-        ? iziToast.warning({message: 'All saves have been deleted!', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
-        : iziToast.warning({message: 'Всё сохранения были удалены!', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
+          ? iziToast.warning({message: 'All saves have been deleted!', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
+          : iziToast.warning({message: 'Всё сохранения были удалены!', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
         this.deleteAll = false
-        this.saves = [] // Обновляет список сохранений
+
+        this.saves = []
+        this.$asyncComputed.SaveList.update()
       }
       catch(error) {
         this.$root.errNotify(error)
@@ -364,7 +356,7 @@ export default {
 
 #scroll-area {
   width: inherit;
-  height: 550px;
+  height: 500px;
 }
 
 #scroll-content {
