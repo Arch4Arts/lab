@@ -3,7 +3,7 @@
                     left: () => SwipeLeft()}">
     <v-content>
     <first-dialog></first-dialog>
-    <app-header v-if="$store.state.Header"></app-Header>
+    <navigation v-if="$store.state.Header"></navigation>
     <General-Info v-if="$store.state.firstStart"></General-Info>
       <router-view v-if="!$store.state.firstStart"/>
     </v-content>
@@ -12,7 +12,7 @@
 
 <script>
 import FirstDialog from "./components/FirstDialog";
-import AppHeader from "./components/AppHeader";
+import Navigation from "./components/Navigation";
 import GeneralInfo from "./components/General_Info";
 import Main from "./Pages/Main";
 
@@ -47,7 +47,7 @@ export default {
    },
   components: {
     FirstDialog,
-    AppHeader,
+    Navigation,
     GeneralInfo,
     Main,
   },

@@ -43,7 +43,7 @@
                 :key="save.saveID"
                 @click="Empty(save.saveID)"
               >
-                <v-list-tile-content>
+                <v-list-tile-content class="list">
                   <v-list-tile-title>{{ save.saveName }}</v-list-tile-title>
                   <v-list-tile-sub-title>{{ save.saveTime }}</v-list-tile-sub-title>
                 </v-list-tile-content>
@@ -362,6 +362,10 @@ export default {
 #scroll-content {
   width: inherit;
   height: inherit;
+}
+
+.list:hover {
+  color: #E0E0E0;
 }
 
 .tip {

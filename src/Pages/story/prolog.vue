@@ -55,7 +55,7 @@ export default {
         MC,
         Sister,
         mcSettings,
-    }
+    },
 }
 </script>
 

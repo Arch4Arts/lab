@@ -1,8 +1,17 @@
 import Vue from 'vue'
+
+import Antd from 'ant-design-vue'
+import 'ant-design-vue/dist/antd.css'
+import { Divider } from 'ant-design-vue'
+Vue.use(Divider);
+
 import './plugins/vuetify'
+
 import App from './App.vue'
 import router from './router.js'
 import store from './stores/store'
+
+
 
 Vue.config.productionTip = false
 

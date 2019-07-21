@@ -2,7 +2,7 @@
     <!-- Скрываем бар, когда открывается окно чата -->
     <div>  
         <!-- ВЫПАДАЮЩИЙ СПИСКОК --> 
-        <v-navigation-drawer width="180" fixed v-model="$store.state.DrawerVisible">
+        <!-- <v-navigation-drawer width="180" fixed v-model="$store.state.DrawerVisible">
             <v-list>
                 <v-list-tile v-for="(Item, i) in menuItems" :key="'Drawer' + i" :to="Item.route">
                     <v-list-tile-action>
@@ -14,7 +14,8 @@
                     </v-list-tile-content>
                 </v-list-tile>
             </v-list>
-         </v-navigation-drawer>
+         </v-navigation-drawer> -->
+        <Radial-Menu/>
 
          <!-- КНОПКИ В МЕНЮ -->
         <v-toolbar app dark class="primary">
@@ -42,6 +43,7 @@
 </template>
 
 <script>
+import RadialMenu from './RadialMenu'
 export default {
     computed: {
         menuItems(){
@@ -59,12 +61,6 @@ export default {
                 route: 'Settings'
                 },
                 {
-                icon: 'fas fa-comments',
-                title: 'Chat',
-                title_ru: 'Чат',
-                route: 'TestPageChat'
-                },
-                {
                 icon: 'fas fa-book',
                 title: 'Diary',
                 title_ru: 'Дневник',
@@ -77,6 +73,9 @@ export default {
                 route: 'Saves'
                 },]
         }
+    },
+    components: {
+        RadialMenu
     }
 }
 </script>
