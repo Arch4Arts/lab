@@ -268,7 +268,7 @@ export default {
         this.$store.state.saveName = name;
         this.$store.state.saveTime = moment().format("DD.MM.YYYY - kk:mm"); // Время сохранения
         var newSaveID = _.random (0, 999999); // генерация ID
-        this.$store.state.saveID = newSaveID22;
+        this.$store.state.saveID = newSaveID;
         await WebCrypto(`save-${newSaveID}`, JSON.stringify(this.$store.state))
         this.$store.state.lang 
           ? iziToast.info({message: 'Game successfully saved', position: 'bottomCenter'})

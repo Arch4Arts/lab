@@ -15,6 +15,7 @@
                 </v-list-tile>
             </v-list>
          </v-navigation-drawer> -->
+        <Radial-Menu/>
 
          <!-- КНОПКИ В МЕНЮ -->
         <v-toolbar app dark class="primary">
@@ -42,6 +43,7 @@
 </template>
 
 <script>
+import RadialMenu from './RadialMenu'
 export default {
     computed: {
         menuItems(){
@@ -72,6 +74,9 @@ export default {
                 },]
         }
     },
+    components: {
+        RadialMenu
+    }
 }
 </script>
 
