@@ -4,7 +4,7 @@ import Main from "./Pages/Main.vue"
 import FAQ from "./Pages/FAQ.vue"
 import TestPageChat from "./components/Chat/TestPage.vue"
 import Diary from "./Pages/DiaryInput.vue"
-import Settings from "./Pages/Settings.vue"
+// import Settings from "./Pages/Settings.vue"
 import Saves from "./Pages/Saves"
 import InitialSettings from "./Pages/InitialSettings"
 
@@ -17,11 +17,11 @@ export default new VueRouter({
             name: '',
             component: Main
         },
-        {
-            path: '/Settings',
-            name: 'Settings',
-            component: Settings
-        },
+        // {
+        //     path: '/Settings',
+        //     name: 'Settings',
+        //     component: Settings
+        // },
         {
             path: '/FAQ',
             name: 'FAQ',

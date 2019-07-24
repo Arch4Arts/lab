@@ -11,84 +11,30 @@
       :transition="transition"
       fixed
     >
+      <!-- Основная кнопка раскрытия списка -->
       <v-btn
         slot="activator"
-        class="blue darken-2"
+        flat
         dark
-        fab
+        icon
         hover
         v-model="fab"
       >
-        <v-icon x-large>fas fa-plus-circle</v-icon>
-        <v-icon>fas fa-times-circle</v-icon>
+        <v-icon>fas fa-ellipsis-v</v-icon>
+        <!-- <v-icon>fas fa-times-circle</v-icon> -->
       </v-btn>
-      
+
+      <router-link v-for="(item, i) in menuItems" :key="'btn' + i" :to="item.route">
       <v-btn
         fab
         dark
         small
         class="blue"
+        @click="openSettings(item.icon)"
       >
-        <v-icon >cloud_download</v-icon>
+        <v-icon >{{item.icon}}</v-icon>
       </v-btn>
-      
-      <v-btn
-        fab
-        dark
-        small
-        class="blue"
-      >
-        <v-icon >folder</v-icon>
-      </v-btn>
-      
-      <div class="fab-text">
-        <v-layout row align-center>
-          <v-flex class="mr-1" xs-6>
-            <v-icon>tab</v-icon>
-          </v-flex>
-          <v-flex xs-6>
-            Module
-          </v-flex>
-        </v-layout>
-      </div>
-   
-      <v-btn
-        fab
-        dark
-        small
-        class="green"
-      >
-        <v-icon >cloud_download</v-icon>
-      </v-btn>
-      
-      <v-btn
-        fab
-        dark
-        small
-        class="green"
-      >
-        <v-icon >folder</v-icon>
-      </v-btn>
-      
-      <v-btn
-        fab
-        dark
-        small
-        class="red"
-      >
-        <v-icon>delete</v-icon>
-      </v-btn>
-      
-      <div class="fab-text">
-        <v-layout row align-center>
-          <v-flex class="mr-1" xs-6>
-            <v-icon>view_quilt</v-icon>
-          </v-flex>
-          <v-flex xs-6>
-            Layout
-          </v-flex>
-        </v-layout>
-      </div>
+      </router-link>
       
     </v-speed-dial>
 </v-card>
@@ -106,9 +52,34 @@ export default {
       right: true,
       bottom: true,
       left: false,
-      transition: 'slide-y-reverse-transition'
+      transition: 'slide-y-reverse-transition',
+      menuItems: [
+                {
+                icon: 'fas fa-save',
+                title: 'Saves',
+                title_ru: 'Сохранения',
+                route: 'Saves'
+                },
+                {
+                icon: 'fas fa-book',
+                title: 'Diary',
+                title_ru: 'Дневник',
+                route: 'Diary'
+                },
+                {
+                icon: 'fas fa-cog',
+                title: 'Settings',
+                title_ru: 'Настройки',
+                route: ''
+                },
+                {
+                icon: 'fas fa-question-circle',
+                title: 'FAQ',
+                title_ru: 'FAQ',
+                route: 'FAQ'
+                },
+                ]
     }),
-
     watch: {
       top (val) {
         this.bottom = !val
@@ -133,7 +104,12 @@ export default {
           default: return {}
         }
       }
-    }
+    },
+    methods: {
+        openSettings(icon){
+            if (icon === 'fas fa-cog') this.$store.state.isOpenSettings = true
+        }
+    },
 }
 </script>
 

@@ -35,22 +35,22 @@
               <div id="scroll-area">
               <smooth-scrollbar>
               <div id="scroll-content">
-                <div v-if="$store.state.lang" v-show="saveCount == 0" class="text-xs-center"><v-divider/><br>No saves<br><br><v-divider/></div>
-                <div v-else v-show="saveCount == 0" class="text-xs-center"><v-divider/><br>Сохранения отсутствуют<br><br></div>
-                <v-divider v-show="saveCount == 1"/>
+                <div v-if="$store.state.lang" v-show="saveExist == 0" class="text-xs-center"><v-divider/><br>No saves<br><br><v-divider/></div>
+                <div v-else v-show="saveExist == 0" class="text-xs-center"><v-divider/><br>Сохранения отсутствуют<br><br></div>
+                <v-divider v-show="saveExist == 1"/>
               <v-list-tile
                 v-for="save in SaveList"
                 :key="save.saveID"
                 @click="Empty(save.saveID)"
               >
-                <v-list-tile-content class="list">
+                <v-list-tile-content>
                   <v-list-tile-title>{{ save.saveName }}</v-list-tile-title>
                   <v-list-tile-sub-title>{{ save.saveTime }}</v-list-tile-sub-title>
                 </v-list-tile-content>
                 <!-- КНОПКИ WRITE/LOAD/DELETE -->
                 <v-list-tile-action class="btns" v-for="(icon ,i) in icons" :key="'icon-id_' + i">
 
-                  <v-tooltip v-if="$store.state.lang" bottom>
+                  <v-tooltip v-if="$store.state.lang" bottom class="list">
                     <template v-slot:activator="{ on }">
                       <v-btn class="btns" v-on="on" icon
                       @click="(icon == 'fas fa-trash') ? deleteSave(save.saveID) : (icon == 'fas fa-download') ? overwriteSave(save.saveID) : loadSave(save.saveID)"
@@ -63,7 +63,7 @@
                       <span v-if="icon == 'fas fa-trash'" class="tip">Delete</span>
                   </v-tooltip>
 
-                  <v-tooltip v-else bottom>
+                  <v-tooltip v-else bottom class="list">
                     <template v-slot:activator="{ on }">
                       <v-btn class="btns" v-on="on" icon
                       @click="(icon == 'fas fa-trash') ? deleteSave(save.saveID) : (icon == 'fas fa-download') ? overwriteSave(save.saveID) : loadSave(save.saveID)"
@@ -86,7 +86,6 @@
           </div>
             <!-- СОХР НА ДИСК / ЗАГР С ДИСКА / ПЕРЕЗАПУСК / УДАЛЕНИЕ ВСЕХ СОХРАНЕНИЙ -->
             <div class="text-xs-right">
-              Количество сохранений: 
             <v-tooltip top>
               <template v-slot:activator="{ on }">
                 <v-btn @click="" v-on="on" icon ripple>
@@ -119,13 +118,16 @@
 
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <v-btn @click="deleteAll = !deleteAll" :disabled="(saveCount > 0) ? false : true" v-on="on" icon ripple>
+                <v-btn @click="deleteAll = !deleteAll" :disabled="(saveExist > 0) ? false : true" v-on="on" icon ripple>
                   <v-icon color="rgb(255, 102, 102)"> fas fa-trash-alt </v-icon>
                 </v-btn>
               </template>
                 <span v-if="$store.state.lang" class="tip">Delete all saves</span>
                 <span v-else class="tip">Удаление всех сохранений</span>
             </v-tooltip>
+            <br>
+            <div v-if="$store.state.lang" class="text-xs-center">Number of saves: {{saveCount}}</div>
+            <div v-else class="text-xs-center">Кол-во сохранений: {{saveCount}}</div>
             </div>
 
             <!-- ДИАЛОГ ПОДТВЕРЖДЕНИЯ УДАЛЕНИЯ ВСЕХ СОХРАНЕНИЙ -->
@@ -231,6 +233,7 @@ export default {
     data: () => ({
         restart: false,
         deleteAll: false,
+        saveExist: 0,
         saveCount: 0,
         icons: ['fas fa-download','fas fa-upload','fas fa-trash'],
         defaultName: 'New save',
@@ -246,12 +249,12 @@ export default {
           var listSaves = await localforage.keys().then(keysList => this.listSaves = keysList); // все ключи из localStorage
           var length = await localforage.length().then(lf_length => this.length = lf_length);
           var saves = [];
-          (this.length > 0) ? this.saveCount = 1 : this.saveCount = 0 // Проверка на наличие сейвов
-          if (this.saveCount === 1) {
+          (this.length > 0) ? this.saveExist = 1 : this.saveExist = 0 // Проверка на наличие сейвов
+          if (this.saveExist === 1) {
           for (let i = 0; i < length; i++) {
             if (length > 0) this.saves.push(await WebCrypto(listSaves[i]))
           }}
-
+          this.saveCount = length
           return _.orderBy(this.saves, 'saveTime', 'desc')
       },
   }
@@ -275,7 +278,7 @@ export default {
           : iziToast.info({message: 'Игра успешно сохранена', position: 'bottomCenter'})
 
         this.saves = []
-        this.$asyncComputed.SaveList.update()
+        this.$asyncComputed.SaveList.update2()
       }
       catch(error) {
         this.$root.errNotify(error)
@@ -362,10 +365,6 @@ export default {
 #scroll-content {
   width: inherit;
   height: inherit;
-}
-
-.list:hover {
-  color: #E0E0E0;
 }
 
 .tip {

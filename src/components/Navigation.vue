@@ -15,11 +15,11 @@
                 </v-list-tile>
             </v-list>
          </v-navigation-drawer> -->
-        <Radial-Menu/>
+        <Radial-Menu v-model="$store.state.DrawerVisible" class="hidden-md-and-up" />
 
          <!-- КНОПКИ В МЕНЮ -->
-        <v-toolbar app dark class="primary">
-            <v-toolbar-side-icon @click.stop="$store.state.DrawerVisible = !$store.state.DrawerVisible" class="hidden-md-and-up"></v-toolbar-side-icon>
+        <v-toolbar v-if="!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs)" app dark class="primary">
+            <!-- <v-toolbar-side-icon @click.stop="$store.state.DrawerVisible = !$store.state.DrawerVisible" class="hidden-md-and-up"></v-toolbar-side-icon> -->
             <router-link v-if="$store.state.Header" to="/" tag="span" style="cursor:pointer">
                 <v-toolbar-title>
                     {{ $store.state.name + ' ' + $store.state.version }} 
@@ -27,15 +27,15 @@
             </router-link>
             <v-spacer></v-spacer>
             <v-toolbar-items v-if="$store.state.lang" class="hidden-sm-and-down">
-                <v-btn v-for="(Item, i) in menuItems" :key="'btn' + i"  :to="Item.route" flat>
-                    <v-icon left v-html="Item.icon"></v-icon>
-                    {{ Item.title }}
+                <v-btn v-for="(item, i) in menuItems" :key="'btn' + i"  :to="item.route" @click="openSettings(item.icon)" flat>
+                    <v-icon left v-html="item.icon"></v-icon>
+                    {{ item.title }}
                 </v-btn>
             </v-toolbar-items>
             <v-toolbar-items v-else class="hidden-sm-and-down">
-                <v-btn shift v-for="(Item, i) in menuItems" :key="'btn' + i" color="" :to="Item.route" flat>
-                    <v-icon left v-html="Item.icon"></v-icon>
-                    {{ Item.title_ru }}
+                <v-btn shift v-for="(item, i) in menuItems" :key="'btn' + i" color="" :to="item.route" @click="openSettings(item.icon)" flat>
+                    <v-icon left v-html="item.icon"></v-icon>
+                    {{ item.title_ru }}
                 </v-btn>
             </v-toolbar-items>
         </v-toolbar>
@@ -55,10 +55,10 @@ export default {
                 route: 'FAQ'
                 },
                 {
-                icon: 'fas fa-cogs',
+                icon: 'fas fa-cog',
                 title: 'Settings',
                 title_ru: 'Настройки',
-                route: 'Settings'
+                route: ''
                 },
                 {
                 icon: 'fas fa-book',
@@ -72,6 +72,11 @@ export default {
                 title_ru: 'Сохранения',
                 route: 'Saves'
                 },]
+        }
+    },
+    methods: {
+        openSettings(icon){
+            if (icon === 'fas fa-cog') this.$store.state.isOpenSettings = true
         }
     },
     components: {

@@ -3,6 +3,7 @@
                     left: () => SwipeLeft()}">
     <v-content>
     <first-dialog></first-dialog>
+    <Settings/>
     <navigation v-if="$store.state.Header"></navigation>
     <General-Info v-if="$store.state.firstStart"></General-Info>
       <router-view v-if="!$store.state.firstStart"/>
@@ -14,6 +15,7 @@
 import FirstDialog from "./components/FirstDialog";
 import Navigation from "./components/Navigation";
 import GeneralInfo from "./components/General_Info";
+import Settings from './components/Settings'
 import Main from "./Pages/Main";
 
 export default {
@@ -50,6 +52,7 @@ export default {
     Navigation,
     GeneralInfo,
     Main,
+    Settings,
   },
 }
 </script>

@@ -27,7 +27,8 @@ const store = new Vuex.Store({
     version: '0.0.4', 
     initialized: false, // Не отрисосывать страницу пока не запустится initializeApp
 
-    DrawerVisible: false, // Для AppHeader
+    // DrawerVisible: false, // Для AppHeader
+    isOpenSettings: false, // Открытие/Закрытия дровера настройек
     appHeaderEnable: true, // Вкл/Выкл AppHeader (для свайпа)
     
     firstLoad: true, // Проверка, первый ли запуск игры (Для определения языка)
