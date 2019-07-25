@@ -202,7 +202,7 @@
 </template>
 
 <script>
-import moment from 'moment' // библиотека для работы с временем
+import dayjs from 'dayjs' // библиотека для работы с временем
 import { resetState, WebCrypto }  from '../stores/store'
 
 const _ = require('lodash'); // Библиотека для упрощения работы со строками, таблицами и т д.
@@ -269,7 +269,7 @@ export default {
         if (name === '') // Проверка введенно ли имя сохранения, если нет, назначаем стандартное
           (this.$store.state.lang) ? name = 'New Save' : name = 'Новое сохранение'
         this.$store.state.saveName = name;
-        this.$store.state.saveTime = moment().format("DD.MM.YYYY - kk:mm"); // Время сохранения
+        this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm"); // Время сохранения
         var newSaveID = _.random (0, 999999); // генерация ID
         this.$store.state.saveID = newSaveID;
         await WebCrypto(`save-${newSaveID}`, JSON.stringify(this.$store.state))
@@ -278,7 +278,7 @@ export default {
           : iziToast.info({message: 'Игра успешно сохранена', position: 'bottomCenter'})
 
         this.saves = []
-        this.$asyncComputed.SaveList.update2()
+        this.$asyncComputed.SaveList.update()
       }
       catch(error) {
         this.$root.errNotify(error)

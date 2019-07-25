@@ -1,5 +1,18 @@
 <template>
-<a-drawer
+<v-navigation-drawer
+  v-model="$store.state.isOpenSettings"
+  absolute
+  temporary
+  right
+  app
+  dark
+>
+  <v-switch
+    v-model="$store.state.autoClosePage"
+    label="Switch 1"
+  ></v-switch>
+</v-navigation-drawer>
+<!-- <a-drawer
     class="drawer"
     title="Create a new account"
     :width="(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs) ? '100%' : '40%'"
@@ -7,12 +20,11 @@
     :visible="$store.state.isOpenSettings"
     :wrapStyle="{height: 'calc(100% - 108px)',overflow: 'auto',paddingBottom: '108px'}"
 >
-  <a href="sdsd">dssdsd</a>
     <v-switch
       v-model="$store.state.autoClosePage"
       :label="`Switch 1`"
     ></v-switch>
-</a-drawer>
+</a-drawer> -->
 </template>
 
 <script>

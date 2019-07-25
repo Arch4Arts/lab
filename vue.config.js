@@ -1,8 +1,16 @@
-const webpack = require('webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   configureWebpack: config => {
     config.output.filename = 'js/[name].js';
+  },
+  configureWebpack: {
+    plugins: [
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static',
+        openAnalyzer: false,
+    })
+    ],
   },
   chainWebpack: config => {
     config.module
@@ -60,5 +68,5 @@ module.exports = {
   },
   publicPath: './',
   filenameHashing: false,
-  productionSourceMap: true,
+  productionSourceMap: false,
 }

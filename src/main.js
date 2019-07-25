@@ -46,7 +46,7 @@ Vue.use(SmoothScrollbar)
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
 
-// if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена
+if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена
   Sentry.init({
     dsn: 'https://6b82c070a6874f70ad6e9fe5ebcb9fb8@sentry.io/1509214',
     integrations: [new Integrations.Vue({Vue, attachProps: true})],
@@ -103,7 +103,7 @@ import * as Integrations from '@sentry/integrations';
       })
     }
   })
-// };
+};
 
 Vue.config.errorHandler = function(err, vm, info) { // Обработчик ошибок Vue
   if (process.env.NODE_ENV === 'production') Sentry.captureException(err, vm, info);
