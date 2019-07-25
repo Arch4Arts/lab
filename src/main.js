@@ -5,8 +5,6 @@ import 'ant-design-vue/lib/divider/style/index.less'
 import { Divider, } from 'ant-design-vue'
 Vue.use(Divider);
 
-import './plugins/vuetify'
-
 import App from './App.vue'
 import router from './router.js'
 import store from './stores/store'
@@ -45,6 +43,9 @@ Vue.use(SmoothScrollbar)
 
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
+import vuetify from './plugins/vuetify';
+import 'roboto-fontface/css/roboto/roboto-fontface.css'
+import '@fortawesome/fontawesome-pro/css/all.css'
 
 if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена
   Sentry.init({
@@ -103,7 +104,7 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
       })
     }
   })
-};
+}
 
 Vue.config.errorHandler = function(err, vm, info) { // Обработчик ошибок Vue
   if (process.env.NODE_ENV === 'production') Sentry.captureException(err, vm, info);
@@ -119,6 +120,7 @@ Vue.config.errorHandler = function(err, vm, info) { // Обработчик ош
 new Vue({
   router,
   store,
+  vuetify,
   mounted: function () { // Определение языка при первой загрузке / А также тип устройства
     this.$nextTick(function () { 
       if (store.state.firstLoad) {
@@ -130,7 +132,6 @@ new Vue({
     })
   },
   methods: {
-
     achievementSound(){
     if (this.$store.state.achievementSound) {
       var audio = new Audio(require('./Media/audio/Achievements.mp3'));
@@ -219,42 +220,42 @@ new Vue({
 //   var mode = 'AES-GCM',
 //   length = 256,
 //   ivLength = 12;
-  
+
 //   var encrypted = await encrypt('Secret text', 'password', mode, length, ivLength).then(function(data){encrypted = data
 // /*   console.log(store.state.name) */
 // })
 //   // console.log(encrypted); // { cipherText: ArrayBuffer, iv: Uint8Array }
 //   return encrypted
-  
+
 //   // var decrypted = await decrypt(encrypted, 'password', mode, length);
 //   // console.log(decrypted); // Secret text
 //   }
 
 
-    // CryptoJS.AES.encrypt(JSON.stringify(this.$store.state), this.$store.state.Cryptokey)
-    // CryptoJS.AES.decrypt(temp.toString(), this.$store.state.Cryptokey).toString(CryptoJS.enc.Utf8)
-      // window.crypto.subtle.generateKey(
-      //     {
-      //         name: "AES-GCM",
-      //         length: 256, //can be  128, 192, or 256
-      //     },
-      //     true, //whether the key is extractable (i.e. can be used in exportKey)
-      //     ["encrypt", "decrypt"] //can "encrypt", "decrypt", "wrapKey", or "unwrapKey"
-      // )
-      // .then(function(key){
-      //     console.log(key);
-      //     window.crypto.subtle.exportKey(
-      //         "jwk", //can be "jwk" or "raw"
-      //         key //extractable must be true
-      //     )
-      //     .then(function(keydata){
-      //         //returns the exported key data
-      //         console.log(JSON.stringify(keydata)); //{"alg":"A256GCM","ext":true,"k":"3DHkmQMNctBvOYeb8RWuCM8OGTH6NanJi3erMcwN-jU","key_ops":["encrypt","decrypt"],"kty":"oct"}
-      //     })
-      //     .catch(function(err){
-      //         console.error(err);
-      //     });
-      // })
-      // .catch(function(err){
-      //     console.error(err);
-      // });
+// CryptoJS.AES.encrypt(JSON.stringify(this.$store.state), this.$store.state.Cryptokey)
+// CryptoJS.AES.decrypt(temp.toString(), this.$store.state.Cryptokey).toString(CryptoJS.enc.Utf8)
+// window.crypto.subtle.generateKey(
+//     {
+//         name: "AES-GCM",
+//         length: 256, //can be  128, 192, or 256
+//     },
+//     true, //whether the key is extractable (i.e. can be used in exportKey)
+//     ["encrypt", "decrypt"] //can "encrypt", "decrypt", "wrapKey", or "unwrapKey"
+// )
+// .then(function(key){
+//     console.log(key);
+//     window.crypto.subtle.exportKey(
+//         "jwk", //can be "jwk" or "raw"
+//         key //extractable must be true
+//     )
+//     .then(function(keydata){
+//         //returns the exported key data
+//         console.log(JSON.stringify(keydata)); //{"alg":"A256GCM","ext":true,"k":"3DHkmQMNctBvOYeb8RWuCM8OGTH6NanJi3erMcwN-jU","key_ops":["encrypt","decrypt"],"kty":"oct"}
+//     })
+//     .catch(function(err){
+//         console.error(err);
+//     });
+// })
+// .catch(function(err){
+//     console.error(err);
+// });
