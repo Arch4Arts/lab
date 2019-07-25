@@ -7,5 +7,5 @@ module.exports = {
         "import",
         { libraryName: "ant-design-vue", libraryDirectory: "es", style: false }
       ]
-    ]
+  ]
 }
