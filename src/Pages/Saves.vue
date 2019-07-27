@@ -8,17 +8,15 @@
               <v-list-item>
                 <v-list-item-content>  
                 <!-- ТЕКСТОВОЕ ПОЛЕ ДЛЯ ВВОДА ИМЕНИ СЕЙВА -->
-                <v-flex xs12 sm6 md12>
                   <v-text-field dark
                     class="textfield"
                     color="grey lighten-2"
                     :placeholder="($store.state.lang) ? defaultName : defaultName_ru"
                     v-model="saveName"
-                    counter="64"
                     @keyup.enter="saveGame(input)"
                     label=""
                   ></v-text-field>
-                </v-flex>
+
                 </v-list-item-content>
                 <!-- КНОПКА: СОХРАНИТЬ + ПОДСКАЗКА -->
                   <v-tooltip bottom>
@@ -41,7 +39,7 @@
                 <div v-else v-show="saveExist == 0" class="text-center"><v-divider/><br>Сохранения отсутствуют<br><br></div>
                 <v-divider v-show="saveExist == 1"/>
               <v-list-item
-                v-for="save in SaveList"
+                v-for="save in saves"
                 :key="save.saveID"
                 @click="Empty(save.saveID)"
               >
@@ -285,13 +283,13 @@ export default {
           return rand;
         }()); 
         this.$store.state.saveID = newSaveID;
-        await WebCrypto(name, JSON.stringify(this.$store.state))
+        await WebCrypto(`save-${newSaveID}`, JSON.stringify(this.$store.state))
         this.$store.state.lang 
           ? iziToast.info({message: 'Game successfully saved', position: 'bottomCenter'})
           : iziToast.info({message: 'Игра успешно сохранена', position: 'bottomCenter'})
 
         this.saves = []
-        this.$asyncComputed.SaveList.update()
+        this.test()
       }
       catch(error) {
         this.$root.errNotify(error)
@@ -387,8 +385,8 @@ export default {
 }
 
 .textfield {
-  /* width: 100px; */
-  margin-left: 17%; 
+  width: 75%;
+  margin-left: 25%; 
   /* margin-right: 20%; */
 }
 
