@@ -1,6 +1,6 @@
 <template id="color-picker-template">
 <v-layout justify-center>
-<v-flex md4 text-xs-center>
+<v-flex md4 text-center>
   <div class="color-picker">
     <div class="color-picker__overlay" v-if="isVisible" v-on:click="hide"></div>
     <transition name="pop">

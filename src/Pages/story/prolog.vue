@@ -7,8 +7,8 @@
 
 <section v-else>
 <br><br>
-<v-card class="bg_elemen">
-<v-card-text class="font-color">
+<v-card>
+<v-card-text>
           <v-text-field
             v-model="chatID"
             placeholder="mc_support"
@@ -21,7 +21,7 @@
           ></v-text-field>
   </v-card-text>
  </v-card>
- <v-btn @click='$root.sendMessage("mc_support", "support", "text", { text: "Шлюха!" })'>Support short text...</v-btn>
+<v-btn @click='$root.sendMessage("mc_support", "support", "text", { text: "Шлюха!" })'>Support short text...</v-btn>
 <v-btn @click='$root.sendMessage("mc_support", "support", "text", { text: "Пиздец ты сиси шлюха" })'>Support text...</v-btn>
 <v-btn @click='$root.sendMessage("mc_support", "support", "text", { text: "Хочешь получить в попку а шлюха? Будешь кончать как девочка!" })'>Support long text...</v-btn>
 <v-btn @click='$root.sendMessage("mc_support", "support", "image", { src: require("../../Media/img/2.gif") })'>Support image gif...</v-btn>

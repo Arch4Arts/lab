@@ -7,7 +7,7 @@
       }">
       <div v-if="message.type !== 'system' && message.type !== 'suggestion'" :title="authorName" class="avatar" :style="{
         backgroundImage: `url(${chatImageUrl})` // Аватарки
-      }" v-tooltip="authorName"></div>
+      }"></div>
       <TextMessage v-if="message.type === 'text'" :data="message.data" />
       <EmojiMessage v-else-if="message.type === 'emoji'" :data="message.data" />
       <TypingMessage v-else-if="message.type === 'typing'" />

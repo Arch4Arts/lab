@@ -2,14 +2,13 @@
     <v-app>
     <v-layout class="BG-v-layout" justify-center>
     <v-flex md8 class="Page" style="padding: 2% 0px 2% 0px">
-    <v-expansion-panel dark class="bg_element">
-        <v-expansion-panel-content class="head_element">
-        <template v-slot:header>
+    <v-expansion-panels accordion dark>
+        <v-expansion-panel class="head_element">
+        <v-expansion-panel-header>
           <div v-if="$store.state.lang">General information</div>
           <div v-else>Общая информация</div>
-        </template>
-            <v-card class="bg_element">
-            <v-card-text class="font-color text-xs-center">
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
             <section v-if="$store.state.lang">
                 <!-- ОБ ИГРЕ -->
                 <p></p>
@@ -55,62 +54,51 @@
                 <p> Также посетите данные ресурсы: <a :href="$store.state.tfgames_link" class="tfgames">TFGames</a> and <a :href="$store.state.f95zone_link" class="f95">F95</a><a :href="$store.state.f95zone_link" class="f95-zone">Zone</a> там вы также можете найти полезную информацию в обсуждениях. </p>
                  
              </section>
-             </v-card-text>
-             </v-card>
         </v-expansion-panel-content>
+        </v-expansion-panel>
 
-        <v-expansion-panel-content v-if="$store.state.lang" class="head_element">
-            <template v-slot:header>
+        <v-expansion-panel class="head_element" v-if="$store.state.lang">
+            <v-expansion-panel-header>
                 <div> Frequently asked question </div>
-            </template>
-            <v-card class="bg_element">
-            <v-card-text class="font-color">
-            <v-expansion-panel class="bg_element">
-                <v-expansion-panel-content
-                v-for="(FAQ, i) in FAQ"
-                :key="i"
-                class="head_element"
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+                <v-expansion-panels popout>
+                <v-expansion-panel
+                    v-for="(FAQ, i) in FAQ_ru"
+                    :key="i"
                 >
-                    <template v-slot:header>
-                        <div>{{ FAQ.header }}</div>
-                    </template>
-                    <v-card class="bg_element">
-                    <v-card-text class="font-color">
-                        {{ FAQ.content }}
-                    </v-card-text>
-                    </v-card>
-                </v-expansion-panel-content>
-            </v-expansion-panel>
-            </v-card-text>
-            </v-card>
-        </v-expansion-panel-content>
+                        <v-expansion-panel-header>
+                            <div>{{ FAQ.header }}</div>
+                        </v-expansion-panel-header>
+                        <v-expansion-panel-content>
+                            {{ FAQ.content }}
+                        </v-expansion-panel-content>
+                </v-expansion-panel>
+                </v-expansion-panels>
+            </v-expansion-panel-content>
+        </v-expansion-panel>
 
-        <v-expansion-panel-content v-else class="head_element">
-            <template v-slot:header>
+        <v-expansion-panel class="head_element" v-else>
+            <v-expansion-panel-header>
                 <div> Часто задаваемые вопросы </div>
-            </template>
-            <v-card class="bg_element">
-            <v-card-text class="font-color">
-            <v-expansion-panel class="bg_element">
-                <v-expansion-panel-content
-                v-for="(FAQ, i) in FAQ_ru"
-                :key="i"
-                class="head_element"
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+                <v-expansion-panels popout>
+                <v-expansion-panel
+                    v-for="(FAQ, i) in FAQ_ru"
+                    :key="i"
                 >
-                    <template v-slot:header>
-                        <div>{{ FAQ.header }}</div>
-                    </template>
-                    <v-card class="bg_element">
-                    <v-card-text class="font-color">
-                        {{ FAQ.content }}
-                    </v-card-text>
-                    </v-card>
-                </v-expansion-panel-content>
-            </v-expansion-panel>
-            </v-card-text>
-            </v-card>
-        </v-expansion-panel-content>
-    </v-expansion-panel>
+                        <v-expansion-panel-header>
+                            <div>{{ FAQ.header }}</div>
+                        </v-expansion-panel-header>
+                        <v-expansion-panel-content>
+                            {{ FAQ.content }}
+                        </v-expansion-panel-content>
+                </v-expansion-panel>
+                </v-expansion-panels>
+            </v-expansion-panel-content>
+        </v-expansion-panel>
+    </v-expansion-panels>
     </v-flex>
     </v-layout>
     </v-app>

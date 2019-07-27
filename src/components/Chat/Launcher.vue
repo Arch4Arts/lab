@@ -8,7 +8,7 @@
       <div v-if="$store.state.chat.newMessagesCount > 0 && !$store.state.chat.isChatOpen" class="sc-new-messsages-count">
         {{ $store.state.chat.newMessagesCount }}
       </div>
-        <v-btn flat large fab icon color="#E0E0E0"><v-icon>fas fa-mobile-android-alt</v-icon></v-btn>
+        <v-btn text large fab icon color="#E0E0E0"><v-icon>fas fa-mobile-android-alt</v-icon></v-btn>
       <!-- <img class="sc-open-icon" :src="icons.open.img"  :alt="icons.open.name" />
       <img class="sc-closed-icon" :src="icons.close.img"  :alt="icons.close.name" /> -->
     </div>

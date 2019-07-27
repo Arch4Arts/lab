@@ -2,7 +2,7 @@
 <v-app>
 <v-layout v-if="$store.state.initialSettings" class="BG-v-layout" justify-center>
     <v-expansion-panel dark>
-    <v-flex md8 text-xs-center class="Page">
+    <v-flex md8 text-center class="Page">
 
         <!-- ENGLISH -->
 
@@ -70,7 +70,7 @@
               </span>
             </v-flex>
         <!-- EN КТО ЭТО? В ШАПКЕ -->
-            <v-flex no-wrap xs5 sm3>
+            <v-flex text-no-wrap xs5 sm3>
               <strong v-html="character.title"></strong>
             </v-flex>
         <!-- EN ЦИТАТА В ШАПКЕ -->
@@ -183,7 +183,7 @@
               </span>
             </v-flex>
         <!-- КТО ЭТО? В ШАПКЕ -->
-            <v-flex no-wrap xs5 sm3>
+            <v-flex text-no-wrap xs5 sm3>
               <strong v-html="character.title"></strong>
             </v-flex>
         <!-- ЦИТАТА В ШАПКЕ -->

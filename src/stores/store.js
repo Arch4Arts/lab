@@ -6,7 +6,11 @@ import chat from './modules/chat'
 import chatUsers from './modules/chatUsers'
 import chars from './modules/chars'
 
-var CryptoJS = require("crypto-js");
+// var CryptoJS = require("crypto-js");
+
+var AES = require("crypto-js/aes");
+var utf8 = require('crypto-js/enc-utf8')
+var PBKDF2 = require('crypto-js/pbkdf2')
 import localforage from 'localforage'
 
 // const persistPlugin = store => {
@@ -24,7 +28,7 @@ const store = new Vuex.Store({
     saveID: 0, // НомерСейва, совпадает с названием в localStorage
 
     name: 'Lab',
-    version: '0.0.4', 
+    version: '0.0.5', 
     initialized: false, // Не отрисосывать страницу пока не запустится initializeApp
 
     // DrawerVisible: false, // Для AppHeader
@@ -55,12 +59,12 @@ const store = new Vuex.Store({
   },
   plugins: [createPersistedState({
     setState(key, state, storage) {
-      return storage.setItem(key, CryptoJS.AES.encrypt(JSON.stringify(state), keyGen(key)));
+      return storage.setItem(key, AES.encrypt(JSON.stringify(state), keyGen(key)));
     },
     getState(key, storage, value) {
       try {
         return (value = storage.getItem(key).toString()) && typeof value !== 'undefined'
-          ? JSON.parse(CryptoJS.AES.decrypt(value, keyGen(key)).toString(CryptoJS.enc.Utf8))
+          ? JSON.parse(AES.decrypt(value, keyGen(key)).toString(utf8))
           : undefined;
       } catch (error) {}
   
@@ -80,6 +84,10 @@ const store = new Vuex.Store({
     // }
   })],
   mutations:{
+    updateStores() { // Используется только для закрепления изменений во всех Store's
+      this.state.name = this.state.name; // Пустышка
+    },
+
     firstDialog() {
       this.state.firstDialog = !this.state.firstDialog;
     },
@@ -161,7 +169,7 @@ const store = new Vuex.Store({
 
 function keyGen(saveName){ // Генерация уникального ключа на основе saveID
   var salt = '3F4428472B4B6250';
-  return CryptoJS.PBKDF2(saveName, salt, { keySize: 256 / 32 , iterations: 1}).toString();
+  return PBKDF2(saveName, salt, { keySize: 256 / 32 , iterations: 1}).toString();
 }
 
 // async function initializeApp() {

@@ -1,13 +1,14 @@
 <template>  
-  <v-app v-touch="{ right: () => SwipeRight(), 
-                    left: () => SwipeLeft()}">
+  <v-app> 
+  <v-layout v-touch="{ right: () => SwipeRight(), left: () => SwipeLeft() }">
     <v-content>
-    <first-dialog></first-dialog>
+    <first-dialog/>
     <Settings/>
     <navigation v-if="$store.state.Header"></navigation>
     <General-Info v-if="$store.state.firstStart"></General-Info>
       <router-view v-if="!$store.state.firstStart"/>
     </v-content>
+  </v-layout>  
   </v-app>
 </template>
 

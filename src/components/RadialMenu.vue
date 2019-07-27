@@ -14,7 +14,7 @@
       <!-- Основная кнопка раскрытия списка -->
       <v-btn
         slot="activator"
-        flat
+        text
         dark
         icon
         hover
@@ -23,7 +23,41 @@
         <v-icon>fas fa-ellipsis-v</v-icon>
         <!-- <v-icon>fas fa-times-circle</v-icon> -->
       </v-btn>
+      <v-btn
+        fab
+        dark
+        small
+        color="blue"
+      >
+        <v-icon>fas fa-save</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        dark
+        small
+        color="blue"
+      >
+        <v-icon>fas fa-book</v-icon>
+      </v-btn>
+      <v-btn
+        fab
+        dark
+        small
+        color="blue"
+      >
+        <v-icon>fas fa-cog</v-icon>
+      </v-btn>
 
+      <v-btn
+        fab
+        dark
+        small
+        color="blue"
+      >
+        <v-icon>fas fa-question-circle</v-icon>
+      </v-btn>
+
+<!-- 
       <router-link v-for="(item, i) in menuItems" :key="'btn' + i" :to="item.route">
       <v-btn
         fab
@@ -34,7 +68,7 @@
       >
         <v-icon >{{item.icon}}</v-icon>
       </v-btn>
-      </router-link>
+      </router-link> -->
       
     </v-speed-dial>
 </v-card>
@@ -56,26 +90,18 @@ export default {
       menuItems: [
                 {
                 icon: 'fas fa-save',
-                title: 'Saves',
-                title_ru: 'Сохранения',
                 route: 'Saves'
                 },
                 {
                 icon: 'fas fa-book',
-                title: 'Diary',
-                title_ru: 'Дневник',
                 route: 'Diary'
                 },
                 {
                 icon: 'fas fa-cog',
-                title: 'Settings',
-                title_ru: 'Настройки',
                 route: ''
                 },
                 {
                 icon: 'fas fa-question-circle',
-                title: 'FAQ',
-                title_ru: 'FAQ',
                 route: 'FAQ'
                 },
                 ]

@@ -1,16 +1,10 @@
 <template>
-
         <!-- ENGLISH -->
 
         <section v-if="$store.state.lang">
 
-        <v-expansion-panel-content class="head_element">
-        <template v-slot:header>
-        <div><h3>Personalization of characters</h3></div>
-        </template>
+        <v-expansion-panels id="layout" class="bg_element">
 
-        <v-card class="bg_element">
-        <v-card-text class="font-color">
         <v-expansion-panel class="bg_element">
         <v-expansion-panel-content class="head_element" v-for="(character, i) in characters" :key="i" hide-actions>
         <!-- EN АВАТАР В ШАПКЕ  --> 
@@ -30,7 +24,7 @@
               </span>
             </v-flex>
         <!-- EN КТО ЭТО? В ШАПКЕ -->
-            <v-flex no-wrap xs5 sm3>
+            <v-flex text-no-wrap xs5 sm3>
               <strong v-html="character.title"></strong>
             </v-flex>
         <!-- EN ЦИТАТА В ШАПКЕ -->
@@ -68,11 +62,8 @@
         </v-card>
         </v-expansion-panel-content>
         </v-expansion-panel>
-        </v-card-text>
-        </v-card>  
-        </v-expansion-panel-content>
-        <br>
-        <v-btn color="red lighten-1" @click="startGame('en')">Start game</v-btn>
+
+        </v-expansion-panels>
 
         </section>
 
@@ -80,10 +71,11 @@
 
         <section v-else>
 
-        <v-expansion-panel class="bg_element">
-        <v-expansion-panel-content class="head_element">
+        <v-expansion-panels id="layout" class="head_element">
+
+        <v-expansion-panel class="head_element">
         <!-- АВАТАР В ШАПКЕ -->
-        <template v-slot:header>
+        <v-expansion-panel-header class="head_element">
           <v-layout align-center row spacer>
             <v-flex xs4 sm2 md1>
               <v-avatar size="36px" >
@@ -99,7 +91,7 @@
               </span>
             </v-flex>
         <!-- КТО ЭТО? В ШАПКЕ -->
-            <v-flex no-wrap xs5 sm3>
+            <v-flex text-no-wrap xs5 sm3>
               <strong v-html="character_ru.title"></strong>
             </v-flex>
         <!-- ЦИТАТА В ШАПКЕ -->
@@ -109,9 +101,10 @@
             </v-flex>
           </v-layout>
 
-        </template>
+        </v-expansion-panel-header>
 
-        <v-card class="bg_element">
+        <v-expansion-panel-content class="bg_element">
+        <v-card elevation='0' class="bg_element">
         <v-divider></v-divider>
             <v-card-text class="font-color">
             <v-layout align-start row>
@@ -153,6 +146,9 @@
         </v-card>
         </v-expansion-panel-content>
         </v-expansion-panel>
+
+        </v-expansion-panels>
+
         </section>
 </template>
 
@@ -250,5 +246,9 @@ export default {
 </script>
 
 <style scoped>
+
+#layout {
+  z-index: 0;
+}
 
 </style>

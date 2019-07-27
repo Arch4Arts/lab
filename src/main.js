@@ -44,7 +44,7 @@ Vue.use(SmoothScrollbar)
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
 import vuetify from './plugins/vuetify';
-import 'roboto-fontface/css/roboto/roboto-fontface.css'
+// import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import '@fortawesome/fontawesome-pro/css/all.css'
 
 if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена
@@ -52,7 +52,7 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
     dsn: 'https://6b82c070a6874f70ad6e9fe5ebcb9fb8@sentry.io/1509214',
     integrations: [new Integrations.Vue({Vue, attachProps: true})],
     release: store.state.version, // Версия ПО
-    beforeSend(event, hint) {
+    beforeSend(event) {
       fetch('https://sentry.io/api/1509214/store/?sentry_key=6b82c070a6874f70ad6e9fe5ebcb9fb8&sentry_version=7') // Проверка не блокируется ли Sentry блокировщиком рекламы
       .then(result => {
         console.log(`Sentry fetch status: ${result.status}\nmsg: ${result.statusText}\nOK: ${result.ok}`)
@@ -198,6 +198,7 @@ new Vue({
           // Удаляем сообщение typing, если используется имитация набора
           if (user.messagesHistory[user.messagesHistory.length - 1].type === 'typing') user.messagesHistory.splice([user.messagesHistory.length - 1], 1)
           user.messagesHistory = [...user.messagesHistory, message]
+          this.$store.commit('updateStores');
         }
       }
     },
@@ -207,7 +208,10 @@ new Vue({
       for (let contact of contacts) {
         if (contact === newContact) doubleDetect = true;
       }
-      if (doubleDetect === false) this.$store.state.chat.currentContacts.push(newContact)
+      if (doubleDetect === false) {
+        this.$store.state.chat.currentContacts.push(newContact);
+        this.$store.commit('updateStores');
+      }
     }
   },
   render: function (h) { return h(App) }

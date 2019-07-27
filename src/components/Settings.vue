@@ -8,8 +8,8 @@
   dark
 >
   <v-switch
-    v-model="$store.state.autoClosePage"
-    label="Switch 1"
+    v-model="$vuetify.theme.dark"
+    label="Dark"
   ></v-switch>
 </v-navigation-drawer>
 <!-- <a-drawer

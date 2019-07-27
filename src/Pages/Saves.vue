@@ -5,23 +5,25 @@
           <div>
             <v-card dark elevation="0">
             <v-list two-line subheader class="bg_element" >
-              <v-list-tile>
-                <v-list-tile-content>  
+              <v-list-item>
+                <v-list-item-content>  
                 <!-- ТЕКСТОВОЕ ПОЛЕ ДЛЯ ВВОДА ИМЕНИ СЕЙВА -->
+                <v-flex xs12 sm6 md12>
                   <v-text-field dark
                     class="textfield"
                     color="grey lighten-2"
                     :placeholder="($store.state.lang) ? defaultName : defaultName_ru"
                     v-model="saveName"
-                    @keyup.enter="saveGame(saveName)"
+                    counter="64"
+                    @keyup.enter="saveGame(input)"
                     label=""
                   ></v-text-field>
-
-                </v-list-tile-content>
+                </v-flex>
+                </v-list-item-content>
                 <!-- КНОПКА: СОХРАНИТЬ + ПОДСКАЗКА -->
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
-                      <v-btn class="save-btn-right" v-on="on" @click="saveGame(saveName)" icon ripple>
+                      <v-btn class="save-btn-right" v-on="on" @click="saveGame(saveName)" icon small ripple>
                         <v-icon color="rgb(126, 193, 255)"> fas fa-download </v-icon>
                       </v-btn>
                     </template>
@@ -29,30 +31,30 @@
                       <span v-else class="tip">Новое сохранение</span>
                   </v-tooltip>
 
-              </v-list-tile>
+              </v-list-item>
 
               <!-- СПИСОК СОХРАНЕНИЙ -->
               <div id="scroll-area">
               <smooth-scrollbar>
               <div id="scroll-content">
-                <div v-if="$store.state.lang" v-show="saveExist == 0" class="text-xs-center"><v-divider/><br>No saves<br><br><v-divider/></div>
-                <div v-else v-show="saveExist == 0" class="text-xs-center"><v-divider/><br>Сохранения отсутствуют<br><br></div>
+                <div v-if="$store.state.lang" v-show="saveExist == 0" class="text-center"><v-divider/><br>No saves<br><br><v-divider/></div>
+                <div v-else v-show="saveExist == 0" class="text-center"><v-divider/><br>Сохранения отсутствуют<br><br></div>
                 <v-divider v-show="saveExist == 1"/>
-              <v-list-tile
+              <v-list-item
                 v-for="save in SaveList"
                 :key="save.saveID"
                 @click="Empty(save.saveID)"
               >
-                <v-list-tile-content>
-                  <v-list-tile-title>{{ save.saveName }}</v-list-tile-title>
-                  <v-list-tile-sub-title>{{ save.saveTime }}</v-list-tile-sub-title>
-                </v-list-tile-content>
+                <v-list-item-content>
+                  <v-list-item-title>{{ save.saveName }}</v-list-item-title>
+                  <v-list-item-subtitle>{{ save.saveTime }}</v-list-item-subtitle>
+                </v-list-item-content>
                 <!-- КНОПКИ WRITE/LOAD/DELETE -->
-                <v-list-tile-action class="btns" v-for="(icon ,i) in icons" :key="'icon-id_' + i">
+                <v-list-item-action v-for="(icon ,i) in icons" :key="'icon-id_' + i">
 
-                  <v-tooltip v-if="$store.state.lang" bottom class="list">
+                  <v-tooltip v-if="$store.state.lang" bottom>
                     <template v-slot:activator="{ on }">
-                      <v-btn class="btns" v-on="on" icon
+                      <v-btn class="btns" v-on="on" icon small 
                       @click="(icon == 'fas fa-trash') ? deleteSave(save.saveID) : (icon == 'fas fa-download') ? overwriteSave(save.saveID) : loadSave(save.saveID)"
                       > 
                         <v-icon :color="(icon == 'fas fa-download') ? 'rgb(126, 193, 255)' : (icon == 'fas fa-upload') ? 'rgb(255, 254, 173)' : 'rgb(255, 102, 102)'"> {{ icon }} </v-icon>
@@ -63,9 +65,9 @@
                       <span v-if="icon == 'fas fa-trash'" class="tip">Delete</span>
                   </v-tooltip>
 
-                  <v-tooltip v-else bottom class="list">
+                  <v-tooltip v-else bottom>
                     <template v-slot:activator="{ on }">
-                      <v-btn class="btns" v-on="on" icon
+                      <v-btn class="btns" v-on="on" icon small
                       @click="(icon == 'fas fa-trash') ? deleteSave(save.saveID) : (icon == 'fas fa-download') ? overwriteSave(save.saveID) : loadSave(save.saveID)"
                       > 
                         <v-icon :color="(icon == 'fas fa-download') ? 'rgb(126, 193, 255)' : (icon == 'fas fa-upload') ? 'rgb(255, 254, 173)' : 'rgb(255, 102, 102)'"> {{ icon }} </v-icon>
@@ -75,8 +77,8 @@
                       <span v-if="icon == 'fas fa-upload'" class="tip">Загрузить</span>
                       <span v-if="icon == 'fas fa-trash'" class="tip">Удалить</span>
                   </v-tooltip>
-                </v-list-tile-action>
-              </v-list-tile>
+                </v-list-item-action>
+              </v-list-item>
               </div>
               </smooth-scrollbar>
               </div>
@@ -85,10 +87,10 @@
           </v-card>
           </div>
             <!-- СОХР НА ДИСК / ЗАГР С ДИСКА / ПЕРЕЗАПУСК / УДАЛЕНИЕ ВСЕХ СОХРАНЕНИЙ -->
-            <div class="text-xs-right">
+            <div class="text-right">
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <v-btn @click="" v-on="on" icon ripple>
+                <v-btn @click="" v-on="on" icon small ripple>
                   <v-icon color="rgb(126, 193, 255)"> fas fa-hdd </v-icon>
                 </v-btn>
               </template>
@@ -98,7 +100,7 @@
 
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <v-btn @click="" v-on="on" icon ripple>
+                <v-btn @click="" v-on="on" icon small ripple>
                   <v-icon color="rgb(255, 254, 173)"> far fa-hdd </v-icon>
                 </v-btn>
               </template>
@@ -108,7 +110,7 @@
 
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <v-btn @click="restart = !restart" v-on="on" icon ripple>
+                <v-btn @click="restart = !restart" v-on="on" icon small ripple>
                   <v-icon color="rgb(255, 102, 102)"> fas fa-power-off </v-icon>
                 </v-btn>
               </template>
@@ -118,7 +120,7 @@
 
             <v-tooltip top>
               <template v-slot:activator="{ on }">
-                <v-btn @click="deleteAll = !deleteAll" :disabled="(saveExist > 0) ? false : true" v-on="on" icon ripple>
+                <v-btn @click="deleteAll = !deleteAll" :disabled="(saveExist > 0) ? false : true" v-on="on" icon small ripple>
                   <v-icon color="rgb(255, 102, 102)"> fas fa-trash-alt </v-icon>
                 </v-btn>
               </template>
@@ -126,38 +128,40 @@
                 <span v-else class="tip">Удаление всех сохранений</span>
             </v-tooltip>
             <br>
-            <div v-if="$store.state.lang" class="text-xs-center">Number of saves: {{saveCount}}</div>
-            <div v-else class="text-xs-center">Кол-во сохранений: {{saveCount}}</div>
+            <div v-if="$store.state.lang" class="text-center">Number of saves: {{saveCount}}</div>
+            <div v-else class="text-center">Кол-во сохранений: {{saveCount}}</div>
             </div>
 
             <!-- ДИАЛОГ ПОДТВЕРЖДЕНИЯ УДАЛЕНИЯ ВСЕХ СОХРАНЕНИЙ -->
             <v-dialog v-model="deleteAll" persistent dark width="230">
-               <v-card class="text-xs-center">
+               <v-card class="text-center">
                  <section v-if="$store.state.lang">
                   <v-card-title class="headline dark red"> Delete all saves </v-card-title>
-                    <v-card-text> 
-                      <b>This operation will delete all current saves!</b>
+                    <v-card-text class="text--primary"> 
                       <br>
+                      <b>This operation will delete all current saves!</b>
+                      <br><br>
                       Are you sure you want to continue?
                     </v-card-text>
                  </section>
                  <section v-else>
                   <v-card-title class="headline dark red"> Удаление всех сохранений </v-card-title>
-                    <v-card-text> 
-                      <b>Данная операция удалит все текущие сохранения!</b>
+                    <v-card-text class="text--primary"> 
                       <br>
+                      <b>Данная операция удалит все текущие сохранения!</b>
+                      <br><br>
                       Вы уверены, что хотите продолжить?
                     </v-card-text>
                  </section>
                   <v-card-actions>
                     <v-layout align-center justify-center>
                         <section v-if="$store.state.lang">
-                          <v-btn dark flat @click="DeleteAllSaves()"> Yes </v-btn>
-                          <v-btn dark flat @click="deleteAll = !deleteAll"> No </v-btn>
+                          <v-btn dark text @click="DeleteAllSaves()"> Yes </v-btn>
+                          <v-btn dark text @click="deleteAll = !deleteAll"> No </v-btn>
                         </section>
                         <section v-else>
-                          <v-btn dark flat @click="DeleteAllSaves()"> Да </v-btn>
-                          <v-btn dark flat @click="deleteAll = !deleteAll"> Нет </v-btn>
+                          <v-btn dark text @click="DeleteAllSaves()"> Да </v-btn>
+                          <v-btn dark text @click="deleteAll = !deleteAll"> Нет </v-btn>
                         </section>
                     </v-layout>
                   </v-card-actions>
@@ -165,32 +169,34 @@
             </v-dialog>
             <!-- ОКНО С ПОДТВЕРЖДЕНИЕМ ПЕРЕЗАПУСКА ИГРЫ-->
             <v-dialog v-model="restart" persistent dark width="230">
-               <v-card class="text-xs-center">
+               <v-card class="text-center">
                  <section v-if="$store.state.lang">
                   <v-card-title class="headline dark red"> Restart game </v-card-title>
-                    <v-card-text> 
+                    <v-card-text class="text--primary">
+                      <br> 
                       <b>When you restart the game, all current progress will be lost!</b>
-                      <br>
+                      <br><br>
                       Are you sure you want to continue?
                     </v-card-text>
                  </section>
                  <section v-else>
                   <v-card-title class="headline dark red"> Перезапуск игры </v-card-title>
-                    <v-card-text> 
-                      <b>При перезапуске игры, будeт потерян весь текущий прогресс!</b>
+                    <v-card-text class="text--primary"> 
                       <br>
+                      <b>При перезапуске игры, будeт потерян весь текущий прогресс!</b>
+                      <br><br>
                       Вы уверены, что хотите продолжить?
                     </v-card-text>
                  </section>
                   <v-card-actions>
                     <v-layout align-center justify-center>
                         <section v-if="$store.state.lang">
-                          <v-btn dark flat @click="restartGame()"> Yes </v-btn>
-                          <v-btn dark flat @click="restart = !restart"> No </v-btn>
+                          <v-btn dark text @click="restartGame()"> Yes </v-btn>
+                          <v-btn dark text @click="restart = !restart"> No </v-btn>
                         </section>
                         <section v-else>
-                          <v-btn dark flat @click="restartGame()"> Да </v-btn>
-                          <v-btn dark flat @click="restart = !restart"> Нет </v-btn>
+                          <v-btn dark text @click="restartGame()"> Да </v-btn>
+                          <v-btn dark text @click="restart = !restart"> Нет </v-btn>
                         </section>
                     </v-layout>
                   </v-card-actions>
@@ -204,8 +210,6 @@
 <script>
 import dayjs from 'dayjs' // библиотека для работы с временем
 import { resetState, WebCrypto }  from '../stores/store'
-
-const _ = require('lodash'); // Библиотека для упрощения работы со строками, таблицами и т д.
 
 // var CryptoJS = require("crypto-js");
 
@@ -255,7 +259,12 @@ export default {
             if (length > 0) this.saves.push(await WebCrypto(listSaves[i]))
           }}
           this.saveCount = length
-          return _.orderBy(this.saves, 'saveTime', 'desc')
+          
+          const sortBy = (key) => { // desc <, asc >
+            return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
+          };
+          return this.saves.concat().sort(sortBy("saveTime"));
+          // return _.orderBy(this.saves, 'saveTime', 'desc')
       },
   }
   },
@@ -270,9 +279,13 @@ export default {
           (this.$store.state.lang) ? name = 'New Save' : name = 'Новое сохранение'
         this.$store.state.saveName = name;
         this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm"); // Время сохранения
-        var newSaveID = _.random (0, 999999); // генерация ID
+        var newSaveID = (function random(min = 0, max = 999999) {
+          var rand = min + Math.random() * (max + 1 - min);
+          rand = Math.floor(rand);
+          return rand;
+        }()); 
         this.$store.state.saveID = newSaveID;
-        await WebCrypto(`save-${newSaveID}`, JSON.stringify(this.$store.state))
+        await WebCrypto(name, JSON.stringify(this.$store.state))
         this.$store.state.lang 
           ? iziToast.info({message: 'Game successfully saved', position: 'bottomCenter'})
           : iziToast.info({message: 'Игра успешно сохранена', position: 'bottomCenter'})
@@ -286,7 +299,7 @@ export default {
     },
     async overwriteSave(saveID){
       try {
-        this.$store.state.saveTime = moment().format("DD.MM.YYYY - kk:mm"); // Обновляем время сохранения
+        this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm"); // Обновляем время сохранения
         var saveData = await WebCrypto(`save-${saveID}`)
         this.$store.state.saveName = saveData.saveName
         this.$store.state.saveID = saveID
@@ -374,8 +387,8 @@ export default {
 }
 
 .textfield {
-  width: 75%;
-  margin-left: 25%; 
+  /* width: 100px; */
+  margin-left: 17%; 
   /* margin-right: 20%; */
 }
 

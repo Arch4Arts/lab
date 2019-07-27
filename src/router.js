@@ -27,11 +27,11 @@ export default new VueRouter({
             name: 'FAQ',
             component: FAQ
         },
-        {
-            path: '/TestPageChat',
-            name: 'Chat',
-            component: TestPageChat
-        },
+        // {
+        //     path: '/TestPageChat',
+        //     name: 'Chat',
+        //     component: TestPageChat
+        // },
         {
             path: '/Diary',
             name: 'Diary',
@@ -42,10 +42,10 @@ export default new VueRouter({
             name: 'Saves',
             component: Saves
         },
-        {
-            path: '/InitialSettings',
-            name: 'InitialSettings',
-            component: InitialSettings
-        },
+        // {
+        //     path: '/InitialSettings',
+        //     name: 'InitialSettings',
+        //     component: InitialSettings
+        // },
     ],
 })
