@@ -52,7 +52,7 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
     dsn: 'https://6b82c070a6874f70ad6e9fe5ebcb9fb8@sentry.io/1509214',
     integrations: [new Integrations.Vue({Vue, attachProps: true})],
     release: store.state.version, // Версия ПО
-    beforeSend(event) {
+    beforeSend(event, hint) {
       fetch('https://sentry.io/api/1509214/store/?sentry_key=6b82c070a6874f70ad6e9fe5ebcb9fb8&sentry_version=7') // Проверка не блокируется ли Sentry блокировщиком рекламы
       .then(result => {
         console.log(`Sentry fetch status: ${result.status}\nmsg: ${result.statusText}\nOK: ${result.ok}`)
@@ -69,8 +69,7 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
                 email: 'Player@example.com'
               },
             });
-          }
-          else {
+          } else {
             Sentry.showReportDialog({ 
               eventId: event.event_id,
               lang: 'ru',
@@ -89,9 +88,7 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
               },
             });
           }
-          return event;
-        }
-        else {
+        } else {
           store.state.lang 
           ? iziToast.info({message: `Sentry failed to send error report: status: ${result.status}\nmsg: ${result.statusText}\nOK: ${result.ok}. Add your site to the ad blocker exception list.`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', close: true, closeOnClick: false, drag: false, timeout: 0})
           : iziToast.info({message: `Sentry не удалось отправить отчёт об ошибке: status: ${result.status}\nmsg: ${result.statusText}\nOK: ${result.ok}. Добавьте сайт в список исключений блокировщика рекламы.`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', close: true, closeOnClick: false, drag: false, timeout: 0})
@@ -102,9 +99,10 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
         ? iziToast.info({message: `Sentry failed to send error report: ${result}. Add your site to the ad blocker exception list.`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', close: true, closeOnClick: false, drag: false, timeout: 0})
         : iziToast.info({message: `Sentry не удалось отправить отчёт об ошибке: ${result}. Добавьте сайт в список исключений блокировщика рекламы.`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', close: true, closeOnClick: false, drag: false, timeout: 0})
       })
+      return event;
     }
   })
-}
+};
 
 Vue.config.errorHandler = function(err, vm, info) { // Обработчик ошибок Vue
   if (process.env.NODE_ENV === 'production') Sentry.captureException(err, vm, info);

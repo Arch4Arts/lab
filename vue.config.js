@@ -1,4 +1,6 @@
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const SentryCliPlugin = require('@sentry/webpack-plugin');
+var pjson = require('D:/Dev/lab/package.json');
 
 module.exports = {
   configureWebpack: config => {
@@ -10,6 +12,14 @@ module.exports = {
         analyzerMode: 'static',
         openAnalyzer: false,
     })
+    ],
+    plugins: [
+      new SentryCliPlugin({
+        release: pjson.version,
+        include: 'D:/Dev/lab/dist/js/',
+        ignoreFile: '.sentrycliignore',
+        ignore: ['node_modules', 'webpack.config.js'],
+      }),
     ],
   },
   chainWebpack: config => {
@@ -68,5 +78,5 @@ module.exports = {
   },
   publicPath: './',
   filenameHashing: false,
-  productionSourceMap: false,
+  productionSourceMap: true,
 }

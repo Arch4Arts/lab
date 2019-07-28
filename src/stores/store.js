@@ -6,6 +6,8 @@ import chat from './modules/chat'
 import chatUsers from './modules/chatUsers'
 import chars from './modules/chars'
 
+var pjson = require('../../package.json');
+
 // var CryptoJS = require("crypto-js");
 
 var AES = require("crypto-js/aes");
@@ -27,8 +29,8 @@ const store = new Vuex.Store({
     saveTime: '', // Когда была сохранена игра
     saveID: 0, // НомерСейва, совпадает с названием в localStorage
 
-    name: 'Lab',
-    version: '0.0.5', 
+    name: pjson.name,
+    version: pjson.version, 
     initialized: false, // Не отрисосывать страницу пока не запустится initializeApp
 
     // DrawerVisible: false, // Для AppHeader
