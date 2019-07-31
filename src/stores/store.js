@@ -35,6 +35,7 @@ const store = new Vuex.Store({
 
     // DrawerVisible: false, // Для AppHeader
     isOpenSettings: false, // Открытие/Закрытия дровера настройек
+    isOpenSaves: false,
     appHeaderEnable: true, // Вкл/Выкл AppHeader (для свайпа)
     
     firstLoad: true, // Проверка, первый ли запуск игры (Для определения языка)

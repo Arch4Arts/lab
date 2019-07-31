@@ -34,6 +34,7 @@
 <br><br>
 {{ this.$store.state.mcIm }}
 <mcSettings/>
+
 </section>
 
 </section>
@@ -43,18 +44,20 @@
 import MC from '../../components/CharStyles/MC'
 import Sister from '../../components/CharStyles/Sister'
 import mcSettings from '../../components/CharSettings/mcSettings'
+import PullTo from 'vue-pull-to'
 
 export default {
     data(){
         return {
             author: '',
-            chatID: ''
+            chatID: '',
         }
     },
     components: {
         MC,
         Sister,
         mcSettings,
+        PullTo,
     },
 }
 </script>

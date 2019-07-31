@@ -6,8 +6,11 @@
             <section v-if="$store.state.lang">
 
                 <!-- ВЫБОР ЯЗЫКА -->
-                <p> The game is available in Russian (the author’s native language) and English, before starting, select a language. </p>
-                <v-btn color="grey darken-2" dark @click="$store.commit('langChange')"> English </v-btn>
+                <a-divider class="divider"><h1> Game language </h1></a-divider>
+                <v-btn-toggle v-model="launguage" rounded>
+                    <v-btn @click="$store.commit('langChange')">Russian</v-btn>
+                    <v-btn>English</v-btn>
+                </v-btn-toggle>
                 <!-- ОБ ИГРЕ -->
                 <p></p>
                 <a-divider class="divider"><h1> About the game </h1></a-divider>
@@ -34,8 +37,11 @@
 
             <section v-else>
                 <!-- ВЫБОР ЯЗЫКА -->
-                <p> Игра доступна на русском (родной язык автора) и английском языке, перед началом, выберите язык. </p>
-                <v-btn color="grey darken-2" dark @click="$store.commit('langChange')"> Русский </v-btn>
+                <a-divider class="divider"><h1> Язык игры </h1></a-divider>
+                <v-btn-toggle v-model="launguage" rounded>
+                    <v-btn>Русский</v-btn>
+                    <v-btn @click="$store.commit('langChange')">Английский</v-btn>
+                </v-btn-toggle>
                 <!-- ОБ ИГРЕ -->
                 <p></p>
                 <a-divider class="divider"><h1> Об игре </h1></a-divider>
@@ -92,6 +98,13 @@ export default {
                 'https://www.urbandictionary.com/define.php?term=sph',
                 'https://www.urbandictionary.com/define.php?term=homosexuality',
             ],
+        }
+    },
+    computed: {
+        launguage() {
+            let result
+            (this.$store.state.lang) ? result = 1 : result = 0
+            return result;
         }
     },
     methods: {

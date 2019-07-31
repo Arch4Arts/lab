@@ -9,7 +9,7 @@
           <div v-else>Общая информация</div>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-            <section v-if="$store.state.lang">
+            <section v-if="$store.state.lang" class="text-center">
                 <!-- ОБ ИГРЕ -->
                 <p></p>
                 <a-divider class="divider"><h1> About the game </h1></a-divider>
@@ -32,7 +32,7 @@
 
             </section>
 
-            <section v-else>
+            <section v-else class="text-center">
                 <!-- ОБ ИГРЕ -->
                 <p></p>
                 <a-divider class="divider"><h1> Об игре </h1></a-divider>

@@ -28,6 +28,7 @@
         dark
         small
         color="blue"
+        @click="() => this.$store.state.isOpenSaves = true"
       >
         <v-icon>fas fa-save</v-icon>
       </v-btn>
@@ -44,6 +45,7 @@
         dark
         small
         color="blue"
+        @click="() => this.$store.state.isOpenSettings = true"
       >
         <v-icon>fas fa-cog</v-icon>
       </v-btn>

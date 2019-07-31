@@ -4,6 +4,7 @@
     <v-content>
     <first-dialog/>
     <Settings/>
+    <Saves/>
     <navigation v-if="$store.state.Header"></navigation>
     <General-Info v-if="$store.state.firstStart"></General-Info>
       <router-view v-if="!$store.state.firstStart"/>
@@ -54,6 +55,7 @@ export default {
     GeneralInfo,
     Main,
     Settings,
+    Saves: () => import('./components/Saves')
   },
 }
 </script>

@@ -69,13 +69,14 @@ export default {
                 icon: 'fas fa-save',
                 title: 'Saves',
                 title_ru: 'Сохранения',
-                route: 'Saves'
+                route: ''
                 },]
         }
     },
     methods: {
         openSettings(icon){
             if (icon === 'fas fa-cog') this.$store.state.isOpenSettings = true
+            if (icon === 'fas fa-save') this.$store.state.isOpenSaves = true
         }
     },
     components: {

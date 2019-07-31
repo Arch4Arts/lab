@@ -7,20 +7,20 @@ module.exports = {
     config.output.filename = 'js/[name].js';
   },
   configureWebpack: {
-    plugins: [
-      new BundleAnalyzerPlugin({
+    plugins: (process.env.NODE_ENV === 'production') ? 
+    [
+    new BundleAnalyzerPlugin({
         analyzerMode: 'static',
         openAnalyzer: false,
-    })
-    ],
-    plugins: [
-      new SentryCliPlugin({
-        release: pjson.version,
-        include: 'D:/Dev/lab/dist/js/',
-        ignoreFile: '.sentrycliignore',
-        ignore: ['node_modules', 'webpack.config.js'],
-      }),
-    ],
+    }),
+    new SentryCliPlugin({
+      release: pjson.version,
+      include: 'D:/Dev/lab/dist/js/',
+      ignoreFile: '.sentrycliignore',
+      ignore: ['node_modules', 'webpack.config.js'],
+    }),
+    ]
+    : []
   },
   chainWebpack: config => {
     config.module

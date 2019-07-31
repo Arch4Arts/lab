@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 // Все стили для ant должны быть импортарованны вручную, для каждого компонента!
-import 'ant-design-vue/lib/divider/style/index.less'
+import 'ant-design-vue/lib/divider/style/index.css'
 import { Divider, } from 'ant-design-vue'
 Vue.use(Divider);
 
@@ -16,7 +16,7 @@ import Viewer from 'v-viewer'
 Vue.use(Viewer) // Открывает картинку в новом окне ( аналог просмоторщика Picasa )
 
 import VuePlyr from 'vue-plyr'
-import 'vue-plyr/dist/vue-plyr.css'
+import 'plyr/dist/plyr.css'
 Vue.use(VuePlyr) // Видео/Аудио плеер
 
 import Chat from './components/Chat/index' // Чат
@@ -37,9 +37,6 @@ Vue.use(VueVirtualScroller)
 
 import AsyncComputed from 'vue-async-computed'
 Vue.use(AsyncComputed)
-
-import SmoothScrollbar from 'vue-smooth-scrollbar'
-Vue.use(SmoothScrollbar)
 
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';

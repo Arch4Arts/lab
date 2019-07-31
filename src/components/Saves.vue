@@ -1,7 +1,16 @@
 <template>
-    <v-app>
-    <v-layout class="BG-v-layout" justify-center>
-        <v-flex md8 class="Page" style="padding: 0px">
+    <!-- <v-app> -->
+    <v-navigation-drawer
+      v-model="$store.state.isOpenSaves"
+      absolute
+      temporary
+      right
+      app
+      dark
+      width="700"
+    >
+    <v-layout justify-center>
+        <v-flex md12 class="Page" style="padding: 0px; height: 100vh;">
           <div>
             <v-card dark elevation="0">
             <v-list two-line subheader class="bg_element" >
@@ -12,10 +21,9 @@
                   <v-text-field dark
                     class="textfield"
                     color="grey lighten-2"
-                    :placeholder="($store.state.lang) ? defaultName : defaultName_ru"
+                    :placeholder="($store.state.lang) ? defaultSaveName : defaultSaveName_ru"
                     @keyup.enter="saveGame()"
                     id="saveNameArea"
-                    label=""
                   ></v-text-field>
                   </v-flex>
 
@@ -23,7 +31,7 @@
                 <!-- КНОПКА: СОХРАНИТЬ + ПОДСКАЗКА -->
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on }">
-                      <v-btn class="save-btn-right" v-on="on" @click="saveGame(saveName)" icon small ripple>
+                      <v-btn class="save-btn-right" v-on="on" @click="saveGame()" icon small ripple>
                         <v-icon color="rgb(126, 193, 255)"> fas fa-download </v-icon>
                       </v-btn>
                     </template>
@@ -34,63 +42,64 @@
               </v-list-item>
 
               <!-- СПИСОК СОХРАНЕНИЙ -->
-              <!-- <div id="scroll-area">
-              <smooth-scrollbar>
-              <div id="scroll-content"> -->
-                <div id="scroll-area">
-                <smooth-scrollbar>
+                <pull-to @infinite-scroll="loadMore" v-if="this.$store.state.isOpenSaves">
+                <div class="scroll-area"> 
+
                 <div v-if="$store.state.lang" v-show="saveExist == 0" class="text-center"><v-divider/><br>No saves<br><br><v-divider/></div>
                 <div v-else v-show="saveExist == 0" class="text-center"><v-divider/><br>Сохранения отсутствуют<br><br></div>
                 <v-divider v-show="saveExist == 1"/>
-                <v-overlay class="saves-loading" :value="overlay">
-                  <v-progress-circular indeterminate size="64"></v-progress-circular>
-                </v-overlay>
-                <div id="example-content">
-                <v-list-item
-                  v-for="save in saves"
-                  :key="save.saveID"
-                  @click="Empty(save.saveID)"
-                >
-                <v-list-item-content>
-                  <v-list-item-title>{{ save.saveName }}</v-list-item-title>
-                  <v-list-item-subtitle>{{ save.saveTime }}</v-list-item-subtitle>
-                </v-list-item-content>
-                <!-- КНОПКИ WRITE/LOAD/DELETE -->
-                <v-list-item-action v-for="(icon ,i) in icons" :key="'icon-id_' + i">
+                
+                  <v-list-item
+                    v-for="save in saves"
+                    :key="save.saveID"
+                    @click="Empty(save.saveID)"
+                  >
+                  <v-list-item-content>
+                    <v-list-item-title>{{ save.saveName }}</v-list-item-title>
+                    <v-list-item-subtitle>{{ save.saveTime }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                  <!-- КНОПКИ WRITE/LOAD/DELETE -->
+                  <v-list-item-action v-for="(icon ,i) in icons" :key="'icon-id_' + i">
 
-                  <v-tooltip v-if="$store.state.lang" bottom>
-                    <template v-slot:activator="{ on }">
-                      <v-btn class="btns" v-on="on" icon small 
-                      @click="(icon == 'fas fa-trash') ? deleteSave(save.saveName, save.saveTime, save.saveID) : (icon == 'fas fa-download') ? overwriteSave(save.saveName, save.saveTime, save.saveID) : loadSave(save.saveName, save.saveTime, save.saveID)"
-                      > 
-                        <v-icon :color="(icon == 'fas fa-download') ? 'rgb(126, 193, 255)' : (icon == 'fas fa-upload') ? 'rgb(255, 254, 173)' : 'rgb(255, 102, 102)'"> {{ icon }} </v-icon>
-                      </v-btn>
-                    </template>
-                      <span v-if="icon == 'fas fa-download'" class="tip">Overwrite</span>
-                      <span v-if="icon == 'fas fa-upload'" class="tip">Load</span>
-                      <span v-if="icon == 'fas fa-trash'" class="tip">Delete</span>
-                  </v-tooltip>
+                    <v-tooltip v-if="$store.state.lang" bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-btn class="btns" v-on="on" icon small 
+                        @click="(icon == 'fas fa-trash') ? deleteSave(save.saveName, save.saveTime, save.saveID) : (icon == 'fas fa-download') ? overwriteSave(save.saveName, save.saveTime, save.saveID) : loadSave(save.saveName, save.saveTime, save.saveID)"
+                        > 
+                          <v-icon :color="(icon == 'fas fa-download') ? 'rgb(126, 193, 255)' : (icon == 'fas fa-upload') ? 'rgb(255, 254, 173)' : 'rgb(255, 102, 102)'"> {{ icon }} </v-icon>
+                        </v-btn>
+                      </template>
+                        <span v-if="icon == 'fas fa-download'" class="tip">Overwrite</span>
+                        <span v-if="icon == 'fas fa-upload'" class="tip">Load</span>
+                        <span v-if="icon == 'fas fa-trash'" class="tip">Delete</span>
+                    </v-tooltip>
 
-                  <v-tooltip v-else bottom>
-                    <template v-slot:activator="{ on }">
-                      <v-btn class="btns" v-on="on" icon small
-                      @click="(icon == 'fas fa-trash') ? deleteSave(save.saveName, save.saveTime, save.saveID) : (icon == 'fas fa-download') ? overwriteSave(save.saveName, save.saveTime, save.saveID) : loadSave(save.saveName, save.saveTime, save.saveID)"
-                      > 
-                        <v-icon :color="(icon == 'fas fa-download') ? 'rgb(126, 193, 255)' : (icon == 'fas fa-upload') ? 'rgb(255, 254, 173)' : 'rgb(255, 102, 102)'"> {{ icon }} </v-icon>
-                      </v-btn>
-                    </template>
-                      <span v-if="icon == 'fas fa-download'" class="tip">Перезаписать</span>
-                      <span v-if="icon == 'fas fa-upload'" class="tip">Загрузить</span>
-                      <span v-if="icon == 'fas fa-trash'" class="tip">Удалить</span>
-                  </v-tooltip>
-                </v-list-item-action>
-              </v-list-item>
+                    <v-tooltip v-else bottom>
+                      <template v-slot:activator="{ on }">
+                        <v-btn class="btns" v-on="on" icon small
+                        @click="(icon == 'fas fa-trash') ? deleteSave(save.saveName, save.saveTime, save.saveID) : (icon == 'fas fa-download') ? overwriteSave(save.saveName, save.saveTime, save.saveID) : loadSave(save.saveName, save.saveTime, save.saveID)"
+                        > 
+                          <v-icon :color="(icon == 'fas fa-download') ? 'rgb(126, 193, 255)' : (icon == 'fas fa-upload') ? 'rgb(255, 254, 173)' : 'rgb(255, 102, 102)'"> {{ icon }} </v-icon>
+                        </v-btn>
+                      </template>
+                        <span v-if="icon == 'fas fa-download'" class="tip">Перезаписать</span>
+                        <span v-if="icon == 'fas fa-upload'" class="tip">Загрузить</span>
+                        <span v-if="icon == 'fas fa-trash'" class="tip">Удалить</span>
+                    </v-tooltip>
+                  </v-list-item-action>
+                </v-list-item>
+
+                <div v-if="!endOfsaveList && saveExist === 1 && saveCount > 11" class="text-center pa-2">
+                  <v-progress-circular indeterminate size="28" />
+                </div>
+                <div v-if="endOfsaveList && saveExist === 1" class="text-center pa-2">
+                  <blockquote v-if="$store.state.lang" class="blockquote">End of list</blockquote>
+                  <blockquote v-else class="blockquote">Конец списка</blockquote>
+                </div>
+
               </div>
-              </smooth-scrollbar>
-              </div>
-              <!-- </div>
-              </smooth-scrollbar>
-              </div> -->
+              </pull-to>
+
               <v-divider/>
             </v-list>
           </v-card>
@@ -219,18 +228,22 @@
             </v-dialog>
         </v-flex>
     </v-layout>
-    </v-app>
+    </v-navigation-drawer>
+    <!-- </v-app> -->
 </template>
 
 <script>
 import dayjs from 'dayjs' // библиотека для работы с временем
+import advancedFormat from 'dayjs/plugin/advancedFormat' // Плагин
+dayjs.extend(advancedFormat)
+
 import { resetState, WebCrypto }  from '../stores/store'
 
 // var CryptoJS = require("crypto-js");
 
 import iziToast from 'izitoast/dist/js/iziToast.min.js';
 
-import virtualList from 'vue-virtual-scroll-list'
+import PullTo from 'vue-pull-to'
 
 import localforage from 'localforage'
 localforage.config({
@@ -249,31 +262,35 @@ iziToast.settings({
 });
 
 export default {
-    data: () => ({
-        restart: false,
-        deleteAll: false,
-        overlay: true,
-        saveExist: -1,
-        saveCount: 0,
-        icons: ['fas fa-download','fas fa-upload','fas fa-trash'],
-        defaultName: 'New save',
-        defaultName_ru: 'Новое сохранение',
-        saveName: '',
-        newSave: 0,
-        newSaveName: '',
-        saves: [],
-    }),
+  data: () => ({
+      restart: false,
+      deleteAll: false,
+      saveExist: -1, // Есть ли сейвы
+      saveCount: 0, // Кол-во сейвов
+      icons: ['fas fa-download','fas fa-upload','fas fa-trash'],
+      defaultSaveName: 'New save',
+      defaultSaveName_ru: 'Новое сохранение',
+      saves: [],
+      IDBsavesList: [],
+      IDBsavesListSorted: [],
+      IDBsaveslength: 0,
+      savesListStartCount: 12,
+      endOfsaveList: false,
+  }),
+  components: {
+    PullTo
+  },
   // asyncComputed: {
   //   SaveList: {
   //     async get() {
-  //         var listSaves = await localforage.keys().then(keysList => this.listSaves = keysList); // все ключи из localStorage
+  //         var IDBsavesList = await localforage.keys().then(keysList => this.IDBsavesList = keysList); // все ключи из localStorage
   //         var length = await localforage.length().then(lf_length => this.length = lf_length);
   //         // var saves = [];
   //         (this.length > 0) ? this.saveExist = 1 : this.saveExist = 0 // Проверка на наличие сейвов
   //         if (this.saveExist === 1) {
   //         this.overlay = true
   //         for (let i = 0; i < length; i++) {
-  //           var saveData = listSaves[i].split(',')
+  //           var saveData = IDBsavesList[i].split(',')
   //           this.saves.push({saveName: saveData[0],saveTime: saveData[1],saveID: saveData[2]})
   //         }}
   //         this.saveCount = length
@@ -282,30 +299,42 @@ export default {
   //           return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
   //         };
 
-  //         return this.saves.concat().sort(sortBy('saveTime'));
-  //         // return _.orderBy(this.saves, 'saveTime', 'desc')
+  //         return this.saves.concat().sort(sortBy('saveID'));
+  //         // return _.orderBy(this.saves, 'saveID', 'desc')
   //     },
   // }
   // },
   created: async function () {
-    var listSaves = await localforage.keys().then(keysList => this.listSaves = keysList); // все ключи из localStorage
-    var length = await localforage.length().then(lf_length => this.length = lf_length);
+    this.IDBsavesList = await localforage.keys().then(keysList => this.IDBsavesList = keysList); // все ключи из IndexedDB
+    this.IDBsaveslength = await localforage.length().then(lf_length => this.IDBsaveslength = lf_length); // Кол-во сохранений в IndexedDB
     var saves = [];
-    (this.length > 0) ? this.saveExist = 1 : this.saveExist = 0 // Проверка на наличие сейвов
+    (this.IDBsaveslength > 0) ? this.saveExist = 1 : this.saveExist = 0 // Проверка на наличие сейвов
     if (this.saveExist === 1) {
-      this.overlay = true
-      for (let i = 0; i < length; i++) {
-        var saveData = listSaves[i].split(',')
-        this.saves.push({saveName: saveData[0],saveTime: saveData[1],saveID: saveData[2]})
-    }}
-    this.overlay = false
-    this.saveCount = length;
-    return this.saves.sort(this.sortBy('saveTime'));
+      for (let i = 0; i < this.IDBsaveslength; i++) { // Преобразуем строку в объект для сортировки
+        var saveData = this.IDBsavesList[i].split(',');
+        this.IDBsavesListSorted.push({saveName: saveData[0],saveTime: saveData[1],saveID: saveData[2]}); 
+      }
+      this.IDBsavesListSorted.sort(this.sortBy('saveID')); // сортируем
+      this.saves = this.IDBsavesListSorted.slice(0, this.savesListStartCount); // копируем диапазон от сортированного массива в массив для первичной отрисовки
+    }
+    this.saveCount = this.IDBsaveslength;
+    // return this.saves.sort(this.sortBy('saveTime'));
     // return _.orderBy(this.saves, 'saveTime', 'desc')
   },
   methods:{
+    async updateIDB(){
+      return this.IDBsaveslength = await localforage.length().then(lf_length => this.IDBsaveslength = lf_length); // Кол-во сохранений в IndexedDB
+    },
+    loadMore() {
+      this.updateIDB();
+      if (!this.endOfsaveList) {
+        let newElements = this.IDBsavesListSorted.slice(this.saves.length, this.saves.length + 9);
+        this.saves = this.saves.concat(newElements);
+        (this.saves.length === this.IDBsaveslength) ? this.endOfsaveList = true : this.endOfsaveList = false
+      }
+    },
     sortBy(key) { // desc <, asc >
-          return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
+      return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
     },
     keyGen(saveName){ // Генерация уникального ключа на основе saveID
         var salt = '3F4428472B4B6250';
@@ -318,22 +347,22 @@ export default {
           (this.$store.state.lang) ? name = 'New Save' : name = 'Новое сохранение'
         this.$store.state.saveName = name;
         this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm"); // Время сохранения
-        var newSaveID = (function random(min = 0, max = 999999) {
-          var rand = min + Math.random() * (max + 1 - min);
-          rand = Math.floor(rand);
-          return rand;
-        }()); 
-        this.$store.state.saveID = newSaveID;
+        // var newSaveID = (function random(min = 0, max = 999999) {
+        //   var rand = min + Math.random() * (max + 1 - min);
+        //   rand = Math.floor(rand);
+        //   return rand;
+        // }()); 
+        this.$store.state.saveID = dayjs().format("x"); // milliseconds since the Unix Epoch
 
-        var ID = `${this.$store.state.saveName},${this.$store.state.saveTime},${newSaveID}`;
+        var ID = `${this.$store.state.saveName},${this.$store.state.saveTime},${this.$store.state.saveID}`;
         await WebCrypto(ID, JSON.stringify(this.$store.state))
         this.$store.state.lang 
           ? iziToast.info({message: 'Game successfully saved', position: 'bottomCenter'})
           : iziToast.info({message: 'Игра успешно сохранена', position: 'bottomCenter'})
 
-        this.saves.unshift({saveName: this.$store.state.saveName,saveTime: this.$store.state.saveTime,saveID: newSaveID})
+        this.saves.unshift({saveName: this.$store.state.saveName,saveTime: this.$store.state.saveTime,saveID: this.$store.state.saveID})
         this.saveExist = 1
-        this.saves.sort(this.sortBy('saveTime'));
+        this.saves.sort(this.sortBy('saveID'));
         this.saveCount = this.saves.length
         // this.saves = []
         // this.$asyncComputed.SaveList.update()
@@ -349,7 +378,8 @@ export default {
         // var saveData = await WebCrypto(`${saveName},${saveTime},${saveID}`)
         // this.$store.state.saveName = saveData.saveName
         // this.$store.state.saveID = saveID
-        await WebCrypto(`${saveName},${this.$store.state.saveTime},${saveID}`, JSON.stringify(this.$store.state)) // Добавем новый за место старого (уадёлнного)
+        this.$store.state.saveID = dayjs().format("x");
+        await WebCrypto(`${saveName},${this.$store.state.saveTime},${this.$store.state.saveID}`, JSON.stringify(this.$store.state)) // Добавем новый за место старого (удалённого)
         this.$store.state.lang 
           ? iziToast.info({message: 'Saving successfully overwritten', position: 'bottomCenter'})
           : iziToast.info({message: 'Сохранение успешно перезаписано', position: 'bottomCenter'})
@@ -357,7 +387,7 @@ export default {
         this.saves.find(function(item) {
           if (item.saveID === saveID) item.saveTime = dayjs().format("DD.MM.YYYY - HH:mm");
         })
-        this.saves.sort(this.sortBy('saveTime'));
+        this.saves.sort(this.sortBy('saveID'));
         // this.saves = []
         // this.$asyncComputed.SaveList.update()
       }
@@ -387,8 +417,9 @@ export default {
           return (item.saveID === saveID)
         })
         this.saves.splice(findIndex, 1);
-        (this.saves.length > 0) ? this.saves.sort(this.sortBy('saveTime')) : this.saveExist = 0
-        this.saveCount = this.saves.length
+        (this.saves.length > 0) ? this.saves.sort(this.sortBy('saveID')) : this.saveExist = 0
+        this.saveCount += -1
+        this.updateIDB()
         // this.saves.splice(findIndex, 1)
         // this.saves = []
         // this.$asyncComputed.SaveList.update()
@@ -425,9 +456,19 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
-#scroll-area {
+.vue-pull-to-wrapper > .scroll-container[data-v-81faaf1a]::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+    width: 0px;  /* ширина scrollbar'a */
+}
+
+.vue-pull-to-wrapper > .scroll-container[data-v-81faaf1a] { 
+    -ms-overflow-style: none;  /* IE 10+ */
+    scrollbar-width: none; /* Firefox */
+}
+
+.scroll-area {
   width: inherit;
   height: 500px;
 }
@@ -435,11 +476,6 @@ export default {
 .saves-loading {
   width: inherit;
   height: 500px;
-}
-
-#scroll-content {
-  width: inherit;
-  height: inherit;
 }
 
 .tip {

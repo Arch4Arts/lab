@@ -4,6 +4,7 @@
   absolute
   temporary
   right
+  height=100%
   app
   dark
 >
