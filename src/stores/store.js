@@ -54,6 +54,8 @@ const store = new Vuex.Store({
     diarySound: true, // Вкл/Выкл звука
     phoneSound: true, // Вкл/Выкл звука
     lang: true, // true: en / false: ru
+    font: 'Roboto',
+    fontSize: '14pt',
 
     patreon_link: 'https://patreon',
     tfgames_link: 'https://tfgames.site',

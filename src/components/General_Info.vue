@@ -39,7 +39,7 @@
                 <!-- ВЫБОР ЯЗЫКА -->
                 <a-divider class="divider"><h1> Язык игры </h1></a-divider>
                 <v-btn-toggle v-model="launguage" rounded>
-                    <v-btn>Русский</v-btn>
+                    <v-btn width="130">Русский</v-btn>
                     <v-btn @click="$store.commit('langChange')">Английский</v-btn>
                 </v-btn-toggle>
                 <!-- ОБ ИГРЕ -->
@@ -127,7 +127,8 @@ export default {
 }
 
 .genres {
-    font-size: 12pt
+    font-size: 12pt;
+    margin: 4px 2px 2px 2px;
 }
 a { 
 	text-decoration: none;

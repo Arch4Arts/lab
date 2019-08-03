@@ -179,29 +179,38 @@ export default {
 }
 
 .genres {
-    font-size: 12pt
+    font-size: 12pt;
+    margin: 4px 2px 2px 2px;
 }
+
 a { 
 	text-decoration: none;
     font-weight:bold;
 }  
+
 a:hover { 
 	text-decoration: none;
     font-weight:bold;
 } 
+
 .patreon {
     color: #e44727;
 }
+
 .discord {
     color: #7289da;
 }
+
 .tfgames {
     color: #405dc6;
 }
+
 .f95 {
     color: white;
 }
+
 .f95-zone {
     color: #ba4545;
 }
+
 </style>

@@ -2,12 +2,14 @@
     <!-- <v-app> -->
     <v-navigation-drawer
       v-model="$store.state.isOpenSaves"
-      absolute
       temporary
       right
       app
+      :class='!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs) ? "mt-5" : "mt-0"'
+      :style='!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs) ? "top: 44px" : "top: 0px"'
       dark
       width="700"
+  
     >
     <v-layout justify-center>
         <v-flex md12 class="Page" style="padding: 0px; height: 100vh;">
@@ -328,9 +330,9 @@ export default {
     loadMore() {
       this.updateIDB();
       if (!this.endOfsaveList) {
-        let newElements = this.IDBsavesListSorted.slice(this.saves.length, this.saves.length + 9);
-        this.saves = this.saves.concat(newElements);
-        (this.saves.length === this.IDBsaveslength) ? this.endOfsaveList = true : this.endOfsaveList = false
+        let newElements = this.IDBsavesListSorted.slice(this.saves.length, this.saves.length + 9); // Копируем часть отсортированного массива в newElements
+        this.saves = this.saves.concat(newElements); // Склеиваем список сохранений и скопированную часть массива 
+        (this.saves.length === this.IDBsaveslength) ? this.endOfsaveList = true : this.endOfsaveList = false 
       }
     },
     sortBy(key) { // desc <, asc >

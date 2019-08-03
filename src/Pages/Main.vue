@@ -2,8 +2,10 @@
     <v-app>
     <v-layout class="BG-v-layout" justify-center>
         <v-flex md8 class="Page">
-            <h1>Home</h1>
-            <prolog/>
+            <section id="StoryTextArea">
+                <h1>Home</h1>
+                <prolog/>
+            </section>
         </v-flex>
         <Chat/> <!-- ЧАТ ДОЛЖЕН БЫТЬ ПОСЛЕДНИЙ ЧТОБЫ ОН ПЕРЕКРЫВАЛ ВСЁ ЭЛЕМЕНТЫ -->
     </v-layout>
@@ -23,6 +25,10 @@ export default {
         return {
         }
     },
+    mounted: function(){ 
+        document.getElementById("StoryTextArea").style.fontFamily = this.$store.state.font;
+        document.getElementById("StoryTextArea").style.fontSize = `${this.$store.state.fontSize}`;
+    }
 }
 </script>
 

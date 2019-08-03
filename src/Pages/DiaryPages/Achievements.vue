@@ -3,7 +3,7 @@
     <v-layout class="BG-v-layout" justify-center>
         <v-flex md8 class="Page">
             <h1 v-if="$store.state.lang" class=" text-center">Achviemenent</h1>
-            <h1 class=" text-center">Достижения</h1>
+            <h1 v-else class=" text-center">Достижения</h1>
             <div class="container"> 
             <AchievementCard class="Achievement" :dataImage="require('../../Media/img/Achievement_imgs/asslick.jpg')">
                 <div slot="header_h1">Lorem ipsum</div>

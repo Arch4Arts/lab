@@ -23,10 +23,10 @@ const chatUsers = {
             id: 'support',
             chatID: 'mc_support',
             name: 'Support',
-            imageUrl: 'https://data.whicdn.com/images/301185130/large.jpg',
+            imageUrl: 'https://www.radan.com/images/icons/hexagon/darkblue/MI_DARK_BLUE_ICON_SUPPORT.png',
             unreadMSGCount: 0,
             messagesHistory: [
-              { type: 'text', author: `support`, data: { text: `You a slut?` } },
+              { type: 'text', author: `support`, data: { text: `You a ?` } },
               { type: 'emoji', author: `me`, data: { src: require('../../Media/img/smiling-face.png') } },
               { type: 'text', author: `me`, data: { text: `Do you read me...`, meta: '✓✓ Read' } },
               { type: 'image', author: `support`, data: { src: require('../../Media/img/2.gif'), meta: '✓✓ Read' } },

@@ -470,5 +470,60 @@ strong {
 	font-style: normal;
 }
 
+/* pridi-200 - latin-ext_latin */
+@font-face {
+  font-family: 'Pridi';
+  font-style: normal;
+  font-weight: 200;
+  src: local('Pridi ExtraLight'), local('Pridi-ExtraLight'),
+       url('./assets/fonts/Pridi/pridi-v5-latin-ext_latin-200.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('./assets/fonts/Pridi/pridi-v5-latin-ext_latin-200.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* pridi-regular - latin-ext_latin */
+@font-face {
+  font-family: 'Pridi';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Pridi Regular'), local('Pridi-Regular'),
+       url('./assets/fonts/Pridi/pridi-v5-latin-ext_latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('./assets/fonts/Pridi/pridi-v5-latin-ext_latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* pridi-300 - latin-ext_latin */
+@font-face {
+  font-family: 'Pridi';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Pridi Light'), local('Pridi-Light'),
+       url('./assets/fonts/Pridi/pridi-v5-latin-ext_latin-300.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('./assets/fonts/Pridi/pridi-v5-latin-ext_latin-300.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* pridi-500 - latin-ext_latin */
+@font-face {
+  font-family: 'Pridi';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Pridi Medium'), local('Pridi-Medium'),
+       url('./assets/fonts/Pridi/pridi-v5-latin-ext_latin-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('./assets/fonts/Pridi/pridi-v5-latin-ext_latin-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* pridi-600 - latin-ext_latin */
+@font-face {
+  font-family: 'Pridi';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Pridi SemiBold'), local('Pridi-SemiBold'),
+       url('./assets/fonts/Pridi/pridi-v5-latin-ext_latin-600.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('./assets/fonts/Pridi/pridi-v5-latin-ext_latin-600.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* pridi-700 - latin-ext_latin */
+@font-face {
+  font-family: 'Pridi';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Pridi Bold'), local('Pridi-Bold'),
+       url('./assets/fonts/Pridi/pridi-v5-latin-ext_latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('./assets/fonts/Pridi/pridi-v5-latin-ext_latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
 </style>
 
