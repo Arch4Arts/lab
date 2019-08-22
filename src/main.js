@@ -8,6 +8,10 @@ Vue.use(Divider);
 import App from './App.vue'
 import router from './router.js'
 import store from './stores/store'
+import { NordLight, CustomDark, NordDark } from './plugins/themes'
+import vuetify from './plugins/vuetify';
+import '@fortawesome/fontawesome-pro/css/all.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 Vue.config.productionTip = false
 
@@ -40,9 +44,7 @@ Vue.use(AsyncComputed)
 
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
-import vuetify from './plugins/vuetify';
 // import 'roboto-fontface/css/roboto/roboto-fontface.css'
-import '@fortawesome/fontawesome-pro/css/all.css'
 
 if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена
   Sentry.init({
@@ -101,12 +103,14 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
   })
 };
 
-Vue.config.errorHandler = function(err, vm, info) { // Обработчик ошибок Vue
-  if (process.env.NODE_ENV === 'production') Sentry.captureException(err, vm, info);
-  store.state.lang 
-  ? iziToast.info({message: `Error: ${err.toString()} Info: ${info}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
-  : iziToast.info({message: `Ошибка: ${err.toString()} Инфо: ${info}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
-}
+if (process.env.NODE_ENV === 'production') {
+  Vue.config.errorHandler = function(err, vm, info) { // Обработчик ошибок Vue
+    Sentry.captureException(err, vm, info);
+    store.state.lang 
+    ? iziToast.info({message: `Error: ${err.toString()} Info: ${info}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
+    : iziToast.info({message: `Ошибка: ${err.toString()} Инфо: ${info}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
+  };
+};
 
 // window.onerror = function(message, source, line, column, error) {
 //   console.log(`Error: ${error} ${message} ${source} ${line}`);
@@ -124,9 +128,29 @@ new Vue({
         store.commit('firstLoad');
         if ( lang == 'ru' ) store.commit('langChange');
       }
+      if (store.state.theme === 'CustomDark') this.$vuetify.theme.themes.dark = CustomDark;
+      if (store.state.theme === 'NordDark') this.$vuetify.theme.themes.dark = NordDark;
+      if (store.state.theme === 'NordLight') this.$vuetify.theme.themes.dark = NordLight;
+      // console.log(getComputedStyle(document.documentElement).getPropertyValue('--amouse-x'))
+      // this.mobileTheme()
     })
   },
   methods: {
+    mobileTheme(){
+      if (this.$store.state.chat.chatCurrentTheme === 'Dark') {
+        // document.getElementById("barBtn-1").style.cssText = 'color: #37addf !important';
+        // document.getElementById("barBtn-2").style.cssText = 'color: #37addf !important';
+        // document.getElementById("barBtn-3").style.cssText = 'color: #37addf !important';
+        // document.getElementById("barBtn-4").style.cssText = 'color: #37addf !important';
+        // document.getElementById("barBtn-5").style.cssText = 'color: #37addf !important';
+        // document.getElementById("barBtn-6").style.cssText = 'color: #37addf !important';
+        // document.getElementById("barBtn-7").style.cssText = 'color: #37addf !important';
+
+        // document.getElementById("chatBar").style.cssText = 'background-color: transparent !important';
+        // document.getElementById("chatUsersList").style.cssText = 'background-color: #ffffff !important';
+      }
+    },
+
     achievementSound(){
     if (this.$store.state.achievementSound) {
       var audio = new Audio(require('./Media/audio/Achievements.mp3'));

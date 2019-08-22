@@ -14,6 +14,14 @@ const chat = {
         ContactOnClikedName: '',
 
         currentContacts: ['support','tailor'], // Текущие контакты в телефоне
+
+        ThemesList: [
+        { title: 'Minimalistic' },
+        { title: 'Click Me 2' },
+        { title: 'Click Me 3' },
+        { title: 'Click Me 4' },
+        ],
+        CurrentTheme: 'Minimalistic',
      },
     mutations: {
 

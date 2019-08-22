@@ -13,12 +13,12 @@
         <hr>
         <br>
 
-        <v-expansion-panel-content class="head_element">
+        <v-expansion-panel-content class="header_panels">
         <template v-slot:header>
         <div><h3> Notification sounds </h3></div>
         </template>
 
-        <v-card class="bg_element">
+        <v-card class="bg_panels">
         <v-card-text class="font-color">
         This game uses sound alerts for certain events, you can turn off the sound completely, or only selected ones, and adjust the volume
         <br>
@@ -42,17 +42,17 @@
         </v-card>
         </v-expansion-panel-content>
 
-        <v-expansion-panel-content class="head_element">
+        <v-expansion-panel-content class="header_panels">
         <template v-slot:header>
         <div><h3>Personalization of characters</h3></div>
         </template>
 
-        <v-card class="bg_element">
+        <v-card class="bg_panels">
         <v-card-text class="font-color">
          In this section, you can personalize characters, changing the name, and color of the replica.
         <p/>
-        <v-expansion-panel class="bg_element">
-        <v-expansion-panel-content class="head_element" v-for="(character, i) in characters" :key="i" hide-actions>
+        <v-expansion-panel class="bg_panels">
+        <v-expansion-panel-content class="header_panels" v-for="(character, i) in characters" :key="i" hide-actions>
         <!-- EN АВАТАР В ШАПКЕ  --> 
         <template v-slot:header>
           <v-layout align-center row spacer>
@@ -82,7 +82,7 @@
 
         </template>
 
-        <v-card class="bg_element">
+        <v-card class="bg_panels">
         <v-divider></v-divider>
             <v-card-text>
             <v-layout align-start row>
@@ -112,7 +112,7 @@
         </v-card>  
         </v-expansion-panel-content>
         <br>
-        <v-btn color="red lighten-1" @click="startGame('en')">Start game</v-btn>
+        <v-btn color="bright_btn" @click="startGame('en')">Start game</v-btn>
 
         </section>
 
@@ -124,12 +124,12 @@
         <hr>
         <br>
 
-        <v-expansion-panel-content class="head_element">
+        <v-expansion-panel-content class="header_panels">
         <template v-slot:header>
         <div><h3> Звуки уведомлений </h3></div>
         </template>
 
-        <v-card class="bg_element">
+        <v-card class="bg_panels">
         <v-card-text class="font-color">
         В данной игре используются звуковые оповещения при определённых событиях, вы можете отключить звук полностью, или только выбранные, а отрегулировать громкость
         <br>
@@ -153,19 +153,19 @@
         </v-card>
         </v-expansion-panel-content>
 
-        <v-expansion-panel-content class="head_element">
+        <v-expansion-panel-content class="header_panels">
         <template v-slot:header>
         <div><h3>Персонализация персонажей</h3></div>
         </template>
 
-        <v-card class="bg_element">
+        <v-card class="bg_panels">
         <v-card-text class="font-color">
         В этом разделе вы можете персонализировать персонажей, изменив имя, и цвет реплики.
 
         Если введённое имя не склоняется должным образом, тогда просклоняйте имя персонажа вручную, отметив соотвествующий пункт.
         <p/>
-        <v-expansion-panel class="bg_element">
-        <v-expansion-panel-content class="head_element" v-for="(character, i) in characters_ru" :key="i" hide-actions>
+        <v-expansion-panel class="bg_panels">
+        <v-expansion-panel-content class="header_panels" v-for="(character, i) in characters_ru" :key="i" hide-actions>
         <!-- АВАТАР В ШАПКЕ -->
         <template v-slot:header>
           <v-layout align-center row spacer>
@@ -195,7 +195,7 @@
 
         </template>
 
-        <v-card class="bg_element">
+        <v-card class="bg_panels">
         <v-divider></v-divider>
             <v-card-text>
             <v-layout align-start row>
@@ -243,7 +243,7 @@
         </v-card>  
         </v-expansion-panel-content>
         <br>
-        <v-btn color="red lighten-1" @click="startGame('ru')">Начать игру</v-btn>
+        <v-btn color="bright_btn" @click="startGame('ru')">Начать игру</v-btn>
         </section>
 
     </v-flex>

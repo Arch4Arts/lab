@@ -4,8 +4,9 @@
   temporary
   right
   app
+  touchless
   id="drawer"
-  :class='!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs) ? "mt-5" : "mt-0"'
+  :class='!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs) ? "mt-5 bg_page" : "mt-0 bg_page"'
   :style='!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs) ? "top: 44px" : "top: 0px"'
   dark
   width="700"
@@ -24,9 +25,9 @@
   <v-layout justify-center>
     
   <v-expansion-panels>
-    <v-expansion-panel>
+    <v-expansion-panel class="header_panels">
       <v-expansion-panel-header>Настройки отображения</v-expansion-panel-header>
-      <v-expansion-panel-content>
+      <v-expansion-panel-content class="bg_panels">
         <div class="text-center">
           <v-btn-toggle v-model="launguage" rounded>
             <v-btn text width="130">Русский</v-btn>
@@ -35,20 +36,25 @@
         </div>
         <v-select
           v-model="fontFamily"
-          :items="fontList"
+          :items="fontListRu"
           menu-props="auto"
           label="Font Selector"
           hide-details
           prepend-icon="far fa-font"
           single-line
         ></v-select>
+        <br>
         <v-slider
           v-model="fontSize"
           thumb-label
+          color="#fff"
           min="10"
           max="32"
           prepend-icon="far fa-text-size"
         ></v-slider>
+        <v-btn @click="Dark()">Dark</v-btn>
+        <v-btn @click="NordDark()">NordDark</v-btn>
+        <v-btn @click="NordLight()">NordLight</v-btn>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
       </v-expansion-panel-content>
     </v-expansion-panel>
@@ -65,15 +71,30 @@
 
 <script>
 import extractNumbers from 'extract-numbers' // Для FontSize
+import { NordLight, CustomDark, NordDark } from '../plugins/themes'
 
 export default {
   data(){
     return {
-      fontList: ['Roboto','Pridi'],
+      fontList: ['Roboto', 'Roboto Slab', 'Open Sans', 'Lato', 'Merriweather', 'Minion Pro'],
+      fontListRu: ['Roboto', 'Roboto Slab', 'Open Sans', 'Merriweather', 'Minion Pro', 'Slut'],
     }
   },
   methods: {
-
+    switchTheme(select){
+      if (select === 'CustomDark') this.$vuetify.theme.themes.dark = CustomDark;
+      if (select === 'NordDark') this.$vuetify.theme.themes.dark = NordDark;
+      if (select === 'NordLight') this.$vuetify.theme.themes.dark = NordLight;
+    },
+      NordDark(){
+        this.$vuetify.theme.themes.dark = NordDark // Работает!!!
+      },
+      Dark(){
+        this.$vuetify.theme.themes.dark = CustomDark // Работает!!!
+      },
+      NordLight(){
+        this.$vuetify.theme.themes.dark = NordLight
+      }
   },
   computed: {
       launguage() {

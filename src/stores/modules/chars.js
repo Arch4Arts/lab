@@ -9,7 +9,7 @@ const chars = {
         mcVin:  'Артура',
         mcTvor: 'Артуром',
         mcPred: 'Артуре',
-        mcColor: 'hsl(100, 100%, 50%)', // Цвет диалогов
+        mcColor: 'hsl(100, 70%, 50%)', // Цвет диалогов
     
         sisterName: 'Adelina',
         sisterIm:   'Аделина',

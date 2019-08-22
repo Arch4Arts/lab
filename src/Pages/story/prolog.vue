@@ -12,7 +12,7 @@
 <v-btn @click='$root.sendMessage("mc_support", "support", "emoji", { src: require("../../Media/img/smiling-face.png") })'>Support emoji..</v-btn>
 <v-btn @click='$root.sendMessage("mc_support", "support", "suggestion", undefined, ["no", "Yes"])'>Support suggestion...</v-btn>
 <v-btn @click="$root.addContactToChatList('mc')">Add mc to contacts</v-btn>
-<v-btn @click="df()">test</v-btn>
+<v-btn @click="test()">test</v-btn>
 <br><br>
   <h1>prologue</h1>
   <h2>prologue</h2>
@@ -57,8 +57,7 @@
 <v-btn @click='$root.sendMessage("mc_support", "support", "audio", { src: require("../../Media/audio/Achievements.mp3") })'>Support audio..</v-btn>
 <v-btn @click='$root.sendMessage("mc_support", "support", "emoji", { src: require("../../Media/img/smiling-face.png") })'>Support emoji..</v-btn>
 <v-btn @click='$root.sendMessage("mc_support", "support", "suggestion", undefined, ["no", "Yes"])'>Support suggetion...</v-btn>
-<v-btn @click="$root.addContactToChatList('mc')">Добавить mc в контакты</v-btn>
-<v-btn @click="df()">test</v-btn>
+<v-btn text @click="$root.addContactToChatList('mc')">Добавить mc в контакты</v-btn>
 <br><br>
   <h1>Пролог</h1>
   <h2>Пролог</h2>
@@ -102,13 +101,11 @@ export default {
         mcSettings,
         PullTo,
     },
+    methods: {
+    }
 }
 </script>
 
-<style scoped>
-
-.bg_elemen {
-  background: white
-}
+<style>
 
 </style>

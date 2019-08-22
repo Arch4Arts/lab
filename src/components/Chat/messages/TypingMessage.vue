@@ -1,10 +1,13 @@
 <template>
+<div class="text-msg-container">
   <div class="typing-indicator">
     <span></span>
     <span></span>
     <span></span>
   </div>
+</div>  
 </template>
+
 <script>
 export default {
   props: {
@@ -12,70 +15,62 @@ export default {
   }
 }
 </script>
+
 <style lang="scss" scoped>
-
+	
 .typing-indicator {
-  border-radius: 20px;
-  padding: 8px 15px;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  display: inline-block;
-  text-align: center;
-	background-color: #eee;
-	position: relative;
-	&:before { // Хвостик
-		content: "";
-		position: absolute;
-		z-index: 0;
-		bottom: 0;
-		left: -7px;
-		height: 20px;
-		width: 20px;
-		background: rgb(233, 233, 233);
-		border-bottom-right-radius: 15px;
-	}
-	&:after { // Хвостик
-		content: ""; 
-		position: absolute;
-		z-index: 1;
-		bottom: 0;
-		left: -10px;
-		width: 10px;
-		height: 20px;
-		background: white;
-		border-bottom-right-radius: 10px;
-	}
-}
-
-.typing-indicator span {
-  display: inline-block;
-  background-color: #B6B5BA;
-  width: 10px;
-  height: 10px;
-  border-radius: 100%;
-  margin-right: 3px;
-  animation: bob 2s infinite;
-} 
-
-/* SAFARI GLITCH */
-.styping-indicator span:nth-child(1) {
-  animation-delay: -1s;
-}
-.typing-indicator span:nth-child(2) {
-  animation-delay: -0.85s;
-}
-.typing-indicator span:nth-child(3) {
-  animation-delay: -0.7s;
-}
-
-@keyframes bob {
-  10% {
-    transform: translateY(-10px);
-    background-color: #9E9DA2;
+  background-color: var(--from_them_msg_bg);
+  will-change: transform;
+  width: auto;
+  border-radius: 50px;
+  padding: 14px;
+  display: table;
+  margin: 0 auto;
+  position: relative;
+  animation: 2s bulge infinite ease-out;
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: -2px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: var(--from_them_msg_bg);
   }
+  &::after {
+    height: 10px;
+    width: 10px;
+    left: -10px;
+    bottom: -10px;
+  }
+  span {
+    height: 15px;
+    width: 15px;
+    float: left;
+    margin: 0 1px;
+    background-color: #9E9EA1;
+    display: block;
+    border-radius: 50%;
+    opacity: 0.4;
+    @for $i from 1 through 3 {
+      &:nth-of-type(#{$i}) {
+        animation: 1s blink infinite ($i * .3333s);
+      }
+    }
+  }
+}
+
+@keyframes blink {
   50% {
-    transform: translateY(0);
-    background-color: #B6B5BA;
+    opacity: 1;
+  }
+}
+
+@keyframes bulge {
+  50% {
+    transform: scale(1.05);
   }
 }
 </style>

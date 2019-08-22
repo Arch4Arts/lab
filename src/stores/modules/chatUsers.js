@@ -23,10 +23,11 @@ const chatUsers = {
             id: 'support',
             chatID: 'mc_support',
             name: 'Support',
-            imageUrl: 'https://www.radan.com/images/icons/hexagon/darkblue/MI_DARK_BLUE_ICON_SUPPORT.png',
+            imageUrl: require('../../Media/img/avatar.jpg'),
             unreadMSGCount: 0,
             messagesHistory: [
-              { type: 'text', author: `support`, data: { text: `You a ?` } },
+              { type: 'text', author: `support`, data: { text: `You a slut?` } },
+              { type: 'system', data: { text: 'User changed security key', meta: '04-08-2018 15:57' } },
               { type: 'emoji', author: `me`, data: { src: require('../../Media/img/smiling-face.png') } },
               { type: 'text', author: `me`, data: { text: `Do you read me...`, meta: '✓✓ Read' } },
               { type: 'image', author: `support`, data: { src: require('../../Media/img/2.gif'), meta: '✓✓ Read' } },

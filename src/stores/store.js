@@ -34,6 +34,7 @@ const store = new Vuex.Store({
     initialized: false, // Не отрисосывать страницу пока не запустится initializeApp
 
     // DrawerVisible: false, // Для AppHeader
+    radialMenuShow: true,
     isOpenSettings: false, // Открытие/Закрытия дровера настройек
     isOpenSaves: false,
     appHeaderEnable: true, // Вкл/Выкл AppHeader (для свайпа)
@@ -54,6 +55,7 @@ const store = new Vuex.Store({
     diarySound: true, // Вкл/Выкл звука
     phoneSound: true, // Вкл/Выкл звука
     lang: true, // true: en / false: ru
+    theme: 'NordDark',
     font: 'Roboto',
     fontSize: '14pt',
 

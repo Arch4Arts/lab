@@ -25,6 +25,9 @@ export default {
         return {
         }
     },
+    methods: {
+
+    },
     mounted: function(){ 
         document.getElementById("StoryTextArea").style.fontFamily = this.$store.state.font;
         document.getElementById("StoryTextArea").style.fontSize = `${this.$store.state.fontSize}`;

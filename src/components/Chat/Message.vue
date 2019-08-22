@@ -1,6 +1,6 @@
 <template>
-  <div class="chat">
-    <div class="message-position" :class="{
+  <div class="chat-area">
+    <div class="messages-container" :class="{
         from_me: message.author === 'me',
         from_them: message.author !== 'me' && message.type !== 'system',
         system: message.type === 'system'  // Свой стиль
@@ -27,7 +27,7 @@ import SystemMessage from './messages/SystemMessage.vue'
 import ImageMessage from './messages/ImageMessage.vue'
 import VideoMessage from './messages/VideoMessage.vue'
 import AudioMessage from './messages/AudioMessage.vue'
-import chatIcon from './assets/user-default-avatar.svg'
+import defaultAvatar from './assets/user-default-avatar.svg'
 
 export default {
   data () {
@@ -51,7 +51,7 @@ export default {
     },
     chatImageUrl: {
       type: String,
-      default: chatIcon // Аватарка по умолчанию, если у пользователя она не назначенна.
+      default: defaultAvatar // Аватарка по умолчанию, если у пользователя она не назначенна.
     },
     authorName: {
       type: String
@@ -80,8 +80,79 @@ export default {
   }
 }
 </script>
+
 <style lang="scss">
-.chat { // стиль окна чата
+
+@function em($value) {
+	@return ($value / 16) * 1em;
+}
+  
+@mixin bubble($radius: 8, $bg_msg_color: dodgerblue, $proportional: false) {
+	$tail: $radius * 1.5;
+	$half: $radius * 0.5;
+	$double: $radius * 2;
+  
+	display: inline-block;
+	// margin: em($half);
+	margin-top: 3px;
+	margin-bottom: 3px; 
+	min-height: em($double);
+	// @include padding($half $tail, em);
+	// padding: em($half) em($tail);
+	padding: 8px 15px;
+	position: relative;
+	border-radius: em($radius);
+	line-height: 1.5;
+	color: white;
+	background-color: $bg_msg_color;
+	background: $bg_msg_color;
+
+	text-align: center;
+	z-index: 3;
+  
+	@if $proportional == true {
+	  p {
+		font-size: em($radius);
+	  }
+	}
+  }
+
+@mixin tail($radius: 8, $side: right, $tail_color: dodgerblue) {
+	$tail: $radius * 1.5;
+	$half: $radius * 0.5;
+	$double: $radius * 2;
+
+	content: '';
+	display: block;
+	width: em($tail);
+	height: em($radius);
+	// @include absolute(x ($radius - $tail) 0 x, em);
+	position: absolute;
+
+	@if $side == 'right' {
+		right: em($radius - $tail);
+	} @else if $side == 'left' {
+		left: em($radius - $tail);
+	}
+
+	bottom: 0;
+
+	@if $side == 'right' {
+		border-left: em($radius) solid $tail_color;
+	} @else if $side == 'left' {
+		border-right: em($radius) solid $tail_color;
+	}
+
+	@if $side == 'right' {
+		border-bottom-left-radius: 100%;
+	} @else if $side == 'left' {
+		border-bottom-right-radius: 100%;
+	}
+
+	z-index: 1;
+}
+
+.chat-area { // стиль окна чата
   width: 320px;
   margin-left: 8px;
   margin-right: 8px;
@@ -90,99 +161,66 @@ export default {
   flex-direction: column;
 }
 
-.message { // Глобальный стиль сообщения
-  border-radius: 20px;
-  padding: 8px 15px;
-  margin-top: 2px;
-  margin-bottom: 2px;
-  display: inline-block;
+.text-msg-container { // Для позиционирования хвостика
+	// width: 100%;
+	display: flex;
+	position: relative;
 }
 
-.message-meta { // Глобальный стиль для мета-информации
+.messages-container { // Общий контейнер для всех сообщений
+	// width: 100%;
+	display: flex;
+	position: relative;
+}
+
+.text-message-meta { // Глобальный стиль для мета-информации
   font-size: xx-small;
-  margin-bottom: 0px;
+  margin-bottom: 0px !important;
   color: white;
   text-align: center;
 }
 
-.message-position { // Глобальный стиль позиционирования
-  width: 100%;
-  display: flex;
+.message-meta {
+  font-size: xx-small;
+  margin-bottom: 0px !important;
+  color: white;
+  text-align: center;  
 }
 
-.message-position { 
-	&.from_them { // Левая колонка - слева
-		justify-content: flex-start;
-		.message { // стиль сообщения
-			margin-right: 25%;
-      max-width: 200px;
-			background-color: #eee;
-			position: relative;
-			&:before { // Хвостик
-				content: "";
-				position: absolute;
-				z-index: 0;
-				bottom: 0;
-				left: -7px;
-				height: 20px;
-				width: 20px;
-				background: rgb(233, 233, 233);
-				border-bottom-right-radius: 15px;
-			}
-			&:after { // Хвостик
-				content: ""; 
-				position: absolute;
-				z-index: 1;
-				bottom: 0;
-				left: -10px;
-				width: 10px;
-				height: 20px;
-				background: white;
-				border-bottom-right-radius: 10px;
-			}
-		}
-	}
-}
-
-.message-position { 
-	&.from_me { // Правая колонка - справа
-		justify-content: flex-end;
-		.message { // Стиль сообщения
-			color: white;
-			margin-left: 25%;
-      max-width: 200px;
-			background: linear-gradient(to bottom, #00D0EA 0%, #00D0EA 100%);
-			background-attachment: fixed;
-			position: relative;
-			&:before { // Хвостик
-				content: "";
-				position: absolute;
-				z-index: 0;
-				bottom: 0;
-				right: -8px;
-				height: 20px;
-				width: 20px;
-				background: linear-gradient(to bottom, #00D0EA 0%, #00D0EA 100%);
-				background-attachment: fixed;
-				border-bottom-left-radius: 15px;
-			}
-			&:after { // Хвостик
-				content: "";
-				position: absolute;
-				z-index: 1;
-				bottom: 0;
-				right: -10px;
-				width: 10px;
-				height: 20px;
-				background: white;
-				border-bottom-left-radius: 10px;
-			}
-		}
-	}
-}
-
-.message-position.system { // Системное сообщение - по центру
+.messages-container.system { // Системное сообщение - по центру
   justify-content: center;
+}
+
+.messages-container { 
+	&.from_me { // Гробальный стиль для всех сообщений в правой колонке
+		justify-content: flex-end;
+		// margin-left: 25%;
+		// max-width: 200px;
+		.text-message { // Локальный стиль сообщения
+      @include bubble(20, var(--from_me_msg_bg));
+      color: var(--from_me_msg_font);
+      max-width: 220px;
+		}
+		.tail { // Стиль хвостика сообщения
+			@include tail(20, right, var(--from_me_tail_color))
+		}		
+	}	
+}
+
+.messages-container { 
+	&.from_them { // Гробальный стиль для всех сообщений в левой колонке
+		justify-content: flex-start;
+		// margin-right: 25%;
+		// max-width: 200px;
+		.text-message { // Локальный стиль сообщения
+      @include bubble(20, var(--from_them_msg_bg));
+      color: var(--from_them_msg_font);
+      max-width: 220px;
+		}
+		.tail { // Стиль хвостика сообщения
+			@include tail(20, left, var(--from_them_tail_color))
+    }
+	}
 }
 
 .image-message {
@@ -190,6 +228,29 @@ export default {
   max-width: 200px;
   position: relative;
   cursor: pointer;
+}
+
+.message-system {
+  background-color: var(--message-system--background-color) !important;
+  color: var(--message-system--color) !important;
+  padding: 8px 20px;
+  border-radius: 12px;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 1.2;
+  white-space: pre-wrap;
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-style: italic;
+  opacity: .70;
+}
+
+.message-meta {
+  color: black;
+  font-size: xx-small;
+  margin-bottom: 0px;
+  margin-top: 5px;
+  opacity: .5;
+  text-align: center;
 }
 
 .avatar { // Стиль для аватарки
@@ -203,111 +264,15 @@ export default {
   margin-right: 12px;
 }
 
-.tooltip { // Показывает имя при наведении на аватарку
-  display: block !important;
-  z-index: 10000;
-  .tooltip-inner {
-    background: black;
-    color: white;
-    border-radius: 16px;
-    padding: 5px 10px 4px;
-  }
-  .tooltip-arrow {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    position: absolute;
-    margin: 5px;
-    border-color: black;
-    z-index: 1;
-  }
-  &[x-placement^="top"] {
-    margin-bottom: 5px;
-    .tooltip-arrow {
-      border-width: 5px 5px 0 5px;
-      border-left-color: transparent !important;
-      border-right-color: transparent !important;
-      border-bottom-color: transparent !important;
-      bottom: -5px;
-      left: calc(50% - 5px);
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-  }
-  &[x-placement^="bottom"] {
-    margin-top: 5px;
-    .tooltip-arrow {
-      border-width: 0 5px 5px 5px;
-      border-left-color: transparent !important;
-      border-right-color: transparent !important;
-      border-top-color: transparent !important;
-      top: -5px;
-      left: calc(50% - 5px);
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-  }
-  &[x-placement^="right"] {
-    margin-left: 5px;
-    .tooltip-arrow {
-      border-width: 5px 5px 5px 0;
-      border-left-color: transparent !important;
-      border-top-color: transparent !important;
-      border-bottom-color: transparent !important;
-      left: -5px;
-      top: calc(50% - 5px);
-      margin-left: 0;
-      margin-right: 0;
-    }
-  }
-  &[x-placement^="left"] {
-    margin-right: 5px;
-    .tooltip-arrow {
-      border-width: 5px 0 5px 5px;
-      border-top-color: transparent !important;
-      border-right-color: transparent !important;
-      border-bottom-color: transparent !important;
-      right: -5px;
-      top: calc(50% - 5px);
-      margin-left: 0;
-      margin-right: 0;
-    }
-  }
-  &[aria-hidden='true'] {
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity .15s, visibility .15s;
-  }
-  &[aria-hidden='false'] {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity .15s;
-  }
-  &.info {
-    $color: rgba(#004499, .9);
-    .tooltip-inner {
-      background: $color;
-      color: white;
-      padding: 24px;
-      border-radius: 5px;
-      box-shadow: 0 5px 30px rgba(black, .1);
-    }
-    .tooltip-arrow {
-      border-color: $color;
-    }
-  }
-  &.popover {
-    $color: #f9f9f9;
-    .popover-inner {
-      background: $color;
-      color: black;
-      padding: 24px;
-      border-radius: 5px;
-      box-shadow: 0 5px 30px rgba(black, .1);
-    }
-    .popover-arrow {
-      border-color: $color;
-    }
+@media (max-width: 450px) {
+  .chat-area { // стиль окна чата
+    width: 94%;
+    margin-left: 8px;
+    margin-right: 8px;
+    padding-bottom: 10px; // интервал между сообщениями
+    display: flex;
+    flex-direction: column;
   }
 }
+
 </style>

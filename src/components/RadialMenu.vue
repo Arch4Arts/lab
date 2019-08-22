@@ -1,5 +1,6 @@
 <template>
 <v-card id="create">
+  <v-fab-transition transition="scale-transition">
     <v-speed-dial
       v-model="fab"
       :top="top"
@@ -10,11 +11,12 @@
       :hover="hover"
       :transition="transition"
       fixed
+      v-show="RadialMenuStatus"
+      transition="scale-transition"
     >
       <!-- Основная кнопка раскрытия списка -->
       <v-btn
         slot="activator"
-        text
         dark
         icon
         hover
@@ -73,6 +75,7 @@
       </router-link> -->
       
     </v-speed-dial>
+    </v-fab-transition>
 </v-card>
 </template>
 
@@ -124,6 +127,9 @@ export default {
     },
 
     computed: {
+      RadialMenuStatus(){
+        return this.$store.state.radialMenuShow;
+      },
       activeFab () {
         switch (this.tabs) {
           case 'one': return { 'class': 'purple', icon: 'account_circle' }

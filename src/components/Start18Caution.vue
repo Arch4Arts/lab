@@ -6,7 +6,7 @@
           <!-- ENGLISH -->
           <section v-if="$store.state.lang">
 
-            <v-card-title class="headline dark red"> You must be 18 or older to access this game </v-card-title>
+            <v-card-title class="headline dark important_modal_header"> You must be 18 or older to access this game </v-card-title>
               <v-card-text class="text--primary">
                   <br>
                   This game contains <b>explicit scenes of a sexual nature</b>, with a great bias in <b>femdom</b>!
@@ -17,10 +17,10 @@
             <v-card-actions>
               <v-layout align-center justify-space-around column>
                 <v-flex>
-                  <v-btn color="red" dark @click="$store.commit('firstDialog')">Enter</v-btn>
+                  <v-btn class="important_modal_button" dark @click="$store.commit('firstDialog')">Enter</v-btn>
                 </v-flex>
                 <v-flex class="leave-btn">
-                  <v-btn color="white darken-1" text @click="Leave()">Cancel</v-btn>
+                  <v-btn text @click="Leave()">Cancel</v-btn>
                 </v-flex>
               </v-layout>
             </v-card-actions>
@@ -29,21 +29,21 @@
           <!-- RUSSIAN -->
           <section v-else>
 
-            <v-card-title class="headline dark red"> Вы должны быть старше 18 лет для доступа к этой игре </v-card-title>
-              <v-card-text class="text--primary">
+            <v-card-title class="headline dark important_modal_header"> Вы должны быть старше 18 лет для доступа к этой игре </v-card-title>
+              <v-card-text class="text--primary important_modal_background">
                   <br>
                   Данная игра содержит <b>откровенные сцены сексуального характера</b>, с большим уклоном в <b>женское доминирование</b>!
                   <br><br>
                   Нажимая на кнопку «<b>Продолжить</b>», вы подтверждаете, что вам как минимум 18 лет.
               </v-card-text>
 
-            <v-card-actions>
+            <v-card-actions class="important_modal_background">
               <v-layout align-center justify-space-around column>
                 <v-flex>
-                  <v-btn color="red" :ripple="{ class: 'red--text' }" dark @click="$store.commit('firstDialog')">Продолжить</v-btn>
+                  <v-btn class="important_modal_button" dark @click="$store.commit('firstDialog')">Продолжить</v-btn>
                 </v-flex>
                 <v-flex class="leave-btn">
-                  <v-btn color="white darken-1" text @click="Leave()">Отменить</v-btn>
+                  <v-btn text @click="Leave()">Отменить</v-btn>
                 </v-flex>
               </v-layout>
             </v-card-actions>
@@ -65,6 +65,7 @@
 </script>
 
 <style scoped>
+
 h1 {
   text-align:left;
   font-size: 1.5em

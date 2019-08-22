@@ -15,10 +15,10 @@
                 </v-list-item>
             </v-list>
          </v-navigation-drawer> -->
-        <Radial-Menu v-model="$store.state.DrawerVisible" class="hidden-md-and-up" />
-
+        <Radial-Menu class="hidden-md-and-up"/>
+ 
          <!-- КНОПКИ В МЕНЮ -->
-        <v-app-bar v-if="!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs)" app dark class="primary">
+        <v-app-bar v-if="!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs)" app dark class="navigationBar" elevation="14">
             <router-link v-if="$store.state.Header" to="/" tag="span" style="cursor:pointer">
                 <v-toolbar-title>
                     {{ $store.state.name + ' ' + $store.state.version }} 
@@ -26,13 +26,13 @@
             </router-link>
             <v-spacer></v-spacer>
             <v-toolbar-items v-if="$store.state.lang" class="hidden-sm-and-down">
-                <v-btn v-for="(item, i) in menuItems" :key="'btn' + i"  :to="item.route" @click="openSettings(item.icon)" text>
+                <v-btn class="nav-btn" v-for="(item, i) in menuItems" :key="'btn' + i"  :to="item.route" @click="openSettings(item.icon)" text>
                     <v-icon left v-html="item.icon"></v-icon>
                     {{ item.title }}
                 </v-btn>
             </v-toolbar-items>
             <v-toolbar-items v-else class="hidden-sm-and-down">
-                <v-btn shift v-for="(item, i) in menuItems" :key="'btn' + i" color="" :to="item.route" @click="openSettings(item.icon)" text>
+                <v-btn class="nav-btn" shift v-for="(item, i) in menuItems" :key="'btn' + i" color="" :to="item.route" @click="openSettings(item.icon)" text>
                     <v-icon left v-html="item.icon"></v-icon>
                     {{ item.title_ru }}
                 </v-btn>

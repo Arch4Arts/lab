@@ -2,29 +2,30 @@
   <div class="smartphone" :class="{opened: $store.state.chat.isChatOpen, closed: !$store.state.chat.isChatOpen}">
     <img src="../../assets/Samsung Galaxy S7 Black.png" class="smartphone">
     <img src="../../assets/Samsung Galaxy S7 Black_bottom.png" class="smartphone close-area" @click.prevent="closeChat()">
-    <Chat-users-list class="vlist" v-if="$store.state.chat.UserListShow"></Chat-users-list>
-    <div v-if="!$store.state.chat.UserListShow" class="sc-chat-window">
+    <Chat-users-list class="user-list-pos" v-if="$store.state.chat.UserListShow"></Chat-users-list>
+    <div v-if="!$store.state.chat.UserListShow" class="chat-window">
       <!-- <UserList 
         v-if="showUserList"
         :participants="participants"
       /> -->
-      <v-toolbar color="cyan" dark height="50" flat>
-        <v-btn icon @click="backToUserList()">
+      <v-toolbar class="bar" dark height="50" flat>
+        <v-btn class="bar__back-btn v-btn--hover" icon @click="backToUserList()">
           <v-icon size="18"> fas fa-arrow-left </v-icon>
         </v-btn>
         <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
-        <v-toolbar-title> 
+        <v-spacer/>
+        <v-toolbar-title class="bar__title"> 
         <!-- ЗАГОЛОВОК ЧАТА преобразует tailor в Tailor -->
           {{ this.$store.state.chat.ContactOnClikedName }} 
         </v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-btn icon>
+        <v-spacer/>
+        <v-btn class="bar__phone-btn v-btn--hover" icon>
           <v-icon size="18"> fas fa-phone </v-icon>
         </v-btn>
-        <v-btn icon>
+        <v-btn v-if="$store.state.chat.CurrentTheme !== $store.state.chat.ThemesList[0].title" class="bar__video-btn v-btn--hover" icon>
           <v-icon size="18"> fas fa-video </v-icon>
         </v-btn>
-        <v-btn icon>
+        <v-btn v-if="$store.state.chat.CurrentTheme !== $store.state.chat.ThemesList[0].title" class="bar__ellipsis-btn v-btn--hover" icon>
           <v-icon size="18"> fas fa-ellipsis-v </v-icon>
         </v-btn>
       </v-toolbar>
@@ -32,16 +33,15 @@
         :messages="messageList"
         :participants="participants"
         :showTypingIndicator="showTypingIndicator"
-        :colors="colors"
         :alwaysScrollToBottom="alwaysScrollToBottom"
         :messageStyling="messageStyling"
         @scrollToTop="$emit('scrollToTop')"
       />
-      <UserInput
+      <!-- <UserInput
         :onSubmit="onSubmitSuggestion"
         :suggestions="getSuggestions()"
         :placeholder="placeholder"
-        :colors="colors" />
+        :colors="colors" /> -->
      </div>
   </div>
 </template>
@@ -81,16 +81,8 @@ export default {
     //   type: Boolean,
     //   default: () => false
     // },
-    placeholder: {
-      type: String,
-      default: 'Write a reply'
-    },
     showTypingIndicator: {
       type: String,
-      required: true
-    },
-    colors: {
-      type: Object,
       required: true
     },
     alwaysScrollToBottom: {
@@ -134,6 +126,7 @@ export default {
           if (user.messagesHistory[user.messagesHistory.length - 1].type === 'suggestion') user.messagesHistory.splice([user.messagesHistory.length - 1], 1)
           // В противном случае просто отправить ответ от ME, т.к suggestion был привязан к THEM
           user.messagesHistory = [...user.messagesHistory, suggestion]
+          this.$store.commit('updateStores');
         }
       }
     },
@@ -143,9 +136,11 @@ export default {
     closeChat() {
       this.$store.state.chat.isChatOpen = false
       this.$store.state.chat.newMessagesCount = 0
+      this.$store.commit('updateStores');
     },
     backToUserList(){
       this.$store.state.chat.UserListShow = !this.$store.state.chat.UserListShow
+      this.$store.commit('updateStores');
     }
   }
 }
@@ -160,16 +155,47 @@ export default {
   bottom: 0px;
   box-sizing: border-box;
 }
+
 .smartphone.close-area {
   cursor: pointer;
 }
+
 .smartphone.closed {
   opacity: 0;
   visibility: hidden;
   bottom: 90px;
 }
 
-.vlist {
+.bar {
+  background-color: var(--bar--background-color) !important;
+}
+
+.bar__title {
+    color:  var(--bar__title--color) !important;
+    font-weight: var(--bar__title--font-weight) !important;  
+}
+
+.bar__back-btn {
+    color: var(--bar__back-btn--color) !important;
+}
+
+.bar__phone-btn {
+    color: var(--bar__phone-btn--color) !important;
+}
+
+.Bbar__video-btn {
+    color: var(--bar__video-btn--color) !important;
+}
+
+.bar__ellipsis-btn {
+    color: var(--bar__ellipsis-btn--color) !important;
+}
+
+.v-btn--hover:hover {
+  background-color: transparent !important;
+}
+
+.user-list-pos {
   width: 340px;
   height: calc(100% - 120px);
   max-height: 595px;
@@ -180,7 +206,7 @@ export default {
   overflow-y: auto;
 }
 
-.sc-chat-window {
+.chat-window {
   width: 340px;
   height: calc(100% - 120px);
   max-height: 595px;
@@ -199,21 +225,14 @@ export default {
   font-size: 11pt;
 }
 
-.sc-chat-window.closed {
+.chat-window.closed {
   opacity: 0;
   visibility: hidden;
   bottom: 90px;
 }
 
-.sc-message--me {
-  text-align: right;
-}
-.sc-message--them {
-  text-align: left;
-}
-
 @media (max-width: 450px) {
-  .vlist {
+  .user-list-pos {
     width: 100%;
     height: 100%;
     max-height: 100%;
@@ -221,7 +240,7 @@ export default {
     bottom: 0px;
   }
 
-  .sc-chat-window {
+  .chat-window {
     width: 100%;
     height: 100%;
     max-height: 100%;
@@ -230,11 +249,11 @@ export default {
     border-radius: 0px;
   }
 
-  .sc-chat-window {
+  .chat-window {
     transition: 0.1s ease-in-out;
   }
   
-  .sc-chat-window.closed {
+  .chat-window.closed {
     bottom: 0px;
   }
 }

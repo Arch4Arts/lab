@@ -3,7 +3,7 @@
     <v-layout class="BG-v-layout" justify-center>
     <v-flex md8 class="Page" style="padding: 2% 0px 2% 0px">
     <v-expansion-panels accordion dark>
-        <v-expansion-panel class="head_element">
+        <v-expansion-panel class="header_panels">
         <v-expansion-panel-header>
           <div v-if="$store.state.lang">General information</div>
           <div v-else>Общая информация</div>
@@ -16,7 +16,7 @@
                 <p></p>
                 <p> This game contains many fetishes, perversions, before starting the game, please read the list below: </p>
                 <p><i> Click on the tag to open the description. </i></p>
-                <v-chip class="genres" v-for="(genre, i) in genres" :key="'genre' + i" @click="ClickGenre(genresLink[i])" color="pink darken-3" text-color="white" > {{ genres[i] }} </v-chip>
+                <v-chip class="genres" v-for="(genre, i) in genres" :key="'genre' + i" @click="ClickGenre(genresLink[i])"> {{ genres[i] }} </v-chip>
                 <p></p>
                 <p> If you are satisfied with the above fetishes, then welcome, otherwise, do not play this game, you have been warned. </p>
                 <!-- ПОДДЕРЖКА -->
@@ -39,7 +39,7 @@
                 <p></p>
                 <p> Данная игра, содержит множество фетишей, извращений, перед началом игры, пожалуйста, ознакомтесь со списком ниже: </p>
                 <p><i> Нажми на тег, чтобы открыть описание </i></p>
-                <v-chip class="genres" v-for="(genre, i) in genres" :key="'genre' + i" @click="ClickGenre(genresLink[i])" color="pink darken-3" text-color="white" > {{ genres[i] }} </v-chip>
+                <v-chip class="genres" v-for="(genre, i) in genres" :key="'genre' + i" @click="ClickGenre(genresLink[i])"> {{ genres[i] }} </v-chip>
                 <p></p>
                 <p> Если вас устраивает вышеперечисленные фетиши, тогда добро пожаловать, в противном случае, не играйте в эту игру, вы были предупреждены. </p>
                 <!-- ПОДДЕРЖКА -->
@@ -57,7 +57,7 @@
         </v-expansion-panel-content>
         </v-expansion-panel>
 
-        <v-expansion-panel class="head_element" v-if="$store.state.lang">
+        <v-expansion-panel class="header_panels" v-if="$store.state.lang">
             <v-expansion-panel-header>
                 <div> Frequently asked question </div>
             </v-expansion-panel-header>
@@ -78,7 +78,7 @@
             </v-expansion-panel-content>
         </v-expansion-panel>
 
-        <v-expansion-panel class="head_element" v-else>
+        <v-expansion-panel class="header_panels" v-else>
             <v-expansion-panel-header>
                 <div> Часто задаваемые вопросы </div>
             </v-expansion-panel-header>
@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import GeneralInfo from '../components/General_Info'
+import StartPageInfo from '../components/StartPageInfo'
 
 export default {
     data(){
@@ -157,17 +157,12 @@ export default {
         }
     },
     components: {
-        GeneralInfo
+        StartPageInfo
     },
     methods: {
         ClickGenre(link){
             window.open(link);
         },
-        ClickStart(){
-            this.$store.commit('firstStart'); // Отключаем стартовую страницу
-            this.$store.commit('Header'); // Включаем хедер
-            this.$router.push('/'); // Переходим в корень
-        }
     }
 }
 </script>
@@ -181,6 +176,7 @@ export default {
 .genres {
     font-size: 12pt;
     margin: 4px 2px 2px 2px;
+    background: var(--v-v_chip-base) !important;
 }
 
 a { 

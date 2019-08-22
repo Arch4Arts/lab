@@ -1,29 +1,25 @@
 <template>
   <div>
-    <Suggestions :suggestions="suggestions" v-on:sendSuggestion="_submitSuggestion" :colors="colors"/>
+    <!-- <Suggestions :suggestions="suggestions" v-on:sendSuggestion="_submitSuggestion" :colors="colors"/> -->
     <!-- <div v-if="file" class='file-container' :style="{backgroundColor: colors.userInput.text, color: colors.userInput.bg}">
       <span class='icon-file-message'><img :src="icons.file.img"  :alt="icons.file.name" height="15" /></span>
       {{file.name}}
       <span class='delete-file-message' @click="cancelFile()" ><img :src="icons.closeSvg.img"  :alt="icons.closeSvg.name" height="10" title='Remove the file' /></span>
     </div> -->
-    <form class="sc-user-input">
+    <form class="inputArea">
       <div
         role="button"
         tabIndex="0"
         contentEditable="false"
-        placeholder="Write a message..."
-        class="sc-user-input--text"
-        ref="userInput"
-        :style="{color: colors.userInput.text}"
+        :placeholder="($store.state.lang) ? 'Write a message...': 'Введите текст...'"
+        class="text-input"
       ></div>
-      <div class="sc-user-input--buttons">
-        <div class="sc-user-input--button"></div>
-        <div class="sc-user-input--button">
-          <v-icon>fal fa-smile</v-icon>
-        </div>
-        <div class="sc-user-input--button">
-          <v-icon>fal fa-paperclip</v-icon>
-        </div>
+      <div class="inputArea buttons-container">
+          <v-icon class="plus-icon">far fa-plus</v-icon>
+          <v-icon class="send-icon">send</v-icon>
+          <v-icon class="smile-icon">far fa-smile</v-icon>
+          <v-icon class="microphone-icon">fas fa-microphone</v-icon>
+          <!-- <v-icon class="paperclip-icon">far fa-paperclip</v-icon> -->
       </div>
     </form>
   </div>
@@ -42,19 +38,15 @@ export default {
       type: Array,
       default: () => []
     },
-    onSubmit: {
-      type: Function,
-      required: true
-    },
-    colors: {
-      type: Object,
-      required: true
-    }
+    // onSubmit: {
+    //   type: Function,
+    //   required: true
+    // },
   },
   data () {
     return {
       file: null,
-      inputActive: false
+      inputActive: false,
     }
   },
   methods: {
@@ -65,9 +57,9 @@ export default {
     //   }
     //   this.$emit('onType')
     // },
-    _submitSuggestion(suggestion) {
-      this.onSubmit({author: 'me', type: 'text', data: { text: suggestion }})
-    },
+    // _submitSuggestion(suggestion) {
+    //   this.onSubmit({author: 'me', type: 'text', data: { text: suggestion }})
+    // },
     // _submitText (event) {
     //   const text = this.$refs.userInput.textContent
     //   const file = this.file
@@ -103,73 +95,90 @@ export default {
 }
 </script>
 
-<style>
-.sc-user-input {
+<style lang="scss">
+
+.inputArea { // Зона размещения поля ввода и кнопок
   min-height: 55px;
-  margin: 0px;
-  position: relative;
-  bottom: 0;
-  display: flex;
-  background-color: #f4f7f9;
-  /* border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px; */
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.sc-user-input--text {
-  width: 300px;
-  resize: none;
-  border: none;
-  outline: none;
-  border-bottom-left-radius: 10px;
-  box-sizing: border-box;
-  padding: 18px;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.33;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  color: #565867;
-  -webkit-font-smoothing: antialiased;
-  max-height: 200px;
-  overflow: scroll;
-  bottom: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-.sc-user-input--text:empty:before {
-  content: attr(placeholder);
-  /* color: rgba(86, 88, 103, 0.3); */
-  filter: contrast(15%);
-  outline: none;
-}
-
-.sc-user-input--buttons {
-  width: 100px;
+  width: 340px;
+  padding-right: 8px;
+  padding-left: 8px;
+  padding-bottom: 5px;
   position: absolute;
-  right: 30px;
-  height: 100%;
+  bottom: 0;
   display: flex;
+  background-color: var(--inputArea--background-color);
+  z-index: 4;
+  .text-input { // Поле ввода
+    width: var(--inputArea__text-input--width);
+    height: var(--inputArea__text-input--height);
+    border-radius: var(--inputArea__text-input--border-radius);
+    padding: 15px; // позиционирование текста по середине
+    padding-left: var(--inputArea__text-input--padding-left); // Смешение текста от левого края
+    background-color: var(--inputArea__text-input--background-color);
+    color: var(--inputArea__text-input--color);
+    &:empty:before {
+      content: attr(placeholder);
+      /* color: rgba(86, 88, 103, 0.3); */
+      filter: contrast(15%);
+      outline: none;
+    }
+  }
+  .buttons-container { // Контейнер для кнопок
+    background: transparent;
+    display: flex;
+    .smile-icon { // Кнопка со смайликом
+      position: absolute;
+      cursor: pointer;
+      left: var(--inputArea-smile-icon--left);
+      bottom: var(--inputArea-smile-icon--bottom);
+      color: var(--inputArea-smile-icon--color);
+      background-color: var(--inputArea-smile-icon--background-color);
+    }
+    .paperclip-icon {
+      position: absolute;
+      cursor: pointer;
+      left: var(--inputArea-paperclip-icon--left);
+      bottom: var(--inputArea-paperclip-icon--bottom);
+      color: var(--inputArea-paperclip-icon--color);
+      background-color: var(--inputArea-paperclip-icon--background-color);
+    }
+    .plus-icon {
+      position: absolute;
+      cursor: pointer;
+      left: var(--inputArea-plus-icon--left);
+      bottom: var(--inputArea-plus-icon--bottom);
+      width: var(--inputArea-plus-icon--width);
+      height: var(--inputArea-plus-icon--height);
+      border-radius: var(--inputArea-plus-icon--border-radius);
+      color: var(--inputArea-plus-icon--color);
+      background-color: var(--inputArea-plus-icon--background-color);
+    }
+    .send-icon {
+      position: absolute;
+      cursor: pointer;
+      left: var(--inputArea-send-icon--left);
+      bottom: var(--inputArea-send-icon--bottom);
+      width: var(--inputArea-send-icon--width);
+      color: var(--inputArea-send-icon--color);
+    }
+    .microphone-icon {
+      position: absolute;
+      cursor: pointer;
+      left: var(--inputArea-microphone-icon--left);
+      bottom: var(--inputArea-microphone-icon--bottom);
+      width: var(--inputArea-microphone-icon--width);
+      color: var(--inputArea-microphone-icon--color);
+    }
+  }
 }
 
-.sc-user-input--button:first-of-type {
-  width: 40px;
-}
-
-.sc-user-input--button {
-  width: 30px;
-  height: 55px;
-  padding-left: 20px;
-  margin-left: 2px;
-  margin-right: 3px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+@media (max-width: 450px) {
+  .inputArea {
+    width: 100%;
+  }
 }
 /* 
-.sc-user-input--button--send {
+.inputArea--button--send {
   width: 30px;
   height: 55px;
   margin-left: 10px;
@@ -179,24 +188,24 @@ export default {
   justify-content: center;
 } */
 
-/* .sc-user-input.active {
+/* .inputArea.active {
   box-shadow: none;
   background-color: white;
   box-shadow: 0px -5px 20px 0px rgba(150, 165, 190, 0.2);
 } */
 
-/* .sc-user-input--button label {
+/* .inputArea--button label {
   position: relative;
   height: 24px;
   padding-left: 3px;
   cursor: pointer;
 }
 
-.sc-user-input--button label:hover path {
+.inputArea--button label:hover path {
   fill: rgba(86, 88, 103, 1);
 }
  */
-/* .sc-user-input--button input {
+/* .inputArea--button input {
   position: absolute;
   left: 0;
   top: 0;

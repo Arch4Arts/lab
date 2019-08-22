@@ -16,9 +16,7 @@
       :messageList="messageList"
       :onUserInputSubmit="onMessageWasSent"
       :participants="participants"
-      :placeholder="placeholder"
       :showTypingIndicator="showTypingIndicator"
-      :colors="colors"
       :alwaysScrollToBottom="alwaysScrollToBottom"
       :messageStyling="messageStyling"
       :disableUserListToggle="disableUserListToggle"
@@ -68,60 +66,9 @@ export default {
     //   type: Number,
     //   default: () => 0
     // },
-    placeholder: {
-      type: String,
-      default: 'Write a message...'
-    },
     showTypingIndicator: {
       type: String,
       default: () => ''
-    },
-    colors: {
-      type: Object,
-      required: false,
-      validator: c => 
-        'header' in c
-        && 'bg' in c.header 
-        && 'text' in c.header
-        && 'launcher' in c
-        && 'bg' in c.launcher
-        && 'messageList' in c
-        && 'bg' in c.messageList
-        && 'sentMessage' in c
-        && 'bg' in c.sentMessage 
-        && 'text' in c.sentMessage
-        && 'receivedMessage' in c
-        && 'bg' in c.receivedMessage 
-        && 'text' in c.receivedMessage
-        && 'userInput' in c
-        && 'bg' in c.userInput 
-        && 'text' in c.userInput,
-      default: function () {
-        return {
-          header: {
-            bg: '#4e8cff',
-            text: '#ffffff'
-          },
-          launcher: {
-            bg: '#4e8cff'
-          },
-          messageList: {
-            bg: '#ffffff'
-          },
-          sentMessage: {
-            bg: '#4e8cff',
-            text: '#ffffff'
-          },
-          receivedMessage: {
-            bg: '#f4f7f9',
-            text: '#ffffff'
-          },
-          userInput: {
-            bg: '#f4f7f9',
-            text: '#565867'
-          }
-        }
-      }
     },
     alwaysScrollToBottom: {
       type: Boolean,
@@ -155,9 +102,11 @@ export default {
     openChat() {
       this.$store.state.chat.isChatOpen = true
       this.$store.state.chat.newMessagesCount = 0
+      this.$store.commit('updateStores');
     },
     closeChat() {
       this.$store.state.chat.isChatOpen = false
+      this.$store.commit('updateStores');
     },
   },
   components: {

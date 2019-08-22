@@ -8,8 +8,8 @@
                 <!-- ВЫБОР ЯЗЫКА -->
                 <a-divider class="divider"><h1> Game language </h1></a-divider>
                 <v-btn-toggle v-model="launguage" rounded>
-                    <v-btn @click="$store.commit('langChange')">Russian</v-btn>
-                    <v-btn>English</v-btn>
+                    <v-btn text @click="$store.commit('langChange')">Russian</v-btn>
+                    <v-btn text>English</v-btn>
                 </v-btn-toggle>
                 <!-- ОБ ИГРЕ -->
                 <p></p>
@@ -17,7 +17,7 @@
                 <p></p>
                 <p> This game contains many fetishes, perversions, before starting the game, please read the list below: </p>
                 <p><i> Click on the tag to open the description. </i></p>
-                <v-chip class="genres" v-for="(genre, i) in genres" :key="'genre' + i" @click="ClickGenre(genresLink[i])" color="pink darken-3" text-color="white" > {{ genres[i] }} </v-chip>
+                <v-chip class="genres" v-for="(genre, i) in genres" :key="'genre' + i" @click="ClickGenre(genresLink[i])"> {{ genres[i] }} </v-chip>
                 <p></p>
                 <p> If you are satisfied with the above fetishes, then welcome, otherwise, do not play this game, you have been warned. </p>
                 <!-- ПОДДЕРЖКА -->
@@ -31,7 +31,7 @@
                 <p> If you have suggestions for improving the game, ideas or questions, you can visit our <a :href="$store.state.discord_link" class="discord">Discord</a> </p>
                 <p> Also visit these resources: <a :href="$store.state.tfgames_link" class="tfgames">TFGames</a> and <a :href="$store.state.f95zone_link" class="f95">F95</a><a :href="$store.state.f95zone_link" class="f95-zone">Zone</a> there you can also find useful information in discussions. </p>
                 
-                <v-btn rounded color="red lighten-1" dark @click=ClickStart()> Continue </v-btn>
+                <v-btn rounded class="bright_button" dark @click=ClickStart()> Continue </v-btn>
 
             </section>
 
@@ -39,8 +39,8 @@
                 <!-- ВЫБОР ЯЗЫКА -->
                 <a-divider class="divider"><h1> Язык игры </h1></a-divider>
                 <v-btn-toggle v-model="launguage" rounded>
-                    <v-btn width="130">Русский</v-btn>
-                    <v-btn @click="$store.commit('langChange')">Английский</v-btn>
+                    <v-btn text width="130">Русский</v-btn>
+                    <v-btn text @click="$store.commit('langChange')">Английский</v-btn>
                 </v-btn-toggle>
                 <!-- ОБ ИГРЕ -->
                 <p></p>
@@ -48,7 +48,7 @@
                 <p></p>
                 <p> Данная игра, содержит множество фетишей, извращений, перед началом игры, пожалуйста, ознакомтесь со списком ниже: </p>
                 <p><i> Нажми на тег, чтобы открыть описание </i></p>
-                <v-chip class="genres" v-for="(genre, i) in genres" :key="'genre' + i" @click="ClickGenre(genresLink[i])" color="pink darken-3" text-color="white" > {{ genres[i] }} </v-chip>
+                <v-chip class="genres" v-for="(genre, i) in genres" :key="'genre' + i" @click="ClickGenre(genresLink[i])"> {{ genres[i] }} </v-chip>
                 <p></p>
                 <p> Если вас устраивает вышеперечисленные фетиши, тогда добро пожаловать, в противном случае, не играйте в эту игру, вы были предупреждены. </p>
                 <!-- ПОДДЕРЖКА -->
@@ -62,7 +62,7 @@
                 <p> Если у вас есть предложения по улучшению игры, идеи или вопросы, вы можете посетить наш <a :href="$store.state.discord_link" class="discord">Discord</a> </p>
                 <p> Также посетите данные ресурсы: <a :href="$store.state.tfgames_link" class="tfgames">TFGames</a> and <a :href="$store.state.f95zone_link" class="f95">F95</a><a :href="$store.state.f95zone_link" class="f95-zone">Zone</a> там вы также можете найти полезную информацию в обсуждениях. </p>
                 
-                <v-btn rounded color="red lighten-1" dark @click=ClickStart()> Продолжить </v-btn>
+                <v-btn rounded class="bright_button" dark @click=ClickStart()> Продолжить </v-btn>
                  
              </section>
          </v-flex>
@@ -122,6 +122,10 @@ export default {
 
 <style scoped>
 
+.bright_button {
+    background-color: var(--v-bright_button-base) !important;
+}
+
 .divider {
     color: #E0E0E0;
 }
@@ -129,6 +133,7 @@ export default {
 .genres {
     font-size: 12pt;
     margin: 4px 2px 2px 2px;
+    background: var(--v-v_chip-base) !important;
 }
 a { 
 	text-decoration: none;

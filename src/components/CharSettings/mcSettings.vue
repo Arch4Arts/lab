@@ -3,10 +3,10 @@
 
         <section v-if="$store.state.lang">
 
-        <v-expansion-panels id="layout" class="bg_element">
+        <v-expansion-panels id="layout" class="bg_panels">
 
-        <v-expansion-panel class="bg_element">
-        <v-expansion-panel-content class="head_element" v-for="(character, i) in characters" :key="i" hide-actions>
+        <v-expansion-panel class="bg_panels">
+        <v-expansion-panel-content class="header_panels" v-for="(character, i) in characters" :key="i" hide-actions>
         <!-- EN АВАТАР В ШАПКЕ  --> 
         <template v-slot:header>
           <v-layout align-center row spacer>
@@ -36,7 +36,7 @@
 
         </template>
 
-        <v-card class="bg_element">
+        <v-card class="bg_panels">
         <v-divider></v-divider>
             <v-card-text>
             <v-layout align-start row>
@@ -71,11 +71,11 @@
 
         <section v-else>
 
-        <v-expansion-panels id="layout" class="head_element">
+        <v-expansion-panels id="layout" class="header_panels">
 
-        <v-expansion-panel class="head_element">
+        <v-expansion-panel class="header_panels">
         <!-- АВАТАР В ШАПКЕ -->
-        <v-expansion-panel-header class="head_element">
+        <v-expansion-panel-header class="header_panels">
           <v-layout align-center row spacer>
             <v-flex xs4 sm2 md1>
               <v-avatar size="36px" >
@@ -103,8 +103,8 @@
 
         </v-expansion-panel-header>
 
-        <v-expansion-panel-content class="bg_element">
-        <v-card elevation='0' class="bg_element">
+        <v-expansion-panel-content class="bg_panels">
+        <v-card elevation='0' class="bg_panels">
         <v-divider></v-divider>
             <v-card-text class="font-color">
             <v-layout align-start row>
@@ -211,23 +211,25 @@ export default {
           return this.$store.state.chars.mcIm;
         },
         set: function (text) {
-          this.$store.state.chars.mcIm = text;
-          var name = new RussianName(this.$store.state.chars.mcIm); // Склоняем
-          // Записываем слоненные значение в Store
-          this.$store.state.chars.mcRod = name.fullName(name.gcaseRod)
-          this.$store.state.chars.mcDat = name.fullName(name.gcaseDat)
-          this.$store.state.chars.mcVin = name.fullName(name.gcaseVin)
-          this.$store.state.chars.mcTvor = name.fullName(name.gcaseTvor)
-          this.$store.state.chars.mcPred = name.fullName(name.gcasePred)
-          // Обновляем данные в characters_ru, для реактивность на странице
-          this.character_ru.name = name.fullName(name.gcaseIm)
-          this.character_ru.Im = name.fullName(name.gcaseIm)
-          this.character_ru.Rod = name.fullName(name.gcaseRod)
-          this.character_ru.Dat = name.fullName(name.gcaseDat)
-          this.character_ru.Vin = name.fullName(name.gcaseVin)
-          this.character_ru.Tvor = name.fullName(name.gcaseTvor)
-          this.character_ru.Pred = name.fullName(name.gcasePred)
-          this.$store.commit('saveCharNames', 'ru')
+          if (text.length > 0) {
+            this.$store.state.chars.mcIm = text;
+            var name = new RussianName(this.$store.state.chars.mcIm); // Склоняем
+            // Записываем слоненные значение в Store
+            this.$store.state.chars.mcRod = name.fullName(name.gcaseRod)
+            this.$store.state.chars.mcDat = name.fullName(name.gcaseDat)
+            this.$store.state.chars.mcVin = name.fullName(name.gcaseVin)
+            this.$store.state.chars.mcTvor = name.fullName(name.gcaseTvor)
+            this.$store.state.chars.mcPred = name.fullName(name.gcasePred)
+            // Обновляем данные в characters_ru, для реактивность на странице
+            this.character_ru.name = name.fullName(name.gcaseIm)
+            this.character_ru.Im = name.fullName(name.gcaseIm)
+            this.character_ru.Rod = name.fullName(name.gcaseRod)
+            this.character_ru.Dat = name.fullName(name.gcaseDat)
+            this.character_ru.Vin = name.fullName(name.gcaseVin)
+            this.character_ru.Tvor = name.fullName(name.gcaseTvor)
+            this.character_ru.Pred = name.fullName(name.gcasePred)
+            this.$store.commit('saveCharNames', 'ru')
+          }
         }
     },
     },

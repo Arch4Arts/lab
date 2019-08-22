@@ -1,7 +1,13 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib';
+import { Touch } from 'vuetify/lib/directives';
 
-Vue.use(Vuetify);
+import { NordLight, CustomDark } from './themes'
+
+Vue.use(Vuetify, {
+  directives: {
+    Touch,
+}});
 
 export default new Vuetify({
   theme: {
@@ -10,31 +16,11 @@ export default new Vuetify({
       },
       dark: true,
     themes: {
-      dark: {
-        primary: '#292929',
-        secondary: '#E0E0E0',
-        accent: '#82B1FF',
-        error: '#FF5252',
-        info: '#2196F3',
-        success: '#4CAF50',
-        warning: '#FFC107',
-        // Мои настройки
-        font_color: '#E0E0E0',
-        bg_element: '#222222',
-        head_element: '2d2d2d'
-      },
-      light: {
-        primary: '#ee44aa',
-        secondary: '#424242',
-        accent: '#82B1FF',
-        error: '#FF5252',
-        info: '#2196F3',
-        success: '#4CAF50',
-        warning: '#FFC107'
-      },
+      dark: CustomDark, // Default
+      light: NordLight, // Default
     },
   },
   icons: {
-    iconfont: 'fa',
+    iconfont: 'fa' && 'md',
   },
 });

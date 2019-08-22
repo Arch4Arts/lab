@@ -118,11 +118,13 @@ export default {
       this.isVisible = false;
       this.$store.state.chat.chatEnable = true
       this.$store.state.appHeaderEnable = true
+      this.$store.commit('updateStores');
     },
     toggle() {
       this.isVisible = !this.isVisible;
       this.$store.state.chat.chatEnable = false
       this.$store.state.appHeaderEnable = false
+      this.$store.commit('updateStores');
     }
   },
   

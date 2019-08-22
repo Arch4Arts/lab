@@ -65,10 +65,6 @@ export default {
       type: String,
       required: true
     },
-    colors: {
-      type: Object,
-      required: true
-    },
     alwaysScrollToBottom: {
       type: Boolean,
       required: true

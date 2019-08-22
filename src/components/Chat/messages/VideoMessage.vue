@@ -1,6 +1,6 @@
 <template>
-<div @mouseenter="play" class="video"> 
-  <vue-plyr ref="plyr" class="video" :options="options">
+<div @mouseenter="play" class="video-message"> 
+  <vue-plyr ref="plyr" class="video-message" :options="options">
     <video :poster="data.img" :src="data.src"></video>
 
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -94,7 +94,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 svg {
   display: none;
@@ -102,10 +102,11 @@ svg {
   overflow: hidden;
 }
 
-.video {
-  width: inherit;
-  /* border-radius: 20px;
-  overflow: hidden; */
+.video-message {
+  width: 270px;
+  border-radius: 20px;
+  overflow: hidden;
+  z-index: 1; // Не удалять!!!
 }
 
 </style>

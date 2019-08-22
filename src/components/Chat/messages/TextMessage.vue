@@ -1,9 +1,11 @@
 <template>
-  <div class="message">
+<div class="text-msg-container">
+  <div class="text-message">
     <div> {{ data.text }} </div>
-    <!-- {{ data.text }} -->
-    <p v-if="data.meta" class='message-meta'>{{data.meta}}</p>
+    <p v-if="data.meta" class='text-message-meta'>{{ data.meta }}</p>
   </div>
+  <div class="tail"></div>
+</div>
 </template>
 
 <script>
