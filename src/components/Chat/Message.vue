@@ -231,7 +231,7 @@ export default {
 }
 
 .message-system {
-  background-color: var(--message-system--background-color) !important;
+  background: var(--message-system--background) !important;
   color: var(--message-system--color) !important;
   padding: 8px 20px;
   border-radius: 12px;
@@ -245,12 +245,15 @@ export default {
 }
 
 .message-meta {
-  color: black;
+  color: var(--message-meta--color);
   font-size: xx-small;
   margin-bottom: 0px;
   margin-top: 5px;
-  opacity: .5;
+  opacity: .6;
   text-align: center;
+  .message-system-meta {
+    color: var(--message-system-meta--color);
+  }
 }
 
 .avatar { // Стиль для аватарки

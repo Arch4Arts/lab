@@ -1,13 +1,13 @@
 <template>
 <v-app>
-    <v-layout justify-center class="BG-v-layout">
+    <v-layout justify-center class="v-layout">
          <v-flex md8 text-center class="Page">
             <!-- ENGLISH -->
             <section v-if="$store.state.lang">
 
                 <!-- ВЫБОР ЯЗЫКА -->
                 <a-divider class="divider"><h1> Game language </h1></a-divider>
-                <v-btn-toggle v-model="launguage" rounded>
+                <v-btn-toggle class="v-btn-toggle" v-model="launguage" rounded>
                     <v-btn text @click="$store.commit('langChange')">Russian</v-btn>
                     <v-btn text>English</v-btn>
                 </v-btn-toggle>
@@ -23,7 +23,7 @@
                 <!-- ПОДДЕРЖКА -->
                 <a-divider class="divider"><h2> Support </h2></a-divider>
                 <p></p>
-                <p> If you like the game and you want to support me, visit my <a :href="$store.state.patreon_link" class="patreon">Patreon</a></p>
+                <p> If you like the game and you want to support me, visit my <a :href="$store.state.patreon_link" class="subscribe-star">Subscribe Star</a></p>
                 <p> Also, the game requires an adequate translation into English, and if you can help with this in any way, write to me. </p>
                 <!-- СООБЩЕСТВО -->
                 <a-divider class="divider"><h2> Community </h2></a-divider>
@@ -31,14 +31,14 @@
                 <p> If you have suggestions for improving the game, ideas or questions, you can visit our <a :href="$store.state.discord_link" class="discord">Discord</a> </p>
                 <p> Also visit these resources: <a :href="$store.state.tfgames_link" class="tfgames">TFGames</a> and <a :href="$store.state.f95zone_link" class="f95">F95</a><a :href="$store.state.f95zone_link" class="f95-zone">Zone</a> there you can also find useful information in discussions. </p>
                 
-                <v-btn rounded class="bright_button" dark @click=ClickStart()> Continue </v-btn>
+                <v-btn rounded class="continue-button" dark @click=ClickStart()> Continue </v-btn>
 
             </section>
 
             <section v-else>
                 <!-- ВЫБОР ЯЗЫКА -->
                 <a-divider class="divider"><h1> Язык игры </h1></a-divider>
-                <v-btn-toggle v-model="launguage" rounded>
+                <v-btn-toggle class="v-btn-toggle" v-model="launguage" rounded>
                     <v-btn text width="130">Русский</v-btn>
                     <v-btn text @click="$store.commit('langChange')">Английский</v-btn>
                 </v-btn-toggle>
@@ -54,7 +54,7 @@
                 <!-- ПОДДЕРЖКА -->
                 <a-divider class="divider"><h2> Поддержка </h2></a-divider>
                 <p></p>
-                <p> Если вам нравится игра, и вы хотите поддержать меня, посетите мой  <a :href="$store.state.patreon_link" class="patreon">Patreon</a></p>
+                <p> Если вам нравится игра, и вы хотите поддержать меня, посетите мой  <a :href="$store.state.patreon_link" class="subscribe-star">Subscribe Star</a></p>
                 <p> Также игре требуется адекватный перевод на английский язык, и если вы можете как-либо помочь с этим, напишите мне. </p>
                 <!-- СООБЩЕСТВО -->
                 <a-divider class="divider"><h2> Сообщество </h2></a-divider>
@@ -62,7 +62,7 @@
                 <p> Если у вас есть предложения по улучшению игры, идеи или вопросы, вы можете посетить наш <a :href="$store.state.discord_link" class="discord">Discord</a> </p>
                 <p> Также посетите данные ресурсы: <a :href="$store.state.tfgames_link" class="tfgames">TFGames</a> and <a :href="$store.state.f95zone_link" class="f95">F95</a><a :href="$store.state.f95zone_link" class="f95-zone">Zone</a> там вы также можете найти полезную информацию в обсуждениях. </p>
                 
-                <v-btn rounded class="bright_button" dark @click=ClickStart()> Продолжить </v-btn>
+                <v-btn rounded class="continue-button" dark @click=ClickStart()> Продолжить </v-btn>
                  
              </section>
          </v-flex>
@@ -120,10 +120,18 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
-.bright_button {
-    background-color: var(--v-bright_button-base) !important;
+.v-btn-toggle {
+    background: transparent !important;
+}
+
+.continue-button {
+    background: var(--startPageInfo--continue-button--background) !important;
+}
+
+.continue-button:hover {
+    background: var(--startPageInfo--continue-button--background) !important;
 }
 
 .divider {
@@ -133,29 +141,37 @@ export default {
 .genres {
     font-size: 12pt;
     margin: 4px 2px 2px 2px;
-    background: var(--v-v_chip-base) !important;
+    background: var(--global--v-chip--background) !important;
 }
+
 a { 
 	text-decoration: none;
     font-weight:bold;
 }  
+
 a:hover { 
 	text-decoration: none;
     font-weight:bold;
 } 
-.patreon {
-    color: #e44727;
+
+.subscribe-star {
+    color: var(--global--subscribe-star--color);
 }
+
 .discord {
-    color: #7289da;
+    color: var(--global--discord--color);
 }
+
 .tfgames {
-    color: #405dc6;
+    color: var(--global--tfgames--color);
 }
+
 .f95 {
-    color: white;
+    color: var(--global--f95--color);
 }
+
 .f95-zone {
-    color: #ba4545;
+    color: var(--global--f95-zone--color);
 }
+
 </style>

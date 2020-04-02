@@ -22,9 +22,45 @@
   </section>
   <!-- RUSSIAN -->
   <section v-else>
-  <v-layout justify-center>
-    
-  <v-expansion-panels>
+  <v-card
+    class="mx-auto"
+  >
+    <v-list
+      subheader
+      two-line
+      flat
+      class="settings__v_list_bg"
+    >
+      <v-subheader>Язык игры</v-subheader>
+
+      <v-list-item-group
+        v-model="settings"
+        multiple
+      >
+        <v-list-item class="settings__v_list_item_bg">
+          <template v-slot:default="{ active, toggle }">
+
+            <v-list-item-content>
+              <v-list-item-title>Notifications</v-list-item-title>
+              <v-list-item-subtitle>Allow notifications</v-list-item-subtitle>
+            </v-list-item-content>
+
+            <v-list-item-action>
+              <v-checkbox
+                v-model="active"
+                color="primary"
+                @click="toggle"
+              ></v-checkbox>
+            </v-list-item-action>
+
+          </template>
+        </v-list-item>
+
+      </v-list-item-group>
+    </v-list>
+  </v-card>
+  <div>Настройки отображения</div>
+  <!-- <v-expansion-panels>
     <v-expansion-panel class="header_panels">
       <v-expansion-panel-header>Настройки отображения</v-expansion-panel-header>
       <v-expansion-panel-content class="bg_panels">
@@ -58,9 +94,8 @@
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
       </v-expansion-panel-content>
     </v-expansion-panel>
-  </v-expansion-panels>
+  </v-expansion-panels> -->
 
-  </v-layout>
   </section>
       <!-- <v-switch
         v-model="$vuetify.theme.dark"
@@ -126,13 +161,17 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 #drawer {
-  background-color: #222222;
+  background: var(--v-bg_laouyt-base) !important;
   color: #E0E0E0;
   font-size: 14pt;
   text-align: justify;
+}
+
+.v-list--subheader {
+  background: transparent;
 }
 
 </style>

@@ -15,7 +15,7 @@
         <v-flex md12 class="Page" style="padding: 0px; height: 100vh;">
           <div>
             <v-card dark elevation="0">
-            <v-list two-line subheader class="bg_panels">
+            <v-list two-line subheader class="v-list-bg">
               <v-list-item>
                 <v-list-item-content>  
                 <!-- ТЕКСТОВОЕ ПОЛЕ ДЛЯ ВВОДА ИМЕНИ СЕЙВА -->
@@ -31,7 +31,7 @@
 
                 </v-list-item-content>
                 <!-- КНОПКА: СОХРАНИТЬ + ПОДСКАЗКА -->
-                  <v-tooltip color="v_tooltip" bottom>
+                  <v-tooltip color="v-tooltip" bottom>
                     <template v-slot:activator="{ on }">
                       <v-btn class="save-btn-right" v-on="on" @click="saveGame()" icon>
                         <v-icon color="rgb(126, 193, 255)"> fas fa-download </v-icon>
@@ -63,7 +63,7 @@
                   <!-- КНОПКИ WRITE/LOAD/DELETE -->
                   <v-list-item-action v-for="(icon ,i) in icons" :key="'icon-id_' + i">
 
-                    <v-tooltip color="v_tooltip" v-if="$store.state.lang" bottom>
+                    <v-tooltip color="v-tooltip" v-if="$store.state.lang" bottom>
                       <template v-slot:activator="{ on }">
                         <v-btn v-on="on" icon
                         @click="(icon == 'fas fa-trash') ? deleteSave(save.saveName, save.saveTime, save.saveID) : (icon == 'fas fa-download') ? overwriteSave(save.saveName, save.saveTime, save.saveID) : loadSave(save.saveName, save.saveTime, save.saveID)"
@@ -76,7 +76,7 @@
                         <span v-if="icon == 'fas fa-trash'" class="tip">Delete</span>
                     </v-tooltip>
 
-                    <v-tooltip color="v_tooltip" v-else bottom>
+                    <v-tooltip color="v-tooltip" v-else bottom>
                       <template v-slot:activator="{ on }">
                         <v-btn v-on="on" icon
                         @click="(icon == 'fas fa-trash') ? deleteSave(save.saveName, save.saveTime, save.saveID) : (icon == 'fas fa-download') ? overwriteSave(save.saveName, save.saveTime, save.saveID) : loadSave(save.saveName, save.saveTime, save.saveID)"
@@ -108,7 +108,7 @@
           </div>
             <!-- СОХР НА ДИСК / ЗАГР С ДИСКА / ПЕРЕЗАПУСК / УДАЛЕНИЕ ВСЕХ СОХРАНЕНИЙ -->
             <div class="text-right">
-            <v-tooltip color="v_tooltip" top>
+            <v-tooltip color="v-tooltip" top>
               <template v-slot:activator="{ on }">
                 <v-btn @click="" v-on="on" icon>
                   <v-icon color="rgb(126, 193, 255)"> fas fa-hdd </v-icon>
@@ -118,7 +118,7 @@
                 <span v-else class="tip">Сохранить сохранения на диск</span>
             </v-tooltip>
 
-            <v-tooltip color="v_tooltip" top>
+            <v-tooltip color="v-tooltip" top>
               <template v-slot:activator="{ on }">
                 <v-btn @click="" v-on="on" icon>
                   <v-icon color="rgb(255, 254, 173)"> far fa-hdd </v-icon>
@@ -128,7 +128,7 @@
                 <span v-else class="tip">Загрузить сохранения с диска</span>
             </v-tooltip>
 
-            <v-tooltip color="v_tooltip" top>
+            <v-tooltip color="v-tooltip" top>
               <template v-slot:activator="{ on }">
                 <v-btn @click="restart = !restart" v-on="on" icon>
                   <v-icon color="rgb(255, 102, 102)"> fas fa-power-off </v-icon>
@@ -138,7 +138,7 @@
                 <span v-else class="tip">Перезапуск игры</span>
             </v-tooltip>
 
-            <v-tooltip color="v_tooltip" top>
+            <v-tooltip color="v-tooltip" top>
               <template v-slot:activator="{ on }">
                 <v-btn @click="deleteAll = !deleteAll" :disabled="(saveExist > 0) ? false : true" v-on="on" icon>
                   <v-icon color="rgb(255, 102, 102)"> fas fa-trash-alt </v-icon>
@@ -148,7 +148,7 @@
                 <span v-else class="tip">Удаление всех сохранений</span>
             </v-tooltip>
             <br>
-            <v-tooltip color="v_tooltip" top>
+            <v-tooltip color="v-tooltip" top>
               <template v-slot:activator="{ on }">
                 <div v-if="$store.state.lang" class="text-center" v-on="on">Number of saves: {{saveCount}}</div>
                 <div v-else class="text-center" v-on="on">Кол-во сохранений: {{saveCount}}</div>
@@ -162,7 +162,7 @@
             <v-dialog v-model="deleteAll" persistent dark width="230">
                <v-card class="text-center">
                  <section v-if="$store.state.lang">
-                  <v-card-title class="headline dark important_modal_header"> Delete all saves </v-card-title>
+                  <v-card-title class="headline dark important-modal-header"> Delete all saves </v-card-title>
                     <v-card-text class="text--primary"> 
                       <br>
                       <b>This operation will delete all current saves!</b>
@@ -171,7 +171,7 @@
                     </v-card-text>
                  </section>
                  <section v-else>
-                  <v-card-title class="headline dark important_modal_header"> Удаление всех сохранений </v-card-title>
+                  <v-card-title class="headline dark important-modal-header"> Удаление всех сохранений </v-card-title>
                     <v-card-text class="text--primary"> 
                       <br>
                       <b>Данная операция удалит все текущие сохранения!</b>
@@ -197,7 +197,7 @@
             <v-dialog v-model="restart" persistent dark width="230">
                <v-card class="text-center">
                  <section v-if="$store.state.lang">
-                  <v-card-title class="headline dark important_modal_header"> Restart game </v-card-title>
+                  <v-card-title class="headline dark important-modal-header"> Restart game </v-card-title>
                     <v-card-text class="text--primary">
                       <br> 
                       <b>When you restart the game, all current progress will be lost!</b>
@@ -206,7 +206,7 @@
                     </v-card-text>
                  </section>
                  <section v-else>
-                  <v-card-title class="headline dark important_modal_header"> Перезапуск игры </v-card-title>
+                  <v-card-title class="headline dark important-modal-header"> Перезапуск игры </v-card-title>
                     <v-card-text class="text--primary"> 
                       <br>
                       <b>При перезапуске игры, будeт потерян весь текущий прогресс!</b>
@@ -249,6 +249,9 @@ import iziToast from 'izitoast/dist/js/iziToast.min.js';
 import PullTo from 'vue-pull-to'
 
 import localforage from 'localforage'
+
+import themes from '../plugins/themes'
+import chatThemes from '../plugins/chatThemes'
 
 localforage.config({
     name: 'vuex',
@@ -408,6 +411,11 @@ export default {
       try {
         console.log(`${saveName},${saveTime},${saveID}`)
         await this.$store.replaceState(await WebCrypto(`${saveName},${saveTime},${saveID}`));
+
+        this.$store.commit('updateStores'); // Фиксируем новые переменные
+        themes();
+        chatThemes(); // Обновляем стиль чата
+
         this.$store.state.lang 
           ? iziToast.info({message: 'Game loaded successfully', position: 'bottomCenter', backgroundColor: 'rgb(255, 254, 173)'})
           : iziToast.info({message: 'Игра загружена успешно', position: 'bottomCenter', backgroundColor: 'rgb(255, 254, 173)'})
@@ -509,8 +517,8 @@ export default {
   margin-right: 4px
 }
 
-.color-btn {
-  color: red;
+.v-list-bg {
+  background: var(--saves--v-list-bg--background) !important;
 }
 
 .save-btn-right {
@@ -519,6 +527,7 @@ export default {
 }
 
 @media (max-width: 450px) {
+
   .textfield {
     width: 100%;
     margin-left: 0px; 

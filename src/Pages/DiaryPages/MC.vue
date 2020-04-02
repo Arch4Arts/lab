@@ -1,6 +1,6 @@
 <template>
     <v-app>
-    <v-layout class="BG-v-layout" justify-center>
+    <v-layout class="v-layout" justify-center>
         <v-flex md8 class="Page">
             <h1>MC</h1>
         </v-flex>

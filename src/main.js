@@ -46,6 +46,8 @@ import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
 // import 'roboto-fontface/css/roboto/roboto-fontface.css'
 
+import chatThemes from './plugins/chatThemes'
+
 if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена
   Sentry.init({
     dsn: 'https://6b82c070a6874f70ad6e9fe5ebcb9fb8@sentry.io/1509214',
@@ -132,25 +134,10 @@ new Vue({
       if (store.state.theme === 'NordDark') this.$vuetify.theme.themes.dark = NordDark;
       if (store.state.theme === 'NordLight') this.$vuetify.theme.themes.dark = NordLight;
       // console.log(getComputedStyle(document.documentElement).getPropertyValue('--amouse-x'))
-      // this.mobileTheme()
+      chatThemes()
     })
   },
   methods: {
-    mobileTheme(){
-      if (this.$store.state.chat.chatCurrentTheme === 'Dark') {
-        // document.getElementById("barBtn-1").style.cssText = 'color: #37addf !important';
-        // document.getElementById("barBtn-2").style.cssText = 'color: #37addf !important';
-        // document.getElementById("barBtn-3").style.cssText = 'color: #37addf !important';
-        // document.getElementById("barBtn-4").style.cssText = 'color: #37addf !important';
-        // document.getElementById("barBtn-5").style.cssText = 'color: #37addf !important';
-        // document.getElementById("barBtn-6").style.cssText = 'color: #37addf !important';
-        // document.getElementById("barBtn-7").style.cssText = 'color: #37addf !important';
-
-        // document.getElementById("chatBar").style.cssText = 'background-color: transparent !important';
-        // document.getElementById("chatUsersList").style.cssText = 'background-color: #ffffff !important';
-      }
-    },
-
     achievementSound(){
     if (this.$store.state.achievementSound) {
       var audio = new Audio(require('./Media/audio/Achievements.mp3'));
@@ -231,7 +218,7 @@ new Vue({
         this.$store.state.chat.currentContacts.push(newContact);
         this.$store.commit('updateStores');
       }
-    }
+    },
   },
   render: function (h) { return h(App) }
 }).$mount('#app')

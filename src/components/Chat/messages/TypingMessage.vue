@@ -19,7 +19,7 @@ export default {
 <style lang="scss" scoped>
 	
 .typing-indicator {
-  background-color: var(--from_them_msg_bg);
+  background: var(--from_them_msg_bg);
   will-change: transform;
   width: auto;
   border-radius: 50px;
@@ -37,7 +37,7 @@ export default {
     height: 20px;
     width: 20px;
     border-radius: 50%;
-    background-color: var(--from_them_msg_bg);
+    background: var(--from_them_msg_bg);
   }
   &::after {
     height: 10px;
@@ -50,7 +50,7 @@ export default {
     width: 15px;
     float: left;
     margin: 0 1px;
-    background-color: #9E9EA1;
+    background: var(--typing-indicator__span--background);
     display: block;
     border-radius: 50%;
     opacity: 0.4;

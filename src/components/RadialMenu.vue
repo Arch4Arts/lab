@@ -17,19 +17,20 @@
       <!-- Основная кнопка раскрытия списка -->
       <v-btn
         slot="activator"
+        class="radial-menu-btn"
         dark
         icon
         hover
         v-model="fab"
       >
-        <v-icon>fas fa-ellipsis-v</v-icon>
+        <v-icon x-large>fas fa-compass</v-icon>
         <!-- <v-icon>fas fa-times-circle</v-icon> -->
       </v-btn>
       <v-btn
         fab
         dark
         small
-        color="blue"
+        class="radial-menu-btns"
         @click="() => this.$store.state.isOpenSaves = true"
       >
         <v-icon>fas fa-save</v-icon>
@@ -38,7 +39,7 @@
         fab
         dark
         small
-        color="blue"
+        class="radial-menu-btns"
       >
         <v-icon>fas fa-book</v-icon>
       </v-btn>
@@ -46,7 +47,7 @@
         fab
         dark
         small
-        color="blue"
+        class="radial-menu-btns"
         @click="() => this.$store.state.isOpenSettings = true"
       >
         <v-icon>fas fa-cog</v-icon>
@@ -56,7 +57,7 @@
         fab
         dark
         small
-        color="blue"
+        class="radial-menu-btns"
       >
         <v-icon>fas fa-question-circle</v-icon>
       </v-btn>
@@ -147,7 +148,18 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+.radial-menu-btn {
+  background: var(--RadialMenu--radial-menu-btn--background) !important;
+  color: var(--RadialMenu--radial-menu-btn--color) !important;
+}
+
+.radial-menu-btns {
+  background: var(--RadialMenu--radial-menu-btns--background) !important;
+  color: var(--RadialMenu--radial-menu-btns--color) !important;
+}
+
 .fab-text {
   color: rgba(0,0,0,0.54);
 }

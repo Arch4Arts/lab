@@ -1,5 +1,5 @@
 <template>
-  <vue-plyr :options="options">
+  <vue-plyr id="plyr--audio" :options="options">
     <audio>
       <source :src="data.src" :type="data.type"/> 
       <!-- audio/mp3 -->
@@ -85,10 +85,15 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 
 svg {
   display: none
+}
+
+.plyr--audio .plyr__controls {
+  background: transparent;
+  color: var(--plyr--audio--color)
 }
 
 </style>

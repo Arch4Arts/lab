@@ -17,7 +17,7 @@
 import Start18Caution from "./components/Start18Caution";
 import Navigation from "./components/Navigation";
 import StartPageInfo from "./components/StartPageInfo";
-import Settings from './components/Settings'
+import Settings from './components/Settings';
 import Main from "./Pages/Main";
 
 export default {
@@ -75,55 +75,64 @@ export default {
 </script>
 
 <style lang="scss">
-
-$bg_page: var(--v-bg_page-base);
-$bg_laouyt: var(--v-bg_laouyt-base);
-$font_color: var(--v-font_color-base);
-$border_color: var(--v-page_border-base);
-$btn-hover: var(--v-btn_hover-base);
-$v-card-bg: var(--v-v_card_background-base);
-$a-link: var(--v-a_link-base);
+@import './plugins/themes.scss';
+@import './plugins/chatThemes.scss';
 
 // .v-btn { ОБРАЗЕЦ КАК ПЕРЕНАЗНАЧАТЬ СТИЛИ VUETIFY
 //   color: green !important
 // }
 
-.BG-v-layout {
-  background-color: $bg_laouyt;
+.v-layout {
+  background: var(--app--v-layout--background);
 }
 
 .Page {
-  background-color: $bg_page;
-  color: $font_color;
+  background: var(--app--Page--background);
+  color: var(--app--Page--color);
   font-size: 14pt;
   text-align: justify;
   padding: 2%;
   box-sizing: border-box;
   height: auto;
-  border-right: 3px solid $border_color;
-  border-left: 3px solid $border_color;
+  border-right: var(--app--Page--border-right);
+  border-left: var(--app--Page--border-left);
 }
 
 .Page-element {
-  background-color: $bg_page;
-  color: $font_color;
+  background: var(--app--Page-element--background);
+  color: var(--app--Page-element--color);
 }
 
 .nav-btn:hover {
-  background-color: $btn-hover !important;
+  background: var(--app--nav-btn__hover--background) !important;
 }
 
 .v-btn:hover {
-  background-color: $btn-hover !important;
+  background: var(--app--v-btn__hover--background) !important;
 }
 
 .v-card {
-  background-color: $v-card-bg !important;
+  background: var(--app--v-card--background) !important;
 }
 
-.v-btn-toggle {
-  background: none !important;
-  background-color: none !important;
+.important-modal-header {
+  background: var(--global--important-modal-header--background);
+}
+
+.important-modal-bg {
+  background: var(--global--important-modal-bg--background);
+}
+
+.important-modal-button {
+  background: var(--global--important-modal-button--background) !important;
+}
+
+.important-modal-button:hover {
+  background: var(--global--important-modal-button--background) !important;
+}
+
+.v-tooltip {
+  background: var(--global--v-tooltip--background) !important;
 }
 
 /* Отключаем показ полосы прокрутки (вертикальной) */
@@ -138,11 +147,11 @@ html::-webkit-scrollbar {
 
 h1 {
   font-size: 2.0em;
-  color: $font_color;
+  color: var(--app--h1--color);
 }
 
 .font-color {
-  color: $font_color;
+  color: var(--app--font-color--color);
 }
 
 a { // убираем подчёркивание и делаем жирнее
@@ -161,8 +170,6 @@ a:hover {
     border-left: none;
   }  
 }
-
-@import './plugins/chatThemes.scss';
 
 /* roboto-100 - cyrillic_latin */
 @font-face {

@@ -8,27 +8,6 @@
         v-if="showUserList"
         :participants="participants"
       /> -->
-      <v-toolbar class="bar" dark height="50" flat>
-        <v-btn class="bar__back-btn v-btn--hover" icon @click="backToUserList()">
-          <v-icon size="18"> fas fa-arrow-left </v-icon>
-        </v-btn>
-        <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
-        <v-spacer/>
-        <v-toolbar-title class="bar__title"> 
-        <!-- ЗАГОЛОВОК ЧАТА преобразует tailor в Tailor -->
-          {{ this.$store.state.chat.ContactOnClikedName }} 
-        </v-toolbar-title>
-        <v-spacer/>
-        <v-btn class="bar__phone-btn v-btn--hover" icon>
-          <v-icon size="18"> fas fa-phone </v-icon>
-        </v-btn>
-        <v-btn v-if="$store.state.chat.CurrentTheme !== $store.state.chat.ThemesList[0].title" class="bar__video-btn v-btn--hover" icon>
-          <v-icon size="18"> fas fa-video </v-icon>
-        </v-btn>
-        <v-btn v-if="$store.state.chat.CurrentTheme !== $store.state.chat.ThemesList[0].title" class="bar__ellipsis-btn v-btn--hover" icon>
-          <v-icon size="18"> fas fa-ellipsis-v </v-icon>
-        </v-btn>
-      </v-toolbar>
       <MessageList
         :messages="messageList"
         :participants="participants"
@@ -138,10 +117,6 @@ export default {
       this.$store.state.chat.newMessagesCount = 0
       this.$store.commit('updateStores');
     },
-    backToUserList(){
-      this.$store.state.chat.UserListShow = !this.$store.state.chat.UserListShow
-      this.$store.commit('updateStores');
-    }
   }
 }
 </script>
@@ -166,39 +141,10 @@ export default {
   bottom: 90px;
 }
 
-.bar {
-  background-color: var(--bar--background-color) !important;
-}
-
-.bar__title {
-    color:  var(--bar__title--color) !important;
-    font-weight: var(--bar__title--font-weight) !important;  
-}
-
-.bar__back-btn {
-    color: var(--bar__back-btn--color) !important;
-}
-
-.bar__phone-btn {
-    color: var(--bar__phone-btn--color) !important;
-}
-
-.Bbar__video-btn {
-    color: var(--bar__video-btn--color) !important;
-}
-
-.bar__ellipsis-btn {
-    color: var(--bar__ellipsis-btn--color) !important;
-}
-
-.v-btn--hover:hover {
-  background-color: transparent !important;
-}
-
 .user-list-pos {
   width: 340px;
   height: calc(100% - 120px);
-  max-height: 595px;
+  max-height: 598px;
   position: fixed;
   right: 39px;
   bottom: 70px;
@@ -209,7 +155,7 @@ export default {
 .chat-window {
   width: 340px;
   height: calc(100% - 120px);
-  max-height: 595px;
+  max-height: 598px;
   position: fixed;
   right: 39px;
   bottom: 70px;

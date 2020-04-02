@@ -106,7 +106,7 @@ export default {
   position: absolute;
   bottom: 0;
   display: flex;
-  background-color: var(--inputArea--background-color);
+  background: var(--inputArea--background);
   z-index: 4;
   .text-input { // Поле ввода
     width: var(--inputArea__text-input--width);
@@ -114,7 +114,7 @@ export default {
     border-radius: var(--inputArea__text-input--border-radius);
     padding: 15px; // позиционирование текста по середине
     padding-left: var(--inputArea__text-input--padding-left); // Смешение текста от левого края
-    background-color: var(--inputArea__text-input--background-color);
+    background: var(--inputArea__text-input--background);
     color: var(--inputArea__text-input--color);
     &:empty:before {
       content: attr(placeholder);
@@ -132,7 +132,7 @@ export default {
       left: var(--inputArea-smile-icon--left);
       bottom: var(--inputArea-smile-icon--bottom);
       color: var(--inputArea-smile-icon--color);
-      background-color: var(--inputArea-smile-icon--background-color);
+      background: var(--inputArea-smile-icon--background);
     }
     .paperclip-icon {
       position: absolute;
@@ -140,7 +140,7 @@ export default {
       left: var(--inputArea-paperclip-icon--left);
       bottom: var(--inputArea-paperclip-icon--bottom);
       color: var(--inputArea-paperclip-icon--color);
-      background-color: var(--inputArea-paperclip-icon--background-color);
+      background: var(--inputArea-paperclip-icon--background);
     }
     .plus-icon {
       position: absolute;
@@ -151,7 +151,7 @@ export default {
       height: var(--inputArea-plus-icon--height);
       border-radius: var(--inputArea-plus-icon--border-radius);
       color: var(--inputArea-plus-icon--color);
-      background-color: var(--inputArea-plus-icon--background-color);
+      background: var(--inputArea-plus-icon--background);
     }
     .send-icon {
       position: absolute;

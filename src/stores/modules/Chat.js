@@ -17,7 +17,7 @@ const chat = {
 
         ThemesList: [
         { title: 'Minimalistic' },
-        { title: 'Click Me 2' },
+        { title: 'Dark minimalistic' },
         { title: 'Click Me 3' },
         { title: 'Click Me 4' },
         ],

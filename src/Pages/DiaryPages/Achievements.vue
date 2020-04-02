@@ -1,6 +1,6 @@
 <template>
     <v-app>
-    <v-layout class="BG-v-layout" justify-center>
+    <v-layout class="v-layout" justify-center>
         <v-flex md8 class="Page">
             <h1 v-if="$store.state.lang" class=" text-center">Achviemenent</h1>
             <h1 v-else class=" text-center">Достижения</h1>

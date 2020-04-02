@@ -29,7 +29,7 @@
           <template v-for="contact in ContactList">
 
             <v-list-item
-              class="users-list__vlist--hover"
+              class="users-list__vlist-item users-list__vlist--hover"
               :key="contact.id"
               @click="ClickOnContact(contact.id, contact.name)"
             >
@@ -60,6 +60,8 @@
 </template>
 
 <script>
+import chatThemes from '../../plugins/chatThemes'
+
   export default {
     computed: {
       ContactList: {
@@ -91,9 +93,9 @@
         this.$store.commit('updateStores');
       },
       chatThemes(select){
-        this.$store.state.chat.chatCurrentTheme = select;
+        this.$store.state.chat.CurrentTheme = select;
         this.$store.commit('updateStores');
-        this.$root.mobileTheme();
+        chatThemes();
       }
     },
   }
@@ -102,28 +104,11 @@
 <style scoped>
 
 .users-list {
-    background-color: var(--users-list--background-color) !important;
+    background: var(--users-list--background) !important;
 }
 
 .users-list__bar {
-    background-color: var(--users-list__bar--background-color) !important;
-}
-
-.users-list__vlist {
-    background-color: var(--users-list__vlist--background-colorr) !important;   
-}
-
-.users-list__vlist--contact-title {
-    color: var(--users-list__vlist--contact-title--color) !important;
-    font-weight: var(--users-list__vlist--contact-title--font-weight) !important;
-}
-
-.users-list__vlist--contact-subtitle {
-    color: var(--users-list__vlist--contact-subtitle--color) !important;
-}
-
-.users-list__vlist--contact-subtitle-icon {
-    color: var(--users-list__vlist--contact-subtitle-icon--color) !important;
+    background: var(--users-list__bar--background) !important;
 }
 
 .users-list__bar__nav-btn {
@@ -139,11 +124,33 @@
 }
 
 .v-btn--hover:hover {
-  background-color: var(--v-btn--hover--background-color) !important;
+  background: var(--v-btn--hover--background) !important;
+}
+
+.users-list__vlist {
+    background: var(--users-list__vlist--background) !important;  
+}
+
+.users-list__vlist-item {
+    background: var(--users-list__vlist-item--background) !important;   
+    margin-bottom: var(--users-list__vlist-item--margin-bottom);
+}
+
+.users-list__vlist--contact-title {
+    color: var(--users-list__vlist--contact-title--color) !important;
+    font-weight: var(--users-list__vlist--contact-title--font-weight) !important;
+}
+
+.users-list__vlist--contact-subtitle {
+    color: var(--users-list__vlist--contact-subtitle--color) !important;
+}
+
+.users-list__vlist--contact-subtitle-icon {
+    color: var(--users-list__vlist--contact-subtitle-icon--color) !important;
 }
 
 .users-list__vlist--hover:hover {
-  background-color: var(--users-list__vlist--hover--background-color) !important;
+  background: var(--users-list__vlist--hover--background) !important;
 }
 
 .users_list__vlist__avatar_badge {
@@ -153,7 +160,7 @@
 }
 
 .users-list__palette-menu-bg {
-  background-color: var(--users-list__palette-menu-bg--background-color) !important;
+  background: var(--users-list__palette-menu-bg--background) !important;
 }
 
 .users-list__palette-menu-font {

@@ -34,7 +34,7 @@ export default {
   border-radius: 15px;
   font-size: 14px;
   color: var(--suggestions-element--color);
-  background-color: var(--suggestions-element--background-color);
+  background: var(--suggestions-element--background);
   cursor: pointer;
 }
 </style>

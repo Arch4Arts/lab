@@ -1,6 +1,6 @@
 <template>
 <v-app>
-<v-layout v-if="$store.state.initialSettings" class="BG-v-layout" justify-center>
+<v-layout v-if="$store.state.initialSettings" class="v-layout" justify-center>
     <v-expansion-panel dark>
     <v-flex md8 text-center class="Page">
 
