@@ -10,7 +10,7 @@ import router from './router.js'
 import store from './stores/store'
 import { NordLight, CustomDark, NordDark } from './plugins/themes'
 import vuetify from './plugins/vuetify';
-import '@fortawesome/fontawesome-pro/css/all.css'
+import '@fortawesome/fontawesome-free/css/all.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 Vue.config.productionTip = false

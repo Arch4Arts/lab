@@ -47,7 +47,6 @@
 
             <v-list-item-action>
               <v-checkbox
-                v-model="active"
                 color="primary"
                 @click="toggle"
               ></v-checkbox>
