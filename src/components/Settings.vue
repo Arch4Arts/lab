@@ -102,6 +102,7 @@
 </template>
 
 <script>
+
 import extractNumbers from 'extract-numbers' // Для FontSize
 import { NordLight, CustomDark, NordDark } from '../Styles/themes'
 

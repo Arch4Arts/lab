@@ -114,7 +114,7 @@ export default {
         ClickStart(){
             this.$store.commit('firstStart'); // Отключаем стартовую страницу
             this.$store.commit('Header'); // Включаем хедер
-            this.$router.push('/'); // Переходим в корень
+            // this.$router.push('/'); // Переходим в корень
         }
     }
 }

@@ -55,6 +55,7 @@ export default {
           }
         }
       },
+      // Тригеры для появления и исчезновения radialMenu
       SwipeBottom(){
         this.$store.state.radialMenuShow = true // Не менять, на телефоне прокрутка свайпами не соотвествует направлению прокрутки на компе
         this.$store.commit('updateStores');
@@ -70,7 +71,7 @@ export default {
     StartPageInfo,
     Main,
     Settings,
-    Saves: () => import('./components/Saves')
+    Saves: () => import('./components/Saves') // Ленивая загрузка компонента (Dynamic Imports) для повышения производительности
   },
 }
 </script>
