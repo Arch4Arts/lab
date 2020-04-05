@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import StartPageInfo from '../components/StartPageInfo'
+import StartPageInfo from '../Pages/StartPageInfo'
 
 export default {
     data(){

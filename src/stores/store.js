@@ -64,7 +64,7 @@ const store = new Vuex.Store({
     f95zone_link: 'https://f95zone.to',
     discord_link: 'https://discordapp.com'
   },
-  plugins: [createPersistedState({
+  plugins: [createPersistedState({ // WebCrypto здесь не подходит, тут однопоток.
     setState(key, state, storage) {
       return storage.setItem(key, AES.encrypt(JSON.stringify(state), keyGen(key)));
     },

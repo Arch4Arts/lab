@@ -248,8 +248,8 @@ import PullTo from 'vue-pull-to'
 
 import localforage from 'localforage'
 
-import themes from '../plugins/themes'
-import chatThemes from '../plugins/chatThemes'
+import themes from '../Styles/themes'
+import chatThemes from '../Styles/chatThemes'
 
 localforage.config({
     name: 'vuex',

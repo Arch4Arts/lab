@@ -8,8 +8,8 @@ Vue.use(Divider);
 import App from './App.vue'
 import router from './router.js'
 import store from './stores/store'
-import { NordLight, CustomDark, NordDark } from './plugins/themes'
-import vuetify from './plugins/vuetify';
+import { NordLight, CustomDark, NordDark } from './Styles/themes'
+import vuetify from './Styles/vuetify';
 import '@fortawesome/fontawesome-free/css/all.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
@@ -46,7 +46,7 @@ import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
 // import 'roboto-fontface/css/roboto/roboto-fontface.css'
 
-import chatThemes from './plugins/chatThemes'
+import chatThemes from './Styles/chatThemes'
 
 if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена
   Sentry.init({

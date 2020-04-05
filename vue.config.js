@@ -9,13 +9,13 @@ module.exports = {
   configureWebpack: {
     plugins: (process.env.NODE_ENV === 'production') ? 
     [
-    new BundleAnalyzerPlugin({
+    new BundleAnalyzerPlugin({ // Генерация файла отчёта
         analyzerMode: 'static',
         openAnalyzer: false,
     }),
-    new SentryCliPlugin({
-      release: pjson.version,
-      include: 'D:/Dev/lab/dist/js/',
+    new SentryCliPlugin({ // Обработчик ошибок
+      release: pjson.version, // извлечение версии игры из переменной
+      include: 'D:/Dev/lab/dist/js/', // Загрузка js файлов на сервер
       // filenameTransform: filename => '~/js/' + filename,
       ignoreFile: '.sentrycliignore',
       ignore: ['node_modules', 'webpack.config.js'],
@@ -36,11 +36,11 @@ module.exports = {
   // css: {
   //   loaderOptions: {
   //     sass: {
-  //       data: `@import 'D:/Dev/lab/src/plugins/chatThemes.scss';`,
+  //       data: `@import 'D:/Dev/lab/src/Styles/chatThemes.scss';`,
   //     },
   //   },
   // },
   publicPath: './',
   filenameHashing: false,
-  productionSourceMap: true,
+  productionSourceMap: true, // чтобы ошибки в консоле указавали точно местоположение в js
 }

@@ -2,11 +2,13 @@
   <v-app> 
   <v-layout v-touch="{ right: () => SwipeRight(), left: () => SwipeLeft(), down: () => SwipeBottom(), up: () => SwipeTop() }">
     <v-content>
+    <!-- Pages -->
+    <StartPageInfo v-if="$store.state.firstStart"/>
+    <!-- Components -->
     <Start18Caution/>
     <Settings/>
     <Saves/>
-    <navigation v-if="$store.state.Header"></navigation>
-    <StartPageInfo v-if="$store.state.firstStart"></StartPageInfo>
+    <navigation v-if="$store.state.Header"/>
       <router-view v-if="!$store.state.firstStart"/>
     </v-content>
   </v-layout>  
@@ -16,7 +18,7 @@
 <script>
 import Start18Caution from "./components/Start18Caution";
 import Navigation from "./components/Navigation";
-import StartPageInfo from "./components/StartPageInfo";
+import StartPageInfo from "./Pages/StartPageInfo";
 import Settings from './components/Settings';
 import Main from "./Pages/Main";
 
@@ -74,8 +76,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import './plugins/themes.scss';
-@import './plugins/chatThemes.scss';
+@import './Styles/themes.scss';
+@import './Styles/chatThemes.scss';
 
 // .v-btn { ОБРАЗЕЦ КАК ПЕРЕНАЗНАЧАТЬ СТИЛИ VUETIFY
 //   color: green !important

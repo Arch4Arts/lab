@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import chatThemes from '../../plugins/chatThemes'
+import chatThemes from '../../Styles/chatThemes'
 
   export default {
     computed: {

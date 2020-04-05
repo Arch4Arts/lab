@@ -57,7 +57,7 @@
     </v-list>
   </v-card>
   <div>Настройки отображения</div>
-  <!-- <v-expansion-panels>
+  <v-expansion-panels>
     <v-expansion-panel class="header_panels">
       <v-expansion-panel-header>Настройки отображения</v-expansion-panel-header>
       <v-expansion-panel-content class="bg_panels">
@@ -91,19 +91,19 @@
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
       </v-expansion-panel-content>
     </v-expansion-panel>
-  </v-expansion-panels> -->
+  </v-expansion-panels>
 
   </section>
-      <!-- <v-switch
+      <v-switch
         v-model="$vuetify.theme.dark"
         label="Dark"
-      ></v-switch> -->
+      ></v-switch>
 </v-navigation-drawer>
 </template>
 
 <script>
 import extractNumbers from 'extract-numbers' // Для FontSize
-import { NordLight, CustomDark, NordDark } from '../plugins/themes'
+import { NordLight, CustomDark, NordDark } from '../Styles/themes'
 
 export default {
   data(){
