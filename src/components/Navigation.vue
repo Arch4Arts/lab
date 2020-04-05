@@ -15,7 +15,8 @@
                 </v-list-item>
             </v-list>
          </v-navigation-drawer> -->
-        <Radial-Menu class="hidden-md-and-up"/>
+
+         <Radial-Menu class="hidden-md-and-up"/>
  
          <!-- КНОПКИ В МЕНЮ -->
         <v-app-bar v-if="!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs)" app dark class="navigationBar" elevation="14">

@@ -1,6 +1,6 @@
 <template>
-<v-card id="create">
-  <v-fab-transition transition="scale-transition">
+<v-card>
+  <v-fab-transition transition="scale-transition" v-show="visible">
     <v-speed-dial
       v-model="fab"
       :top="top"
@@ -12,7 +12,6 @@
       :transition="transition"
       fixed
       v-show="RadialMenuStatus"
-      transition="scale-transition"
     >
       <!-- Основная кнопка раскрытия списка -->
       <v-btn
@@ -22,10 +21,12 @@
         icon
         hover
         v-model="fab"
+        v-show="visible"
       >
         <v-icon x-large>fas fa-compass</v-icon>
-        <!-- <v-icon>fas fa-times-circle</v-icon> -->
       </v-btn>
+
+      <!-- Saves -->
       <v-btn
         fab
         dark
@@ -35,14 +36,20 @@
       >
         <v-icon>fas fa-save</v-icon>
       </v-btn>
+
+      <!-- Diary -->
       <v-btn
         fab
         dark
         small
         class="radial-menu-btns"
+        to="/Diary"
+        @click="visible = false"
       >
         <v-icon>fas fa-book</v-icon>
       </v-btn>
+
+      <!-- Settings -->
       <v-btn
         fab
         dark
@@ -53,29 +60,33 @@
         <v-icon>fas fa-cog</v-icon>
       </v-btn>
 
+      <!-- FAQ -->
       <v-btn
         fab
         dark
         small
         class="radial-menu-btns"
+        to="/FAQ"
+        @click="visible = false"
       >
         <v-icon>fas fa-question-circle</v-icon>
-      </v-btn>
-
-<!-- 
-      <router-link v-for="(item, i) in menuItems" :key="'btn' + i" :to="item.route">
-      <v-btn
-        fab
-        dark
-        small
-        class="blue"
-        @click="openSettings(item.icon)"
-      >
-        <v-icon >{{item.icon}}</v-icon>
-      </v-btn>
-      </router-link> -->
-      
+      </v-btn>  
     </v-speed-dial>
+    </v-fab-transition>
+
+    <v-fab-transition transition="scale-transition">
+      <!-- Кнопка возврата назад -->
+      <v-btn
+        v-if="visible != true"
+        transition="scale-transition"
+        class="radial-menu-btn return"
+        dark
+        icon
+        v-show="RadialMenuStatus"
+        @click="() => { visible = true; this.$router.push('/')}"
+      >
+        <v-icon>fas fa-undo-alt</v-icon>
+    </v-btn>
     </v-fab-transition>
 </v-card>
 </template>
@@ -93,58 +104,15 @@ export default {
       bottom: true,
       left: false,
       transition: 'slide-y-reverse-transition',
-      menuItems: [
-                {
-                icon: 'fas fa-save',
-                route: 'Saves'
-                },
-                {
-                icon: 'fas fa-book',
-                route: 'Diary'
-                },
-                {
-                icon: 'fas fa-cog',
-                route: ''
-                },
-                {
-                icon: 'fas fa-question-circle',
-                route: 'FAQ'
-                },
-                ]
+      visible: true // Отображение компаса или кнопки назад
     }),
-    watch: {
-      top (val) {
-        this.bottom = !val
-      },
-      right (val) {
-        this.left = !val
-      },
-      bottom (val) {
-        this.top = !val
-      },
-      left (val) {
-        this.right = !val
-      }
-    },
-
     computed: {
       RadialMenuStatus(){
         return this.$store.state.radialMenuShow;
-      },
-      activeFab () {
-        switch (this.tabs) {
-          case 'one': return { 'class': 'purple', icon: 'account_circle' }
-          case 'two': return { 'class': 'red', icon: 'edit' }
-          case 'three': return { 'class': 'green', icon: 'keyboard_arrow_up' }
-          default: return {}
-        }
       }
     },
     methods: {
-        openSettings(icon){
-            if (icon === 'fas fa-cog') this.$store.state.isOpenSettings = true
-        }
-    },
+    }
 }
 </script>
 
@@ -158,6 +126,14 @@ export default {
 .radial-menu-btns {
   background: var(--RadialMenu--radial-menu-btns--background) !important;
   color: var(--RadialMenu--radial-menu-btns--color) !important;
+}
+
+.return {
+  position: fixed;
+  right: 0px;
+  bottom: 0px;
+  margin: 14px 14px 14px 14px;
+  z-index: 10;
 }
 
 .fab-text {

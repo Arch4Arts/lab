@@ -6,8 +6,6 @@
   app
   touchless
   id="drawer"
-  :class='!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs) ? "mt-5 bg_page" : "mt-0 bg_page"'
-  :style='!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs) ? "top: 44px" : "top: 0px"'
   dark
   width="700"
 >

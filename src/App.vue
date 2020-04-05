@@ -56,7 +56,6 @@ export default {
       SwipeBottom(){
         this.$store.state.radialMenuShow = true // Не менять, на телефоне прокрутка свайпами не соотвествует направлению прокрутки на компе
         this.$store.commit('updateStores');
-        console.log('111')
       },
       SwipeTop(){
         this.$store.state.radialMenuShow = false

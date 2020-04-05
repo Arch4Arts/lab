@@ -6,8 +6,6 @@
       right
       app
       touchless
-      :class='!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs) ? "mt-5" : "mt-0"'
-      :style='!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs) ? "top: 44px" : "top: 0px"'
       dark
       width="700"
     >
@@ -492,12 +490,12 @@ export default {
 
 .scroll-area {
   width: inherit;
-  height: 500px;
+  height: 75vh;
 }
 
 .saves-loading {
   width: inherit;
-  height: 500px;
+  height: 75vh;
 }
 
 .tip {
