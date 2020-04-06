@@ -13,7 +13,7 @@ Vue.use(VueRouter)
 export default new VueRouter({
     routes: [
         {
-            path: '/',
+            path: '/', // Корень
             name: '',
             component: Main
         },
@@ -27,11 +27,6 @@ export default new VueRouter({
             name: 'FAQ',
             component: FAQ
         },
-        // {
-        //     path: '/TestPageChat',
-        //     name: 'Chat',
-        //     component: TestPageChat
-        // },
         {
             path: '/Diary',
             name: 'Diary',

@@ -1,12 +1,12 @@
 <template>
   <div class="text-center">
     <!--  v-model это активатор - ЕГО НЕ ТРОГАТЬ -->
-    <v-dialog v-model="$store.state.firstDialog" persistent dark width="420">
+    <v-dialog v-model="$store.state.gameAgeWarningDialog" persistent dark width="420">
         <v-card class="text-center">
           <!-- ENGLISH -->
-          <section v-if="$store.state.lang">
+          <section v-if="$store.state.gameLang">
 
-            <v-card-title class="headline dark important-modal-header"> You must be 18 or older to access this game </v-card-title>
+            <v-card-title class="headline dark important-modal__header"> You must be 18 or older to access this game </v-card-title>
               <v-card-text class="text--primary">
                   <br>
                   This game contains <b>explicit scenes of a sexual nature</b>, with a great bias in <b>femdom</b>!
@@ -17,7 +17,7 @@
             <v-card-actions>
               <v-layout align-center justify-space-around column>
                 <v-flex>
-                  <v-btn class="important-modal-button" dark @click="$store.commit('firstDialog')">Enter</v-btn>
+                  <v-btn class="important-modal__button" dark @click="$store.commit('gameAgeWarningDialog')">Enter</v-btn>
                 </v-flex>
                 <v-flex class="leave-btn">
                   <v-btn text @click="Leave()">Cancel</v-btn>
@@ -29,18 +29,18 @@
           <!-- RUSSIAN -->
           <section v-else>
 
-            <v-card-title class="headline dark important-modal-header"> Вы должны быть старше 18 лет для доступа к этой игре </v-card-title>
-              <v-card-text class="text--primary important-modal-bg">
+            <v-card-title class="headline dark important-modal__header"> Вы должны быть старше 18 лет для доступа к этой игре </v-card-title>
+              <v-card-text class="text--primary important-modal__bg">
                   <br>
                   Данная игра содержит <b>откровенные сцены сексуального характера</b>, с большим уклоном в <b>женское доминирование</b>!
                   <br><br>
                   Нажимая на кнопку «<b>Продолжить</b>», вы подтверждаете, что вам как минимум 18 лет.
               </v-card-text>
 
-            <v-card-actions class="important-modal-bg">
+            <v-card-actions class="important-modal__bg">
               <v-layout align-center justify-space-around column>
                 <v-flex>
-                  <v-btn class="important-modal-button" dark @click="$store.commit('firstDialog')">Продолжить</v-btn>
+                  <v-btn class="important-modal__button" dark @click="$store.commit('gameAgeWarningDialog')">Продолжить</v-btn>
                 </v-flex>
                 <v-flex class="leave-btn">
                   <v-btn text @click="Leave()">Отменить</v-btn>

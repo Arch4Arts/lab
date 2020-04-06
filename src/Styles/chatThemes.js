@@ -1,7 +1,7 @@
 import store from '../stores/store'
 
 export default function chatThemes(){
-    if (store.state.chat.CurrentTheme === store.state.chat.ThemesList[0].title) { // Minimalistic
+    if (store.state.mChat.mChat_CurrentTheme_MC === store.state.mChat.mChat_ThemesList[0].title) { // Minimalistic
       // Список контактов
       document.documentElement.style.setProperty('--users-list--background', '#fff');
       document.documentElement.style.setProperty('--users-list__bar--background', '#fff');
@@ -84,7 +84,7 @@ export default function chatThemes(){
       document.documentElement.style.setProperty('--inputArea-microphone-icon--width', '18px');
       document.documentElement.style.setProperty('--inputArea-microphone-icon--color', '#37addf');
     };
-    if (store.state.chat.CurrentTheme === store.state.chat.ThemesList[1].title) { // Dark Minimalistic
+    if (store.state.mChat.mChat_CurrentTheme_MC === store.state.mChat.mChat_ThemesList[1].title) { // Dark Minimalistic
       // Список контактов
       document.documentElement.style.setProperty('--users-list--background', '#242933');
       document.documentElement.style.setProperty('--users-list__bar--background', 'transparent');

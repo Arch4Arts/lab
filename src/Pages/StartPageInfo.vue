@@ -1,177 +1,173 @@
 <template>
 <v-app>
-    <v-layout justify-center class="v-layout">
-         <v-flex md8 text-center class="Page">
-            <!-- ENGLISH -->
-            <section v-if="$store.state.lang">
+	<v-layout justify-center class="v-layout">
+		<v-flex md8 text-center class="Page">
+			<!-- ENGLISH -->
+			<section v-if="$store.state.gameLang">
+				<!-- ВЫБОР ЯЗЫКА -->
+				<a-divider class="divider"><h1> Game language </h1></a-divider>
+				<v-btn-toggle class="v-btn-toggle" v-model="launguage" rounded>
+					<v-btn text @click="$store.commit('langChange')">Russian</v-btn>
+					<v-btn text>English</v-btn>
+				</v-btn-toggle>
+				<!-- ОБ ИГРЕ -->
+				<p></p>
+				<a-divider class="divider"><h1> About the game </h1></a-divider>
+				<p></p>
+				<p> This game contains many fetishes, perversions, before starting the game, please read the list below: </p>
+				<p><i> Click on the tag to open the description. </i></p>
+				<v-chip class="genres" v-for="(genre, i) in genres" :key="'genre' + i" @click="ClickGenre(genresLink[i])"> {{ genres[i] }} </v-chip>
+				<p></p>
+				<p> If you are satisfied with the above fetishes, then welcome, otherwise, do not play this game, you have been warned. </p>
+				<!-- ПОДДЕРЖКА -->
+				<a-divider class="divider"><h2> Support </h2></a-divider>
+				<p></p>
+				<p> If you like the game and you want to support me, visit my <a :href="$store.state.patreon_link" class="subscribe-star">Subscribe Star</a></p>
+				<p> Also, the game requires an adequate translation into English, and if you can help with this in any way, write to me. </p>
+				<!-- СООБЩЕСТВО -->
+				<a-divider class="divider"><h2> Community </h2></a-divider>
+				<p></p>
+				<p> If you have suggestions for improving the game, ideas or questions, you can visit our <a :href="$store.state.discord_link" class="discord">Discord</a> </p>
+				<p> Also visit these resources: <a :href="$store.state.tfgames_link" class="tfgames">TFGames</a> and <a :href="$store.state.f95zone_link" class="f95">F95</a><a :href="$store.state.f95zone_link" class="f95-zone">Zone</a> there you can also find useful information in discussions. </p>
+				
+				<v-btn rounded class="continue-button" dark @click=ClickStart()> Continue </v-btn>
+		  </section>
 
-                <!-- ВЫБОР ЯЗЫКА -->
-                <a-divider class="divider"><h1> Game language </h1></a-divider>
-                <v-btn-toggle class="v-btn-toggle" v-model="launguage" rounded>
-                    <v-btn text @click="$store.commit('langChange')">Russian</v-btn>
-                    <v-btn text>English</v-btn>
-                </v-btn-toggle>
-                <!-- ОБ ИГРЕ -->
-                <p></p>
-                <a-divider class="divider"><h1> About the game </h1></a-divider>
-                <p></p>
-                <p> This game contains many fetishes, perversions, before starting the game, please read the list below: </p>
-                <p><i> Click on the tag to open the description. </i></p>
-                <v-chip class="genres" v-for="(genre, i) in genres" :key="'genre' + i" @click="ClickGenre(genresLink[i])"> {{ genres[i] }} </v-chip>
-                <p></p>
-                <p> If you are satisfied with the above fetishes, then welcome, otherwise, do not play this game, you have been warned. </p>
-                <!-- ПОДДЕРЖКА -->
-                <a-divider class="divider"><h2> Support </h2></a-divider>
-                <p></p>
-                <p> If you like the game and you want to support me, visit my <a :href="$store.state.patreon_link" class="subscribe-star">Subscribe Star</a></p>
-                <p> Also, the game requires an adequate translation into English, and if you can help with this in any way, write to me. </p>
-                <!-- СООБЩЕСТВО -->
-                <a-divider class="divider"><h2> Community </h2></a-divider>
-                <p></p>
-                <p> If you have suggestions for improving the game, ideas or questions, you can visit our <a :href="$store.state.discord_link" class="discord">Discord</a> </p>
-                <p> Also visit these resources: <a :href="$store.state.tfgames_link" class="tfgames">TFGames</a> and <a :href="$store.state.f95zone_link" class="f95">F95</a><a :href="$store.state.f95zone_link" class="f95-zone">Zone</a> there you can also find useful information in discussions. </p>
-                
-                <v-btn rounded class="continue-button" dark @click=ClickStart()> Continue </v-btn>
-
-            </section>
-
-            <section v-else>
-                <!-- ВЫБОР ЯЗЫКА -->
-                <a-divider class="divider"><h1> Язык игры </h1></a-divider>
-                <v-btn-toggle class="v-btn-toggle" v-model="launguage" rounded>
-                    <v-btn text width="130">Русский</v-btn>
-                    <v-btn text @click="$store.commit('langChange')">Английский</v-btn>
-                </v-btn-toggle>
-                <!-- ОБ ИГРЕ -->
-                <p></p>
-                <a-divider class="divider"><h1> Об игре </h1></a-divider>
-                <p></p>
-                <p> Данная игра, содержит множество фетишей, извращений, перед началом игры, пожалуйста, ознакомтесь со списком ниже: </p>
-                <p><i> Нажми на тег, чтобы открыть описание </i></p>
-                <v-chip class="genres" v-for="(genre, i) in genres" :key="'genre' + i" @click="ClickGenre(genresLink[i])"> {{ genres[i] }} </v-chip>
-                <p></p>
-                <p> Если вас устраивает вышеперечисленные фетиши, тогда добро пожаловать, в противном случае, не играйте в эту игру, вы были предупреждены. </p>
-                <!-- ПОДДЕРЖКА -->
-                <a-divider class="divider"><h2> Поддержка </h2></a-divider>
-                <p></p>
-                <p> Если вам нравится игра, и вы хотите поддержать меня, посетите мой  <a :href="$store.state.patreon_link" class="subscribe-star">Subscribe Star</a></p>
-                <p> Также игре требуется адекватный перевод на английский язык, и если вы можете как-либо помочь с этим, напишите мне. </p>
-                <!-- СООБЩЕСТВО -->
-                <a-divider class="divider"><h2> Сообщество </h2></a-divider>
-                <p></p>
-                <p> Если у вас есть предложения по улучшению игры, идеи или вопросы, вы можете посетить наш <a :href="$store.state.discord_link" class="discord">Discord</a> </p>
-                <p> Также посетите данные ресурсы: <a :href="$store.state.tfgames_link" class="tfgames">TFGames</a> and <a :href="$store.state.f95zone_link" class="f95">F95</a><a :href="$store.state.f95zone_link" class="f95-zone">Zone</a> там вы также можете найти полезную информацию в обсуждениях. </p>
-                
-                <v-btn rounded class="continue-button" dark @click=ClickStart()> Продолжить </v-btn>
-                 
-             </section>
-         </v-flex>
-     </v-layout>
+		  <section v-else>
+				<!-- ВЫБОР ЯЗЫКА -->
+				<a-divider class="divider"><h1> Язык игры </h1></a-divider>
+				<v-btn-toggle class="v-btn-toggle" v-model="launguage" rounded>
+						<v-btn text width="130">Русский</v-btn>
+						<v-btn text @click="$store.commit('langChange')">Английский</v-btn>
+				</v-btn-toggle>
+				<!-- ОБ ИГРЕ -->
+				<p></p>
+				<a-divider class="divider"><h1> Об игре </h1></a-divider>
+				<p></p>
+				<p> Данная игра, содержит множество фетишей, извращений, перед началом игры, пожалуйста, ознакомтесь со списком ниже: </p>
+				<p><i> Нажми на тег, чтобы открыть описание </i></p>
+				<v-chip class="genres" v-for="(genre, i) in genres" :key="'genre' + i" @click="ClickGenre(genresLink[i])"> {{ genres[i] }} </v-chip>
+				<p></p>
+				<p> Если вас устраивает вышеперечисленные фетиши, тогда добро пожаловать, в противном случае, не играйте в эту игру, вы были предупреждены. </p>
+				<!-- ПОДДЕРЖКА -->
+				<a-divider class="divider"><h2> Поддержка </h2></a-divider>
+				<p></p>
+				<p> Если вам нравится игра, и вы хотите поддержать меня, посетите мой  <a :href="$store.state.patreon_link" class="subscribe-star">Subscribe Star</a></p>
+				<p> Также игре требуется адекватный перевод на английский язык, и если вы можете как-либо помочь с этим, напишите мне. </p>
+				<!-- СООБЩЕСТВО -->
+				<a-divider class="divider"><h2> Сообщество </h2></a-divider>
+				<p></p>
+				<p> Если у вас есть предложения по улучшению игры, идеи или вопросы, вы можете посетить наш <a :href="$store.state.discord_link" class="discord">Discord</a> </p>
+				<p> Также посетите данные ресурсы: <a :href="$store.state.tfgames_link" class="tfgames">TFGames</a> and <a :href="$store.state.f95zone_link" class="f95">F95</a><a :href="$store.state.f95zone_link" class="f95-zone">Zone</a> там вы также можете найти полезную информацию в обсуждениях. </p>
+				
+				<v-btn rounded class="continue-button" dark @click=ClickStart()> Продолжить </v-btn>
+			</section>
+		</v-flex>
+	</v-layout>
 </v-app>
 </template>
 
 <script>
 export default {
-    data(){
-        return {
-            genres: [
-                'Sissy',
-                'Humiliation',
-                'Femdom',
-                'Pegging',
-                'Chastity Cage',
-                'Asswoship',
-                'Asslick',
-                'Dick shrinking',
-                'SPH',
-                'Homosexuality',
-            ],
-            genresLink: [
-                'https://www.urbandictionary.com/define.php?term=sissy',
-                'https://www.urbandictionary.com/define.php?term=humiliation',
-                'https://www.urbandictionary.com/define.php?term=Femdom',
-                'https://www.urbandictionary.com/define.php?term=pegging',
-                'https://www.urbandictionary.com/define.php?term=chastity+cage',
-                'https://www.urbandictionary.com/define.php?term=ass%20worship',
-                'https://www.urbandictionary.com/define.php?term=asslick',
-                'https://www.urbandictionary.com/define.php?term=shrink+dick',
-                'https://www.urbandictionary.com/define.php?term=sph',
-                'https://www.urbandictionary.com/define.php?term=homosexuality',
-            ],
-        }
-    },
-    computed: {
-        launguage() {
-            let result
-            (this.$store.state.lang) ? result = 1 : result = 0
-            return result;
-        }
-    },
-    methods: {
-        ClickGenre(link){
-            window.open(link);
-        },
-        ClickStart(){
-            this.$store.commit('firstStart'); // Отключаем стартовую страницу
-            this.$store.commit('Header'); // Включаем хедер
-            // this.$router.push('/'); // Переходим в корень
-        }
-    }
+	data(){
+	return {
+		genres: [
+			'Sissy',
+			'Humiliation',
+			'Femdom',
+			'Pegging',
+			'Chastity Cage',
+			'Asswoship',
+			'Asslick',
+			'Dick shrinking',
+			'SPH',
+			'Homosexuality',
+	],
+	genresLink: [
+			'https://www.urbandictionary.com/define.php?term=sissy',
+			'https://www.urbandictionary.com/define.php?term=humiliation',
+			'https://www.urbandictionary.com/define.php?term=Femdom',
+			'https://www.urbandictionary.com/define.php?term=pegging',
+			'https://www.urbandictionary.com/define.php?term=chastity+cage',
+			'https://www.urbandictionary.com/define.php?term=ass%20worship',
+			'https://www.urbandictionary.com/define.php?term=asslick',
+			'https://www.urbandictionary.com/define.php?term=shrink+dick',
+			'https://www.urbandictionary.com/define.php?term=sph',
+			'https://www.urbandictionary.com/define.php?term=homosexuality',
+		],
+	}
+},
+computed: {
+	launguage() {
+			let result
+			(this.$store.state.gameLang) ? result = 1 : result = 0
+			return result;
+	}
+},
+methods: {
+ClickGenre(link){
+		window.open(link);
+},
+ClickStart(){
+		// Отключаем стартовую страницу и включаем панель навигации appHeaderEnable
+		this.$store.commit('gameDisplayingStartPage');
+}
+	}
 }
 </script>
 
 <style lang="scss" scoped>
 
 .v-btn-toggle {
-    background: transparent !important;
+	background: transparent !important;
 }
 
 .continue-button {
-    background: var(--startPageInfo--continue-button--background) !important;
+	background: var(--startPageInfo--continue-button--background) !important;
 }
 
 .continue-button:hover {
-    background: var(--startPageInfo--continue-button--background) !important;
+	background: var(--startPageInfo--continue-button--background) !important;
 }
 
 .divider {
-    color: #E0E0E0;
+	color: #E0E0E0;
 }
 
 .genres {
-    font-size: 12pt;
-    margin: 4px 2px 2px 2px;
-    background: var(--global--v-chip--background) !important;
+	font-size: 12pt;
+	margin: 4px 2px 2px 2px;
+	background: var(--global--v-chip--background) !important;
 }
 
 a { 
-	text-decoration: none;
-    font-weight:bold;
+text-decoration: none;
+	font-weight:bold;
 }  
 
 a:hover { 
-	text-decoration: none;
-    font-weight:bold;
+text-decoration: none;
+	font-weight:bold;
 } 
 
 .subscribe-star {
-    color: var(--global--subscribe-star--color);
+	color: var(--global--subscribe-star--color);
 }
 
 .discord {
-    color: var(--global--discord--color);
+	color: var(--global--discord--color);
 }
 
 .tfgames {
-    color: var(--global--tfgames--color);
+	color: var(--global--tfgames--color);
 }
 
 .f95 {
-    color: var(--global--f95--color);
+	color: var(--global--f95--color);
 }
 
 .f95-zone {
-    color: var(--global--f95-zone--color);
+	color: var(--global--f95-zone--color);
 }
 
 </style>

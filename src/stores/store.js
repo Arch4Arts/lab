@@ -2,18 +2,17 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 
-import chat from './modules/chat'
-import chatUsers from './modules/chatUsers'
+import mChat from './modules/mobileChat/mChat'
+import mChatHistory from './modules/mobileChat/mChatHistory'
 import chars from './modules/chars'
 
-var pjson = require('../../package.json');
+var packageJson = require('../../package.json');
 
 // var CryptoJS = require("crypto-js");
 
 var AES = require("crypto-js/aes");
 var utf8 = require('crypto-js/enc-utf8')
 var PBKDF2 = require('crypto-js/pbkdf2')
-import localforage from 'localforage'
 
 // const persistPlugin = store => {
 //   store.subscribe((mutations, state) => {
@@ -25,44 +24,39 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    saveName: '', // Название сохранения
-    saveTime: '', // Когда была сохранена игра
-    saveID: 0, // НомерСейва, совпадает с названием в localStorage
+    gameName: packageJson.name,
+    gameVersion: packageJson.version, 
 
-    name: pjson.name,
-    version: pjson.version, 
-    initialized: false, // Не отрисосывать страницу пока не запустится initializeApp
-
-    // DrawerVisible: false, // Для AppHeader
-    radialMenuShow: true,
-    isOpenSettings: false, // Открытие/Закрытия дровера настройек
-    isOpenSaves: false,
-    appHeaderEnable: true, // Вкл/Выкл AppHeader (для свайпа)
+    gameLang: true, // true: en / false: ru
+    gameTheme: 'NordDark',
+    gameFont: 'Roboto',
+    gameFontSize: '14pt',
     
-    firstLoad: true, // Проверка, первый ли запуск игры (Для определения языка)
-    firstStart: true, // Для отображения StartPage
-    firstDialog: true, // Стартовое окно 18+
+    gameFirstLoad: true, // Проверка, первый ли запуск игры (Для определения языка) gameDisplayingStartPage
+    gameDisplayingStartPage: true, // Для отображения StartPage
+    gameAgeWarningDialog: true, // предупреждающее окно 18+
 
-    TestPageChat: false, // Тестовая страница чата, по умолчанию отключена
+    radialMenuShow: true, // Плавающая иконка с меню для мобильных устройств, при скрытой панели навигации
+    isOpenSettingsDrawer: false, // Открытие/Закрытия панели настройек
+    isOpenSavesDrawer: false,
+    appHeaderEnable: false, // По умолчанию выкл, на время показа стартовой страницы с информацией об игре.
 
-    Header: false, // Вкл/выкл кнопки в шапке
+    notif_AchievementVolume: 0.5, // Громкость уведомления о получении достижения
+    notif_DiaryVolume: 0.5, // Громкость уведомления дневника
+    notif_smartphoneVolume: 0.5, // Громкость уведомления смартфона
 
-    achievementVolume: 0.5, // Громкость уведомления достижения
-    diaryVolume: 0.5, // Громкость уведомления дневника
-    phoneVolume: 0.5, // Громкость уведомления телефона
-
-    achievementSound: true, // Вкл/Выкл звука
-    diarySound: true, // Вкл/Выкл звука
-    phoneSound: true, // Вкл/Выкл звука
-    lang: true, // true: en / false: ru
-    theme: 'NordDark',
-    font: 'Roboto',
-    fontSize: '14pt',
+    notif_AchievementSoundEnable: true, // Вкл/Выкл звука
+    notif_DiarySoundEnable: true, // Вкл/Выкл звука
+    notif_SmartphoneSoundEnable: true, // Вкл/Выкл звука
 
     patreon_link: 'https://patreon',
     tfgames_link: 'https://tfgames.site',
     f95zone_link: 'https://f95zone.to',
-    discord_link: 'https://discordapp.com'
+    discord_link: 'https://discordapp.com',
+
+    saveName: '', // Название сохранения
+    saveTime: '', // Когда была сохранена игра
+    saveID: 0, // Номер сейва, совпадает с названием в localStorage
   },
   plugins: [createPersistedState({ // WebCrypto здесь не подходит, тут однопоток.
     setState(key, state, storage) {
@@ -92,47 +86,45 @@ const store = new Vuex.Store({
   })],
   mutations:{
     updateStores() { // Используется только для закрепления изменений во всех Store's
-      this.state.name = this.state.name; // Пустышка
+      this.state.gameName = this.state.gameName; // Пустышка
     },
 
-    firstDialog() {
-      this.state.firstDialog = !this.state.firstDialog;
+    gameAgeWarningDialog() {
+      this.state.gameAgeWarningDialog = !this.state.gameAgeWarningDialog;
     },
-    firstLoad(){
-      this.state.firstLoad = !this.state.firstLoad;
+    gameFirstLoad(){
+      this.state.gameFirstLoad = !this.state.gameFirstLoad;
     },
-    firstStart(){
-      this.state.firstStart = !this.state.firstStart;
-    },
-    Header(){ // Вкл/Выкл кнопок в хедере
-      this.state.Header = !this.state.Header;
+    gameDisplayingStartPage(){
+      this.state.gameDisplayingStartPage = !this.state.gameDisplayingStartPage;
+      this.state.appHeaderEnable = !this.state.appHeaderEnable;
     },
 
     // Громкость звука
-    achievementVolume(){
-      this.state.achievementVolume = this.state.achievementVolume;
+    notif_AchievementVolume(){
+      this.state.notif_AchievementVolume = this.state.notif_AchievementVolume;
     },
-    diaryVolume(){
-      this.state.diaryVolume = this.state.diaryVolume;
+    notif_DiaryVolume(){
+      this.state.notif_DiaryVolume = this.state.notif_DiaryVolume;
     },
-    phoneVolume(){
-      this.state.phoneVolume = this.state.phoneVolume;
+    notif_smartphoneVolume(){
+      this.state.notif_smartphoneVolume = this.state.notif_smartphoneVolume;
     },
 
     // Вкл/Выкл звука
-    achievementSound(){
-      this.state.achievementSound = !this.state.achievementSound;
+    notif_AchievementSoundEnable(){
+      this.state.notif_AchievementSoundEnable = !this.state.notif_AchievementSoundEnable;
     },
-    diarySound(){
-      this.state.diarySound = !this.state.diarySound;
+    notif_DiarySoundEnable(){
+      this.state.notif_DiarySoundEnable = !this.state.notif_DiarySoundEnable;
     },
-    phoneSound(){
-      this.state.phoneSound = !this.state.phoneSound;
+    notif_SmartphoneSoundEnable(){
+      this.state.notif_SmartphoneSoundEnable = !this.state.notif_SmartphoneSoundEnable;
     },
 
     // Смена языка
     langChange(){
-      this.state.lang = !this.state.lang;
+      this.state.gameLang = !this.state.gameLang;
     },
 
     // Сохранение имен при настройке
@@ -158,7 +150,7 @@ const store = new Vuex.Store({
 
         // Обновление имен для чата
 
-        state.chatUsers[0].name = this.state.mcIm
+        state.mChatHistory[0].name = this.state.mcIm
       } else { // простые английские имена
         this.state.mcName = this.state.mcName;
         this.state.sisterName = this.state.sisterName;
@@ -168,76 +160,15 @@ const store = new Vuex.Store({
     },
   },
   modules: {
-    chat,
-    chatUsers,
+    mChat,
+    mChatHistory,
     chars,
   }
 })
 
-function keyGen(saveName){ // Генерация уникального ключа на основе saveID
+function keyGen(saveName){ // Генерация уникального ключа
   var salt = '3F4428472B4B6250';
   return PBKDF2(saveName, salt, { keySize: 256 / 32 , iterations: 1}).toString();
-}
-
-// async function initializeApp() {
-//   store.replaceState(await localforage.getItem('vuex'));
-//   store.state.initialized = true
-// }
-
-// initializeApp()
-
-// Генерация уникального ключа на основе имени сохранения
-async function genEncryptionKey(saveName, mode, length) {
-  var algo = {
-  name: 'PBKDF2',
-  hash: 'SHA-512',
-  salt: new TextEncoder().encode('a-unique-salt-for-save'),
-  iterations: 1000
-  };
-  var derived = { name: mode, length: length };
-  var encoded = new TextEncoder().encode(saveName);
-  var key = await crypto.subtle.importKey('raw', encoded, { name: 'PBKDF2' }, false, ['deriveKey']);
-  
-  return crypto.subtle.deriveKey(algo, key, derived, false, ['encrypt', 'decrypt']);
-};
-
-// Шифрование
-async function encrypt (saveName, saveData) {
-  var algo = {
-  name: 'AES-GCM',
-  length: 256,
-  iv: crypto.getRandomValues(new Uint8Array(12))
-  };
-  var key = await genEncryptionKey(saveName, 'AES-GCM', 256);
-  var encoded = new TextEncoder().encode(saveData);
-  
-  return {
-  cipherData: await crypto.subtle.encrypt(algo, key, encoded),
-  iv: algo.iv
-  };
-}
-
-// Дешифрование
-async function decrypt (saveName,encryptedData) {
-  var algo = {
-  name: 'AES-GCM',
-  length: 256,
-  iv: encryptedData.iv
-  };
-  var key = await genEncryptionKey(saveName, 'AES-GCM', 256);
-  var decrypted = await crypto.subtle.decrypt(algo, key, encryptedData.cipherData);
-
-  return new TextDecoder().decode(decrypted);
-}
-
-export async function WebCrypto(saveName, saveData){
-  if ( typeof saveName !== 'undefined' && typeof saveData !== 'undefined') {
-    return await encrypt(saveName, saveData).then(encryptedData => localforage.setItem(saveName, encryptedData))
-  } else {
-    var Data;
-    await localforage.getItem(saveName).then(encryptedData => Data = encryptedData)
-    return await decrypt(saveName, Data).then(DecryptedData => JSON.parse(DecryptedData))
-  }
 }
 
 export default store

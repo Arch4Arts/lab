@@ -29,8 +29,8 @@ export default {
 
     },
     mounted: function(){ 
-        document.getElementById("StoryTextArea").style.fontFamily = this.$store.state.font;
-        document.getElementById("StoryTextArea").style.fontSize = `${this.$store.state.fontSize}`;
+        document.getElementById("StoryTextArea").style.fontFamily = this.$store.state.gameFont;
+        document.getElementById("StoryTextArea").style.fontSize = `${this.$store.state.gameFontSize}`;
     }
 }
 </script>

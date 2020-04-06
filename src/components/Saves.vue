@@ -1,7 +1,7 @@
 <template>
     <!-- <v-app> -->
     <v-navigation-drawer
-      v-model="$store.state.isOpenSaves"
+      v-model="$store.state.isOpenSavesDrawer"
       temporary
       right
       app
@@ -21,7 +21,7 @@
                   <v-text-field dark
                     class="textfield"
                     color="grey lighten-2"
-                    :placeholder="($store.state.lang) ? defaultSaveName : defaultSaveName_ru"
+                    :placeholder="($store.state.gameLang) ? defaultSaveName : defaultSaveName_ru"
                     @keyup.enter="saveGame()"
                     id="saveNameArea"
                   ></v-text-field>
@@ -35,17 +35,17 @@
                         <v-icon color="rgb(126, 193, 255)"> fas fa-download </v-icon>
                       </v-btn>
                     </template>
-                      <span v-if="$store.state.lang" class="tip">New save</span>
+                      <span v-if="$store.state.gameLang" class="tip">New save</span>
                       <span v-else class="tip">Новое сохранение</span>
                   </v-tooltip>
 
               </v-list-item>
 
               <!-- СПИСОК СОХРАНЕНИЙ -->
-                <pull-to @infinite-scroll="loadMore" :is-top-bounce="false" :is-bottom-bounce="false" v-if="this.$store.state.isOpenSaves">
+                <pull-to @infinite-scroll="loadMore" :is-top-bounce="false" :is-bottom-bounce="false" v-if="this.$store.state.isOpenSavesDrawer">
                 <div class="scroll-area"> 
 
-                <div v-if="$store.state.lang" v-show="saveExist == 0" class="text-center"><v-divider/><br>No saves<br><br></div>
+                <div v-if="$store.state.gameLang" v-show="saveExist == 0" class="text-center"><v-divider/><br>No saves<br><br></div>
                 <div v-else v-show="saveExist == 0" class="text-center"><v-divider/><br>Сохранения отсутствуют<br><br></div>
                 <v-divider v-show="saveExist == 1"/>
                 
@@ -61,7 +61,7 @@
                   <!-- КНОПКИ WRITE/LOAD/DELETE -->
                   <v-list-item-action v-for="(icon ,i) in icons" :key="'icon-id_' + i">
 
-                    <v-tooltip color="v-tooltip" v-if="$store.state.lang" bottom>
+                    <v-tooltip color="v-tooltip" v-if="$store.state.gameLang" bottom>
                       <template v-slot:activator="{ on }">
                         <v-btn v-on="on" icon
                         @click="(icon == 'fas fa-trash') ? deleteSave(save.saveName, save.saveTime, save.saveID) : (icon == 'fas fa-download') ? overwriteSave(save.saveName, save.saveTime, save.saveID) : loadSave(save.saveName, save.saveTime, save.saveID)"
@@ -93,7 +93,7 @@
                   <v-progress-circular indeterminate size="28" />
                 </div>
                 <div v-if="endOfsaveList && saveExist === 1" class="text-center pa-2">
-                  <blockquote v-if="$store.state.lang" class="blockquote">End of list</blockquote>
+                  <blockquote v-if="$store.state.gameLang" class="blockquote">End of list</blockquote>
                   <blockquote v-else class="blockquote">Конец списка</blockquote>
                 </div>
 
@@ -112,7 +112,7 @@
                   <v-icon color="rgb(126, 193, 255)"> fas fa-hdd </v-icon>
                 </v-btn>
               </template>
-                <span v-if="$store.state.lang" class="tip">Save saves to disk</span>
+                <span v-if="$store.state.gameLang" class="tip">Save saves to disk</span>
                 <span v-else class="tip">Сохранить сохранения на диск</span>
             </v-tooltip>
 
@@ -122,7 +122,7 @@
                   <v-icon color="rgb(255, 254, 173)"> far fa-hdd </v-icon>
                 </v-btn>
               </template>
-                <span v-if="$store.state.lang" class="tip">To load the save from disk</span>
+                <span v-if="$store.state.gameLang" class="tip">To load the save from disk</span>
                 <span v-else class="tip">Загрузить сохранения с диска</span>
             </v-tooltip>
 
@@ -132,7 +132,7 @@
                   <v-icon color="rgb(255, 102, 102)"> fas fa-power-off </v-icon>
                 </v-btn>
               </template>
-                <span v-if="$store.state.lang" class="tip">Restart game</span>
+                <span v-if="$store.state.gameLang" class="tip">Restart game</span>
                 <span v-else class="tip">Перезапуск игры</span>
             </v-tooltip>
 
@@ -142,16 +142,16 @@
                   <v-icon color="rgb(255, 102, 102)"> fas fa-trash-alt </v-icon>
                 </v-btn>
               </template>
-                <span v-if="$store.state.lang" class="tip">Delete all saves</span>
+                <span v-if="$store.state.gameLang" class="tip">Delete all saves</span>
                 <span v-else class="tip">Удаление всех сохранений</span>
             </v-tooltip>
             <br>
             <v-tooltip color="v-tooltip" top>
               <template v-slot:activator="{ on }">
-                <div v-if="$store.state.lang" class="text-center" v-on="on">Number of saves: {{saveCount}}</div>
+                <div v-if="$store.state.gameLang" class="text-center" v-on="on">Number of saves: {{saveCount}}</div>
                 <div v-else class="text-center" v-on="on">Кол-во сохранений: {{saveCount}}</div>
               </template>
-                <span v-if="$store.state.lang">A large number of saves can cause performance degradation.</span>
+                <span v-if="$store.state.gameLang">A large number of saves can cause performance degradation.</span>
                 <span v-else>Большое количество сохранений могут вызвать падение производительности.</span>
             </v-tooltip>
             </div>
@@ -159,8 +159,8 @@
             <!-- ДИАЛОГ ПОДТВЕРЖДЕНИЯ УДАЛЕНИЯ ВСЕХ СОХРАНЕНИЙ -->
             <v-dialog v-model="deleteAll" persistent dark width="230">
                <v-card class="text-center">
-                 <section v-if="$store.state.lang">
-                  <v-card-title class="headline dark important-modal-header"> Delete all saves </v-card-title>
+                 <section v-if="$store.state.gameLang">
+                  <v-card-title class="headline dark important-modal__header"> Delete all saves </v-card-title>
                     <v-card-text class="text--primary"> 
                       <br>
                       <b>This operation will delete all current saves!</b>
@@ -169,7 +169,7 @@
                     </v-card-text>
                  </section>
                  <section v-else>
-                  <v-card-title class="headline dark important-modal-header"> Удаление всех сохранений </v-card-title>
+                  <v-card-title class="headline dark important-modal__header"> Удаление всех сохранений </v-card-title>
                     <v-card-text class="text--primary"> 
                       <br>
                       <b>Данная операция удалит все текущие сохранения!</b>
@@ -179,7 +179,7 @@
                  </section>
                   <v-card-actions>
                     <v-layout align-center justify-center>
-                        <section v-if="$store.state.lang">
+                        <section v-if="$store.state.gameLang">
                           <v-btn dark text @click="DeleteAllSaves()"> Yes </v-btn>
                           <v-btn dark text @click="deleteAll = !deleteAll"> No </v-btn>
                         </section>
@@ -194,8 +194,8 @@
             <!-- ОКНО С ПОДТВЕРЖДЕНИЕМ ПЕРЕЗАПУСКА ИГРЫ-->
             <v-dialog v-model="restart" persistent dark width="230">
                <v-card class="text-center">
-                 <section v-if="$store.state.lang">
-                  <v-card-title class="headline dark important-modal-header"> Restart game </v-card-title>
+                 <section v-if="$store.state.gameLang">
+                  <v-card-title class="headline dark important-modal__header"> Restart game </v-card-title>
                     <v-card-text class="text--primary">
                       <br> 
                       <b>When you restart the game, all current progress will be lost!</b>
@@ -204,7 +204,7 @@
                     </v-card-text>
                  </section>
                  <section v-else>
-                  <v-card-title class="headline dark important-modal-header"> Перезапуск игры </v-card-title>
+                  <v-card-title class="headline dark important-modal__header"> Перезапуск игры </v-card-title>
                     <v-card-text class="text--primary"> 
                       <br>
                       <b>При перезапуске игры, будeт потерян весь текущий прогресс!</b>
@@ -214,7 +214,7 @@
                  </section>
                   <v-card-actions>
                     <v-layout align-center justify-center>
-                        <section v-if="$store.state.lang">
+                        <section v-if="$store.state.gameLang">
                           <v-btn dark text @click="restartGame()"> Yes </v-btn>
                           <v-btn dark text @click="restart = !restart"> No </v-btn>
                         </section>
@@ -237,7 +237,8 @@ import dayjs from 'dayjs' // библиотека для работы с вре�
 import advancedFormat from 'dayjs/plugin/advancedFormat' // Плагин
 dayjs.extend(advancedFormat)
 
-import { resetState, WebCrypto }  from '../stores/store'
+import WebCrypto from '../components/WebCrypto' // Модуль для шифрования и дешифрования сохранений
+import { resetState }  from '../stores/store'
 import store from '../stores/store'
 
 // var CryptoJS = require("crypto-js");
@@ -347,9 +348,10 @@ export default {
     },
     async saveGame(){
       try {
-        var name = document.getElementById("saveNameArea").value
+        var name = document.getElementById("saveNameArea").value // Копирует значение
+        document.getElementById("saveNameArea").value = '' // И очищаем поле ввода
         if (name === '') // Проверка введенно ли имя сохранения, если нет, назначаем стандартное
-          (this.$store.state.lang) ? name = 'New Save' : name = 'Новое сохранение'
+          (this.$store.state.gameLang) ? name = 'New Save' : name = 'Новое сохранение'
         this.$store.state.saveName = name;
         this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm"); // Время сохранения
         // var newSaveID = (function random(min = 0, max = 999999) {
@@ -361,7 +363,7 @@ export default {
 
         var ID = `${this.$store.state.saveName},${this.$store.state.saveTime},${this.$store.state.saveID}`;
         await WebCrypto(ID, JSON.stringify(this.$store.state))
-        this.$store.state.lang 
+        this.$store.state.gameLang 
           ? iziToast.info({message: 'Game successfully saved', position: 'bottomCenter'})
           : iziToast.info({message: 'Игра успешно сохранена', position: 'bottomCenter'})
 
@@ -385,7 +387,7 @@ export default {
         // this.$store.state.saveID = saveID
         this.$store.state.saveID = dayjs().format("x");
         await WebCrypto(`${saveName},${this.$store.state.saveTime},${this.$store.state.saveID}`, JSON.stringify(this.$store.state)) // Добавем новый за место старого (удалённого)
-        this.$store.state.lang 
+        this.$store.state.gameLang 
           ? iziToast.info({message: 'Saving successfully overwritten', position: 'bottomCenter'})
           : iziToast.info({message: 'Сохранение успешно перезаписано', position: 'bottomCenter'})
 
@@ -407,14 +409,14 @@ export default {
     },
     async loadSave(saveName, saveTime, saveID){
       try {
-        console.log(`${saveName},${saveTime},${saveID}`)
+        // console.log(`${saveName},${saveTime},${saveID}`)
         await this.$store.replaceState(await WebCrypto(`${saveName},${saveTime},${saveID}`));
 
         this.$store.commit('updateStores'); // Фиксируем новые переменные
-        themes();
+        // themes(); // Обновляем стиль игры
         chatThemes(); // Обновляем стиль чата
 
-        this.$store.state.lang 
+        this.$store.state.gameLang 
           ? iziToast.info({message: 'Game loaded successfully', position: 'bottomCenter', backgroundColor: 'rgb(255, 254, 173)'})
           : iziToast.info({message: 'Игра загружена успешно', position: 'bottomCenter', backgroundColor: 'rgb(255, 254, 173)'})
       }
@@ -425,7 +427,7 @@ export default {
     deleteSave(saveName, saveTime, saveID) {
       try {
         localforage.removeItem(`${saveName},${saveTime},${saveID}`) // Удаление сейва
-        this.$store.state.lang 
+        this.$store.state.gameLang 
           ? iziToast.info({message: 'Saving has been deleted!', position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
           : iziToast.info({message: 'Сохранение было удалено!', position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
 
@@ -447,7 +449,7 @@ export default {
     async DeleteAllSaves(){
       try {
         await localforage.clear()
-        this.$store.state.lang 
+        this.$store.state.gameLang 
           ? iziToast.warning({message: 'All saves have been deleted!', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
           : iziToast.warning({message: 'Всё сохранения были удалены!', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
         this.deleteAll = false

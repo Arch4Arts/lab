@@ -2,12 +2,12 @@
   <div class="sc-chat-window" :class="{opened: isOpen, closed: !isOpen}">
       <!-- <UserList 
         v-if="showUserList"
-        :participants="participants"
+        :contacts="contacts"
       /> -->
       <!-- <MessageList
         :messages="messages"
-        :participants="participants"
-        :showTypingIndicator="showTypingIndicator"
+        :contacts="contacts"
+        :showmChat_TypingIndicatorEnable="showmChat_TypingIndicatorEnable"
         :colors="colors"
         :alwaysScrollToBottom="alwaysScrollToBottom"
         :messageStyling="messageStyling"
@@ -33,7 +33,7 @@ export default {
     UserList
   },
   props: {
-    participants: {
+    contacts: {
       type: Array,
       required: true
     },
@@ -61,7 +61,7 @@ export default {
       type: Boolean,
       default: () => false
     },
-    showTypingIndicator: {
+    showmChat_TypingIndicatorEnable: {
       type: String,
       required: true
     },

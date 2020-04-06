@@ -1,12 +1,12 @@
 <template>
   <div>
     <!-- ГОТОВЫЙ КОМПОНЕНТ С ИКОНКОЙ ЧАТА И САМИМ ЧАТОМ ДЛЯ ИМПОРТА В ДРУГИЕ МОДУЛИ -->
-    <beautiful-chat 
+    <mobile-chat
       :alwaysScrollToBottom="alwaysScrollToBottom"
       :messageStyling="messageStyling"
       :onMessageWasSent="onMessageWasSent"
-      :participants="participants"
-      :showTypingIndicator="showTypingIndicator"
+      :contacts="contacts"
+      :showmChat_TypingIndicatorEnable="showmChat_TypingIndicatorEnable"
       @onType="handleOnType"
     />
   </div>
@@ -14,18 +14,18 @@
 
 <script>
 // import messageHistory from './messageHistory'
-// import chatParticipants from './chatProfiles'
+// import chatcontacts from './chatProfiles'
 // import availableColors from './colors'
 
 export default {
   name: 'App',
   data() {
     return {
-      participants: this.$store.state.chatUsers,
+      contacts: this.$store.state.mChatHistory,
       // messageList: messageHistory,
-      // newMessagesCount: 0,
-      // isChatOpen: false,
-      showTypingIndicator: '',
+      // mChat_NewMessagesCount: 0,
+      // mChat_Show: false,
+      showmChat_TypingIndicatorEnable: '',
       // colors: null,
       // availableColors,
       // chosenColor: null,
@@ -40,7 +40,7 @@ export default {
   methods: {
     sendMessage(text) {
       if (text.length > 0) {
-        this.$store.state.chat.newMessagesCount = this.isChatOpen ? this.$store.state.chat.newMessagesCount : this.$store.state.chat.newMessagesCount += 1
+        this.$store.state.mChat.mChat_NewMessagesCount = this.mChat_Show ? this.$store.state.mChat.mChat_NewMessagesCount : this.$store.state.mChat.mChat_NewMessagesCount += 1
         this.onMessageWasSent({
           author: 'support',
           type: 'text',
@@ -49,9 +49,9 @@ export default {
       }
     },
     handleTyping(text) {
-      this.showTypingIndicator =
+      this.showmChat_TypingIndicatorEnable =
         text.length > 0
-          ? this.participants[this.participants.length - 1].id
+          ? this.contacts[this.contacts.length - 1].id
           : ''
     },
     onMessageWasSent(message) {

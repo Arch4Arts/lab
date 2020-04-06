@@ -3,20 +3,20 @@
   <v-layout v-touch="{ right: () => SwipeRight(), left: () => SwipeLeft(), down: () => SwipeBottom(), up: () => SwipeTop() }">
     <v-content>
     <!-- Pages -->
-    <StartPageInfo v-if="$store.state.firstStart"/>
+    <StartPageInfo v-if="$store.state.gameDisplayingStartPage"/>
     <!-- Components -->
-    <Start18Caution/>
+    <Age18WarningDialog/>
     <Settings/>
     <Saves/>
-    <navigation v-if="$store.state.Header"/>
-      <router-view v-if="!$store.state.firstStart"/>
+    <navigation v-if="$store.state.appHeaderEnable"/>
+      <router-view v-if="!$store.state.gameDisplayingStartPage"/>
     </v-content>
   </v-layout>  
   </v-app>
 </template>
 
 <script>
-import Start18Caution from "./components/Start18Caution";
+import Age18WarningDialog from "./components/Age18WarningDialog";
 import Navigation from "./components/Navigation";
 import StartPageInfo from "./Pages/StartPageInfo";
 import Settings from './components/Settings';
@@ -26,32 +26,30 @@ export default {
   name: 'App',
   methods: {
       SwipeRight(){
-        if (this.$store.state.isOpenSettings) this.$store.state.isOpenSettings = !this.$store.state.isOpenSettings
-        if (this.$store.state.isOpenSaves) this.$store.state.isOpenSaves = !this.$store.state.isOpenSaves
-        if (this.$store.state.appHeaderEnable) { // Включено ли меню (Отключается при выборе палитры цвета диалогов)
-          if (this.$route.path != '/Diary') // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
-          if (this.$store.state.chat.isChatOpen) { // проверка открыт ли чат
-            if (this.$store.state.chat.UserListShow) { // проверка открыт ли контакт
-              this.$store.state.chat.isChatOpen = !this.$store.state.chat.isChatOpen // закрываем окно чата
+        // Открытие/Закрытие панели настроек
+        if (this.$store.state.isOpenSettingsDrawer) this.$store.state.isOpenSettingsDrawer = !this.$store.state.isOpenSettingsDrawer
+        // Открытие/закрытие панели сохранений
+        if (this.$store.state.isOpenSavesDrawer) this.$store.state.isOpenSavesDrawer = !this.$store.state.isOpenSavesDrawer
+        // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
+        if (this.$route.path != '/Diary') {
+          if (this.$store.state.mChat.mChat_Show) { // проверка открыт ли чат, если да то...
+            // Открыта ли страница контактов, true, то закрываем, если false, возвращаемся к странице контактов, т.к открыт чат с контактом
+            if (this.$store.state.mChat.mChat_ContactsPage) {
+              this.$store.state.mChat.mChat_Show = !this.$store.state.mChat.mChat_Show // закрываем окно чата
               this.$store.commit('updateStores');
-              if (screen.width <= 450) { // Включаем бар при закрытии чата
-                this.$store.state.Header = !this.$store.state.Header
-                this.$store.commit('updateStores');
-                }
             }
-            else this.$store.state.chat.UserListShow = !this.$store.state.chat.UserListShow // Закрывает текущий контакт если он открыт
+            // Закрывает чат с контактом если он открыт
+            else this.$store.state.mChat.mChat_ContactsPage = !this.$store.state.mChat.mChat_ContactsPage
           }
         }
       },
       SwipeLeft(){
-        if (this.$store.state.chat.chatEnable && this.$store.state.chat.UserListShow) { // Включён ли чат (Отключается при выборе палитры цвета диалогов)
-          if (this.$route.path != '/Diary') { // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
-            this.$store.state.chat.isChatOpen = !this.$store.state.chat.isChatOpen // открываем окно чата
+        if (this.$store.state.mChat.mChat_Enable) { // Включён ли чат (Отключается при выборе палитры цвета диалогов)
+          // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
+          if (this.$route.path != '/Diary') {
+            // открываем окно чата, если оно не было открыто ранее
+            if (!this.$store.state.mChat.mChat_Show) this.$store.state.mChat.mChat_Show = !this.$store.state.mChat.mChat_Show
             this.$store.commit('updateStores');
-            if (screen.width <= 450) { // Отключаем бар при закрытии чата
-              this.$store.state.Header = !this.$store.state.Header
-              this.$store.commit('updateStores');
-            }
           }
         }
       },
@@ -66,7 +64,7 @@ export default {
       }
    },
   components: {
-    Start18Caution,
+    Age18WarningDialog,
     Navigation,
     StartPageInfo,
     Main,
@@ -77,6 +75,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import './Styles/normalize.css';
 @import './Styles/themes.scss';
 @import './Styles/chatThemes.scss';
 
@@ -105,10 +104,6 @@ export default {
   color: var(--app--Page-element--color);
 }
 
-.nav-btn:hover {
-  background: var(--app--nav-btn__hover--background) !important;
-}
-
 .v-btn:hover {
   background: var(--app--v-btn__hover--background) !important;
 }
@@ -117,20 +112,21 @@ export default {
   background: var(--app--v-card--background) !important;
 }
 
-.important-modal-header {
-  background: var(--global--important-modal-header--background);
+// Модальные окна с важными оповещениями
+.important-modal__header {
+  background: var(--global--important-modal__header--background);
 }
 
-.important-modal-bg {
-  background: var(--global--important-modal-bg--background);
+.important-modal__bg {
+  background: var(--global--important-modal__bg--background);
 }
 
-.important-modal-button {
-  background: var(--global--important-modal-button--background) !important;
+.important-modal__button {
+  background: var(--global--important-modal__button--background) !important;
 }
 
-.important-modal-button:hover {
-  background: var(--global--important-modal-button--background) !important;
+.important-modal__button:hover {
+  background: var(--global--important-modal__button--background) !important;
 }
 
 .v-tooltip {
@@ -139,12 +135,14 @@ export default {
 
 /* Отключаем показ полосы прокрутки (вертикальной) */
 html {
-  -ms-overflow-style: none;  /* IE 10+ */
-  scrollbar-width: none;  /* Firefox */
-}
+  -ms-overflow-style: none;
+  /* IE 10+ */
+  scrollbar-width: none;
+  /* Firefox */
 
-html::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
 }
 
 h1 {

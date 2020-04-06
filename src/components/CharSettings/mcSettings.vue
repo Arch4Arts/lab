@@ -1,7 +1,7 @@
 <template>
         <!-- ENGLISH -->
 
-        <section v-if="$store.state.lang">
+        <section v-if="$store.state.gameLang">
 
         <v-expansion-panels id="layout" class="bg_panels">
 

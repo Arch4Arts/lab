@@ -32,7 +32,7 @@
         dark
         small
         class="radial-menu-btns"
-        @click="() => this.$store.state.isOpenSaves = true"
+        @click="() => this.$store.state.isOpenSavesDrawer = true"
       >
         <v-icon>fas fa-save</v-icon>
       </v-btn>
@@ -55,7 +55,7 @@
         dark
         small
         class="radial-menu-btns"
-        @click="() => this.$store.state.isOpenSettings = true"
+        @click="() => this.$store.state.isOpenSettingsDrawer = true"
       >
         <v-icon>fas fa-cog</v-icon>
       </v-btn>

@@ -2,8 +2,8 @@
   <div class="user-list">
     <!-- <table class="" style="padding-top: 5px">
       <tbody>
-        <tr v-for="user in participants" :key="user.id">
-            <td style="text-align: center;"><img :src="user.imageUrl" class="img-msg"/></td>
+        <tr v-for="user in contacts" :key="user.id">
+            <td style="text-align: center;"><img :src="user.mChatHistory_AvatarImg" class="img-msg"/></td>
             <td>{{user.name}}</td>
         </tr>
       </tbody>
@@ -14,7 +14,7 @@
 <script>
 export default {
   props: {
-    participants: {
+    contacts: {
       type: Array,
       required: true
     }

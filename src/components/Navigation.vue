@@ -9,31 +9,32 @@
                         <v-icon v-html="Item.icon"></v-icon>
                     </v-list-item-action>
                     <v-list-item-content>
-                            <v-list-item-title v-if="$store.state.lang" v-text="Item.title" ></v-list-item-title>
+                            <v-list-item-title v-if="$store.state.gameLang" v-text="Item.title" ></v-list-item-title>
                             <v-list-item-title v-else v-text="Item.title_ru"></v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
          </v-navigation-drawer> -->
 
-         <Radial-Menu class="hidden-md-and-up"/>
+        <!-- Плавающая кпнока для мобильной навигации -->
+         <Radial-Menu class="hidden-md-and-up"/> 
  
          <!-- КНОПКИ В МЕНЮ -->
         <v-app-bar v-if="!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs)" app dark class="navigationBar" elevation="14">
-            <router-link v-if="$store.state.Header" to="/" tag="span" style="cursor:pointer">
+            <router-link to="/" tag="span" style="cursor:pointer">
                 <v-toolbar-title>
-                    {{ $store.state.name + ' ' + $store.state.version }} 
+                    {{ $store.state.gameName + ' ' + $store.state.gameVersion }} 
                 </v-toolbar-title>
             </router-link>
             <v-spacer></v-spacer>
-            <v-toolbar-items v-if="$store.state.lang" class="hidden-sm-and-down">
-                <v-btn class="nav-btn" v-for="(item, i) in menuItems" :key="'btn' + i"  :to="item.route" @click="openSettings(item.icon)" text>
+            <v-toolbar-items v-if="$store.state.gameLang" class="hidden-sm-and-down">
+                <v-btn v-for="(item, i) in menuItems" :key="'btn' + i"  :to="item.route" @click="openSettings(item.icon)" text>
                     <v-icon left v-html="item.icon"></v-icon>
                     {{ item.title }}
                 </v-btn>
             </v-toolbar-items>
             <v-toolbar-items v-else class="hidden-sm-and-down">
-                <v-btn class="nav-btn" shift v-for="(item, i) in menuItems" :key="'btn' + i" color="" :to="item.route" @click="openSettings(item.icon)" text>
+                <v-btn shift v-for="(item, i) in menuItems" :key="'btn' + i" color="" :to="item.route" @click="openSettings(item.icon)" text>
                     <v-icon left v-html="item.icon"></v-icon>
                     {{ item.title_ru }}
                 </v-btn>
@@ -76,8 +77,8 @@ export default {
     },
     methods: {
         openSettings(icon){
-            if (icon === 'fas fa-cog') this.$store.state.isOpenSettings = true
-            if (icon === 'fas fa-save') this.$store.state.isOpenSaves = true
+            if (icon === 'fas fa-cog') this.$store.state.isOpenSettingsDrawer = true
+            if (icon === 'fas fa-save') this.$store.state.isOpenSavesDrawer = true
         }
     },
     components: {

@@ -10,7 +10,7 @@ export const CustomDark = { // Моя первая тема
   bg_panels: '#222222',
   bright_button: '#EF5350',
   important_modal_header: '#F44336',
-  // important-modal-bg: '#4C566A',
+  // important-modal__bg: '#4C566A',
   important_modal_button: '#F44336',
   // btn_hover: '#222222',
   v_card_background: '#424242',

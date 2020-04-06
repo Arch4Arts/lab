@@ -2,7 +2,7 @@
     <v-app>
     <v-layout class="v-layout" justify-center>
         <v-flex md8 class="Page">
-            <h1 v-if="$store.state.lang" class=" text-center">Achviemenent</h1>
+            <h1 v-if="$store.state.gameLang" class=" text-center">Achviemenent</h1>
             <h1 v-else class=" text-center">Достижения</h1>
             <div class="container"> 
             <AchievementCard class="Achievement" :dataImage="require('../../Media/img/Achievement_imgs/asslick.jpg')">

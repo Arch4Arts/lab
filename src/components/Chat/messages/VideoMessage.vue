@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     play(){
-      if (this.$store.state.chat.autoplayChatVideo) this.$refs.plyr.player.play()
+      if (this.$store.state.mChat.mChat_HoverPlayMsgVideo) this.$refs.plyr.player.play()
     },
     pause(){
       this.$refs.plyr.player.pause()

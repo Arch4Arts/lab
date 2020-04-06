@@ -1,6 +1,6 @@
 <template>
 <v-navigation-drawer
-  v-model="$store.state.isOpenSettings"
+  v-model="$store.state.isOpenSettingsDrawer"
   temporary
   right
   app
@@ -11,11 +11,8 @@
 >
 
   <!-- ENGLISH -->
-  <section v-if="$store.state.lang">
+  <section v-if="$store.state.gameLang">
   <v-layout justify-center>
-
-
-    
   </v-layout>
   </section>
   <!-- RUSSIAN -->
@@ -29,7 +26,7 @@
       flat
       class="settings__v_list_bg"
     >
-      <v-subheader>Язык игры</v-subheader>
+      <v-subheader class="v-list header">Настройки</v-subheader>
 
       <v-list-item-group
         v-model="settings"
@@ -59,7 +56,10 @@
   <div>Настройки отображения</div>
   <v-expansion-panels>
     <v-expansion-panel class="header_panels">
-      <v-expansion-panel-header>Настройки отображения</v-expansion-panel-header>
+      <v-expansion-panel-header>
+        <div class="v-expansion-panel header-icon"><v-icon large left>far fa-eye</v-icon></div>
+        Настройки отображения
+      </v-expansion-panel-header>
       <v-expansion-panel-content class="bg_panels">
         <div class="text-center">
           <v-btn-toggle v-model="launguage" rounded>
@@ -82,7 +82,7 @@
           thumb-label
           color="#fff"
           min="10"
-          max="32"
+          max="24"
           prepend-icon="far fa-text-size"
         ></v-slider>
         <v-btn @click="Dark()">Dark</v-btn>
@@ -98,6 +98,9 @@
         v-model="$vuetify.theme.dark"
         label="Dark"
       ></v-switch>
+      <v-btn @click="NordDark()">NordDark</v-btn>
+      <v-btn @click="NordLight()">NordLight</v-btn>
+      <v-btn @click="CustomDark()">CustomDark</v-btn>
 </v-navigation-drawer>
 </template>
 
@@ -120,10 +123,10 @@ export default {
       if (select === 'NordLight') this.$vuetify.theme.themes.dark = NordLight;
     },
       NordDark(){
-        this.$vuetify.theme.themes.dark = NordDark // Работает!!!
+        this.$vuetify.theme.themes.dark = NordDark // Работает
       },
-      Dark(){
-        this.$vuetify.theme.themes.dark = CustomDark // Работает!!!
+      CustomDark(){
+        this.$vuetify.theme.themes.dark = CustomDark // Работает
       },
       NordLight(){
         this.$vuetify.theme.themes.dark = NordLight
@@ -132,25 +135,25 @@ export default {
   computed: {
       launguage() {
         let result
-        (this.$store.state.lang) ? result = 1 : result = 0
+        (this.$store.state.gameLang) ? result = 1 : result = 0
         return result;
       },
       fontFamily: {
         get: function () {
-          return this.$store.state.font;
+          return this.$store.state.gameFont;
         },
         set: function (selected) {
-          this.$store.state.font = selected;
+          this.$store.state.gameFont = selected;
           document.getElementById("StoryTextArea").style.fontFamily = selected;
           this.$store.commit("updateStores");
         }
       },
       fontSize: {
         get: function () {
-          return extractNumbers(this.$store.state.fontSize)[0];
+          return extractNumbers(this.$store.state.gameFontSize)[0];
         },
         set: function (selected) {
-          this.$store.state.fontSize = `${selected}pt`;
+          this.$store.state.gameFontSize = `${selected}pt`;
           document.getElementById("StoryTextArea").style.fontSize = `${selected}pt`;
           this.$store.commit("updateStores");
         } 
@@ -168,8 +171,18 @@ export default {
   text-align: justify;
 }
 
-.v-list--subheader {
-  background: transparent;
+.v-list {
+  .header {
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+
+.v-expansion-panel .header-icon {
+  flex: none;
+  background-color: transparent !important;
+  width: 65px !important;
 }
 
 </style>

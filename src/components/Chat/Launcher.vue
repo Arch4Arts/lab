@@ -1,12 +1,12 @@
 <template>
   <div>
     <!-- <div class="sc-launcher" :class="{opened: isOpen}" @click.prevent="isOpen ? close() : open()" :style="{backgroundColor: colors.launcher.bg}">
-      <div v-if="newMessagesCount > 0 && !isOpen" class="sc-new-messsages-count">
-        {{newMessagesCount}}
+      <div v-if="mChat_NewMessagesCount > 0 && !isOpen" class="sc-new-messsages-count">
+        {{mChat_NewMessagesCount}}
       </div> -->
-    <div class="sc-launcher hidden-sm-and-down" @click.prevent="$store.state.chat.isChatOpen ? closeChat() : openChat()">
-      <div v-if="$store.state.chat.newMessagesCount > 0 && !$store.state.chat.isChatOpen" class="sc-new-messsages-count">
-        {{ $store.state.chat.newMessagesCount }}
+    <div class="sc-launcher hidden-sm-and-down" @click.prevent="$store.state.mChat.mChat_Show ? closeChat() : openChat()">
+      <div v-if="$store.state.mChat.mChat_NewMessagesCount > 0 && !$store.state.mChat.mChat_Show" class="sc-new-messsages-count">
+        {{ $store.state.mChat.mChat_NewMessagesCount }}
       </div>
         <v-btn text large fab icon color="#E0E0E0"><v-icon>fas fa-mobile-android-alt</v-icon></v-btn>
       <!-- <img class="sc-open-icon" :src="icons.open.img"  :alt="icons.open.name" />
@@ -15,8 +15,8 @@
     <ChatFrame
       :messageList="messageList"
       :onUserInputSubmit="onMessageWasSent"
-      :participants="participants"
-      :showTypingIndicator="showTypingIndicator"
+      :contacts="contacts"
+      :showmChat_TypingIndicatorEnable="showmChat_TypingIndicatorEnable"
       :alwaysScrollToBottom="alwaysScrollToBottom"
       :messageStyling="messageStyling"
       :disableUserListToggle="disableUserListToggle"
@@ -42,7 +42,7 @@ export default {
     //   type: Function,
     //   required: true
     // },
-    participants: {
+    contacts: {
       type: Array,
       required: true
     },
@@ -62,11 +62,11 @@ export default {
       type: Array,
       default: () => []
     },
-    // newMessagesCount: {
+    // mChat_NewMessagesCount: {
     //   type: Number,
     //   default: () => 0
     // },
-    showTypingIndicator: {
+    showmChat_TypingIndicatorEnable: {
       type: String,
       default: () => ''
     },
@@ -89,23 +89,23 @@ export default {
   //       return this.title
   //     }
 
-  //     if (this.participants.length === 0) {
+  //     if (this.contacts.length === 0) {
   //       return 'You'
-  //     } else if (this.participants.length > 1) {
-  //       return 'You, ' + this.participants[0].name + ' & others'
+  //     } else if (this.contacts.length > 1) {
+  //       return 'You, ' + this.contacts[0].name + ' & others'
   //     } else {
-  //       return 'You & ' + this.participants[0].name
+  //       return 'You & ' + this.contacts[0].name
   //     }
   //   }
   // },
   methods: {
     openChat() {
-      this.$store.state.chat.isChatOpen = true
-      this.$store.state.chat.newMessagesCount = 0
+      this.$store.state.mChat.mChat_Show = true
+      this.$store.state.mChat.mChat_NewMessagesCount = 0
       this.$store.commit('updateStores');
     },
     closeChat() {
-      this.$store.state.chat.isChatOpen = false
+      this.$store.state.mChat.mChat_Show = false
       this.$store.commit('updateStores');
     },
   },

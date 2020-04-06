@@ -1,6 +1,6 @@
 <template>
     <v-app>
-    <v-tabs v-if="$store.state.lang" color="#19191a" centered dark slider-color="white">
+    <v-tabs v-if="$store.state.gameLang" color="#19191a" centered dark slider-color="white">
         <v-tab> <v-icon left>fas fa-user-crown</v-icon>Main Character </v-tab>
         <v-tab-item> <MC-page/> </v-tab-item>
 

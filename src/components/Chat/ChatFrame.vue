@@ -1,17 +1,17 @@
 <template>
-  <div class="smartphone" :class="{opened: $store.state.chat.isChatOpen, closed: !$store.state.chat.isChatOpen}">
+  <div class="smartphone" :class="{opened: $store.state.mChat.mChat_Show, closed: !$store.state.mChat.mChat_Show}">
     <img src="../../assets/Samsung Galaxy S7 Black.png" class="smartphone">
     <img src="../../assets/Samsung Galaxy S7 Black_bottom.png" class="smartphone close-area" @click.prevent="closeChat()">
-    <Chat-users-list class="user-list-pos" v-if="$store.state.chat.UserListShow"></Chat-users-list>
-    <div v-if="!$store.state.chat.UserListShow" class="chat-window">
+    <Chat-users-list class="user-list-pos" v-if="$store.state.mChat.mChat_ContactsPage"></Chat-users-list>
+    <div v-if="!$store.state.mChat.mChat_ContactsPage" class="chat-window">
       <!-- <UserList 
         v-if="showUserList"
-        :participants="participants"
+        :contacts="contacts"
       /> -->
       <MessageList
         :messages="messageList"
-        :participants="participants"
-        :showTypingIndicator="showTypingIndicator"
+        :contacts="contacts"
+        :showmChat_TypingIndicatorEnable="showmChat_TypingIndicatorEnable"
         :alwaysScrollToBottom="alwaysScrollToBottom"
         :messageStyling="messageStyling"
         @scrollToTop="$emit('scrollToTop')"
@@ -40,7 +40,7 @@ export default {
     ChatUsersList
   },
   props: {
-    participants: {
+    contacts: {
       type: Array,
       required: true
     },
@@ -60,7 +60,7 @@ export default {
     //   type: Boolean,
     //   default: () => false
     // },
-    showTypingIndicator: {
+    showmChat_TypingIndicatorEnable: {
       type: String,
       required: true
     },
@@ -80,16 +80,16 @@ export default {
   computed: {
     messageList() {
       // let messages = this.messageList
-      this.$store.state.chat.UserListShow // обновляет список сообщений при каждом открытии и закрытии списка пользователей
+      this.$store.state.mChat.mChat_ContactsPage // обновляет список сообщений при каждом открытии и закрытии списка пользователей
 
       let messages;
-      var users = this.$store.state.chatUsers;
-      var selectedUser = this.$store.state.chat.ContactOnClikedID
+      var users = this.$store.state.mChatHistory;
+      var selectedUser = this.$store.state.mChat.mChat_ContactClikedID
       for (let user of users) { // Перебираем для каждого пользователя
-        if (user.id === selectedUser) {
-          user.unreadMSGCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
-          console.log(user.messagesHistory.length)
-          return messages = user.messagesHistory
+        if (user.mChatHistory_ContactID === selectedUser) {
+          user.mChatHistory_unReadMsgCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
+          console.log(user.mChatHistory_MsgHistory.length)
+          return messages = user.mChatHistory_MsgHistory
         }
       }
     }
@@ -97,14 +97,14 @@ export default {
   methods: {
     onSubmitSuggestion(suggestion){ // Импорт для userInput (Suggestions)
       // this.messageList = [...this.messageList, message]
-      var users = this.$store.state.chatUsers; // Не копируем массив, чтобы изменять оригинал
-      var selectedUser = this.$store.state.chat.ContactOnClikedID
+      var users = this.$store.state.mChatHistory; // Не копируем массив, чтобы изменять оригинал
+      var selectedUser = this.$store.state.mChat.mChat_ContactClikedID
       for (let user of users) { // Перебираем для каждого пользователя
-        if (user.id === selectedUser) {
+        if (user.mChatHistory_ContactID === selectedUser) {
           // если отправляемый suggestion автономен, то нужно удалить его запись из истории, и добавить уже в виде ответа от ME
-          if (user.messagesHistory[user.messagesHistory.length - 1].type === 'suggestion') user.messagesHistory.splice([user.messagesHistory.length - 1], 1)
+          if (user.mChatHistory_MsgHistory[user.mChatHistory_MsgHistory.length - 1].type === 'suggestion') user.mChatHistory_MsgHistory.splice([user.mChatHistory_MsgHistory.length - 1], 1)
           // В противном случае просто отправить ответ от ME, т.к suggestion был привязан к THEM
-          user.messagesHistory = [...user.messagesHistory, suggestion]
+          user.mChatHistory_MsgHistory = [...user.mChatHistory_MsgHistory, suggestion]
           this.$store.commit('updateStores');
         }
       }
@@ -113,8 +113,8 @@ export default {
       return this.messageList.length > 0 ? this.messageList[this.messageList.length - 1].suggestions : []
     },
     closeChat() {
-      this.$store.state.chat.isChatOpen = false
-      this.$store.state.chat.newMessagesCount = 0
+      this.$store.state.mChat.mChat_Show = false
+      this.$store.state.mChat.mChat_NewMessagesCount = 0
       this.$store.commit('updateStores');
     },
   }

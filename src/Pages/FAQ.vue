@@ -5,11 +5,11 @@
     <v-expansion-panels accordion dark>
         <v-expansion-panel>
         <v-expansion-panel-header class="header-panels">
-          <div v-if="$store.state.lang">General information</div>
+          <div v-if="$store.state.gameLang">General information</div>
           <div v-else>Общая информация</div>
         </v-expansion-panel-header>
         <v-expansion-panel-content class="content-panels">
-            <section v-if="$store.state.lang" class="text-center">
+            <section v-if="$store.state.gameLang" class="text-center">
                 <!-- ОБ ИГРЕ -->
                 <p></p>
                 <a-divider class="divider"><h1> About the game </h1></a-divider>
@@ -57,7 +57,7 @@
         </v-expansion-panel-content>
         </v-expansion-panel>
 
-        <v-expansion-panel v-if="$store.state.lang">
+        <v-expansion-panel v-if="$store.state.gameLang">
             <v-expansion-panel-header class="header-panels">
                 <div> Frequently asked question </div>
             </v-expansion-panel-header>

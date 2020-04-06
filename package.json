@@ -1,6 +1,6 @@
 {
   "name": "lab",
-  "version": "0.0.5",
+  "version": "0.0.5b",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -15,7 +15,7 @@
     "ant-design-vue": "^1.5.1",
     "core-js": "^3.6.4",
     "crypto-js": "^4.0.0",
-    "css-loader": "^3.4.2",
+    "css-loader": "^3.5.0",
     "dayjs": "^1.8.23",
     "extract-numbers": "^1.0.5",
     "localforage": "^1.7.3",

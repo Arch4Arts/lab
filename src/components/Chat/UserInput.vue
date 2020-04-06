@@ -11,7 +11,7 @@
         role="button"
         tabIndex="0"
         contentEditable="false"
-        :placeholder="($store.state.lang) ? 'Write a message...': 'Введите текст...'"
+        :placeholder="($store.state.gameLang) ? 'Write a message...': 'Введите текст...'"
         class="text-input"
       ></div>
       <div class="inputArea buttons-container">

@@ -1,7 +1,7 @@
 <template>
 <section>
 
-<section v-if="$store.state.lang">
+<section v-if="$store.state.gameLang">
 <v-btn @click='$root.sendMessage("mc_support", "support", "text", { text: "lorum!"})'>Support short text...</v-btn>
 <v-btn @click='$root.sendMessage("mc_support", "support", "text", { text: "Lorum ipsum orom!"})'>Support text...</v-btn>
 
@@ -38,9 +38,9 @@
 <v-card>
 <v-card-text>
           <v-text-field
-            v-model="chatID"
+            v-model="mChatHistory_ChatID"
             placeholder="mc_support"
-            label="chatID"
+            label="mChatHistory_ChatID"
           ></v-text-field>
           <v-text-field
             v-model="author"
@@ -92,7 +92,7 @@ export default {
     data(){
         return {
             author: '',
-            chatID: '',
+            mChatHistory_ChatID: '',
         }
     },
     components: {

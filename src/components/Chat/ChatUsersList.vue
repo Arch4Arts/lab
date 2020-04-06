@@ -13,7 +13,7 @@
           <v-list class="users-list__palette-menu-bg">
             <v-list-item
               class="users-list__vlist--hover"
-              v-for="(item, index) in $store.state.chat.ThemesList"
+              v-for="(item, index) in $store.state.mChat.mChat_ThemesList"
               :key="index"
               @click="chatThemes(item.title)"
             >
@@ -30,26 +30,26 @@
 
             <v-list-item
               class="users-list__vlist-item users-list__vlist--hover"
-              :key="contact.id"
-              @click="ClickOnContact(contact.id, contact.name)"
+              :key="contact.mChatHistory_ContactID"
+              @click="ClickOnContact(contact.mChatHistory_ContactID, contact.mChatHistory_ContactName)"
             >
               <v-list-item-avatar size="52">
-                <img :class="{ users_list__vlist__avatar_badge: contact.unreadMSGCount > 0 }" :src="contact.imageUrl">
+                <img :class="{ users_list__vlist__avatar_badge: contact.mChatHistory_unReadMsgCount > 0 }" :src="contact.mChatHistory_AvatarImg">
               </v-list-item-avatar>
 
               <v-list-item-content>
-                <v-list-item-title class="ml-2 users-list__vlist--contact-title"> {{ contact.name }} </v-list-item-title>
+                <v-list-item-title class="ml-2 users-list__vlist--contact-title"> {{ contact.mChatHistory_ContactName }} </v-list-item-title>
                 <v-list-item-subtitle class="ml-2 users-list__vlist--contact-subtitle" 
-                v-if="contact.messagesHistory.type === 'text' || contact.messagesHistory.type === 'system'"> {{ contact.messagesHistory.data.text }} </v-list-item-subtitle>
+                v-if="contact.mChatHistory_MsgHistory.type === 'text' || contact.mChatHistory_MsgHistory.type === 'system'"> {{ contact.mChatHistory_MsgHistory.data.text }} </v-list-item-subtitle>
                 <v-list-item-subtitle class="ml-2" 
-                v-else-if="contact.messagesHistory.type === 'emoji'"> <v-img width="28" :src="contact.messagesHistory.data.src"></v-img> </v-list-item-subtitle>
+                v-else-if="contact.mChatHistory_MsgHistory.type === 'emoji'"> <v-img width="28" :src="contact.mChatHistory_MsgHistory.data.src"></v-img> </v-list-item-subtitle>
                 <v-list-item-subtitle class="ml-2" v-else> <v-icon class="users-list__vlist--contact-subtitle-icon">fas fa-photo-video</v-icon> </v-list-item-subtitle>
               </v-list-item-content>
 
               <v-list-item-action class="text-no-wrap">
                 <v-badge color="badge">
                   <template v-slot:badge>
-                      <span v-if="contact.unreadMSGCount > 0"> {{ contact.unreadMSGCount }} </span>
+                      <span v-if="contact.mChatHistory_unReadMsgCount > 0"> {{ contact.mChatHistory_unReadMsgCount }} </span>
                   </template>
                 </v-badge>
               </v-list-item-action>
@@ -66,17 +66,17 @@ import chatThemes from '../../Styles/chatThemes'
     computed: {
       ContactList: {
         get() {
-          var contacts = this.$store.state.chat.currentContacts // Контакты в телефоне
-          var users = JSON.parse(JSON.stringify(this.$store.state.chatUsers)); // все контакты в игре
+          var contacts = this.$store.state.mChat.mChat_CurrentContacts_MC // Контакты в телефоне персонажа
+          var users = JSON.parse(JSON.stringify(this.$store.state.mChatHistory)); // История всех чатов
           var showContactsList = [] // обработанные контакты для отображения
           for (let i = 0; i < contacts.length; i++) { // Перебираем столько раз, сколько контактов в contacts
             for (let user of users) { // Перебираем для каждого пользователя
-              if (user.id === contacts[i]) {
+              if (user.mChatHistory_ContactID === contacts[i]) {
                 showContactsList.push(user)
-                user.messagesHistory.find(function(item) {
-                  // if (item.type === 'text' && item.author === contacts[i]) showContactsList[i].messagesHistory = item.data.text;
-                  // if (item.type === 'text' && item.author === contacts[i]) showContactsList[i].messagesHistory = item.data.text; // Забирем первое значение удовлетворяющее условию
-                  if (item.type !== 'suggestion') showContactsList[i].messagesHistory = item
+                user.mChatHistory_MsgHistory.find(function(item) {
+                  // if (item.type === 'text' && item.author === contacts[i]) showContactsList[i].mChatHistory_MsgHistory = item.data.text;
+                  // if (item.type === 'text' && item.author === contacts[i]) showContactsList[i].mChatHistory_MsgHistory = item.data.text; // Забирем первое значение удовлетворяющее условию
+                  if (item.type !== 'suggestion') showContactsList[i].mChatHistory_MsgHistory = item
                 })
               }
             }
@@ -87,13 +87,13 @@ import chatThemes from '../../Styles/chatThemes'
     },
     methods: {
       ClickOnContact(contactID, contactName){
-        this.$store.state.chat.ContactOnClikedID = contactID
-        this.$store.state.chat.ContactOnClikedName = contactName
-        this.$store.state.chat.UserListShow = !this.$store.state.chat.UserListShow
+        this.$store.state.mChat.mChat_ContactClikedID = contactID
+        this.$store.state.mChat.mChat_ContactClikedName = contactName
+        this.$store.state.mChat.mChat_ContactsPage = !this.$store.state.mChat.mChat_ContactsPage
         this.$store.commit('updateStores');
       },
       chatThemes(select){
-        this.$store.state.chat.CurrentTheme = select;
+        this.$store.state.mChat.mChat_CurrentTheme_MC = select;
         this.$store.commit('updateStores');
         chatThemes();
       }

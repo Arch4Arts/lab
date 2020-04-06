@@ -1,6 +1,6 @@
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const SentryCliPlugin = require('@sentry/webpack-plugin');
-var pjson = require('D:/Dev/lab/package.json');
+var packageJson = require('D:/Dev/lab/package.json');
 
 module.exports = {
   configureWebpack: config => {
@@ -14,7 +14,7 @@ module.exports = {
         openAnalyzer: false,
     }),
     new SentryCliPlugin({ // Обработчик ошибок
-      release: pjson.version, // извлечение версии игры из переменной
+      release: packageJson.version, // извлечение версии игры из переменной
       include: 'D:/Dev/lab/dist/js/', // Загрузка js файлов на сервер
       // filenameTransform: filename => '~/js/' + filename,
       ignoreFile: '.sentrycliignore',

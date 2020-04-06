@@ -9,16 +9,16 @@
         <v-spacer/>
         <v-toolbar-title class="bar__title"> 
         <!-- ЗАГОЛОВОК ЧАТА преобразует tailor в Tailor -->
-          {{ this.$store.state.chat.ContactOnClikedName }} 
+          {{ this.$store.state.mChat.mChat_ContactClikedName }} 
         </v-toolbar-title>
         <v-spacer/>
         <v-btn class="bar__phone-btn v-btn--hover" icon>
           <v-icon size="18"> fas fa-phone </v-icon>
         </v-btn>
-        <!-- <v-btn v-if="$store.state.chat.CurrentTheme !== $store.state.chat.ThemesList[0].title" class="bar__video-btn v-btn--hover" icon>
+        <!-- <v-btn v-if="$store.state.mChat.mChat_CurrentTheme_MC !== $store.state.mChat.mChat_ThemesList[0].title" class="bar__video-btn v-btn--hover" icon>
           <v-icon size="18"> fas fa-video </v-icon>
         </v-btn>
-        <v-btn v-if="$store.state.chat.CurrentTheme !== $store.state.chat.ThemesList[0].title" class="bar__ellipsis-btn v-btn--hover" icon>
+        <v-btn v-if="$store.state.mChat.mChat_CurrentTheme_MC !== $store.state.mChat.mChat_ThemesList[0].title" class="bar__ellipsis-btn v-btn--hover" icon>
           <v-icon size="18"> fas fa-ellipsis-v </v-icon>
         </v-btn> -->
       </v-toolbar>
@@ -30,7 +30,7 @@
   <!-- </RecycleScroller> -->
   </virtual-list>
     <UserInput /> 
-  <!-- <Message v-show="showTypingIndicator !== ''" :message="{author: showTypingIndicator, type: 'typing'}" :chatImageUrl="chatImageUrl(showTypingIndicator)" :colors="colors" :messageStyling="messageStyling" /> -->
+  <!-- <Message v-show="showmChat_TypingIndicatorEnable !== ''" :message="{author: showmChat_TypingIndicatorEnable, type: 'typing'}" :chatImageUrl="chatImageUrl(showmChat_TypingIndicatorEnable)" :colors="colors" :messageStyling="messageStyling" /> -->
 </div>
 
 </template>
@@ -50,7 +50,7 @@ export default {
     Suggestions
   },
   props: {
-    participants: {
+    contacts: {
       type: Array,
       required: true
     },
@@ -58,7 +58,7 @@ export default {
       type: Array,
       required: true
     },
-    showTypingIndicator: {
+    showmChat_TypingIndicatorEnable: {
       type: String,
       required: true
     },
@@ -74,14 +74,14 @@ export default {
   methods: {
     onSubmitSuggestion(suggestion){ // Импорт для userInput (Suggestions)
       // this.messageList = [...this.messageList, message]
-      var users = this.$store.state.chatUsers; // Не копируем массив, чтобы изменять оригинал
-      var selectedUser = this.$store.state.chat.ContactOnClikedID
+      var users = this.$store.state.mChatHistory; // Не копируем массив, чтобы изменять оригинал
+      var selectedUser = this.$store.state.mChat.mChat_ContactClikedID
       for (let user of users) { // Перебираем для каждого пользователя
-        if (user.id === selectedUser) {
+        if (user.mChatHistory_ContactID === selectedUser) {
           // если отправляемый suggestion автономен, то нужно удалить его запись из истории, и добавить уже в виде ответа от ME
-          if (user.messagesHistory[user.messagesHistory.length - 1].type === 'suggestion') user.messagesHistory.splice([user.messagesHistory.length - 1], 1)
+          if (user.mChatHistory_MsgHistory[user.mChatHistory_MsgHistory.length - 1].type === 'suggestion') user.mChatHistory_MsgHistory.splice([user.mChatHistory_MsgHistory.length - 1], 1)
           // В противном случае просто отправить ответ от ME, т.к suggestion был привязан к THEM
-          user.messagesHistory = [...user.messagesHistory, suggestion]
+          user.mChatHistory_MsgHistory = [...user.mChatHistory_MsgHistory, suggestion]
           this.$store.commit('updateStores');
         }
       }
@@ -93,7 +93,7 @@ export default {
       this.onSubmitSuggestion({author: 'me', type: 'text', data: { text: suggestion }})
     },
     backToUserList(){
-      this.$store.state.chat.UserListShow = !this.$store.state.chat.UserListShow
+      this.$store.state.mChat.mChat_ContactsPage = !this.$store.state.mChat.mChat_ContactsPage
       this.$store.commit('updateStores');
     },
     _scrollDown () {
@@ -108,16 +108,16 @@ export default {
       return this.alwaysScrollToBottom || (this.$refs.scrollList.scrollTop > this.$refs.scrollList.scrollHeight - 600)
     },
     profile(author) {
-      const profile = this.participants.find(profile => profile.id === author)
+      const profile = this.contacts.find(profile => profile.mChatHistory_ContactID === author)
 
       // A profile may not be found for system messages or messages by 'me'
-      return profile || {imageUrl: '', name: ''}
+      return profile || {mChatHistory_AvatarImg: '', mChatHistory_ContactName: ''}
     },
     chatImageUrl(author) {
-      return this.profile(author).imageUrl
+      return this.profile(author).mChatHistory_AvatarImg
     },
     authorName(author) {
-      return this.profile(author).name
+      return this.profile(author).mChatHistory_ContactName
     }
   },
   computed: {
@@ -174,7 +174,7 @@ export default {
     color: var(--bar__phone-btn--color) !important;
 }
 
-.Bbar__video-btn {
+.bar__video-btn {
     color: var(--bar__video-btn--color) !important;
 }
 

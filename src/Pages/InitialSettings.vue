@@ -6,7 +6,7 @@
 
         <!-- ENGLISH -->
 
-        <section v-if="$store.state.lang">
+        <section v-if="$store.state.gameLang">
 
         <hr>
         <h1> Game settings </h1>
@@ -23,20 +23,20 @@
         This game uses sound alerts for certain events, you can turn off the sound completely, or only selected ones, and adjust the volume
         <br>
 
-        <v-btn color="grey lighten-2" outline dark @click="$root.achievementSound()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> Getting achievement </v-btn>
+        <v-btn color="grey lighten-2" outline dark @click="$root.notif_AchievementSoundEnable()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> Getting achievement </v-btn>
         
-        <v-switch v-model="$store.state.achievementSound" @click.stop="Switch('achievementSound')" color="grey lighten-2" dark :label="($store.state.achievementSound) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.achievementVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.achievementSound" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
+        <v-switch v-model="$store.state.notif_AchievementSoundEnable" @click.stop="Switch('notif_AchievementSoundEnable')" color="grey lighten-2" dark :label="($store.state.notif_AchievementSoundEnable) ? 'ON' : 'OFF' "></v-switch>
+        <v-slider v-model="$store.state.notif_AchievementVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_AchievementSoundEnable" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
         
-        <v-btn color="grey lighten-2" outline dark @click="$root.diarySound()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> A new entry in the diary </v-btn>
+        <v-btn color="grey lighten-2" outline dark @click="$root.notif_DiarySoundEnable()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> A new entry in the diary </v-btn>
         
-        <v-switch v-model="$store.state.diarySound" @click.stop="Switch('diarySound')" color="grey lighten-2" dark :label="($store.state.diarySound) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.diaryVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.diarySound" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
+        <v-switch v-model="$store.state.notif_DiarySoundEnable" @click.stop="Switch('notif_DiarySoundEnable')" color="grey lighten-2" dark :label="($store.state.notif_DiarySoundEnable) ? 'ON' : 'OFF' "></v-switch>
+        <v-slider v-model="$store.state.notif_DiaryVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_DiarySoundEnable" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
         
-        <v-btn color="grey lighten-2" outline dark @click="$root.phoneSound()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> A new message in the phone </v-btn>
+        <v-btn color="grey lighten-2" outline dark @click="$root.notif_SmartphoneSoundEnable()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> A new message in the phone </v-btn>
 
-        <v-switch v-model="$store.state.phoneSound" @click.stop="Switch('phoneSound')" color="grey lighten-2" dark :label="($store.state.phoneSound) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.phoneVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.phoneSound" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
+        <v-switch v-model="$store.state.notif_SmartphoneSoundEnable" @click.stop="Switch('notif_SmartphoneSoundEnable')" color="grey lighten-2" dark :label="($store.state.notif_SmartphoneSoundEnable) ? 'ON' : 'OFF' "></v-switch>
+        <v-slider v-model="$store.state.notif_smartphoneVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_SmartphoneSoundEnable" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
         
         </v-card-text>
         </v-card>
@@ -134,20 +134,20 @@
         В данной игре используются звуковые оповещения при определённых событиях, вы можете отключить звук полностью, или только выбранные, а отрегулировать громкость
         <br>
 
-        <v-btn color="grey lighten-2" outline dark @click="$root.achievementSound()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> Получение достижения </v-btn>
+        <v-btn color="grey lighten-2" outline dark @click="$root.notif_AchievementSoundEnable()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> Получение достижения </v-btn>
         
-        <v-switch v-model="$store.state.achievementSound" @click.stop="Switch('achievementSound')" color="grey lighten-2" dark :label="($store.state.achievementSound) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.achievementVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.achievementSound" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
+        <v-switch v-model="$store.state.notif_AchievementSoundEnable" @click.stop="Switch('notif_AchievementSoundEnable')" color="grey lighten-2" dark :label="($store.state.notif_AchievementSoundEnable) ? 'ON' : 'OFF' "></v-switch>
+        <v-slider v-model="$store.state.notif_AchievementVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_AchievementSoundEnable" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
         
-        <v-btn color="grey lighten-2" outline dark @click="$root.diarySound()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> Новая запись в дневнике </v-btn>
+        <v-btn color="grey lighten-2" outline dark @click="$root.notif_DiarySoundEnable()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> Новая запись в дневнике </v-btn>
         
-        <v-switch v-model="$store.state.diarySound" @click.stop="Switch('diarySound')" color="grey lighten-2" dark :label="($store.state.diarySound) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.diaryVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.diarySound" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
+        <v-switch v-model="$store.state.notif_DiarySoundEnable" @click.stop="Switch('notif_DiarySoundEnable')" color="grey lighten-2" dark :label="($store.state.notif_DiarySoundEnable) ? 'ON' : 'OFF' "></v-switch>
+        <v-slider v-model="$store.state.notif_DiaryVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_DiarySoundEnable" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
         
-        <v-btn color="grey lighten-2" outline dark @click="$root.phoneSound()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> Новое сообщение в телефоне </v-btn>
+        <v-btn color="grey lighten-2" outline dark @click="$root.notif_SmartphoneSoundEnable()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> Новое сообщение в телефоне </v-btn>
 
-        <v-switch v-model="$store.state.phoneSound" @click.stop="Switch('phoneSound')" color="grey lighten-2" dark :label="($store.state.phoneSound) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.phoneVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.phoneSound" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
+        <v-switch v-model="$store.state.notif_SmartphoneSoundEnable" @click.stop="Switch('notif_SmartphoneSoundEnable')" color="grey lighten-2" dark :label="($store.state.notif_SmartphoneSoundEnable) ? 'ON' : 'OFF' "></v-switch>
+        <v-slider v-model="$store.state.notif_smartphoneVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_SmartphoneSoundEnable" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
         
         </v-card-text>
         </v-card>
@@ -398,9 +398,9 @@ export default {
         startGame(lang){ // Для сохранения всех настроек
             this.$router.push('/');
             this.$store.commit('Header'); // Включаем кнопки в шапке
-            this.$store.commit('achievementVolume');
-            this.$store.commit('diaryVolume');
-            this.$store.commit('phoneVolume');
+            this.$store.commit('notif_AchievementVolume');
+            this.$store.commit('notif_DiaryVolume');
+            this.$store.commit('notif_smartphoneVolume');
             if ( lang == 'ru' ) 
               this.$store.commit('saveCharNames', 'ru');
             else 

@@ -8,9 +8,9 @@ Vue.use(Divider);
 import App from './App.vue'
 import router from './router.js'
 import store from './stores/store'
-import { NordLight, CustomDark, NordDark } from './Styles/themes'
+import { NordLight, CustomDark, NordDark } from './Styles/themes' // Кастомные стили (темы)
 import vuetify from './Styles/vuetify';
-import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/css/all.css' // Не менять, в free скидывать файлы от Pro
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 Vue.config.productionTip = false
@@ -48,17 +48,123 @@ import * as Integrations from '@sentry/integrations';
 
 import chatThemes from './Styles/chatThemes'
 
+new Vue({
+  router,
+  store,
+  vuetify,
+  mounted: function () { // Определение языка при первой загрузке / А также тип устройства
+    this.$nextTick(function () { 
+      if (store.state.gameFirstLoad) {
+        let lang = window.navigator ? (window.navigator.language || window.navigator.systemLanguage || window.navigator.userLanguage) : "ru";
+        lang = lang.substr(0, 2).toLowerCase();
+        store.commit('gameFirstLoad');
+        if ( lang == 'ru' ) store.commit('langChange');
+      }
+      if (store.state.gameTheme === 'CustomDark') this.$vuetify.theme.themes.dark = CustomDark;
+      if (store.state.gameTheme === 'NordDark') this.$vuetify.theme.themes.dark = NordDark;
+      if (store.state.gameTheme === 'NordLight') this.$vuetify.theme.themes.dark = NordLight;
+      // console.log(getComputedStyle(document.documentElement).getPropertyValue('--amouse-x'))
+      chatThemes()
+    })
+  },
+  methods: {
+    notif_AchievementSoundEnable(){
+    if (this.$store.state.notif_AchievementSoundEnable) {
+      var audio = new Audio(require('./Media/audio/Achievements.mp3'));
+      audio.volume = this.$store.state.notif_AchievementVolume;
+      audio.play();
+    }
+    },
+    notif_DiarySoundEnable(){
+      if (this.$store.state.notif_DiarySoundEnable) {
+        var audio = new Audio(require('./Media/audio/Diary.mp3'));
+        audio.volume = this.$store.state.notif_DiaryVolume;
+        audio.play();
+      }
+    },
+    notif_SmartphoneSoundEnable(){
+      if (this.$store.state.notif_SmartphoneSoundEnable) {
+        var audio = new Audio(require('./Media/audio/Phone.mp3'));
+        audio.volume = this.$store.state.notif_smartphoneVolume;
+        audio.play();
+      }
+    },
+    convertColor(Color){ // Преобразует hsl(100, 100%, 50%) в h=100, s=100, l=100
+      // console.log('3' + Color)
+      var hsl = extractNumbers(Color);
+      // console.log('3_' + hsl)
+      // console.log(parseFloat(hsl[0]))
+      // console.log(parseFloat(hsl[1]))
+      // console.log(parseFloat(hsl[2]) * 2)
+      return { // Преобразуем иначе, вернётся не число, а элемент массива в виде строки
+        h: parseFloat(hsl[0]), 
+        s: parseFloat(hsl[1]),
+        l: parseFloat(hsl[2]) * 2, // умножаем на 2, т.к в ColorPicker'e l всегда возвращается делённой на 2 (т.к l:50% - максимум для цвета 100% уже просто былеый цвет)
+      };
+    },
+    errNotify(error){
+      Sentry.captureException(error); // Отправка ошибки черезе Sentry
+      console.log(error)
+      this.$store.state.gameLang 
+      ? iziToast.info({message: `Error: ${error}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
+      : iziToast.info({message: `Ошибка: ${error}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
+    },
+    sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
+    sendMessage(mChatHistory_ChatID ,author, type, data, suggestions) { // Для suggestion ONLY нужно указать type: suggestion и data: undefined
+      this.$store.state.mChat.mChat_NewMessagesCount = this.mChat_Show ? this.$store.state.mChat.mChat_NewMessagesCount : this.$store.state.mChat.mChat_NewMessagesCount + 1
+
+      // setTimeout можно заменить на sleep(ms)
+      if (this.$store.state.mChat.mChat_TypingIndicatorEnable && type !== 'suggestion' && this.$store.state.mChat.mChat_ContactsPage === false){
+        this.onMessageWasSent(mChatHistory_ChatID, {author: author, type: 'typing', data: undefined, suggestions: undefined});
+        (type === 'text' && data.text.length <= '8') 
+        ? setTimeout(() => this.onMessageWasSent(mChatHistory_ChatID, {author: author, type: type, data: data, suggestions: suggestions}), 500) 
+        : (type === 'text' && data.text.length <= '20') 
+        ? setTimeout(() => this.onMessageWasSent(mChatHistory_ChatID, {author: author, type: type, data: data, suggestions: suggestions}), 1000)
+        : setTimeout(() => this.onMessageWasSent(mChatHistory_ChatID, {author: author, type: type, data: data, suggestions: suggestions}), 3000)
+      }
+      else this.onMessageWasSent(mChatHistory_ChatID, {author: author, type: type, data: data, suggestions: suggestions})
+    },
+    onMessageWasSent(mChatHistory_ChatID, message){ // Импорт для userInput (Suggestions)
+      // this.messageList = [...this.messageList, message]
+      var users = this.$store.state.mChatHistory; // Не копируем массив, чтобы изменять оригинал
+      for (let user of users) { // Перебираем для каждого пользователя
+        if (user.mChatHistory_ChatID === mChatHistory_ChatID) {
+          user.mChatHistory_unReadMsgCount += 1
+          // Удаляем сообщение typing, если используется имитация набора
+          if (user.mChatHistory_MsgHistory[user.mChatHistory_MsgHistory.length - 1].type === 'typing') user.mChatHistory_MsgHistory.splice([user.mChatHistory_MsgHistory.length - 1], 1)
+          user.mChatHistory_MsgHistory = [...user.mChatHistory_MsgHistory, message]
+          this.$store.commit('updateStores');
+        }
+      }
+    },
+    addContactToChatList(newContact){
+      let doubleDetect = false;
+      let contacts = this.$store.state.mChat.mChat_CurrentContacts_MC
+      for (let contact of contacts) {
+        if (contact === newContact) doubleDetect = true;
+      }
+      if (doubleDetect === false) {
+        this.$store.state.mChat.mChat_CurrentContacts_MC.push(newContact);
+        this.$store.commit('updateStores');
+      }
+    },
+  },
+  render: function (h) { return h(App) }
+}).$mount('#app')
+
 if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена
   Sentry.init({
     dsn: 'https://6b82c070a6874f70ad6e9fe5ebcb9fb8@sentry.io/1509214',
     integrations: [new Integrations.Vue({Vue, attachProps: true})],
-    release: store.state.version, // Версия ПО
+    release: store.state.gameVersion, // Версия ПО
     beforeSend(event, hint) {
       fetch('https://sentry.io/api/1509214/store/?sentry_key=6b82c070a6874f70ad6e9fe5ebcb9fb8&sentry_version=7') // Проверка не блокируется ли Sentry блокировщиком рекламы
       .then(result => {
         console.log(`Sentry fetch status: ${result.status}\nmsg: ${result.statusText}\nOK: ${result.ok}`)
         if (result.status === 400) {
-          if (event.exception && store.state.lang) {
+          if (event.exception && store.state.gameLang) {
             Sentry.showReportDialog({ 
               eventId: event.event_id,
               lang: 'en',
@@ -90,13 +196,13 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
             });
           }
         } else {
-          store.state.lang 
+          store.state.gameLang 
           ? iziToast.info({message: `Sentry failed to send error report: status: ${result.status}\nmsg: ${result.statusText}\nOK: ${result.ok}. Add your site to the ad blocker exception list.`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', close: true, closeOnClick: false, drag: false, timeout: 0})
           : iziToast.info({message: `Sentry не удалось отправить отчёт об ошибке: status: ${result.status}\nmsg: ${result.statusText}\nOK: ${result.ok}. Добавьте сайт в список исключений блокировщика рекламы.`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', close: true, closeOnClick: false, drag: false, timeout: 0})
         }
       })
       .catch(result => {
-        store.state.lang 
+        store.state.gameLang 
         ? iziToast.info({message: `Sentry failed to send error report: ${result}. Add your site to the ad blocker exception list.`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', close: true, closeOnClick: false, drag: false, timeout: 0})
         : iziToast.info({message: `Sentry не удалось отправить отчёт об ошибке: ${result}. Добавьте сайт в список исключений блокировщика рекламы.`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', close: true, closeOnClick: false, drag: false, timeout: 0})
       })
@@ -108,7 +214,7 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
 if (process.env.NODE_ENV === 'production') {
   Vue.config.errorHandler = function(err, vm, info) { // Обработчик ошибок Vue
     Sentry.captureException(err, vm, info);
-    store.state.lang 
+    store.state.gameLang 
     ? iziToast.info({message: `Error: ${err.toString()} Info: ${info}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
     : iziToast.info({message: `Ошибка: ${err.toString()} Инфо: ${info}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
   };
@@ -117,111 +223,6 @@ if (process.env.NODE_ENV === 'production') {
 // window.onerror = function(message, source, line, column, error) {
 //   console.log(`Error: ${error} ${message} ${source} ${line}`);
 // }
-
-new Vue({
-  router,
-  store,
-  vuetify,
-  mounted: function () { // Определение языка при первой загрузке / А также тип устройства
-    this.$nextTick(function () { 
-      if (store.state.firstLoad) {
-        let lang = window.navigator ? (window.navigator.language || window.navigator.systemLanguage || window.navigator.userLanguage) : "ru";
-        lang = lang.substr(0, 2).toLowerCase();
-        store.commit('firstLoad');
-        if ( lang == 'ru' ) store.commit('langChange');
-      }
-      if (store.state.theme === 'CustomDark') this.$vuetify.theme.themes.dark = CustomDark;
-      if (store.state.theme === 'NordDark') this.$vuetify.theme.themes.dark = NordDark;
-      if (store.state.theme === 'NordLight') this.$vuetify.theme.themes.dark = NordLight;
-      // console.log(getComputedStyle(document.documentElement).getPropertyValue('--amouse-x'))
-      chatThemes()
-    })
-  },
-  methods: {
-    achievementSound(){
-    if (this.$store.state.achievementSound) {
-      var audio = new Audio(require('./Media/audio/Achievements.mp3'));
-      audio.volume = this.$store.state.achievementVolume;
-      audio.play();
-    }
-    },
-    diarySound(){
-      if (this.$store.state.diarySound) {
-        var audio = new Audio(require('./Media/audio/Diary.mp3'));
-        audio.volume = this.$store.state.diaryVolume;
-        audio.play();
-      }
-    },
-    phoneSound(){
-      if (this.$store.state.phoneSound) {
-        var audio = new Audio(require('./Media/audio/Phone.mp3'));
-        audio.volume = this.$store.state.phoneVolume;
-        audio.play();
-      }
-    },
-    convertColor(Color){ // Преобразует hsl(100, 100%, 50%) в h=100, s=100, l=100
-      // console.log('3' + Color)
-      var hsl = extractNumbers(Color);
-      // console.log('3_' + hsl)
-      // console.log(parseFloat(hsl[0]))
-      // console.log(parseFloat(hsl[1]))
-      // console.log(parseFloat(hsl[2]) * 2)
-      return { // Преобразуем иначе, вернётся не число, а элемент массива в виде строки
-        h: parseFloat(hsl[0]), 
-        s: parseFloat(hsl[1]),
-        l: parseFloat(hsl[2]) * 2, // умножаем на 2, т.к в ColorPicker'e l всегда возвращается делённой на 2 (т.к l:50% - максимум для цвета 100% уже просто былеый цвет)
-      };
-    },
-    errNotify(error){
-      Sentry.captureException(error); // Отправка ошибки черезе Sentry
-      this.$store.state.lang 
-      ? iziToast.info({message: `Error: ${error}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
-      : iziToast.info({message: `Ошибка: ${error}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
-    },
-    sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    },
-    sendMessage(chatID ,author, type, data, suggestions) { // Для suggestion ONLY нужно указать type: suggestion и data: undefined
-      this.$store.state.chat.newMessagesCount = this.isChatOpen ? this.$store.state.chat.newMessagesCount : this.$store.state.chat.newMessagesCount + 1
-
-      // setTimeout можно заменить на sleep(ms)
-      if (this.$store.state.chat.TypingIndicator && type !== 'suggestion' && this.$store.state.chat.UserListShow === false){
-        this.onMessageWasSent(chatID, {author: author, type: 'typing', data: undefined, suggestions: undefined});
-        (type === 'text' && data.text.length <= '8') 
-        ? setTimeout(() => this.onMessageWasSent(chatID, {author: author, type: type, data: data, suggestions: suggestions}), 500) 
-        : (type === 'text' && data.text.length <= '20') 
-        ? setTimeout(() => this.onMessageWasSent(chatID, {author: author, type: type, data: data, suggestions: suggestions}), 1000)
-        : setTimeout(() => this.onMessageWasSent(chatID, {author: author, type: type, data: data, suggestions: suggestions}), 3000)
-      }
-      else this.onMessageWasSent(chatID, {author: author, type: type, data: data, suggestions: suggestions})
-    },
-    onMessageWasSent(chatID, message){ // Импорт для userInput (Suggestions)
-      // this.messageList = [...this.messageList, message]
-      var users = this.$store.state.chatUsers; // Не копируем массив, чтобы изменять оригинал
-      for (let user of users) { // Перебираем для каждого пользователя
-        if (user.chatID === chatID) {
-          user.unreadMSGCount += 1
-          // Удаляем сообщение typing, если используется имитация набора
-          if (user.messagesHistory[user.messagesHistory.length - 1].type === 'typing') user.messagesHistory.splice([user.messagesHistory.length - 1], 1)
-          user.messagesHistory = [...user.messagesHistory, message]
-          this.$store.commit('updateStores');
-        }
-      }
-    },
-    addContactToChatList(newContact){
-      let doubleDetect = false;
-      let contacts = this.$store.state.chat.currentContacts
-      for (let contact of contacts) {
-        if (contact === newContact) doubleDetect = true;
-      }
-      if (doubleDetect === false) {
-        this.$store.state.chat.currentContacts.push(newContact);
-        this.$store.commit('updateStores');
-      }
-    },
-  },
-  render: function (h) { return h(App) }
-}).$mount('#app')
 
 // var decoded = String.fromCharCode(...new Uint8Array(encrypted.cipherData));
 // var encoded = Uint8Array.from([...decoded].map(ch => ch.charCodeAt())).buffer;
@@ -232,7 +233,7 @@ new Vue({
 //   ivLength = 12;
 
 //   var encrypted = await encrypt('Secret text', 'password', mode, length, ivLength).then(function(data){encrypted = data
-// /*   console.log(store.state.name) */
+// /*   console.log(store.state.gameName) */
 // })
 //   // console.log(encrypted); // { cipherText: ArrayBuffer, iv: Uint8Array }
 //   return encrypted

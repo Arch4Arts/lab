@@ -1,6 +1,6 @@
 <template>
 <!-- ENGLISH -->
-<section v-if="$store.state.lang">
+<section v-if="$store.state.gameLang">
 
 </section>
 <!-- RUSSIAN -->
