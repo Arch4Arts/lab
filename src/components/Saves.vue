@@ -88,7 +88,6 @@
                     </v-tooltip>
                   </v-list-item-action>
                 </v-list-item>
-
                 <div v-if="!endOfsaveList && saveExist === 1 && saveCount > 11" class="text-center pa-2">
                   <v-progress-circular indeterminate size="28" />
                 </div>
