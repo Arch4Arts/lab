@@ -5,9 +5,9 @@
     <img src="../../assets/Samsung Galaxy S7 Black.png" class="smartphone-texture">
     <img src="../../assets/Samsung Galaxy S7 Black_bottom.png" class="smartphone-texture close-area" @click.prevent="closeChat()">
     <!-- Страница с контактами -->
-    <ContactsPage class="contacts-page" v-if="$store.state.mChat.mChat_ContactsPage"></ContactsPage>
+    <ContactsPage class="contacts-page" v-if="$store.state.mChat.mChat_ContactsPageShow"></ContactsPage>
     <!-- Чат с конкретным контактом -->
-    <div v-if="!$store.state.mChat.mChat_ContactsPage" class="chat-window">
+    <div v-if="!$store.state.mChat.mChat_ContactsPageShow" class="chat-window">
       <MessageList
         :messages="messageList"
         :contacts="contacts"
@@ -59,7 +59,7 @@ export default {
   computed: {
     messageList() {
       // let messages = this.messageList
-      this.$store.state.mChat.mChat_ContactsPage // обновляет список сообщений при каждом открытии и закрытии списка пользователей
+      this.$store.state.mChat.mChat_ContactsPageShow // обновляет список сообщений при каждом открытии и закрытии списка пользователей
 
       let messages;
       var users = this.$store.state.mChatHistory;
@@ -93,7 +93,6 @@ export default {
     },
     closeChat() {
       this.$store.state.mChat.mChat_Show = false
-      this.$store.state.mChat.mChat_NewMessagesCount = 0
       this.$store.commit('updateStores');
     },
   }

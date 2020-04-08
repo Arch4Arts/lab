@@ -4,7 +4,7 @@ const mChat = {
         mChat_Enable: true, // Вкл/Выкл чата
         mChat_NewMessagesCount: 0, // Счетчик новых сообщений
         mChat_Show: false, // Статус отображения чата
-        mChat_ContactsPage: true, // Отображение списка контактов
+        mChat_ContactsPageShow: true, // Отображение списка контактов
 
         mChat_TypingIndicatorEnable: true, // Если true отображается имитация набора текста, если false, то ничего не отображается
         

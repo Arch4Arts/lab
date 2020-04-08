@@ -58,7 +58,6 @@ export default {
   methods: {
     openChat() {
       this.$store.state.mChat.mChat_Show = true
-      this.$store.state.mChat.mChat_NewMessagesCount = 0
       this.$store.commit('updateStores');
     },
     closeChat() {

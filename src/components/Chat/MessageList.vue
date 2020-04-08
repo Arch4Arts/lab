@@ -95,7 +95,7 @@ export default {
       this.onSubmitSuggestion({author: 'me', type: 'text', data: { text: suggestion }})
     },
     backToContactsPage(){
-      this.$store.state.mChat.mChat_ContactsPage = !this.$store.state.mChat.mChat_ContactsPage
+      this.$store.state.mChat.mChat_ContactsPageShow = !this.$store.state.mChat.mChat_ContactsPageShow
       this.$store.commit('updateStores');
     },
     _scrollDown () {

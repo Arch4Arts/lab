@@ -34,12 +34,12 @@ export default {
         if (this.$route.path != '/Diary') {
           if (this.$store.state.mChat.mChat_Show) { // проверка открыт ли чат, если да то...
             // Открыта ли страница контактов, true, то закрываем, если false, возвращаемся к странице контактов, т.к открыт чат с контактом
-            if (this.$store.state.mChat.mChat_ContactsPage) {
+            if (this.$store.state.mChat.mChat_ContactsPageShow) {
               this.$store.state.mChat.mChat_Show = !this.$store.state.mChat.mChat_Show // закрываем окно чата
               this.$store.commit('updateStores');
             }
             // Закрывает чат с контактом если он открыт
-            else this.$store.state.mChat.mChat_ContactsPage = !this.$store.state.mChat.mChat_ContactsPage
+            else this.$store.state.mChat.mChat_ContactsPageShow = !this.$store.state.mChat.mChat_ContactsPageShow
           }
         }
       },

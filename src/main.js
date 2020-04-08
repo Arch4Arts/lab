@@ -111,7 +111,7 @@ new Vue({
       this.$store.state.mChat.mChat_NewMessagesCount = this.mChat_Show ? this.$store.state.mChat.mChat_NewMessagesCount : this.$store.state.mChat.mChat_NewMessagesCount + 1
 
       // setTimeout можно заменить на sleep(ms)
-      if (this.$store.state.mChat.mChat_TypingIndicatorEnable && type !== 'suggestion' && this.$store.state.mChat.mChat_ContactsPage === false){
+      if (this.$store.state.mChat.mChat_TypingIndicatorEnable && type !== 'suggestion' && this.$store.state.mChat.mChat_ContactsPageShow === false){
         this.onMessageWasSent(mChatHistory_ChatID, {author: author, type: 'typing', data: undefined, suggestions: undefined});
         (type === 'text' && data.text.length <= '8') 
         ? setTimeout(() => this.onMessageWasSent(mChatHistory_ChatID, {author: author, type: type, data: data, suggestions: suggestions}), 500) 

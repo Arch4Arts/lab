@@ -39,7 +39,7 @@
             <v-list-item
               class="contacts-page__vlist-item contacts-page__vlist--hover"
               :key="contact.mChatHistory_ContactID"
-              @click="ClickOnContact(contact.mChatHistory_ContactID, contact.mChatHistory_ContactName)"
+              @click="ClickOnContact(contact.mChatHistory_ContactID, contact.mChatHistory_ContactName, contact.mChatHistory_unReadMsgCount)"
             >
               <!-- Аватар -->
               <v-list-item-avatar size="52">
@@ -108,10 +108,17 @@ import updateAllThemes from '../../Styles/updateAllThemes'
       }
     },
     methods: {
-      ClickOnContact(contactID, contactName){
+      ClickOnContact(contactID, contactName, contactUnReadMsgCount){
         this.$store.state.mChat.mChat_ContactClikedID = contactID
         this.$store.state.mChat.mChat_ContactClikedName = contactName
-        this.$store.state.mChat.mChat_ContactsPage = !this.$store.state.mChat.mChat_ContactsPage
+        var contacts = JSON.parse(JSON.stringify(this.$store.state.mChatHistory)); // История всех чатов
+          for (let contact of contacts) { // Перебираем для каждого контакта
+            if (contact.mChatHistory_ContactID === contactID) { // Если это тот кто был выбран
+              // Отниманием кол-во непричитанных сообщений у контакта из общего счётчика
+              this.$store.state.mChat.mChat_NewMessagesCount = this.$store.state.mChat.mChat_NewMessagesCount - contact.mChatHistory_unReadMsgCount
+            }
+          }
+        this.$store.state.mChat.mChat_ContactsPageShow = !this.$store.state.mChat.mChat_ContactsPageShow
         this.$store.commit('updateStores');
       },
       chatThemes(select){
