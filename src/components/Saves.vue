@@ -330,6 +330,7 @@ export default {
     async updateIDB(){
       return this.IDBsaveslength = await localforage.length().then(lf_length => this.IDBsaveslength = lf_length); // Кол-во сохранений в IndexedDB
     },
+
     loadMore() {
       this.updateIDB();
       if (!this.endOfsaveList) {
@@ -338,13 +339,16 @@ export default {
         (this.saves.length === this.IDBsaveslength) ? this.endOfsaveList = true : this.endOfsaveList = false 
       }
     },
+
     sortBy(key) { // desc <, asc >
       return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
     },
+
     keyGen(saveName){ // Генерация уникального ключа на основе saveID
         var salt = '3F4428472B4B6250';
         return CryptoJS.PBKDF2(saveName, salt, { keySize: 256 / 32 , iterations: 1}).toString();
     },
+
     async saveGame(){
       try {
         var name = document.getElementById("saveNameArea").value // Копирует значение
@@ -377,6 +381,7 @@ export default {
         this.$root.errNotify(error)
       }
     },
+
     async overwriteSave(saveName, saveTime, saveID){
       try {
         localforage.removeItem(`${saveName},${saveTime},${saveID}`) // Удаление сейва
@@ -406,6 +411,7 @@ export default {
         this.$root.errNotify(error)
       }
     },
+
     async loadSave(saveName, saveTime, saveID){
       try {
         // console.log(`${saveName},${saveTime},${saveID}`)
@@ -422,6 +428,7 @@ export default {
         this.$root.errNotify(error)
       }
     },
+
     deleteSave(saveName, saveTime, saveID) {
       try {
         localforage.removeItem(`${saveName},${saveTime},${saveID}`) // Удаление сейва
@@ -444,6 +451,7 @@ export default {
         this.$root.errNotify(error)
       }
     },
+
     async DeleteAllSaves(){
       try {
         await localforage.clear()
@@ -460,6 +468,7 @@ export default {
         this.$root.errNotify(error)
       }
     },
+
     async restartGame(){
       this.$router.push('/')
       await resetState()
@@ -467,6 +476,7 @@ export default {
       // this.$store.replaceState({})
       await location.reload()
     },
+    
     Empty(saveID){} // Заглушка, для того, чтобы v-list выделялся при наведении @click
   }
 }

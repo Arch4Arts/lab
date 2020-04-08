@@ -4,7 +4,7 @@
         <v-flex md8 class="Page">
             <section id="StoryTextArea">
                 <h1>Home</h1>
-                <prolog/>
+                <Prolog/>
             </section>
         </v-flex>
         <mChat/> <!-- ЧАТ ДОЛЖЕН БЫТЬ ПОСЛЕДНИЙ ЧТОБЫ ОН ПЕРЕКРЫВАЛ ВСЁ ЭЛЕМЕНТЫ -->
@@ -14,12 +14,12 @@
 
 <script>
 import mChat from '../components/Chat/mChat.vue'
-import prolog from './story/prolog'
+import Prolog from './story/Prolog'
 
 export default {
     components: {
         mChat,
-        prolog,
+        Prolog,
     },
     data(){
         return {

@@ -1,10 +1,5 @@
 import Vue from 'vue'
 
-// Все стили для ant должны быть импортарованны вручную, для каждого компонента!
-import 'ant-design-vue/lib/divider/style/index.css'
-import { Divider, } from 'ant-design-vue'
-Vue.use(Divider);
-
 import App from './App.vue'
 import router from './router.js'
 import store from './stores/store'
