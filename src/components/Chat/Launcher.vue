@@ -1,22 +1,18 @@
 <template>
   <div>
-    <!-- <div class="sc-launcher" :class="{opened: isOpen}" @click.prevent="isOpen ? close() : open()" :style="{backgroundColor: colors.launcher.bg}">
-      <div v-if="mChat_NewMessagesCount > 0 && !isOpen" class="sc-new-messsages-count">
-        {{mChat_NewMessagesCount}}
-      </div> -->
-    <div class="sc-launcher hidden-sm-and-down" @click.prevent="$store.state.mChat.mChat_Show ? closeChat() : openChat()">
-      <div v-if="$store.state.mChat.mChat_NewMessagesCount > 0 && !$store.state.mChat.mChat_Show" class="sc-new-messsages-count">
+    <!-- Иконка открывающая чат -->
+    <div class="launcher hidden-sm-and-down" @click.prevent="$store.state.mChat.mChat_Show ? closeChat() : openChat()">
+      <!-- Элемент показывающий кол-во сообщений рядом с эконкой -->
+      <div v-if="$store.state.mChat.mChat_NewMessagesCount > 0 && !$store.state.mChat.mChat_Show" class="new-msg-count">
         {{ $store.state.mChat.mChat_NewMessagesCount }}
       </div>
-        <v-btn text large fab icon color="#E0E0E0"><v-icon>fas fa-mobile-android-alt</v-icon></v-btn>
-      <!-- <img class="sc-open-icon" :src="icons.open.img"  :alt="icons.open.name" />
-      <img class="sc-closed-icon" :src="icons.close.img"  :alt="icons.close.name" /> -->
+      <v-btn text large fab icon color="#E0E0E0"><v-icon>fas fa-mobile-android-alt</v-icon></v-btn>
     </div>
-    <ChatFrame
+    <mChatFrame
       :messageList="messageList"
       :onUserInputSubmit="onMessageWasSent"
       :contacts="contacts"
-      :showmChat_TypingIndicatorEnable="showmChat_TypingIndicatorEnable"
+      :mChat_TypingIndicatorEnable="mChat_TypingIndicatorEnable"
       :alwaysScrollToBottom="alwaysScrollToBottom"
       :messageStyling="messageStyling"
       :disableUserListToggle="disableUserListToggle"
@@ -26,34 +22,14 @@
   </div>
 </template>
 <script>
-import ChatFrame from './ChatFrame.vue'
+import mChatFrame from './mChatFrame.vue'
 
 export default {
   props: {
-    // isOpen: {
-    //   type: Boolean,
-    //   required: true
-    // },
-    // open: {
-    //   type: Function,
-    //   required: true
-    // },
-    // close: {
-    //   type: Function,
-    //   required: true
-    // },
     contacts: {
       type: Array,
       required: true
     },
-    // title: {
-    //   type: String,
-    //   default: () => ''
-    // },
-    // titleImageUrl: {
-    //   type: String,
-    //   default: () => ''
-    // },
     onMessageWasSent: {
       type: Function,
       required: true
@@ -62,11 +38,7 @@ export default {
       type: Array,
       default: () => []
     },
-    // mChat_NewMessagesCount: {
-    //   type: Number,
-    //   default: () => 0
-    // },
-    showmChat_TypingIndicatorEnable: {
+    mChat_TypingIndicatorEnable: {
       type: String,
       default: () => ''
     },
@@ -83,21 +55,6 @@ export default {
       default: false
     }
   },
-  // computed: {
-  //   chatWindowTitle() {
-  //     if (this.title !== '') {
-  //       return this.title
-  //     }
-
-  //     if (this.contacts.length === 0) {
-  //       return 'You'
-  //     } else if (this.contacts.length > 1) {
-  //       return 'You, ' + this.contacts[0].name + ' & others'
-  //     } else {
-  //       return 'You & ' + this.contacts[0].name
-  //     }
-  //   }
-  // },
   methods: {
     openChat() {
       this.$store.state.mChat.mChat_Show = true
@@ -110,12 +67,13 @@ export default {
     },
   },
   components: {
-    ChatFrame
+    mChatFrame
   }
 }
 </script>
-<style scoped>
-.sc-launcher {
+<style lang='scss' scoped>
+
+.launcher {
   /* width: 60px;
   height: 60px;
   background-position: center;
@@ -127,73 +85,25 @@ export default {
   box-shadow: none; */
   transition: box-shadow 0.2s ease-in-out;
   cursor: pointer;
+  .new-msg-count {
+    position: absolute;
+    top: 6px;
+    left: 55px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    background: #ff4646;
+    color: white;
+    text-align: center;
+    margin: auto;
+    font-size: 12px;
+    font-weight: 500;
+    /* Чтобы красный кружок не перекрывался выделением кнопки */
+    z-index: 1;
+  }
 }
 
-/* .sc-launcher:before {
-  content: '';
-  position: relative;
-  display: block;
-  width: 60px;
-  height: 60px;  
-  border-radius: 50%;
-  transition: box-shadow 0.2s ease-in-out;
-} */
-
-/* .sc-launcher .sc-open-icon,
-.sc-launcher .sc-closed-icon {
-  width: 60px;
-  height: 60px;
-  position: fixed;
-  right: 25px;
-  bottom: 25px;
-  transition: opacity 100ms ease-in-out, transform 100ms ease-in-out;
-}
-
-.sc-launcher .sc-closed-icon {
-  transition: opacity 100ms ease-in-out, transform 100ms ease-in-out;
-  width: 60px;
-  height: 60px;
-}
-
-.sc-launcher .sc-open-icon {
-  padding: 20px;
-  box-sizing: border-box;
-  opacity: 0;
-}
-
-.sc-launcher.opened .sc-open-icon {
-  transform: rotate(-90deg);
-  opacity: 1;
-}
-
-.sc-launcher.opened .sc-closed-icon {
-  transform: rotate(-90deg);
-  opacity: 0;
-}
-
-.sc-launcher.opened:before {
-  box-shadow: 0px 0px 400px 250px rgba(148, 149, 150, 0.2);
-}
-
-.sc-launcher:hover {
-  box-shadow: 0 0px 27px 1.5px rgba(0,0,0,0.2);
-} */
-
-.sc-new-messsages-count {
-  position: absolute;
-  top: 6px;
-  left: 55px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  border-radius: 50%;
-	width: 22px;
-  height: 22px;
-  background: #ff4646;
-  color: white;
-  text-align: center;
-  margin: auto;
-  font-size: 12px;
-  font-weight: 500;
-}
 </style>

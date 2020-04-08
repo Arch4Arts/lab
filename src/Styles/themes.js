@@ -33,6 +33,7 @@ export const NordDark = {
   important_modal_header: '#BF616A', // For Dialog
   important_modal_bg: '#4C566A',
   important_modal_button: '#BF616A',
+  v_badge: '#37addf',
   btn_hover: '#434C5E',
   v_tooltip: '#4C566A', // BG
   v_card_background: '#3B4252', // BG

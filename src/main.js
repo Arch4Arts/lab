@@ -46,7 +46,7 @@ import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
 // import 'roboto-fontface/css/roboto/roboto-fontface.css'
 
-import chatThemes from './Styles/chatThemes'
+import updateAllThemes from './Styles/updateAllThemes';
 
 new Vue({
   router,
@@ -60,11 +60,11 @@ new Vue({
         store.commit('gameFirstLoad');
         if ( lang == 'ru' ) store.commit('langChange');
       }
-      if (store.state.gameTheme === 'CustomDark') this.$vuetify.theme.themes.dark = CustomDark;
-      if (store.state.gameTheme === 'NordDark') this.$vuetify.theme.themes.dark = NordDark;
-      if (store.state.gameTheme === 'NordLight') this.$vuetify.theme.themes.dark = NordLight;
+      if (store.state.gameCurrentTheme === 'CustomDark') this.$vuetify.theme.themes.dark = CustomDark;
+      if (store.state.gameCurrentTheme === 'NordDark') this.$vuetify.theme.themes.dark = NordDark;
+      if (store.state.gameCurrentTheme === 'NordLight') this.$vuetify.theme.themes.dark = NordLight;
       // console.log(getComputedStyle(document.documentElement).getPropertyValue('--amouse-x'))
-      chatThemes()
+      updateAllThemes()
     })
   },
   methods: {

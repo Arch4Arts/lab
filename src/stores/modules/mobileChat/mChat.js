@@ -15,12 +15,12 @@ const mChat = {
 
         mChat_CurrentContacts_MC: ['support','tailor'], // Текущие контакты в телефоне
 
-        mChat_ThemesList: [
-        { title: 'Minimalistic' },
-        { title: 'Dark minimalistic' },
-        { title: 'Scarllet' }
-        ],
         mChat_CurrentTheme_MC: 'Minimalistic',
+        mChat_ThemesList: [
+        { themeName: 'Minimalistic' },
+        { themeName: 'Dark minimalistic' },
+        { themeName: 'Scarllet' }
+        ],
      },
     mutations: {
 

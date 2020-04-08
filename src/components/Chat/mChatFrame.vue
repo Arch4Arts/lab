@@ -1,26 +1,21 @@
 <template>
-  <div class="smartphone" :class="{opened: $store.state.mChat.mChat_Show, closed: !$store.state.mChat.mChat_Show}">
-    <img src="../../assets/Samsung Galaxy S7 Black.png" class="smartphone">
-    <img src="../../assets/Samsung Galaxy S7 Black_bottom.png" class="smartphone close-area" @click.prevent="closeChat()">
-    <Chat-users-list class="user-list-pos" v-if="$store.state.mChat.mChat_ContactsPage"></Chat-users-list>
+  <!-- текстура смартфона -->
+  <div class="smartphone-texture" :class="{ opened: $store.state.mChat.mChat_Show, closed: !$store.state.mChat.mChat_Show }">
+    <!-- Текстура поделена на 2 части основную и нижнюю -->
+    <img src="../../assets/Samsung Galaxy S7 Black.png" class="smartphone-texture">
+    <img src="../../assets/Samsung Galaxy S7 Black_bottom.png" class="smartphone-texture close-area" @click.prevent="closeChat()">
+    <!-- Страница с контактами -->
+    <ContactsPage class="contacts-page" v-if="$store.state.mChat.mChat_ContactsPage"></ContactsPage>
+    <!-- Чат с конкретным контактом -->
     <div v-if="!$store.state.mChat.mChat_ContactsPage" class="chat-window">
-      <!-- <UserList 
-        v-if="showUserList"
-        :contacts="contacts"
-      /> -->
       <MessageList
         :messages="messageList"
         :contacts="contacts"
-        :showmChat_TypingIndicatorEnable="showmChat_TypingIndicatorEnable"
+        :mChat_TypingIndicatorEnable="mChat_TypingIndicatorEnable"
         :alwaysScrollToBottom="alwaysScrollToBottom"
         :messageStyling="messageStyling"
         @scrollToTop="$emit('scrollToTop')"
       />
-      <!-- <UserInput
-        :onSubmit="onSubmitSuggestion"
-        :suggestions="getSuggestions()"
-        :placeholder="placeholder"
-        :colors="colors" /> -->
      </div>
   </div>
 </template>
@@ -30,37 +25,21 @@ import MessageList from './MessageList.vue'
 import UserInput from './UserInput.vue'
 // import UserList from './UserList.vue'
 
-import ChatUsersList from './ChatUsersList'
+import ContactsPage from './ContactsPage'
 
 export default {
   components: {
     MessageList,
     UserInput,
     // UserList,
-    ChatUsersList
+    ContactsPage
   },
   props: {
     contacts: {
       type: Array,
       required: true
     },
-    // onUserInputSubmit: {
-    //   type: Function,
-    //   required: true
-    // },
-    // onClose: {
-    //   type: Function,
-    //   required: true
-    // },
-    // messageList: {
-    //   type: Array,
-    //   default: () => []
-    // },
-    // isOpen: {
-    //   type: Boolean,
-    //   default: () => false
-    // },
-    showmChat_TypingIndicatorEnable: {
+    mChat_TypingIndicatorEnable: {
       type: String,
       required: true
     },
@@ -122,7 +101,7 @@ export default {
 </script>
 <style scoped>
 
-.smartphone {
+.smartphone-texture {
   transition: 0.3s ease-in-out;
   width: 370px;
   position: fixed;
@@ -131,17 +110,17 @@ export default {
   box-sizing: border-box;
 }
 
-.smartphone.close-area {
+.smartphone-texture.close-area {
   cursor: pointer;
 }
 
-.smartphone.closed {
+.smartphone-texture.closed {
   opacity: 0;
   visibility: hidden;
   bottom: 90px;
 }
 
-.user-list-pos {
+.contacts-page {
   width: 340px;
   height: calc(100% - 120px);
   max-height: 598px;
@@ -178,7 +157,7 @@ export default {
 }
 
 @media (max-width: 450px) {
-  .user-list-pos {
+  .contacts-page {
     width: 100%;
     height: 100%;
     max-height: 100%;

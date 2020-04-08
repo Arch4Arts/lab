@@ -1,13 +1,17 @@
 <template>
   <div class="chat-area">
+    <!-- Стиливая сообщения -->
     <div class="messages-container" :class="{
         from_me: message.author === 'me',
         from_them: message.author !== 'me' && message.type !== 'system',
         system: message.type === 'system'  // Свой стиль
       }">
-      <div v-if="message.type !== 'system' && message.type !== 'suggestion'" :title="authorName" class="avatar" :style="{
-        backgroundImage: `url(${chatImageUrl})` // Аватарки
-      }"></div>
+      <!-- Аватар отправившего сообщение -->
+      <div v-if="message.type !== 'system' && message.type !== 'suggestion'" 
+      :title="authorName" class="avatar" 
+      :style="{ backgroundImage: `url(${chatImageUrl})` }">
+      </div>
+      <!-- Различные типы сообщений -->
       <TextMessage v-if="message.type === 'text'" :data="message.data" />
       <EmojiMessage v-else-if="message.type === 'emoji'" :data="message.data" />
       <TypingMessage v-else-if="message.type === 'typing'" />
@@ -62,21 +66,6 @@ export default {
     }
   },
   methods: {
-    // sentColorsStyle() {
-    //   return {
-    //     color: this.colors.sentMessage.text,
-    //     backgroundColor: this.colors.sentMessage.bg
-    //   }
-    // },
-    // receivedColorsStyle() {
-    //   return {
-    //     color: this.colors.receivedMessage.text,
-    //     backgroundColor: this.colors.receivedMessage.bg
-    //   }
-    // },
-    // determineMessageColors() {
-    //   return this.message.author === 'me' ? this.sentColorsStyle() : this.receivedColorsStyle()
-    // }
   }
 }
 </script>

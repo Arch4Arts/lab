@@ -12,7 +12,6 @@
 <v-btn @click='$root.sendMessage("mc_support", "support", "emoji", { src: require("../../Media/img/smiling-face.png") })'>Support emoji..</v-btn>
 <v-btn @click='$root.sendMessage("mc_support", "support", "suggestion", undefined, ["no", "Yes"])'>Support suggestion...</v-btn>
 <v-btn @click="$root.addContactToChatList('mc')">Add mc to contacts</v-btn>
-<v-btn @click="test()">test</v-btn>
 <br><br>
   <h1>prologue</h1>
   <h2>prologue</h2>

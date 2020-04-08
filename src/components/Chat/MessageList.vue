@@ -1,39 +1,41 @@
 <template>
 <div class="message-list" ref="scrollList" @scroll="handleScroll">
-
+      <!-- Верхняя панель с кнопками -->
       <v-toolbar class="bar" dark height="50" flat>
-        <v-btn class="bar__back-btn v-btn--hover" icon @click="backToUserList()">
+        <!-- Кнопка возвращения к списку контактов -->
+        <v-btn class="bar__back-btn v-btn--hover" icon @click="backToContactsPage()">
           <v-icon size="18"> fas fa-arrow-left </v-icon>
         </v-btn>
-        <!-- <v-toolbar-side-icon></v-toolbar-side-icon> -->
+
         <v-spacer/>
-        <v-toolbar-title class="bar__title"> 
         <!-- ЗАГОЛОВОК ЧАТА преобразует tailor в Tailor -->
+        <v-toolbar-title class="bar__title"> 
           {{ this.$store.state.mChat.mChat_ContactClikedName }} 
         </v-toolbar-title>
+
         <v-spacer/>
+        <!-- Декоративная кнопка -->
         <v-btn class="bar__phone-btn v-btn--hover" icon>
           <v-icon size="18"> fas fa-phone </v-icon>
         </v-btn>
-        <!-- <v-btn v-if="$store.state.mChat.mChat_CurrentTheme_MC !== $store.state.mChat.mChat_ThemesList[0].title" class="bar__video-btn v-btn--hover" icon>
-          <v-icon size="18"> fas fa-video </v-icon>
-        </v-btn>
-        <v-btn v-if="$store.state.mChat.mChat_CurrentTheme_MC !== $store.state.mChat.mChat_ThemesList[0].title" class="bar__ellipsis-btn v-btn--hover" icon>
-          <v-icon size="18"> fas fa-ellipsis-v </v-icon>
-        </v-btn> -->
       </v-toolbar>
-
+  
+  <!-- Зона прокрутки -->
   <virtual-list class="message-list v-list" ref="scrollList" :size="65" :remain="12">
   <!-- <RecycleScroller :items="messages" :item-size="1" key-field="idx"> -->
+    <!-- Сообщение -->
     <Message v-for="(message, idx) in messages" :message="message" :chatImageUrl="chatImageUrl(message.author)" :authorName="authorName(message.author)" :key="idx" :messageStyling="messageStyling" />
+    <!-- Выбор ответа -->
     <Suggestions :suggestions="getSuggestions()" v-on:sendSuggestion="_submitSuggestion"/>
   <!-- </RecycleScroller> -->
   </virtual-list>
-    <UserInput /> 
-  <!-- <Message v-show="showmChat_TypingIndicatorEnable !== ''" :message="{author: showmChat_TypingIndicatorEnable, type: 'typing'}" :chatImageUrl="chatImageUrl(showmChat_TypingIndicatorEnable)" :colors="colors" :messageStyling="messageStyling" /> -->
+  <!-- Декоративная панель ввода -->
+  <UserInput /> 
+  <!-- <Message v-show="mChat_TypingIndicatorEnable !== ''" :message="{author: mChat_TypingIndicatorEnable, type: 'typing'}" :chatImageUrl="chatImageUrl(mChat_TypingIndicatorEnable)" :colors="colors" :messageStyling="messageStyling" /> -->
 </div>
 
 </template>
+
 <script>
 import chatIcon from './assets/user-default-avatar.svg'
 
@@ -58,7 +60,7 @@ export default {
       type: Array,
       required: true
     },
-    showmChat_TypingIndicatorEnable: {
+    mChat_TypingIndicatorEnable: {
       type: String,
       required: true
     },
@@ -92,7 +94,7 @@ export default {
     _submitSuggestion(suggestion) {
       this.onSubmitSuggestion({author: 'me', type: 'text', data: { text: suggestion }})
     },
-    backToUserList(){
+    backToContactsPage(){
       this.$store.state.mChat.mChat_ContactsPage = !this.$store.state.mChat.mChat_ContactsPage
       this.$store.commit('updateStores');
     },
@@ -158,28 +160,28 @@ export default {
 }
 
 .bar {
-  background-color: var(--bar--background-color) !important;
+  background-color: var(--message-list--bar--background-color) !important;
 }
 
 .bar__title {
-    color:  var(--bar__title--color) !important;
-    font-weight: var(--bar__title--font-weight) !important;  
+    color:  var(--message-list--bar__title--color) !important;
+    font-weight: var(--message-list--bar__title--font-weight) !important;  
 }
 
 .bar__back-btn {
-    color: var(--bar__back-btn--color) !important;
+    color: var(--message-list--bar__back-btn--color) !important;
 }
 
 .bar__phone-btn {
-    color: var(--bar__phone-btn--color) !important;
+    color: var(--message-list--bar__phone-btn--color) !important;
 }
 
 .bar__video-btn {
-    color: var(--bar__video-btn--color) !important;
+    color: var(--message-list--bar__video-btn--color) !important;
 }
 
 .bar__ellipsis-btn {
-    color: var(--bar__ellipsis-btn--color) !important;
+    color: var(--message-list--bar__ellipsis-btn--color) !important;
 }
 
 .v-btn--hover:hover {

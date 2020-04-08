@@ -5,38 +5,27 @@
       :alwaysScrollToBottom="alwaysScrollToBottom"
       :messageStyling="messageStyling"
       :onMessageWasSent="onMessageWasSent"
+      :newMessagesCount="this.$store.state.mChat_NewMessagesCount"
       :contacts="contacts"
-      :showmChat_TypingIndicatorEnable="showmChat_TypingIndicatorEnable"
+      :mChat_TypingIndicatorEnable="mChat_TypingIndicatorEnable"
       @onType="handleOnType"
     />
   </div>
 </template>
 
 <script>
-// import messageHistory from './messageHistory'
-// import chatcontacts from './chatProfiles'
-// import availableColors from './colors'
 
 export default {
-  name: 'App',
+  name: 'mChatApp',
   data() {
     return {
       contacts: this.$store.state.mChatHistory,
-      // messageList: messageHistory,
-      // mChat_NewMessagesCount: 0,
-      // mChat_Show: false,
-      showmChat_TypingIndicatorEnable: '',
-      // colors: null,
-      // availableColors,
-      // chosenColor: null,
+      mChat_TypingIndicatorEnable: '',
       alwaysScrollToBottom: true,
       messageStyling: false, // Не работает в независимости от этого ключа
       userIsTyping: false
     }
   },
-  // created() {
-  //   this.setColor('blue')
-  // },
   methods: {
     sendMessage(text) {
       if (text.length > 0) {
@@ -49,7 +38,7 @@ export default {
       }
     },
     handleTyping(text) {
-      this.showmChat_TypingIndicatorEnable =
+      this.mChat_TypingIndicatorEnable =
         text.length > 0
           ? this.contacts[this.contacts.length - 1].id
           : ''
@@ -57,10 +46,6 @@ export default {
     onMessageWasSent(message) {
       this.messageList = [...this.messageList, message]
     },
-    // setColor(color) {
-    //   this.colors = this.availableColors[color]
-    //   this.chosenColor = color
-    // },
     // showStylingInfo() {
     //   this.$modal.show('dialog', {
     //     title: 'Info',
@@ -76,16 +61,6 @@ export default {
       this.userIsTyping = true
     }
   },
-  // computed: {
-  //   linkColor() {
-  //     return this.chosenColor === 'dark'
-  //       ? this.colors.sentMessage.text
-  //       : this.colors.launcher.bg
-  //   },
-  //   backgroundColor() {
-  //     return this.chosenColor === 'dark' ? this.colors.messageList.bg : '#fff'
-  //   }
-  // }
 }
 </script>
 

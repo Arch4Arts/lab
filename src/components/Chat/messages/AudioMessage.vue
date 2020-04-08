@@ -92,7 +92,7 @@ svg {
 }
 
 .plyr--audio .plyr__controls {
-  background: transparent;
+  background: transparent !important;
   color: var(--plyr--audio--color)
 }
 

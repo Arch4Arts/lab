@@ -1,0 +1,101 @@
+// Настройки по умолчанию
+:root {
+	// Список контактов
+  --contacts-page--background: #fff; // цвет списка контактов
+	--contacts-page__bar--background: #fff; // цвет бара
+	--contacts-page__vlist--background: #fff;
+	--contacts-page__vlist-item--background: #fff;
+	--contacts-page__vlist-item--margin-bottom: 0px;
+	--contacts-page__vlist--hover--background: #f5f5f5;
+	--contacts_page__vlist__avatar_badge--border: 2px solid #ffffff;
+	--contacts_page__vlist__avatar_badge--box-shadow: 0 0 12px #37addf;
+	--contacts-page__vlist--contact-title--color: #4c4c4c; // Заголовок контакта в списке контактов
+	--contacts-page__vlist--contact-title--font-weight: 700;
+	--contacts-page__vlist--contact-subtitle--color: #6d6d6d; // Последнее сообщение контакта
+	--contacts-page__vlist--contact-subtitle-icon--color: #818181; // Цвет иконки аудио/видео соодержания сообщения
+	--contacts-page__bar__nav-btn--color: #37addf;
+	--contacts-page__bar__palette-btn--color: #37addf;
+	--contacts-page__bar__search_btn--color: #37addf;
+	--contacts-page__v-btn--hover--background: transparent;
+	--contacts-page__palette-menu-bg--background: #fff;
+	--contacts-page__palette-menu-font--color: #4c4c4c;
+	--contacts-page__vlist--contact-badge--color: #37addf;
+	--contacts-page__vlist--contact-badge--background: #e8e8e8;
+	--contacts-page__vlist--contact-badge--font-size: 14px;
+	--contacts-page__vlist--contact-badge--font-weight: 700;
+	--contacts-page__vlist--contact-badge--border-radius: 4px;
+	--contacts-page__vlist--contact-badge--width: 26px;
+	--contacts-page__vlist--contact-badge--height: 26px;
+	// Чат
+	--message-list--bar--background-color: transparent; // цвет бара
+	--message-list--bar__title--color: #606060;
+	--message-list--bar__title--font-weight: 400;
+	--message-list--bar__back-btn--color: #37addf;
+	--message-list--bar__phone-btn--color: #37addf;
+	--message-list--bar__video-btn--color: #37addf;
+	--message-list--bar__ellipsis-btn--color: #37addf;
+	--message-list--background: #fff;
+	--from_me_msg_font: #fff;
+	--from_me_msg_bg: #00bfe4;
+	--from_me_tail_color: #00bfe4;
+	--from_them_msg_font: black;
+	--from_them_msg_bg: #eee;
+	--from_them_tail_color: #eee;
+	--message-system--background: #dedede;
+	--message-system--color: black;
+	--message-system-meta--color: black;
+	--message-meta--color: black;
+	--suggestions-element--border: 1px solid #37addf;
+	--suggestions-element--color: #37addf;
+	--suggestions-element--background: transparent;
+	--typing-indicator__span--background: #9E9EA1; // Цвет точек
+	--plyr--audio--color: black;
+	// Панель ввода
+	--inputArea--background: transparent;
+	--inputArea__text-input--width: 250px;
+	--inputArea__text-input--height: 50px;
+	--inputArea__text-input--border-radius: 17px;
+	--inputArea__text-input--padding-left: 50px;
+	--inputArea__text-input--background: #edf0f7;
+	--inputArea__text-input--color: #9c9d9d;
+	// Элементы панели ввода
+	--inputArea-smile-icon--left: 217px;
+	--inputArea-smile-icon--bottom: 18px;
+	--inputArea-smile-icon--color: #9c9d9d;
+	--inputArea-smile-icon--background: none;
+	--inputArea-paperclip-icon--left: 217px;
+	--inputArea-paperclip-icon--bottom: 18px;
+	--inputArea-paperclip-icon--color: #37addf;
+	--inputArea-paperclip-icon--background: none;
+	--inputArea-plus-icon--left: 10px;
+	--inputArea-plus-icon--bottom: 15px;
+	--inputArea-plus-icon--width: 30px;
+	--inputArea-plus-icon--height: 30px;
+	--inputArea-plus-icon--border-radius: 8px;
+	--inputArea-plus-icon--color: #37addf;
+	--inputArea-plus-icon--background: #d9dade;
+	--inputArea-send-icon--left: 295px;
+	--inputArea-send-icon--bottom: 18px;
+	--inputArea-send-icon--width: 18px;
+	--inputArea-send-icon--color: #37addf;
+	--inputArea-microphone-icon--left: 262px;
+	--inputArea-microphone-icon--bottom: 18px;
+	--inputArea-microphone-icon--width: 18px;
+	--inputArea-microphone-icon--color: #37addf;
+}
+
+// === //
+
+// Чат //
+
+.badge {
+    color: var(--contacts-page__vlist--contact-badge--color) !important;
+    background-color: var(--contacts-page__vlist--contact-badge--background) !important;
+    font-size: var(--contacts-page__vlist--contact-badge--font-size) !important;
+    font-weight: var(--contacts-page__vlist--contact-badge--font-weight) !important;
+    border-radius: var(--contacts-page__vlist--contact-badge--border-radius) !important;
+    width: var(--contacts-page__vlist--contact-badge--width) !important;
+    height: var(--contacts-page__vlist--contact-badge--height) !important;
+    margin-bottom: 22px;
+}
+

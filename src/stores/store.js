@@ -28,9 +28,14 @@ const store = new Vuex.Store({
     gameVersion: packageJson.version, 
 
     gameLang: true, // true: en / false: ru
-    gameTheme: 'NordDark',
     gameFont: 'Roboto',
     gameFontSize: '14pt',
+    gameCurrentTheme: 'NordDark',
+    gameThemesList: [
+      { themeName: 'NordLight' },
+      { themeName: 'NordDark' },
+      { themeName: 'CustomDark' }
+    ],
     
     gameFirstLoad: true, // Проверка, первый ли запуск игры (Для определения языка) gameDisplayingStartPage
     gameDisplayingStartPage: true, // Для отображения StartPage

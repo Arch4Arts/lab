@@ -76,8 +76,8 @@ export default {
 
 <style lang="scss">
 @import './Styles/normalize.css';
-@import './Styles/themes.scss';
-@import './Styles/chatThemes.scss';
+@import './Styles/gameThemes.scss';
+@import './Styles/mChatThemes.scss';
 
 // .v-btn { ОБРАЗЕЦ КАК ПЕРЕНАЗНАЧАТЬ СТИЛИ VUETIFY
 //   color: green !important
@@ -114,6 +114,8 @@ export default {
 
 // Модальные окна с важными оповещениями
 .important-modal__header {
+  justify-content: center;
+  word-break: normal; // Для правильного переноса строк
   background: var(--global--important-modal__header--background);
 }
 

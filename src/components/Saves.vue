@@ -233,24 +233,23 @@
 </template>
 
 <script>
-import dayjs from 'dayjs' // библиотека для работы с временем
-import advancedFormat from 'dayjs/plugin/advancedFormat' // Плагин
-dayjs.extend(advancedFormat)
+import dayjs from 'dayjs'; // библиотека для работы с временем
+import advancedFormat from 'dayjs/plugin/advancedFormat'; // Плагин
+dayjs.extend(advancedFormat);
 
-import WebCrypto from '../components/WebCrypto' // Модуль для шифрования и дешифрования сохранений
-import { resetState }  from '../stores/store'
-import store from '../stores/store'
+import WebCrypto from '../components/WebCrypto'; // Модуль для шифрования и дешифрования сохранений
+import { resetState }  from '../stores/store';
+import store from '../stores/store';
 
 // var CryptoJS = require("crypto-js");
 
 import iziToast from 'izitoast/dist/js/iziToast.min.js';
 
-import PullTo from 'vue-pull-to'
+import PullTo from 'vue-pull-to';
 
-import localforage from 'localforage'
+import localforage from 'localforage';
 
-import themes from '../Styles/themes'
-import chatThemes from '../Styles/chatThemes'
+import updateAllThemes from '../Styles/updateAllThemes';
 
 localforage.config({
     name: 'vuex',
@@ -413,8 +412,7 @@ export default {
         await this.$store.replaceState(await WebCrypto(`${saveName},${saveTime},${saveID}`));
 
         this.$store.commit('updateStores'); // Фиксируем новые переменные
-        // themes(); // Обновляем стиль игры
-        chatThemes(); // Обновляем стиль чата
+        updateAllThemes()
 
         this.$store.state.gameLang 
           ? iziToast.info({message: 'Game loaded successfully', position: 'bottomCenter', backgroundColor: 'rgb(255, 254, 173)'})

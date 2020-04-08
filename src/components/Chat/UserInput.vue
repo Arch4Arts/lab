@@ -1,11 +1,5 @@
 <template>
   <div>
-    <!-- <Suggestions :suggestions="suggestions" v-on:sendSuggestion="_submitSuggestion" :colors="colors"/> -->
-    <!-- <div v-if="file" class='file-container' :style="{backgroundColor: colors.userInput.text, color: colors.userInput.bg}">
-      <span class='icon-file-message'><img :src="icons.file.img"  :alt="icons.file.name" height="15" /></span>
-      {{file.name}}
-      <span class='delete-file-message' @click="cancelFile()" ><img :src="icons.closeSvg.img"  :alt="icons.closeSvg.name" height="10" title='Remove the file' /></span>
-    </div> -->
     <form class="inputArea">
       <div
         role="button"
@@ -38,10 +32,6 @@ export default {
       type: Array,
       default: () => []
     },
-    // onSubmit: {
-    //   type: Function,
-    //   required: true
-    // },
   },
   data () {
     return {
@@ -50,47 +40,6 @@ export default {
     }
   },
   methods: {
-    // handleKey (event) {
-    //   if (event.keyCode === 13 && !event.shiftKey) {
-    //     this._submitText(event)
-    //     event.preventDefault()
-    //   }
-    //   this.$emit('onType')
-    // },
-    // _submitSuggestion(suggestion) {
-    //   this.onSubmit({author: 'me', type: 'text', data: { text: suggestion }})
-    // },
-    // _submitText (event) {
-    //   const text = this.$refs.userInput.textContent
-    //   const file = this.file
-    //   if (file) {
-    //     if (text && text.length > 0) {
-    //       this.onSubmit({
-    //         author: 'me',
-    //         type: 'file',
-    //         data: { text, file }
-    //       })
-    //       this.file = null
-    //       this.$refs.userInput.innerHTML = ''
-    //     } else {
-    //       this.onSubmit({
-    //         author: 'me',
-    //         type: 'file',
-    //         data: { file }
-    //       })
-    //       this.file = null
-    //     }
-    //   } else {
-    //     if (text && text.length > 0) {
-    //       this.onSubmit({
-    //         author: 'me',
-    //         type: 'text',
-    //         data: { text }
-    //       })
-    //       this.$refs.userInput.innerHTML = ''
-    //     }
-    //   }
-    // },
   }
 }
 </script>
