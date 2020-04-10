@@ -1,6 +1,6 @@
 <template>
 <section>
-    <v-color-picker width='550' flat hide-inputs v-model="color"></v-color-picker>
+    <v-color-picker :width='calcWidth - 48' flat hide-inputs v-model="color"></v-color-picker>
 </section>
 </template>
 
@@ -8,15 +8,40 @@
 export default {
   data(){
     return {
-      color: ''
+      color: this.currentColor,
+      calcWidth: 440 // Default
     }
   },
-  watch: {
-    'color': function() { // Отслеживание состояние цвета и отправка данных компоненту выше
-      this.$emit('colorChange', this.color);
-      console.log(this.color);
+  props: { // Текущий цвет, если есть
+    currentColor: {
+      type: String,
+      required: true,
+    },
+    parentBlockNameID: { // передаёт название id='' 
+      type: String,
+      required: true,
     }
-  }
+  },
+  created() {
+    this.widthSizeDetect()
+    window.addEventListener("resize", this.widthSizeDetect);
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.widthSizeDetect);
+  },
+  methods: {
+    // Автомаштабирование по ширине на основании родительского компонента
+    widthSizeDetect() {
+      var element = document.getElementById(this.parentBlockNameID);
+      var elementInfo = element.getBoundingClientRect();
+      this.calcWidth = elementInfo.width
+    },
+  },
+  watch: {
+    'color': function() { // Отслеживание состояние цвета и отправка данных родительскому компоненту через события
+      this.$emit('colorChange', this.color);
+    }
+  },
 }
 </script>
 

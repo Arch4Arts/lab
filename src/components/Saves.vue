@@ -469,7 +469,6 @@ export default {
     },
 
     async restartGame(){
-      this.$router.push('/')
       await resetState()
       await localStorage.removeItem(`vuex`);
       // this.$store.replaceState({})

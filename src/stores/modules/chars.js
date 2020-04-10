@@ -9,7 +9,7 @@ const chars = {
         mcVin:  'Артура',
         mcTvor: 'Артуром',
         mcPred: 'Артуре',
-        mcColor: 'hsl(100, 70%, 50%)', // Цвет диалогов
+        mcColor: '#00D3FFFF', // Цвет диалогов
     
         sisterName: 'Adelina',
         sisterIm:   'Аделина',
@@ -18,7 +18,7 @@ const chars = {
         sisterVin:  'Аделину',
         sisterTvor: 'Аделиной',
         sisterPred: 'Аделине',
-        sisterColor: 'hsl(200, 100%, 50%)',
+        sisterColor: '#FF00FFFF',
     
         girlfriendName: '',
         girlfriendColor: 'hsl(100, 100%, 50%)',

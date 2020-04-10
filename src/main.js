@@ -84,19 +84,6 @@ new Vue({
         audio.play();
       }
     },
-    convertColor(Color){ // Преобразует hsl(100, 100%, 50%) в h=100, s=100, l=100
-      // console.log('3' + Color)
-      var hsl = extractNumbers(Color);
-      // console.log('3_' + hsl)
-      // console.log(parseFloat(hsl[0]))
-      // console.log(parseFloat(hsl[1]))
-      // console.log(parseFloat(hsl[2]) * 2)
-      return { // Преобразуем иначе, вернётся не число, а элемент массива в виде строки
-        h: parseFloat(hsl[0]), 
-        s: parseFloat(hsl[1]),
-        l: parseFloat(hsl[2]) * 2, // умножаем на 2, т.к в ColorPicker'e l всегда возвращается делённой на 2 (т.к l:50% - максимум для цвета 100% уже просто былеый цвет)
-      };
-    },
     errNotify(error){
       Sentry.captureException(error); // Отправка ошибки черезе Sentry
       console.log(error)
