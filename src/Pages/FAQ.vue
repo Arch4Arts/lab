@@ -102,11 +102,11 @@ export default {
 <style lang="scss" scoped>
 
 .header-panels {
-	background: var(--global--header-panels--background);
+	background: var(--global--header-panels--background) !important;
 }
 
 .content-panels {
-	background: var(--global--content-panels--background);
+	background: var(--global--content-panels--background) !important;
 }
 
 </style>

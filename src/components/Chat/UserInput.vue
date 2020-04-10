@@ -55,16 +55,16 @@ export default {
   position: absolute;
   bottom: 0;
   display: flex;
-  background: var(--inputArea--background);
+  background: var(--inputArea--background) !important;
   z-index: 4;
   .text-input { // Поле ввода
-    width: var(--inputArea__text-input--width);
-    height: var(--inputArea__text-input--height);
-    border-radius: var(--inputArea__text-input--border-radius);
+    width: var(--inputArea__text-input--width) !important;
+    height: var(--inputArea__text-input--height) !important;
+    border-radius: var(--inputArea__text-input--border-radius) !important;
     padding: 15px; // позиционирование текста по середине
-    padding-left: var(--inputArea__text-input--padding-left); // Смешение текста от левого края
-    background: var(--inputArea__text-input--background);
-    color: var(--inputArea__text-input--color);
+    padding-left: var(--inputArea__text-input--padding-left) !important; // Смешение текста от левого края
+    background: var(--inputArea__text-input--background) !important;
+    color: var(--inputArea__text-input--color) !important;
     &:empty:before {
       content: attr(placeholder);
       /* color: rgba(86, 88, 103, 0.3); */
@@ -78,45 +78,45 @@ export default {
     .smile-icon { // Кнопка со смайликом
       position: absolute;
       cursor: pointer;
-      left: var(--inputArea-smile-icon--left);
-      bottom: var(--inputArea-smile-icon--bottom);
-      color: var(--inputArea-smile-icon--color);
-      background: var(--inputArea-smile-icon--background);
+      left: var(--inputArea-smile-icon--left) !important;
+      bottom: var(--inputArea-smile-icon--bottom) !important;
+      color: var(--inputArea-smile-icon--color) !important;
+      background: var(--inputArea-smile-icon--background) !important;
     }
     .paperclip-icon {
       position: absolute;
       cursor: pointer;
-      left: var(--inputArea-paperclip-icon--left);
-      bottom: var(--inputArea-paperclip-icon--bottom);
-      color: var(--inputArea-paperclip-icon--color);
-      background: var(--inputArea-paperclip-icon--background);
+      left: var(--inputArea-paperclip-icon--left) !important;
+      bottom: var(--inputArea-paperclip-icon--bottom) !important;
+      color: var(--inputArea-paperclip-icon--color) !important;
+      background: var(--inputArea-paperclip-icon--background) !important;
     }
     .plus-icon {
       position: absolute;
       cursor: pointer;
-      left: var(--inputArea-plus-icon--left);
-      bottom: var(--inputArea-plus-icon--bottom);
-      width: var(--inputArea-plus-icon--width);
-      height: var(--inputArea-plus-icon--height);
-      border-radius: var(--inputArea-plus-icon--border-radius);
-      color: var(--inputArea-plus-icon--color);
-      background: var(--inputArea-plus-icon--background);
+      left: var(--inputArea-plus-icon--left) !important;
+      bottom: var(--inputArea-plus-icon--bottom) !important;
+      width: var(--inputArea-plus-icon--width) !important;
+      height: var(--inputArea-plus-icon--height) !important;
+      border-radius: var(--inputArea-plus-icon--border-radius) !important;
+      color: var(--inputArea-plus-icon--color) !important;
+      background: var(--inputArea-plus-icon--background) !important;
     }
     .send-icon {
       position: absolute;
       cursor: pointer;
-      left: var(--inputArea-send-icon--left);
-      bottom: var(--inputArea-send-icon--bottom);
-      width: var(--inputArea-send-icon--width);
-      color: var(--inputArea-send-icon--color);
+      left: var(--inputArea-send-icon--left) !important;
+      bottom: var(--inputArea-send-icon--bottom) !important;
+      width: var(--inputArea-send-icon--width) !important;
+      color: var(--inputArea-send-icon--color) !important;
     }
     .microphone-icon {
       position: absolute;
       cursor: pointer;
-      left: var(--inputArea-microphone-icon--left);
-      bottom: var(--inputArea-microphone-icon--bottom);
-      width: var(--inputArea-microphone-icon--width);
-      color: var(--inputArea-microphone-icon--color);
+      left: var(--inputArea-microphone-icon--left) !important;
+      bottom: var(--inputArea-microphone-icon--bottom) !important;
+      width: var(--inputArea-microphone-icon--width) !important;
+      color: var(--inputArea-microphone-icon--color) !important;
     }
   }
 }
@@ -126,65 +126,5 @@ export default {
     width: 100%;
   }
 }
-/* 
-.inputArea--button--send {
-  width: 30px;
-  height: 55px;
-  margin-left: 10px;
-  margin-right: 2px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-} */
 
-/* .inputArea.active {
-  box-shadow: none;
-  background-color: white;
-  box-shadow: 0px -5px 20px 0px rgba(150, 165, 190, 0.2);
-} */
-
-/* .inputArea--button label {
-  position: relative;
-  height: 24px;
-  padding-left: 3px;
-  cursor: pointer;
-}
-
-.inputArea--button label:hover path {
-  fill: rgba(86, 88, 103, 1);
-}
- */
-/* .inputArea--button input {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  z-index: 99999;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
-  overflow: hidden;
-}
-
-.file-container {
-  background-color: #f4f7f9;
-  border-top-left-radius: 10px;
-  padding: 5px 20px;
-  color: #565867;
-} */
-
-/* .delete-file-message {
-  font-style: normal;
-  float: right;
-  cursor: pointer;
-  color: #c8cad0;
-}
-
-.delete-file-message:hover {
-  color: #5d5e6d;
-}
-
-.icon-file-message {
-  margin-right: 5px;
-} */
 </style>

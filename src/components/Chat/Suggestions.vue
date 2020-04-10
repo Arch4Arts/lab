@@ -30,11 +30,11 @@ export default {
 .suggestions-element {
   margin: 3px;
   padding: 5px 10px 5px 10px;
-  border: var(--suggestions-element--border);
+  border: var(--suggestions-element--border) !important;
   border-radius: 15px;
   font-size: 14px;
-  color: var(--suggestions-element--color);
-  background: var(--suggestions-element--background);
+  color: var(--suggestions-element--color) !important;
+  background: var(--suggestions-element--background) !important;
   cursor: pointer;
 }
 </style>

@@ -162,7 +162,7 @@ import updateAllThemes from '../../Styles/updateAllThemes'
 
 .contacts-page__vlist-item {
     background: var(--contacts-page__vlist-item--background) !important;   
-    margin-bottom: var(--contacts-page__vlist-item--margin-bottom);
+    margin-bottom: var(--contacts-page__vlist-item--margin-bottom) !important;
 }
 
 .contacts-page__vlist--contact-title {
@@ -182,13 +182,13 @@ import updateAllThemes from '../../Styles/updateAllThemes'
     align-items: center;
     display: inline-flex;
     justify-content: center;
-    color: var(--contacts-page__vlist--contact-badge--color);
-    background-color: var(--contacts-page__vlist--contact-badge--background);
-    font-size: var(--contacts-page__vlist--contact-badge--font-size);
-    font-weight: var(--contacts-page__vlist--contact-badge--font-weight);
-    border-radius: var(--contacts-page__vlist--contact-badge--border-radius);
-    width: var(--contacts-page__vlist--contact-badge--width);
-    height: var(--contacts-page__vlist--contact-badge--height);
+    color: var(--contacts-page__vlist--contact-badge--color) !important;
+    background-color: var(--contacts-page__vlist--contact-badge--background) !important;
+    font-size: var(--contacts-page__vlist--contact-badge--font-size) !important;
+    font-weight: var(--contacts-page__vlist--contact-badge--font-weight) !important;
+    border-radius: var(--contacts-page__vlist--contact-badge--border-radius) !important;
+    width: var(--contacts-page__vlist--contact-badge--width) !important;
+    height: var(--contacts-page__vlist--contact-badge--height) !important;
 }
 
 .contacts-page__vlist--hover:hover {
@@ -197,8 +197,8 @@ import updateAllThemes from '../../Styles/updateAllThemes'
 
 .contacts_page__vlist__avatar_badge {
   width: 54px;
-  border: var(--contacts_page__vlist__avatar_badge--border);
-  box-shadow: var(--contacts_page__vlist__avatar_badge--box-shadow);
+  border: var(--contacts_page__vlist__avatar_badge--border) !important;
+  box-shadow: var(--contacts_page__vlist__avatar_badge--box-shadow) !important;
 }
 
 .contacts-page__palette-menu-bg {

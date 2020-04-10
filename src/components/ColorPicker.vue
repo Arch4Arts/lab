@@ -1,6 +1,4 @@
 <template id="color-picker-template">
-<v-layout justify-center>
-<v-flex md4 text-center>
   <div class="color-picker">
     <div class="color-picker__overlay" v-if="isVisible" v-on:click="hide"></div>
     <transition name="pop">
@@ -27,8 +25,6 @@
     <!-- <div class="swatch" v-bind:style="{'background': color}" v-on:click="toggle"></div> -->
     <v-icon :color="color" class="swatch" @click="toggle">fas fa-palette</v-icon>
   </div>
-  </v-flex>
-</v-layout>
 </template>
 
 <script>
@@ -164,6 +160,7 @@ function hsb2hsl(h, s, b) {
 </script>
 
 <style scoped>
+
 .color-picker {
   position: relative;
 }
@@ -186,8 +183,8 @@ function hsb2hsl(h, s, b) {
   background: #222222;
   box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.12);
   font-family: "Roboto", "Helvetica Neue", sans-serif;
-  top: -1650%;
-  right: 9%;
+  bottom: -170px;
+  left: -100px;
   position: absolute;
   z-index: 2;
 }

@@ -164,8 +164,8 @@ export default {
 }
 
 .bar__title {
-    color:  var(--message-list--bar__title--color) !important;
-    font-weight: var(--message-list--bar__title--font-weight) !important;  
+  color:  var(--message-list--bar__title--color) !important;
+  font-weight: var(--message-list--bar__title--font-weight) !important;  
 }
 
 .bar__back-btn {

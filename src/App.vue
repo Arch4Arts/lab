@@ -84,24 +84,24 @@ export default {
 // }
 
 .v-layout {
-  background: var(--app--v-layout--background);
+  background: var(--app--v-layout--background) !important;
 }
 
 .Page {
-  background: var(--app--Page--background);
-  color: var(--app--Page--color);
+  background: var(--app--Page--background) !important;
+  color: var(--app--Page--color) !important;
   font-size: 14pt;
   text-align: justify;
   padding: 2%;
   box-sizing: border-box;
   height: auto;
-  border-right: var(--app--Page--border-right);
-  border-left: var(--app--Page--border-left);
+  border-right: var(--app--Page--border-right) !important;
+  border-left: var(--app--Page--border-left) !important;
 }
 
 .Page-element {
-  background: var(--app--Page-element--background);
-  color: var(--app--Page-element--color);
+  background: var(--app--Page-element--background) !important;
+  color: var(--app--Page-element--color) !important;
 }
 
 .v-btn:hover {
@@ -116,11 +116,11 @@ export default {
 .important-modal__header {
   justify-content: center;
   word-break: normal; // Для правильного переноса строк
-  background: var(--global--important-modal__header--background);
+  background: var(--global--important-modal__header--background) !important;
 }
 
 .important-modal__bg {
-  background: var(--global--important-modal__bg--background);
+  background: var(--global--important-modal__bg--background) !important;
 }
 
 .important-modal__button {
@@ -149,11 +149,11 @@ html {
 
 h1 {
   font-size: 2.0em;
-  color: var(--app--h1--color);
+  color: var(--app--h1--color) !important;
 }
 
 .font-color {
-  color: var(--app--font-color--color);
+  color: var(--app--font-color--color) !important;
 }
 
 a { // убираем подчёркивание и делаем жирнее

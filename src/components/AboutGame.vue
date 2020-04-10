@@ -141,23 +141,23 @@ text-decoration: none;
 } 
 
 .subscribe-star {
-	color: var(--global--subscribe-star--color);
+	color: var(--global--subscribe-star--color) !important;
 }
 
 .discord {
-	color: var(--global--discord--color);
+	color: var(--global--discord--color) !important;
 }
 
 .tfgames {
-	color: var(--global--tfgames--color);
+	color: var(--global--tfgames--color) !important;
 }
 
 .f95 {
-	color: var(--global--f95--color);
+	color: var(--global--f95--color) !important;
 }
 
 .f95-zone {
-	color: var(--global--f95-zone--color);
+	color: var(--global--f95-zone--color) !important;
 }
 
 </style>

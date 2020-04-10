@@ -187,7 +187,7 @@ export default {
 		// max-width: 200px;
 		.text-message { // Локальный стиль сообщения
       @include bubble(20, var(--from_me_msg_bg));
-      color: var(--from_me_msg_font);
+      color: var(--from_me_msg_font) !important;
       max-width: 220px;
 		}
 		.tail { // Стиль хвостика сообщения
@@ -203,7 +203,7 @@ export default {
 		// max-width: 200px;
 		.text-message { // Локальный стиль сообщения
       @include bubble(20, var(--from_them_msg_bg));
-      color: var(--from_them_msg_font);
+      color: var(--from_them_msg_font) !important;
       max-width: 220px;
 		}
 		.tail { // Стиль хвостика сообщения
@@ -234,14 +234,14 @@ export default {
 }
 
 .message-meta {
-  color: var(--message-meta--color);
+  color: var(--message-meta--color) !important;
   font-size: xx-small;
   margin-bottom: 0px;
   margin-top: 5px;
   opacity: .6;
   text-align: center;
   .message-system-meta {
-    color: var(--message-system-meta--color);
+    color: var(--message-system-meta--color) !important;
   }
 }
 

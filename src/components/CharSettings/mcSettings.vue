@@ -113,9 +113,11 @@
             <p :style="{'color': $store.state.chars.mcColor}"> {{ character_ru.quote }} </p>
             </v-flex>
             <!-- ВЫБОР ЦВЕТА ЦИТАТЫ (РЕПЛИК) -->
-            <v-flex d-flex lg1 md1 sm1 xs1>
+            <!-- Смена цвета (слушает событий colorChange в компоненте) -->
+            <color-picker @colorChange="applyColorChange" />
+            <!-- <v-flex d-flex lg1 md1 sm1 xs1>
                 <color-picker :change="mcUpdateColor" :extColor="this.$root.convertColor(this.$store.state.chars.mcColor)"></color-picker>
-            </v-flex>
+            </v-flex> -->
             </v-layout>
             <!-- ЗАПОЛНЕНИЕ ИМЕНИ -->
             <v-form ref="form" v-model="validation" lazy-validation>
@@ -153,7 +155,8 @@
 </template>
 
 <script>
-import ColorPicker from "../ColorPicker.vue"
+import ColorPicker from "../CharSettings/ColorPicker"
+// import ColorPicker from "../ColorPicker.vue"
 import RussianName from "../Name.js"
 
 export default {
@@ -234,12 +237,17 @@ export default {
     },
     },
     methods: {
-    mcUpdateColor(event) { // Обновляет цвет ColorPicker'ом
-      // console.log('2' + event.color)
-      this.color = event.color;
-      this.$store.state.chars.mcColor = this.color;
-      this.$store.commit('saveColorsChar');
-    },
+      mcUpdateColor(event) { // Обновляет цвет ColorPicker'ом
+        // console.log('2' + event.color)
+        this.color = event.color;
+        this.$store.state.chars.mcColor = this.color;
+        this.$store.commit('saveColorsChar');
+      },
+      applyColorChange(color){ // Обработчик сообытия из дочернего элемента (ColorPicker)
+        this.color = color
+        this.$store.state.chars.mcColor = this.color;
+        this.$store.commit('saveColorsChar');
+      }
     },
     components: {
         ColorPicker,
