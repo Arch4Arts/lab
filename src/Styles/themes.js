@@ -6,7 +6,6 @@ export const CustomDark = { // Моя первая тема
   primary: '#292929',
   secondary: '#ffffff',
   font_color: '#E0E0E0',
-  header_panels: '2d2d2d',
   bg_panels: '#222222',
   bright_button: '#EF5350',
   important_modal_header: '#F44336',
@@ -24,7 +23,6 @@ export const NordDark = {
   primary: '#ECEFF4',
   secondary: '#2E3440', 
   font_color: '#ECEFF4', // Цвет шрифта
-  header_panels: '#3B4252', // Header expansions panels
   bg_panels: '#2E3440', // BG expansions panels
   saves__v_list_bg: '#2E3440',
   settings__v_list_bg: '#242933',
@@ -49,7 +47,6 @@ export const NordLight = {
   primary: '#292929',
   secondary: '#ffffff',
   font_color: '#4c566a',
-  header_panels: '2d2d2d',
   bg_panels: '#222222',
   bright_button: '#EF5350',
   important_modal_header: '#F44336',

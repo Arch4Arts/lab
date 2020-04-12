@@ -8,9 +8,8 @@
       touchless
       dark
       width="700"
+      class="v-navigation-drawer"
     >
-    <v-layout justify-center>
-        <v-flex md12 class="Page" style="padding: 0px; height: 100vh;">
           <div>
             <v-card dark elevation="0">
             <v-list two-line subheader class="v-list-bg">
@@ -225,8 +224,6 @@
                   </v-card-actions>
               </v-card>
             </v-dialog>
-        </v-flex>
-    </v-layout>
     </v-navigation-drawer>
     <!-- </v-app> -->
 </template>
@@ -486,6 +483,12 @@ export default {
 </script>
 
 <style>
+
+.v-navigation-drawer {
+  background: var(--v-navigation-drawer--background) !important;
+  font-size: 14pt;
+  border-left: var(--v-navigation-drawer--border-left) !important;
+}
 
 .IsSaveExist {
   position: absolute;

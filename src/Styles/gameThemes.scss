@@ -1,35 +1,41 @@
 // Настройки стилей по умолчанию
-:root {
+html {
+	&[gameTheme='NordDark'] {	
 	// Переиспользуемые переменные
-	--global--header-panels--background: #3B4252;
-	--global--content-panels--background: #2E3440;
+	--h1--color: #ECEFF4;
+	--font-color--color: #ECEFF4;
 
-	--global--v-chip--background: #5E81AC;
-	--global--subscribe-star--color: #BF616A;
-	--global--discord--color: #5E81AC;
-	--global--tfgames--color: #81A1C1;
-	--global--f95--color: #BF616A;
-	--global--f95-zone--color: #fff;
+	--v-expansion-panel__header--background: #3B4252;
+	--content-panels--background: #2E3440;
 
-	--global--important-modal__header--background: #BF616A;
-	--global--important-modal__bg--background: #4C566A;
-	--global--important-modal__button--background: #BF616A;
+	--v-navigation-drawer--background: #2E3440;
+	--v-navigation-drawer--border-left: 3px solid #3B4252;
 
-	--global--v-tooltip--background: #4C566A;
+	--v-chip--background: #5E81AC;
+	--subscribe-star--color: #BF616A;
+	--discord--color: #5E81AC;
+	--tfgames--color: #81A1C1;
+	--f95--color: #BF616A;
+	--f95-zone--color: #fff;
+
+	--important-modal__header--background: #BF616A;
+	--important-modal__button--background: #BF616A;
+
+	--v-tooltip--background: #4C566A;
+
+	--v-input--switch: #88C0D0;
 
 
 // App.vue
-	--app--v-layout--background: #242933; // цвет списка контактов
-	--app--Page--background: #2E3440;
-	--app--Page--color: #ECEFF4;
-	--app--Page--border-right: 3px solid #3B4252;
-	--app--Page--border-left: 3px solid #3B4252;
-	--app--Page-element--background: #2E3440;
-	--app--Page-element--color: #ECEFF4;
-	--app--v-btn__hover--background: #434C5E;
-	--app--v-card--background: #3B4252;
-	--app--h1--color: #ECEFF4;
-	--app--font-color--color: #ECEFF4;
+	--v-layout--background: #242933;
+	--Page--background: #2E3440;
+	--Page--color: #ECEFF4;
+	--Page--border-right: 3px solid #3B4252;
+	--Page--border-left: 3px solid #3B4252;
+	--Page-element--background: #2E3440;
+	--Page-element--color: #ECEFF4;
+	--v-btn__hover--background: #434C5E;
+	--v-card--background: #3B4252;
 
 	--startPageInfo--continue-button--background: #BF616A;
 
@@ -39,9 +45,31 @@
 	--RadialMenu--radial-menu-btn--color: #242933;
 	--RadialMenu--radial-menu-btns--background: #242933;
 	--RadialMenu--radial-menu-btns--color: #88C0D0;
+	}
+	&[gameTheme='NordLight'] {	
+	}
 }
 
 // Переопределяем глобальные стили Vuetify
+
+.v-navigation-drawer__border {
+	width: 0px !important;
+}
+
+.v-expansion-panel {
+	background: var(--v-expansion-panel__header--background) !important;
+}
+
+.v-expansion-panel-content__wrap {
+  padding: 0px 0px 0px 0px !important;
+}
+
+.v-input--switch__thumb.theme--dark.primary--text {
+	color: var(--v-input--switch) !important;
+}
+.v-input--switch__track.theme--dark.primary--text {
+	color: var(--v-input--switch) !important;
+}
 
 .v-slider__thumb-label {
   background-color: #eceff4 !important;

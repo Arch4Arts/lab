@@ -30,14 +30,14 @@
           <section v-else>
 
             <v-card-title class="headline dark important-modal__header"> Вы должны быть старше 18 лет для доступа к этой игре </v-card-title>
-              <v-card-text class="text--primary important-modal__bg">
+              <v-card-text class="text--primary">
                   <br>
                   Данная игра содержит <b>откровенные сцены сексуального характера</b>, с большим уклоном в <b>женское доминирование</b>!
                   <br><br>
                   Нажимая на кнопку «<b>Продолжить</b>», вы подтверждаете, что вам как минимум 18 лет.
               </v-card-text>
 
-            <v-card-actions class="important-modal__bg">
+            <v-card-actions>
               <v-layout align-center justify-space-around column>
                 <v-flex>
                   <v-btn class="important-modal__button" dark @click="$store.commit('gameAgeWarningDialog')">Продолжить</v-btn>

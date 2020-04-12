@@ -83,55 +83,51 @@ export default {
 // }
 
 .v-layout {
-  background: var(--app--v-layout--background) !important;
+  background: var(--v-layout--background) !important;
 }
 
 .Page {
-  background: var(--app--Page--background) !important;
-  color: var(--app--Page--color) !important;
+  background: var(--Page--background) !important;
+  color: var(--Page--color) !important;
   font-size: 14pt;
   text-align: justify;
   padding: 2%;
   box-sizing: border-box;
   height: auto;
-  border-right: var(--app--Page--border-right) !important;
-  border-left: var(--app--Page--border-left) !important;
+  border-right: var(--Page--border-right) !important;
+  border-left: var(--Page--border-left) !important;
 }
 
 .Page-element {
-  background: var(--app--Page-element--background) !important;
-  color: var(--app--Page-element--color) !important;
+  background: var(--Page-element--background) !important;
+  color: var(--Page-element--color) !important;
 }
 
 .v-btn:hover {
-  background: var(--app--v-btn__hover--background) !important;
+  background: var(--v-btn__hover--background) !important;
 }
 
 .v-card {
-  background: var(--app--v-card--background) !important;
+  background: var(--v-card--background) !important;
 }
 
 // Модальные окна с важными оповещениями
 .important-modal__header {
   justify-content: center;
   word-break: normal; // Для правильного переноса строк
-  background: var(--global--important-modal__header--background) !important;
-}
-
-.important-modal__bg {
-  background: var(--global--important-modal__bg--background) !important;
+  background: var(--important-modal__header--background) !important;
 }
 
 .important-modal__button {
-  background: var(--global--important-modal__button--background) !important;
+  background: var(--important-modal__button--background) !important;
 }
 
 .important-modal__button:hover {
-  background: var(--global--important-modal__button--background) !important;
+  background: var(--important-modal__button--background) !important;
 }
 
 .v-tooltip {
-  background: var(--global--v-tooltip--background) !important;
+  background: var(--v-tooltip--background) !important;
 }
 
 /* Отключаем показ полосы прокрутки (вертикальной) */
@@ -148,11 +144,11 @@ html {
 
 h1 {
   font-size: 2.0em;
-  color: var(--app--h1--color) !important;
+  color: var(--h1--color) !important;
 }
 
 .font-color {
-  color: var(--app--font-color--color) !important;
+  color: var(--font-color--color) !important;
 }
 
 a { // убираем подчёркивание и делаем жирнее

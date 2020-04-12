@@ -52,6 +52,7 @@ const store = new Vuex.Store({
     notif_DiaryVolume: 0.50, // Громкость уведомления дневника
     notif_SmartphoneVolume: 0.50, // Громкость уведомления смартфона
 
+    gameGlobalSoundsEnable: false, // Откл все звуки по умолчанию
     notif_AchievementSoundEnable: true, // Вкл/Выкл звука
     notif_DiarySoundEnable: true, // Вкл/Выкл звука
     notif_SmartphoneSoundEnable: true, // Вкл/Выкл звука
@@ -119,6 +120,9 @@ const store = new Vuex.Store({
     },
 
     // Вкл/Выкл звука
+    gameGlobalSoundsEnable(){
+      this.state.gameGlobalSoundsEnable = !this.state.gameGlobalSoundsEnable;
+    },
     notif_AchievementSoundEnable(){
       this.state.notif_AchievementSoundEnable = !this.state.notif_AchievementSoundEnable;
     },

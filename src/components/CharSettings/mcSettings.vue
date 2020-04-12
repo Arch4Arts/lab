@@ -6,7 +6,7 @@
         <v-expansion-panels id="layout" class="bg_panels">
 
         <v-expansion-panel class="bg_panels">
-        <v-expansion-panel-content class="header_panels" v-for="(character, i) in characters" :key="i" hide-actions>
+        <v-expansion-panel-content  v-for="(character, i) in characters" :key="i" hide-actions>
         <!-- EN АВАТАР В ШАПКЕ  --> 
         <template v-slot:header>
           <v-layout align-center row spacer>
@@ -72,11 +72,11 @@
 
         <section :id="parentBlockNameID" v-else>
 
-        <v-expansion-panels id="layout" class="header_panels">
+        <v-expansion-panels id="layout" >
 
-        <v-expansion-panel class="header_panels">
+        <v-expansion-panel >
         <!-- АВАТАР В ШАПКЕ -->
-        <v-expansion-panel-header class="header_panels">
+        <v-expansion-panel-header >
           <v-layout align-center row spacer>
             <v-flex xs4 sm2 md1>
               <v-avatar size="36px" >

@@ -64,21 +64,21 @@ new Vue({
   },
   methods: {
     notif_AchievementSoundEnable(){
-    if (this.$store.state.notif_AchievementSoundEnable) {
+    if (this.$store.state.notif_AchievementSoundEnable && this.$store.state.gameGlobalSoundsEnable) {
       var audio = new Audio(require('./Media/audio/Achievements.mp3'));
       audio.volume = this.$store.state.notif_AchievementVolume;
       audio.play();
     }
     },
     notif_DiarySoundEnable(){
-      if (this.$store.state.notif_DiarySoundEnable) {
+      if (this.$store.state.notif_DiarySoundEnable && this.$store.state.gameGlobalSoundsEnable) {
         var audio = new Audio(require('./Media/audio/Diary.mp3'));
         audio.volume = this.$store.state.notif_DiaryVolume;
         audio.play();
       }
     },
     notif_SmartphoneSoundEnable(){
-      if (this.$store.state.notif_SmartphoneSoundEnable) {
+      if (this.$store.state.notif_SmartphoneSoundEnable && this.$store.state.gameGlobalSoundsEnable) {
         var audio = new Audio(require('./Media/audio/Phone.mp3'));
         audio.volume = this.$store.state.notif_SmartphoneVolume;
         audio.play();

@@ -56,7 +56,7 @@ export default {
 <style lang="scss">
 
 .v-color-picker {
-  background-color: var(--app--Page--background) !important;
+  background-color: var(--Page--background) !important;
 }
 
 .v-color-picker__dot {

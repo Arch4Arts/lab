@@ -13,7 +13,7 @@
         <hr>
         <br>
 
-        <v-expansion-panel-content class="header_panels">
+        <v-expansion-panel-content >
         <template v-slot:header>
         <div><h3> Notification sounds </h3></div>
         </template>
@@ -42,7 +42,7 @@
         </v-card>
         </v-expansion-panel-content>
 
-        <v-expansion-panel-content class="header_panels">
+        <v-expansion-panel-content >
         <template v-slot:header>
         <div><h3>Personalization of characters</h3></div>
         </template>
@@ -52,7 +52,7 @@
          In this section, you can personalize characters, changing the name, and color of the replica.
         <p/>
         <v-expansion-panel class="bg_panels">
-        <v-expansion-panel-content class="header_panels" v-for="(character, i) in characters" :key="i" hide-actions>
+        <v-expansion-panel-content  v-for="(character, i) in characters" :key="i" hide-actions>
         <!-- EN АВАТАР В ШАПКЕ  --> 
         <template v-slot:header>
           <v-layout align-center row spacer>
@@ -124,7 +124,7 @@
         <hr>
         <br>
 
-        <v-expansion-panel-content class="header_panels">
+        <v-expansion-panel-content >
         <template v-slot:header>
         <div><h3> Звуки уведомлений </h3></div>
         </template>
@@ -153,7 +153,7 @@
         </v-card>
         </v-expansion-panel-content>
 
-        <v-expansion-panel-content class="header_panels">
+        <v-expansion-panel-content >
         <template v-slot:header>
         <div><h3>Персонализация персонажей</h3></div>
         </template>
@@ -165,7 +165,7 @@
         Если введённое имя не склоняется должным образом, тогда просклоняйте имя персонажа вручную, отметив соотвествующий пункт.
         <p/>
         <v-expansion-panel class="bg_panels">
-        <v-expansion-panel-content class="header_panels" v-for="(character, i) in characters_ru" :key="i" hide-actions>
+        <v-expansion-panel-content  v-for="(character, i) in characters_ru" :key="i" hide-actions>
         <!-- АВАТАР В ШАПКЕ -->
         <template v-slot:header>
           <v-layout align-center row spacer>
