@@ -75,9 +75,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import './Styles/normalize.css';
-@import './Styles/gameThemes.scss';
-@import './Styles/mChatThemes.scss';
+@import './styles/gameThemes.scss';
+@import './styles/mChatThemes.scss';
 
 // .v-btn { ОБРАЗЕЦ КАК ПЕРЕНАЗНАЧАТЬ СТИЛИ VUETIFY
 //   color: green !important

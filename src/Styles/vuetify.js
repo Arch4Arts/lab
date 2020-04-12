@@ -1,8 +1,8 @@
-import Vue from 'vue';
+import Vue from '../../node_modules/vue';
 import Vuetify from 'vuetify/lib';
 import { Touch } from 'vuetify/lib/directives';
 
-import { NordLight, CustomDark } from './themes'
+import { NordLight, NordDark, CustomDark } from './themes'
 
 Vue.use(Vuetify, {
   directives: {
@@ -16,7 +16,7 @@ export default new Vuetify({
       },
       dark: true,
     themes: {
-      dark: CustomDark, // Default
+      dark: NordDark, // Default
       light: NordLight, // Default
     },
   },

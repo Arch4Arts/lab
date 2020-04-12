@@ -1,6 +1,13 @@
 <template>
 <section>
-    <v-color-picker :width='calcWidth - 48' flat hide-inputs v-model="color"></v-color-picker>
+    <v-color-picker 
+    :width='calcWidth - 48' 
+    flat 
+    mode='hexa'
+    v-model="color"
+    :key="$store.state.reRender_ColorPickerCanvas"
+    >
+    </v-color-picker>
 </section>
 </template>
 
@@ -35,6 +42,7 @@ export default {
       var element = document.getElementById(this.parentBlockNameID);
       var elementInfo = element.getBoundingClientRect();
       this.calcWidth = elementInfo.width
+      this.$store.state.reRender_ColorPickerCanvas += 1;
     },
   },
   watch: {

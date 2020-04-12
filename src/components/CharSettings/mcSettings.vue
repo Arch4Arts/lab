@@ -115,15 +115,15 @@
             </v-flex>
             <!-- ВЫБОР ЦВЕТА ЦИТАТЫ (РЕПЛИК) -->
             <!-- Смена цвета (слушает событий colorChange в компоненте) -->
+            <!-- <v-flex d-flex lg1 md1 sm1 xs1>
+                <color-picker :change="mcUpdateColor" :extColor="this.$root.convertColor(this.$store.state.chars.mcColor)"></color-picker>
+            </v-flex> -->
+            </v-layout>
             <color-picker 
             @colorChange="applyColorChange" 
             :currentColor="$store.state.chars.mcColor"
             :parentBlockNameID="parentBlockNameID"
              />
-            <!-- <v-flex d-flex lg1 md1 sm1 xs1>
-                <color-picker :change="mcUpdateColor" :extColor="this.$root.convertColor(this.$store.state.chars.mcColor)"></color-picker>
-            </v-flex> -->
-            </v-layout>
             <!-- ЗАПОЛНЕНИЕ ИМЕНИ -->
             <v-form ref="form" v-model="validation" lazy-validation>
                 <v-flex sm5 md5>

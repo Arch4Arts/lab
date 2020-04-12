@@ -3,8 +3,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router.js'
 import store from './stores/store'
-import { NordLight, CustomDark, NordDark } from './Styles/themes' // Кастомные стили (темы)
-import vuetify from './Styles/vuetify';
+import { NordLight, CustomDark, NordDark } from './styles/themes' // Кастомные стили (темы)
+import "normalize.css"
+import vuetify from './styles/vuetify'
 import '@fortawesome/fontawesome-free/css/all.css' // Не менять, в free скидывать файлы от Pro
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
@@ -24,8 +25,6 @@ Vue.use(Chat, {})
 import vueScrollBehavior from 'vue-scroll-behavior' // Сохранение положения прокрутки
 Vue.use(vueScrollBehavior, { router: router })
 
-import extractNumbers from 'extract-numbers' // Для ColorPicker'a
-
 import VueIziToast from 'vue-izitoast'; // Уведомления
 import 'izitoast/dist/css/iziToast.min.css';
 import iziToast from 'izitoast/dist/js/iziToast.min.js';
@@ -41,7 +40,7 @@ import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
 // import 'roboto-fontface/css/roboto/roboto-fontface.css'
 
-import updateAllThemes from './Styles/updateAllThemes';
+import updateAllThemes from './styles/updateAllThemes';
 
 new Vue({
   router,
@@ -80,7 +79,7 @@ new Vue({
     notif_SmartphoneSoundEnable(){
       if (this.$store.state.notif_SmartphoneSoundEnable) {
         var audio = new Audio(require('./Media/audio/Phone.mp3'));
-        audio.volume = this.$store.state.notif_smartphoneVolume;
+        audio.volume = this.$store.state.notif_SmartphoneVolume;
         audio.play();
       }
     },

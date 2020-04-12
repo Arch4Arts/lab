@@ -32,6 +32,8 @@ const mChatHistory = {
               { type: 'text', author: `me`, data: { text: `Do you read me...`, meta: '✓✓ Read' } },
               { type: 'image', author: `support`, data: { src: require('../../../Media/img/2.gif'), meta: '✓✓ Read' } },
               { type: 'image', author: `me`, data: { src: require('../../../Media/img/1.jpg'), meta: '✓✓ Read' } },
+              { type: 'audio', author: `support`, data: { src: require('../../../Media/audio/test.mp3') } },
+              { type: 'video', author: `support`, data: { src: require('../../../Media/video/Carmelita.mp4') } },
               { type: 'text', author: `me`, data: { text: `...or not?`, meta: '✓ Delivered' }, suggestions: ["Looks good!", "It's OK.", "Uhh.. Do I really have to say something?", "This suggestion is way too long for css purpose. Let's make it long... Longer, and more and more.. Never ending."] },
             ]
           },

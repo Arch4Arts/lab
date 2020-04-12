@@ -82,50 +82,50 @@
 </template>
 
 <script>
-import updateAllThemes from '../../Styles/updateAllThemes'
+import updateAllThemes from '../../styles/updateAllThemes';
 
-  export default {
-    computed: {
-      ContactsList: {
-        get() {
-          var contacts = this.$store.state.mChat.mChat_CurrentContacts_MC // Контакты в телефоне персонажа
-          var users = JSON.parse(JSON.stringify(this.$store.state.mChatHistory)); // История всех чатов
-          var showContactsList = [] // обработанные контакты для отображения
-          for (let i = 0; i < contacts.length; i++) { // Перебираем столько раз, сколько контактов в contacts
-            for (let user of users) { // Перебираем для каждого пользователя
-              if (user.mChatHistory_ContactID === contacts[i]) {
-                showContactsList.push(user)
-                user.mChatHistory_MsgHistory.find(function(item) {
-                  // if (item.type === 'text' && item.author === contacts[i]) showContactsList[i].mChatHistory_MsgHistory = item.data.text;
-                  // if (item.type === 'text' && item.author === contacts[i]) showContactsList[i].mChatHistory_MsgHistory = item.data.text; // Забирем первое значение удовлетворяющее условию
-                  if (item.type !== 'suggestion') showContactsList[i].mChatHistory_MsgHistory = item
-                })
-              }
+export default {
+  computed: {
+    ContactsList: {
+      get() {
+        var contacts = this.$store.state.mChat.mChat_CurrentContacts_MC // Контакты в телефоне персонажа
+        var users = JSON.parse(JSON.stringify(this.$store.state.mChatHistory)); // История всех чатов
+        var showContactsList = [] // обработанные контакты для отображения
+        for (let i = 0; i < contacts.length; i++) { // Перебираем столько раз, сколько контактов в contacts
+          for (let user of users) { // Перебираем для каждого пользователя
+            if (user.mChatHistory_ContactID === contacts[i]) {
+              showContactsList.push(user)
+              user.mChatHistory_MsgHistory.find(function(item) {
+                // if (item.type === 'text' && item.author === contacts[i]) showContactsList[i].mChatHistory_MsgHistory = item.data.text;
+                // if (item.type === 'text' && item.author === contacts[i]) showContactsList[i].mChatHistory_MsgHistory = item.data.text; // Забирем первое значение удовлетворяющее условию
+                if (item.type !== 'suggestion') showContactsList[i].mChatHistory_MsgHistory = item
+              })
             }
           }
-          return showContactsList
-        },
-      }
-    },
-    methods: {
-      ClickOnContact(contactID, contactName, contactUnReadMsgCount){
-        this.$store.state.mChat.mChat_ContactClikedID = contactID
-        this.$store.state.mChat.mChat_ContactClikedName = contactName
-        var contacts = JSON.parse(JSON.stringify(this.$store.state.mChatHistory)); // История всех чатов
-          for (let contact of contacts) { // Перебираем для каждого контакта
-            if (contact.mChatHistory_ContactID === contactID) { // Если это тот кто был выбран
-              // Отниманием кол-во непричитанных сообщений у контакта из общего счётчика
-              this.$store.state.mChat.mChat_NewMessagesCount = this.$store.state.mChat.mChat_NewMessagesCount - contact.mChatHistory_unReadMsgCount
-            }
-          }
-        this.$store.state.mChat.mChat_ContactsPageShow = !this.$store.state.mChat.mChat_ContactsPageShow
-        this.$store.commit('updateStores');
+        }
+        return showContactsList
       },
-      chatThemes(select){
-        this.$store.state.mChat.mChat_CurrentTheme_MC = select;
-        this.$store.commit('updateStores');
-        updateAllThemes()
-      }
+    }
+  },
+  methods: {
+    ClickOnContact(contactID, contactName, contactUnReadMsgCount){
+      this.$store.state.mChat.mChat_ContactClikedID = contactID
+      this.$store.state.mChat.mChat_ContactClikedName = contactName
+      var contacts = JSON.parse(JSON.stringify(this.$store.state.mChatHistory)); // История всех чатов
+        for (let contact of contacts) { // Перебираем для каждого контакта
+          if (contact.mChatHistory_ContactID === contactID) { // Если это тот кто был выбран
+            // Отниманием кол-во непричитанных сообщений у контакта из общего счётчика
+            this.$store.state.mChat.mChat_NewMessagesCount = this.$store.state.mChat.mChat_NewMessagesCount - contact.mChatHistory_unReadMsgCount
+          }
+        }
+      this.$store.state.mChat.mChat_ContactsPageShow = !this.$store.state.mChat.mChat_ContactsPageShow
+      this.$store.commit('updateStores');
+    },
+    chatThemes(select){
+      this.$store.state.mChat.mChat_CurrentTheme_MC = select;
+      this.$store.commit('updateStores');
+      updateAllThemes()
+    }
     },
   }
 </script>

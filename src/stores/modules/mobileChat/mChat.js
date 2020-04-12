@@ -8,6 +8,8 @@ const mChat = {
 
         mChat_TypingIndicatorEnable: true, // Если true отображается имитация набора текста, если false, то ничего не отображается
         
+        mChat_VideoPlyrVolume: 0, // Громкость видео плеера чата (По умолчанию выкл как и весь звук игры)
+        mChat_AudioPlyrVolume: 0, // Громкость видео плеера чата (По умолчанию вкл как и весь звук игры)
         mChat_HoverPlayMsgVideo: false, // Воспроизводить ли видео при наведении мышки
 
         mChat_ContactClikedID: '',

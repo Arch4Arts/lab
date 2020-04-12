@@ -10,9 +10,9 @@ export default function updateAllThemes(){
     document.documentElement.setAttribute('mChatTheme', 'Scarlet')
   // Оформление игры
   if (store.state.gameThemesList[0].themeName === store.state.gameCurrentTheme)
-    document.documentElement.setAttribute('gameCurrentTheme', 'NordLight')
+    document.documentElement.setAttribute('gameTheme', 'NordLight')
   else if (store.state.gameThemesList[1].themeName === store.state.gameCurrentTheme)
-    document.documentElement.setAttribute('gameCurrentTheme', 'NordDark')
+    document.documentElement.setAttribute('gameTheme', 'NordDark')
   else if (store.state.gameThemesList[2].themeName === store.state.gameCurrentTheme)
-    document.documentElement.setAttribute('gameCurrentTheme', 'CustomDark')
+    document.documentElement.setAttribute('gameTheme', 'CustomDark')
 }

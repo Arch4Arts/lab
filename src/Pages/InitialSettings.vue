@@ -36,7 +36,7 @@
         <v-btn color="grey lighten-2" outline dark @click="$root.notif_SmartphoneSoundEnable()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> A new message in the phone </v-btn>
 
         <v-switch v-model="$store.state.notif_SmartphoneSoundEnable" @click.stop="Switch('notif_SmartphoneSoundEnable')" color="grey lighten-2" dark :label="($store.state.notif_SmartphoneSoundEnable) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.notif_smartphoneVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_SmartphoneSoundEnable" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
+        <v-slider v-model="$store.state.notif_SmartphoneVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_SmartphoneSoundEnable" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
         
         </v-card-text>
         </v-card>
@@ -147,7 +147,7 @@
         <v-btn color="grey lighten-2" outline dark @click="$root.notif_SmartphoneSoundEnable()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> Новое сообщение в телефоне </v-btn>
 
         <v-switch v-model="$store.state.notif_SmartphoneSoundEnable" @click.stop="Switch('notif_SmartphoneSoundEnable')" color="grey lighten-2" dark :label="($store.state.notif_SmartphoneSoundEnable) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.notif_smartphoneVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_SmartphoneSoundEnable" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
+        <v-slider v-model="$store.state.notif_SmartphoneVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_SmartphoneSoundEnable" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
         
         </v-card-text>
         </v-card>
@@ -400,7 +400,7 @@ export default {
             this.$store.commit('Header'); // Включаем кнопки в шапке
             this.$store.commit('notif_AchievementVolume');
             this.$store.commit('notif_DiaryVolume');
-            this.$store.commit('notif_smartphoneVolume');
+            this.$store.commit('notif_SmartphoneVolume');
             if ( lang == 'ru' ) 
               this.$store.commit('saveCharNames', 'ru');
             else 

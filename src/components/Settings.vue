@@ -16,49 +16,138 @@
   </v-layout>
   </section>
   <!-- RUSSIAN -->
-  <section v-else>
-  <v-card
-    class="mx-auto"
-  >
-    <v-list
-      subheader
-      two-line
-      flat
-      class="settings__v_list_bg"
-    >
-      <v-subheader class="v-list header">Настройки</v-subheader>
+  <section class="options" v-else>
 
-      <v-list-item-group
-        v-model="settings"
-        multiple
-      >
-        <v-list-item class="settings__v_list_item_bg">
-          <template v-slot:default="{ active, toggle }">
+  <v-expansion-panels accordion class="options__item">
+    <v-expansion-panel class="header_panels options__item">
+      <v-expansion-panel-header>
+        <div class="v-expansion-panel header-icon"><v-icon large left>fas fa-volume</v-icon></div>
+        Звук
+      </v-expansion-panel-header>
+      <v-expansion-panel-content class="bg_panels">
+      <v-list
+          subheader
+          two-line
+          flat
+        >
+        <v-subheader>Hangout notifications</v-subheader>
 
-            <v-list-item-content>
-              <v-list-item-title>Notifications</v-list-item-title>
-              <v-list-item-subtitle>Allow notifications</v-list-item-subtitle>
-            </v-list-item-content>
+        <v-list-item-group
+          v-model="settings"
+          multiple
+        >
+          <v-list-item>
+            <template v-slot:default="{ active, toggle }">
+              <v-list-item-action>
+                <v-checkbox
+                  v-model="active"
+                  color="primary"
+                  @click="toggle"
+                ></v-checkbox>
+              </v-list-item-action>
 
-            <v-list-item-action>
-              <v-checkbox
-                color="primary"
-                @click="toggle"
-              ></v-checkbox>
-            </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>Notifications</v-list-item-title>
+                <v-list-item-subtitle>Allow notifications</v-list-item-subtitle>
+              </v-list-item-content>
+            </template>
+          </v-list-item>
 
-          </template>
-        </v-list-item>
+          <v-list-item>
+            <template v-slot:default="{ active, toggle }">
+              <v-list-item-action>
+                <v-checkbox
+                  v-model="active"
+                  color="primary"
+                  @click="toggle"
+                ></v-checkbox>
+              </v-list-item-action>
 
-      </v-list-item-group>
-    </v-list>
-  </v-card>
-  <div>Настройки отображения</div>
-  <v-expansion-panels>
+              <v-list-item-content>
+                <v-list-item-title>Sound</v-list-item-title>
+                <v-list-item-subtitle>Hangouts message</v-list-item-subtitle>
+              </v-list-item-content>
+            </template>
+          </v-list-item>
+
+          <v-list-item>
+            <template v-slot:default="{ active, toggle }">
+              <v-list-item-action>
+                <v-checkbox
+                  v-model="active"
+                  color="primary"
+                  @click="toggle"
+                ></v-checkbox>
+              </v-list-item-action>
+
+              <v-list-item-content>
+                <v-list-item-title>Video sounds</v-list-item-title>
+                <v-list-item-subtitle>Hangouts video call</v-list-item-subtitle>
+              </v-list-item-content>
+            </template>
+          </v-list-item>
+
+          <v-list-item>
+            <template v-slot:default="{ active, toggle }">
+              <v-list-item-action>
+                <v-checkbox
+                  v-model="active"
+                  color="primary"
+                  @click="toggle"
+                ></v-checkbox>
+              </v-list-item-action>
+
+              <v-list-item-content>
+                <v-list-item-title>Invites</v-list-item-title>
+                <v-list-item-subtitle>Notify when receiving invites</v-list-item-subtitle>
+                        <v-select
+          v-model="fontFamily"
+          :items="fontListRu"
+          menu-props="auto"
+          label="Font Selector"
+          hide-details
+          prepend-icon="far fa-font"
+          single-line
+        ></v-select>
+              </v-list-item-content>
+            </template>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+      <v-slider
+        append-icon="fas fa-volume-up"
+        prepend-icon="fas fa-volume-down"
+        thumb-label
+        min="0"
+        max="100"
+        step="1"
+        v-model="achievementVolume"
+      ></v-slider>
+      <v-slider
+        append-icon="fas fa-volume-up"
+        prepend-icon="fas fa-volume-down"
+        thumb-label
+        min="0"
+        max="100"
+        step="1"
+        v-model="diaryVolume"
+      ></v-slider>
+      <v-slider
+        append-icon="fas fa-volume-up"
+        prepend-icon="fas fa-volume-down"
+        thumb-label
+        min="0"
+        max="100"
+        step="1"
+        v-model="smartphoneVolume"
+      ></v-slider>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+
     <v-expansion-panel class="header_panels">
       <v-expansion-panel-header>
         <div class="v-expansion-panel header-icon"><v-icon large left>far fa-eye</v-icon></div>
-        Настройки отображения
+        Отображение
       </v-expansion-panel-header>
       <v-expansion-panel-content class="bg_panels">
         <div class="text-center">
@@ -80,7 +169,6 @@
         <v-slider
           v-model="fontSize"
           thumb-label
-          color="#fff"
           min="10"
           max="24"
           prepend-icon="far fa-text-size"
@@ -107,11 +195,12 @@
 <script>
 
 import extractNumbers from 'extract-numbers' // Для FontSize
-import { NordLight, CustomDark, NordDark } from '../Styles/themes'
+// import { NordLight, CustomDark, NordDark } from '../styles/themes'
 
 export default {
   data(){
     return {
+      slider: 33,
       fontList: ['Roboto', 'Roboto Slab', 'Open Sans', 'Lato', 'Merriweather', 'Minion Pro'],
       fontListRu: ['Roboto', 'Roboto Slab', 'Open Sans', 'Merriweather', 'Minion Pro', 'Slut'],
     }
@@ -133,6 +222,37 @@ export default {
       }
   },
   computed: {
+      // Звук
+      achievementVolume: {
+        get: function () {
+          var Volume = (this.$store.state.notif_AchievementVolume * 100)
+          return Volume;
+        },
+        set: function (level) {
+          this.$store.state.notif_AchievementVolume = (level /= 100)
+          this.$store.commit("updateStores");
+        } 
+      },
+      diaryVolume: {
+        get: function () {
+          var Volume = (this.$store.state.notif_DiaryVolume * 100)
+          return Volume;
+        },
+        set: function (level) {
+          this.$store.state.notif_DiaryVolume = (level /= 100)
+          this.$store.commit("updateStores");
+        } 
+      },
+      smartphoneVolume: {
+        get: function () {
+          var Volume = (this.$store.state.notif_SmartphoneVolume * 100)
+          return Volume;
+        },
+        set: function (level) {
+          this.$store.state.notif_SmartphoneVolume = (level /= 100)
+          this.$store.commit("updateStores");
+        } 
+      },
       launguage() {
         let result
         (this.$store.state.gameLang) ? result = 1 : result = 0
@@ -164,19 +284,22 @@ export default {
 
 <style lang="scss" scoped>
 
-#drawer {
-  background: var(--v-bg_laouyt-base) !important;
-  color: #E0E0E0;
-  font-size: 14pt;
-  text-align: justify;
+.options {
+  display: flex;
+  flex-direction: column;
 }
 
-.v-list {
-  .header {
-    justify-content: center;
-    font-size: 18px;
-    font-weight: 700;
-  }
+.options__item {
+  margin: 10px 0;
+}
+
+.v-slider__thumb {
+  background: coral !important;
+}
+
+#drawer {
+  background: var(--v-bg_laouyt-base) !important;
+  font-size: 14pt;
 }
 
 .v-expansion-panel .header-icon {

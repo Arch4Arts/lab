@@ -37,6 +37,8 @@ const store = new Vuex.Store({
       { themeName: 'CustomDark' }
     ],
     
+    reRender_mChatPlayersVolume: 0, // Используется для перерендера плееров в чате, изменяется в Saves.vue 
+    reRender_ColorPickerCanvas: 0, // Для перерисовски окна с выбором цвета (исчезает при изменении размера)
     gameFirstLoad: true, // Проверка, первый ли запуск игры (Для определения языка) gameDisplayingStartPage
     gameDisplayingStartPage: true, // Для отображения StartPage
     gameAgeWarningDialog: true, // предупреждающее окно 18+
@@ -46,9 +48,9 @@ const store = new Vuex.Store({
     isOpenSavesDrawer: false,
     appHeaderEnable: false, // По умолчанию выкл, на время показа стартовой страницы с информацией об игре.
 
-    notif_AchievementVolume: 0.5, // Громкость уведомления о получении достижения
-    notif_DiaryVolume: 0.5, // Громкость уведомления дневника
-    notif_smartphoneVolume: 0.5, // Громкость уведомления смартфона
+    notif_AchievementVolume: 0.50, // Громкость уведомления о получении достижения
+    notif_DiaryVolume: 0.50, // Громкость уведомления дневника
+    notif_SmartphoneVolume: 0.50, // Громкость уведомления смартфона
 
     notif_AchievementSoundEnable: true, // Вкл/Выкл звука
     notif_DiarySoundEnable: true, // Вкл/Выкл звука
@@ -112,8 +114,8 @@ const store = new Vuex.Store({
     notif_DiaryVolume(){
       this.state.notif_DiaryVolume = this.state.notif_DiaryVolume;
     },
-    notif_smartphoneVolume(){
-      this.state.notif_smartphoneVolume = this.state.notif_smartphoneVolume;
+    notif_SmartphoneVolume(){
+      this.state.notif_SmartphoneVolume = this.state.notif_SmartphoneVolume;
     },
 
     // Вкл/Выкл звука

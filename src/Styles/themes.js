@@ -21,8 +21,8 @@ export const NordDark = {
   page_border: '#3B4252',
   bg_laouyt: '#242933',
   navigationBar: '#242933', 
-  primary: '#2E3440',
-  secondary: '#434C5E', 
+  primary: '#ECEFF4',
+  secondary: '#2E3440', 
   font_color: '#ECEFF4', // Цвет шрифта
   header_panels: '#3B4252', // Header expansions panels
   bg_panels: '#2E3440', // BG expansions panels

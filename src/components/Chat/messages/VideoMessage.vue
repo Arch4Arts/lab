@@ -1,6 +1,6 @@
 <template>
-<div @mouseenter="play" class="video-message"> 
-  <vue-plyr ref="plyr" class="video-message" :options="options">
+<div @mouseenter="play" class="video-message" @click="saveVolumeSettings()"> 
+  <vue-plyr ref="VideoMessagePlyr" class="video-message" :options="options" :key="$store.state.reRender_mChatPlayersVolume"> 
     <video :poster="data.img" :src="data.src"></video>
 
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -73,7 +73,8 @@ export default {
         loadSprite: false,
         controls: ['play','progress','play-large','volume','pip','airplay','fullscreen'],
         loop: { active: true },
-        volume: '0.5'
+        volume: this.$store.state.mChat.mChat_VideoPlyrVolume, // Значение по умолчанию, потом плеер берёт данные из plyr-video
+        storage: { enabled: false, key: 'plyr-video' },
       }
     };
   },
@@ -84,13 +85,17 @@ export default {
     },
   },
   methods: {
+    saveVolumeSettings(){
+      this.$store.state.mChat.mChat_VideoPlyrVolume = this.$refs.VideoMessagePlyr.player.volume
+      this.$store.commit('updateStores');
+    },
     play(){
-      if (this.$store.state.mChat.mChat_HoverPlayMsgVideo) this.$refs.plyr.player.play()
+      if (this.$store.state.mChat.mChat_HoverPlayMsgVideo) this.$refs.VideoMessagePlyr.player.play()
     },
     pause(){
-      this.$refs.plyr.player.pause()
+      this.$refs.VideoMessagePlyr.player.pause()
     }
-  }
+  },
 };
 </script>
 

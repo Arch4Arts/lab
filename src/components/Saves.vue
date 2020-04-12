@@ -23,7 +23,7 @@
                     color="grey lighten-2"
                     :placeholder="($store.state.gameLang) ? defaultSaveName : defaultSaveName_ru"
                     @keyup.enter="saveGame()"
-                    id="saveNameArea"
+                    v-model="saveNameInput"
                   ></v-text-field>
                   </v-flex>
 
@@ -45,9 +45,9 @@
                 <pull-to @infinite-scroll="loadMore" :is-top-bounce="false" :is-bottom-bounce="false" v-if="this.$store.state.isOpenSavesDrawer">
                 <div class="scroll-area"> 
 
-                <div v-if="$store.state.gameLang" v-show="saveExist == 0" class="text-center"><v-divider/><br>No saves<br><br></div>
-                <div v-else v-show="saveExist == 0" class="text-center"><v-divider/><br>Сохранения отсутствуют<br><br></div>
-                <v-divider v-show="saveExist == 1"/>
+                <div v-if="$store.state.gameLang" v-show="IsSaveExist == 0" class="text-center"><v-divider/><br>No saves<br><br></div>
+                <div v-else v-show="IsSaveExist == 0" class="text-center"><v-divider/><br>Сохранения отсутствуют<br><br></div>
+                <v-divider v-show="IsSaveExist == 1"/>
                 
                   <v-list-item
                     v-for="save in saves"
@@ -59,7 +59,7 @@
                     <v-list-item-subtitle>{{ save.saveTime }}</v-list-item-subtitle>
                   </v-list-item-content>
                   <!-- КНОПКИ WRITE/LOAD/DELETE -->
-                  <v-list-item-action v-for="(icon ,i) in icons" :key="'icon-id_' + i">
+                  <v-list-item-action v-for="(icon ,i) in btnIconsList" :key="'icon-id_' + i">
 
                     <v-tooltip color="v-tooltip" v-if="$store.state.gameLang" bottom>
                       <template v-slot:activator="{ on }">
@@ -88,10 +88,10 @@
                     </v-tooltip>
                   </v-list-item-action>
                 </v-list-item>
-                <div v-if="!endOfsaveList && saveExist === 1 && saveCount > 11" class="text-center pa-2">
+                <div v-if="!endOfsaveList && IsSaveExist === 1 && savesCount > 11" class="text-center pa-2">
                   <v-progress-circular indeterminate size="28" />
                 </div>
-                <div v-if="endOfsaveList && saveExist === 1" class="text-center pa-2">
+                <div v-if="endOfsaveList && IsSaveExist === 1" class="text-center pa-2">
                   <blockquote v-if="$store.state.gameLang" class="blockquote">End of list</blockquote>
                   <blockquote v-else class="blockquote">Конец списка</blockquote>
                 </div>
@@ -127,17 +127,17 @@
 
             <v-tooltip color="v-tooltip" top>
               <template v-slot:activator="{ on }">
-                <v-btn @click="restart = !restart" v-on="on" icon>
+                <v-btn @click="showModalRestart = !showModalRestart" v-on="on" icon>
                   <v-icon color="rgb(255, 102, 102)"> fas fa-power-off </v-icon>
                 </v-btn>
               </template>
-                <span v-if="$store.state.gameLang" class="tip">Restart game</span>
+                <span v-if="$store.state.gameLang" class="tip">showModalRestart game</span>
                 <span v-else class="tip">Перезапуск игры</span>
             </v-tooltip>
 
             <v-tooltip color="v-tooltip" top>
               <template v-slot:activator="{ on }">
-                <v-btn @click="deleteAll = !deleteAll" :disabled="(saveExist > 0) ? false : true" v-on="on" icon>
+                <v-btn @click="showModalDelSavesAll = !showModalDelSavesAll" :disabled="(IsSaveExist > 0) ? false : true" v-on="on" icon>
                   <v-icon color="rgb(255, 102, 102)"> fas fa-trash-alt </v-icon>
                 </v-btn>
               </template>
@@ -147,8 +147,8 @@
             <br>
             <v-tooltip color="v-tooltip" top>
               <template v-slot:activator="{ on }">
-                <div v-if="$store.state.gameLang" class="text-center" v-on="on">Number of saves: {{saveCount}}</div>
-                <div v-else class="text-center" v-on="on">Кол-во сохранений: {{saveCount}}</div>
+                <div v-if="$store.state.gameLang" class="text-center" v-on="on">Number of saves: {{savesCount}}</div>
+                <div v-else class="text-center" v-on="on">Кол-во сохранений: {{savesCount}}</div>
               </template>
                 <span v-if="$store.state.gameLang">A large number of saves can cause performance degradation.</span>
                 <span v-else>Большое количество сохранений могут вызвать падение производительности.</span>
@@ -156,7 +156,7 @@
             </div>
 
             <!-- ДИАЛОГ ПОДТВЕРЖДЕНИЯ УДАЛЕНИЯ ВСЕХ СОХРАНЕНИЙ -->
-            <v-dialog v-model="deleteAll" persistent dark width="230">
+            <v-dialog v-model="showModalDelSavesAll" persistent dark width="230">
                <v-card class="text-center">
                  <section v-if="$store.state.gameLang">
                   <v-card-title class="headline dark important-modal__header"> Delete all saves </v-card-title>
@@ -180,24 +180,24 @@
                     <v-layout align-center justify-center>
                         <section v-if="$store.state.gameLang">
                           <v-btn dark text @click="DeleteAllSaves()"> Yes </v-btn>
-                          <v-btn dark text @click="deleteAll = !deleteAll"> No </v-btn>
+                          <v-btn dark text @click="showModalDelSavesAll = !showModalDelSavesAll"> No </v-btn>
                         </section>
                         <section v-else>
                           <v-btn dark text @click="DeleteAllSaves()"> Да </v-btn>
-                          <v-btn dark text @click="deleteAll = !deleteAll"> Нет </v-btn>
+                          <v-btn dark text @click="showModalDelSavesAll = !showModalDelSavesAll"> Нет </v-btn>
                         </section>
                     </v-layout>
                   </v-card-actions>
               </v-card>
             </v-dialog>
             <!-- ОКНО С ПОДТВЕРЖДЕНИЕМ ПЕРЕЗАПУСКА ИГРЫ-->
-            <v-dialog v-model="restart" persistent dark width="230">
+            <v-dialog v-model="showModalRestart" persistent dark width="230">
                <v-card class="text-center">
                  <section v-if="$store.state.gameLang">
-                  <v-card-title class="headline dark important-modal__header"> Restart game </v-card-title>
+                  <v-card-title class="headline dark important-modal__header"> showModalRestart game </v-card-title>
                     <v-card-text class="text--primary">
                       <br> 
-                      <b>When you restart the game, all current progress will be lost!</b>
+                      <b>When you showModalRestart the game, all current progress will be lost!</b>
                       <br><br>
                       Are you sure you want to continue?
                     </v-card-text>
@@ -215,11 +215,11 @@
                     <v-layout align-center justify-center>
                         <section v-if="$store.state.gameLang">
                           <v-btn dark text @click="restartGame()"> Yes </v-btn>
-                          <v-btn dark text @click="restart = !restart"> No </v-btn>
+                          <v-btn dark text @click="showModalRestart = !showModalRestart"> No </v-btn>
                         </section>
                         <section v-else>
                           <v-btn dark text @click="restartGame()"> Да </v-btn>
-                          <v-btn dark text @click="restart = !restart"> Нет </v-btn>
+                          <v-btn dark text @click="showModalRestart = !showModalRestart"> Нет </v-btn>
                         </section>
                     </v-layout>
                   </v-card-actions>
@@ -248,7 +248,7 @@ import PullTo from 'vue-pull-to';
 
 import localforage from 'localforage';
 
-import updateAllThemes from '../Styles/updateAllThemes';
+import updateAllThemes from '../styles/updateAllThemes';
 
 localforage.config({
     name: 'vuex',
@@ -267,19 +267,20 @@ iziToast.settings({
 
 export default {
   data: () => ({
-      restart: false,
-      deleteAll: false,
-      saveExist: -1, // Есть ли сейвы
-      saveCount: 0, // Кол-во сейвов
-      icons: ['fas fa-download','fas fa-upload','fas fa-trash'],
-      defaultSaveName: 'New save',
+      showModalRestart: false, // Для показа модального окна, меняется при нажатия на кнопку и появляется диалог
+      showModalDelSavesAll: false, // Для показа модального окна, меняется при нажатия на кнопку и появляется диалог
+      IsSaveExist: -1, // Есть ли сейвы
+      savesCount: 0, // Кол-во сейвов
+      btnIconsList: ['fas fa-download','fas fa-upload','fas fa-trash'],
+      saveNameInput: '', // Поле ввода сохранения
+      defaultSaveName: 'New save', // Placeholder поля ввода
       defaultSaveName_ru: 'Новое сохранение',
       saves: [],
-      IDBsavesList: [],
-      IDBsavesListSorted: [],
-      IDBsaveslength: 0,
-      savesListStartCount: 12,
-      endOfsaveList: false,
+      IDBsavesList: [], // Список сохранений, для сортировки
+      IDBsavesListSorted: [], // Отсортированные сохранения (по дате Unix)
+      IDBsaveslength: 0, //  Кол-во сохранений в БД
+      savesListStartCount: 12, // Сколько показываются сохранений при первой отрисовке
+      endOfsaveList: false, // Достигнут ли конец списка
   }),
   components: {
     PullTo
@@ -290,14 +291,14 @@ export default {
   //         var IDBsavesList = await localforage.keys().then(keysList => this.IDBsavesList = keysList); // все ключи из localStorage
   //         var length = await localforage.length().then(lf_length => this.length = lf_length);
   //         // var saves = [];
-  //         (this.length > 0) ? this.saveExist = 1 : this.saveExist = 0 // Проверка на наличие сейвов
-  //         if (this.saveExist === 1) {
+  //         (this.length > 0) ? this.IsSaveExist = 1 : this.IsSaveExist = 0 // Проверка на наличие сейвов
+  //         if (this.IsSaveExist === 1) {
   //         this.overlay = true
   //         for (let i = 0; i < length; i++) {
   //           var saveData = IDBsavesList[i].split(',')
   //           this.saves.push({saveName: saveData[0],saveTime: saveData[1],saveID: saveData[2]})
   //         }}
-  //         this.saveCount = length
+  //         this.savesCount = length
   //         this.overlay = false
   //         const sortBy = (key) => { // desc <, asc >
   //           return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
@@ -312,8 +313,8 @@ export default {
     this.IDBsavesList = await localforage.keys().then(keysList => this.IDBsavesList = keysList); // все ключи из IndexedDB
     this.IDBsaveslength = await localforage.length().then(lf_length => this.IDBsaveslength = lf_length); // Кол-во сохранений в IndexedDB
     var saves = [];
-    (this.IDBsaveslength > 0) ? this.saveExist = 1 : this.saveExist = 0 // Проверка на наличие сейвов
-    if (this.saveExist === 1) {
+    (this.IDBsaveslength > 0) ? this.IsSaveExist = 1 : this.IsSaveExist = 0 // Проверка на наличие сейвов
+    if (this.IsSaveExist === 1) {
       for (let i = 0; i < this.IDBsaveslength; i++) { // Преобразуем строку в объект для сортировки
         var saveData = this.IDBsavesList[i].split(',');
         this.IDBsavesListSorted.push({saveName: saveData[0],saveTime: saveData[1],saveID: saveData[2]}); 
@@ -321,7 +322,7 @@ export default {
       this.IDBsavesListSorted.sort(this.sortBy('saveID')); // сортируем
       this.saves = this.IDBsavesListSorted.slice(0, this.savesListStartCount); // копируем диапазон от сортированного массива в массив для первичной отрисовки
     }
-    this.saveCount = this.IDBsaveslength;
+    this.savesCount = this.IDBsaveslength;
     // return this.saves.sort(this.sortBy('saveTime'));
     // return _.orderBy(this.saves, 'saveTime', 'desc')
   },
@@ -350,8 +351,8 @@ export default {
 
     async saveGame(){
       try {
-        var name = document.getElementById("saveNameArea").value // Копирует значение
-        document.getElementById("saveNameArea").value = '' // И очищаем поле ввода
+        var name = this.saveNameInput // Копирует значение
+        this.saveNameInput = '' // И очищаем поле ввода
         if (name === '') // Проверка введенно ли имя сохранения, если нет, назначаем стандартное
           (this.$store.state.gameLang) ? name = 'New Save' : name = 'Новое сохранение'
         this.$store.state.saveName = name;
@@ -361,6 +362,7 @@ export default {
         //   rand = Math.floor(rand);
         //   return rand;
         // }()); 
+
         this.$store.state.saveID = dayjs().format("x"); // milliseconds since the Unix Epoch
 
         var ID = `${this.$store.state.saveName},${this.$store.state.saveTime},${this.$store.state.saveID}`;
@@ -370,9 +372,9 @@ export default {
           : iziToast.info({message: 'Игра успешно сохранена', position: 'bottomCenter'})
 
         this.saves.unshift({saveName: this.$store.state.saveName,saveTime: this.$store.state.saveTime,saveID: this.$store.state.saveID})
-        this.saveExist = 1
+        this.IsSaveExist = 1
         this.saves.sort(this.sortBy('saveID'));
-        this.saveCount = this.saves.length
+        this.savesCount = this.saves.length
         // this.saves = []
         // this.$asyncComputed.SaveList.update()
       }
@@ -388,6 +390,7 @@ export default {
         // var saveData = await WebCrypto(`${saveName},${saveTime},${saveID}`)
         // this.$store.state.saveName = saveData.saveName
         // this.$store.state.saveID = saveID
+
         this.$store.state.saveID = dayjs().format("x");
         await WebCrypto(`${saveName},${this.$store.state.saveTime},${this.$store.state.saveID}`, JSON.stringify(this.$store.state)) // Добавем новый за место старого (удалённого)
         this.$store.state.gameLang 
@@ -439,8 +442,8 @@ export default {
           return (item.saveID === saveID)
         })
         this.saves.splice(findIndex, 1);
-        (this.saves.length > 0) ? this.saves.sort(this.sortBy('saveID')) : this.saveExist = 0
-        this.saveCount += -1
+        (this.saves.length > 0) ? this.saves.sort(this.sortBy('saveID')) : this.IsSaveExist = 0
+        this.savesCount += -1
         this.updateIDB()
         // this.saves.splice(findIndex, 1)
         // this.saves = []
@@ -457,10 +460,10 @@ export default {
         this.$store.state.gameLang 
           ? iziToast.warning({message: 'All saves have been deleted!', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
           : iziToast.warning({message: 'Всё сохранения были удалены!', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
-        this.deleteAll = false
-        this.saveExist = 0
+        this.showModalDelSavesAll = false
+        this.IsSaveExist = 0
         this.saves = []
-        this.saveCount = this.saves.length
+        this.savesCount = this.saves.length
         // this.$asyncComputed.SaveList.update()
       }
       catch(error) {
@@ -482,7 +485,7 @@ export default {
 
 <style>
 
-.SaveExist {
+.IsSaveExist {
   position: absolute;
 }
 

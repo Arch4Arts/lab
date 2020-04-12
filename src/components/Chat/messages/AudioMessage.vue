@@ -1,5 +1,6 @@
 <template>
-  <vue-plyr id="plyr--audio" :options="options">
+<div @click="saveVolumeSettings()" class="container"> 
+  <vue-plyr ref="AudioMessagePlyr" id="plyr--audio" :options="options" :key="$store.state.reRender_mChatPlayersVolume">
     <audio>
       <source :src="data.src" :type="data.type"/> 
       <!-- audio/mp3 -->
@@ -63,6 +64,7 @@
     </svg>
 
   </vue-plyr>
+</div>
 </template>
 
 <script>
@@ -72,7 +74,8 @@ export default {
       options: {
         loadSprite: false,
         controls: ['play','progress','current-time','volume'],
-        volume: '0.5'
+        volume: this.$store.state.mChat.mChat_AudioPlyrVolume, // Значение по умолчанию, потом плеер берёт данные из plyr-audio
+        storage: { enabled: false, key: 'plyr-audio' }
       }
     };
   },
@@ -82,10 +85,20 @@ export default {
       required: true
     },
   },
+  methods: {
+    saveVolumeSettings(){
+      this.$store.state.mChat.mChat_AudioPlyrVolume = this.$refs.AudioMessagePlyr.player.volume
+      this.$store.commit('updateStores');
+    },    
+  }
 };
 </script>
 
-<style scoped>
+<style>
+
+.container {
+  overflow: hidden;
+}
 
 svg {
   display: none
@@ -93,7 +106,7 @@ svg {
 
 .plyr--audio .plyr__controls {
   background: transparent !important;
-  color: var(--plyr--audio--color)
+  color: var(--plyr--audio--color);
 }
 
 </style>

@@ -58,6 +58,7 @@
 <v-btn @click='$root.sendMessage(mChatHistory_ChatID, author, "suggestion", undefined, ["no", "Yes"])'>Support suggetion...</v-btn>
 <v-btn text @click="$root.addContactToChatList('mc')">Добавить mc в контакты</v-btn>
 <br><br>
+  <v-btn @click="$root.notif_AchievementSoundEnable()">Default</v-btn>
   <h1>Пролог</h1>
   <h2>Пролог</h2>
   <h3>Пролог</h3>
