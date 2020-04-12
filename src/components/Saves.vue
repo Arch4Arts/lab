@@ -418,6 +418,8 @@ export default {
       try {
         // console.log(`${saveName},${saveTime},${saveID}`)
         await this.$store.replaceState(await WebCrypto(`${saveName},${saveTime},${saveID}`));
+        // Перерисовываем компоненты плееров для применянения настроек звука
+        this.$store.state.reRender_mChatPlayersVolume += 1;
 
         this.$store.commit('updateStores'); // Фиксируем новые переменные
         updateAllThemes()

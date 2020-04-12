@@ -8,6 +8,7 @@ import "normalize.css"
 import vuetify from './styles/vuetify'
 import '@fortawesome/fontawesome-free/css/all.css' // Не менять, в free скидывать файлы от Pro
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import favicon from './assets/favicon.png'; // Для экспорта иконки в run build
 
 Vue.config.productionTip = false
 
