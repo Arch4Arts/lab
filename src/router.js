@@ -1,6 +1,6 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
-import Main from "./Pages/Main.vue"
+import Entry from "./Pages/Entry.vue"
 import FAQ from "./Pages/FAQ.vue"
 // import TestPageChat from "./components/Chat/TestPage.vue"
 import Diary from "./Pages/DiaryInput.vue"
@@ -15,7 +15,7 @@ export default new VueRouter({
         {
             path: '/', // Корень
             name: '',
-            component: Main
+            component: Entry
         },
         // {
         //     path: '/Settings',

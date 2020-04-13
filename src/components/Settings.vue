@@ -60,7 +60,7 @@
           <p v-else class="options__item__slider__name" style="opacity: .5">Громкость оповещений дневника</p>
           <v-slider
             class="options__item__slider--padding"
-            prepend-icon="fas fa-book-heart"
+            prepend-icon="fas fa-book"
             thumb-label
             min="0"
             max="100"
@@ -88,7 +88,7 @@
             <div class="v-expansion-panel header-icon"><v-icon large left>far fa-eye</v-icon></div>
             Внешний вид
           </v-expansion-panel-header>
-          <v-expansion-panel-content class="bg_panels">
+          <v-expansion-panel-content>
             <div class="text-center">
               <v-btn-toggle v-model="launguage" rounded>
                 <v-btn text width="130">Русский</v-btn>
@@ -232,7 +232,6 @@ export default {
 
 .v-navigation-drawer {
   background: var(--v-navigation-drawer--background) !important;
-  font-size: 14pt;
   border-left: var(--v-navigation-drawer--border-left) !important;
 }
 

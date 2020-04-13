@@ -3,7 +3,7 @@
       <!-- Верхняя панель с кнопками -->
       <v-toolbar class="bar" dark height="50" flat>
         <!-- Кнопка возвращения к списку контактов -->
-        <v-btn class="bar__back-btn v-btn--hover" icon @click="backToContactsPage()">
+        <v-btn class="bar__back-btn" icon @click="backToContactsPage()">
           <v-icon size="18"> fas fa-arrow-left </v-icon>
         </v-btn>
 
@@ -15,7 +15,7 @@
 
         <v-spacer/>
         <!-- Декоративная кнопка -->
-        <v-btn class="bar__phone-btn v-btn--hover" icon>
+        <v-btn class="bar__phone-btn" icon>
           <v-icon size="18"> fas fa-phone </v-icon>
         </v-btn>
       </v-toolbar>
@@ -137,7 +137,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+
+.v-btn {
+  background: var(--message-list__v-btn--background) !important;
+}
 
 .message-list {
   height: 100%;
@@ -178,14 +182,11 @@ export default {
 
 .bar__video-btn {
     color: var(--message-list--bar__video-btn--color) !important;
+    background-color: transparent !important;
 }
 
 .bar__ellipsis-btn {
     color: var(--message-list--bar__ellipsis-btn--color) !important;
-}
-
-.v-btn--hover:hover {
-  background-color: transparent !important;
 }
 
 @media (max-width: 450px) {

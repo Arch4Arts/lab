@@ -1,54 +1,54 @@
 <template>
   <div class="text-center">
-    <!--  v-model это активатор - ЕГО НЕ ТРОГАТЬ -->
+    <!-- v-model это активатор - ЕГО НЕ ТРОГАТЬ -->
     <v-dialog v-model="$store.state.gameAgeWarningDialog" persistent dark width="420">
-        <v-card class="text-center">
-          <!-- ENGLISH -->
-          <section v-if="$store.state.gameLang">
+      <v-card class="text-center">
+        <!-- ENGLISH -->
+        <section v-if="$store.state.gameLang">
+          
+          <v-card-title class="headline dark important-modal__header"> You must be 18 or older to access this game </v-card-title>
+            <v-card-text class="text--primary">
+                <br>
+                This game contains <b>explicit scenes of a sexual nature</b>, with a great bias in <b>femdom</b>!
+                <br><br>
+                By clicking on the "<b>Continue</b>" button, you confirm that you are at least 18 years old.
+            </v-card-text>
 
-            <v-card-title class="headline dark important-modal__header"> You must be 18 or older to access this game </v-card-title>
-              <v-card-text class="text--primary">
-                  <br>
-                  This game contains <b>explicit scenes of a sexual nature</b>, with a great bias in <b>femdom</b>!
-                  <br><br>
-                  By clicking on the "<b>Continue</b>" button, you confirm that you are at least 18 years old.
-              </v-card-text>
+          <v-card-actions>
+            <v-layout align-center justify-space-around column>
+              <v-flex>
+                <v-btn class="important-modal__button" dark @click="$store.commit('gameAgeWarningDialog')">Enter</v-btn>
+              </v-flex>
+              <v-flex class="leave-btn">
+                <v-btn text @click="Leave()">Cancel</v-btn>
+              </v-flex>
+            </v-layout>
+          </v-card-actions>
 
-            <v-card-actions>
-              <v-layout align-center justify-space-around column>
-                <v-flex>
-                  <v-btn class="important-modal__button" dark @click="$store.commit('gameAgeWarningDialog')">Enter</v-btn>
-                </v-flex>
-                <v-flex class="leave-btn">
-                  <v-btn text @click="Leave()">Cancel</v-btn>
-                </v-flex>
-              </v-layout>
-            </v-card-actions>
+        </section>
+        <!-- RUSSIAN -->
+        <section v-else>
 
-          </section>
-          <!-- RUSSIAN -->
-          <section v-else>
+          <v-card-title class="headline dark important-modal__header"> Вы должны быть старше 18 лет для доступа к этой игре </v-card-title>
+            <v-card-text class="text--primary">
+                <br>
+                Данная игра содержит <b>откровенные сцены сексуального характера</b>, с большим уклоном в <b>женское доминирование</b>!
+                <br><br>
+                Нажимая на кнопку «<b>Продолжить</b>», вы подтверждаете, что вам как минимум 18 лет.
+            </v-card-text>
 
-            <v-card-title class="headline dark important-modal__header"> Вы должны быть старше 18 лет для доступа к этой игре </v-card-title>
-              <v-card-text class="text--primary">
-                  <br>
-                  Данная игра содержит <b>откровенные сцены сексуального характера</b>, с большим уклоном в <b>женское доминирование</b>!
-                  <br><br>
-                  Нажимая на кнопку «<b>Продолжить</b>», вы подтверждаете, что вам как минимум 18 лет.
-              </v-card-text>
+          <v-card-actions>
+            <v-layout align-center justify-space-around column>
+              <v-flex>
+                <v-btn class="important-modal__button" dark @click="$store.commit('gameAgeWarningDialog')">Продолжить</v-btn>
+              </v-flex>
+              <v-flex class="leave-btn">
+                <v-btn text @click="Leave()">Отменить</v-btn>
+              </v-flex>
+            </v-layout>
+          </v-card-actions>
 
-            <v-card-actions>
-              <v-layout align-center justify-space-around column>
-                <v-flex>
-                  <v-btn class="important-modal__button" dark @click="$store.commit('gameAgeWarningDialog')">Продолжить</v-btn>
-                </v-flex>
-                <v-flex class="leave-btn">
-                  <v-btn text @click="Leave()">Отменить</v-btn>
-                </v-flex>
-              </v-layout>
-            </v-card-actions>
-
-          </section>
+        </section>
       </v-card>
     </v-dialog>
   </div>

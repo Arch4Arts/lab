@@ -20,54 +20,54 @@ import Age18WarningDialog from "./components/Age18WarningDialog";
 import Navigation from "./components/Navigation";
 import StartPageInfo from "./Pages/StartPageInfo";
 import Settings from './components/Settings';
-import Main from "./Pages/Main";
+import Entry from "./Pages/Entry";
 
 export default {
   name: 'App',
   methods: {
-      SwipeRight(){
-        // Открытие/Закрытие панели настроек
-        if (this.$store.state.isOpenSettingsDrawer) this.$store.state.isOpenSettingsDrawer = !this.$store.state.isOpenSettingsDrawer
-        // Открытие/закрытие панели сохранений
-        if (this.$store.state.isOpenSavesDrawer) this.$store.state.isOpenSavesDrawer = !this.$store.state.isOpenSavesDrawer
-        // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
-        if (this.$route.path != '/Diary') {
-          if (this.$store.state.mChat.mChat_Show) { // проверка открыт ли чат, если да то...
-            // Открыта ли страница контактов, true, то закрываем, если false, возвращаемся к странице контактов, т.к открыт чат с контактом
-            if (this.$store.state.mChat.mChat_ContactsPageShow) {
-              this.$store.state.mChat.mChat_Show = !this.$store.state.mChat.mChat_Show // закрываем окно чата
-              this.$store.commit('updateStores');
-            }
-            // Закрывает чат с контактом если он открыт
-            else this.$store.state.mChat.mChat_ContactsPageShow = !this.$store.state.mChat.mChat_ContactsPageShow
-          }
-        }
-      },
-      SwipeLeft(){
-        if (this.$store.state.mChat.mChat_Enable) { // Включён ли чат (Отключается при выборе палитры цвета диалогов)
-          // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
-          if (this.$route.path != '/Diary') {
-            // открываем окно чата, если оно не было открыто ранее
-            if (!this.$store.state.mChat.mChat_Show) this.$store.state.mChat.mChat_Show = !this.$store.state.mChat.mChat_Show
+    SwipeRight(){
+      // Открытие/Закрытие панели настроек
+      if (this.$store.state.isOpenSettingsDrawer) this.$store.state.isOpenSettingsDrawer = !this.$store.state.isOpenSettingsDrawer
+      // Открытие/закрытие панели сохранений
+      if (this.$store.state.isOpenSavesDrawer) this.$store.state.isOpenSavesDrawer = !this.$store.state.isOpenSavesDrawer
+      // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
+      if (this.$route.path != '/Diary') {
+        if (this.$store.state.mChat.mChat_Show) { // проверка открыт ли чат, если да то...
+          // Открыта ли страница контактов, true, то закрываем, если false, возвращаемся к странице контактов, т.к открыт чат с контактом
+          if (this.$store.state.mChat.mChat_ContactsPageShow) {
+            this.$store.state.mChat.mChat_Show = !this.$store.state.mChat.mChat_Show // закрываем окно чата
             this.$store.commit('updateStores');
           }
+          // Закрывает чат с контактом если он открыт
+          else this.$store.state.mChat.mChat_ContactsPageShow = !this.$store.state.mChat.mChat_ContactsPageShow
         }
-      },
-      // Тригеры для появления и исчезновения radialMenu
-      SwipeBottom(){
-        this.$store.state.radialMenuShow = true // Не менять, на телефоне прокрутка свайпами не соотвествует направлению прокрутки на компе
-        this.$store.commit('updateStores');
-      },
-      SwipeTop(){
-        this.$store.state.radialMenuShow = false
-        this.$store.commit('updateStores');
       }
-   },
+    },
+    SwipeLeft(){
+      if (this.$store.state.mChat.mChat_Enable) { // Включён ли чат (Отключается при выборе палитры цвета диалогов)
+        // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
+        if (this.$route.path != '/Diary') {
+          // открываем окно чата, если оно не было открыто ранее
+          if (!this.$store.state.mChat.mChat_Show) this.$store.state.mChat.mChat_Show = !this.$store.state.mChat.mChat_Show
+          this.$store.commit('updateStores');
+        }
+      }
+    },
+    // Тригеры для появления и исчезновения radialMenu
+    SwipeBottom(){
+      this.$store.state.radialMenuShow = true // Не менять, на телефоне прокрутка свайпами не соотвествует направлению прокрутки на компе
+      this.$store.commit('updateStores');
+    },
+    SwipeTop(){
+      this.$store.state.radialMenuShow = false
+      this.$store.commit('updateStores');
+    }
+  },
   components: {
     Age18WarningDialog,
     Navigation,
     StartPageInfo,
-    Main,
+    Entry,
     Settings,
     Saves: () => import('./components/Saves') // Ленивая загрузка компонента (Dynamic Imports) для повышения производительности
   },
@@ -78,9 +78,15 @@ export default {
 @import './styles/gameThemes.scss';
 @import './styles/mChatThemes.scss';
 
-// .v-btn { ОБРАЗЕЦ КАК ПЕРЕНАЗНАЧАТЬ СТИЛИ VUETIFY
-//   color: green !important
-// }
+a { // убираем подчёркивание и делаем жирнее
+	text-decoration: none;
+  font-weight:bold;
+}  
+
+a:hover { 
+	text-decoration: none;
+  font-weight:bold;
+} 
 
 .v-layout {
   background: var(--v-layout--background) !important;
@@ -89,26 +95,16 @@ export default {
 .Page {
   background: var(--Page--background) !important;
   color: var(--Page--color) !important;
-  font-size: 14pt;
   text-align: justify;
   padding: 2%;
   box-sizing: border-box;
   height: auto;
-  border-right: var(--Page--border-right) !important;
-  border-left: var(--Page--border-left) !important;
+  border: var(--Page--border) !important;
 }
 
 .Page-element {
-  background: var(--Page-element--background) !important;
   color: var(--Page-element--color) !important;
-}
-
-.v-btn:hover {
-  background: var(--v-btn__hover--background) !important;
-}
-
-.v-card {
-  background: var(--v-card--background) !important;
+  background: var(--Page-element--background) !important;
 }
 
 // Модальные окна с важными оповещениями
@@ -126,10 +122,6 @@ export default {
   background: var(--important-modal__button--background) !important;
 }
 
-.v-tooltip {
-  background: var(--v-tooltip--background) !important;
-}
-
 /* Отключаем показ полосы прокрутки (вертикальной) */
 html {
   -ms-overflow-style: none;
@@ -141,25 +133,6 @@ html {
     display: none; /* Safari and Chrome */
   }
 }
-
-h1 {
-  font-size: 2.0em;
-  color: var(--h1--color) !important;
-}
-
-.font-color {
-  color: var(--font-color--color) !important;
-}
-
-a { // убираем подчёркивание и делаем жирнее
-	text-decoration: none;
-    font-weight:bold;
-}  
-
-a:hover { 
-	text-decoration: none;
-    font-weight:bold;
-} 
 
 @media (max-width: 450px) {
   .Page {

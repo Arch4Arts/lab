@@ -44,5 +44,5 @@ module.exports = {
   outputDir: `./dist/${packageJson.name} ${packageJson.version}`,
   assetsDir: 'assets', // Каталог для хранения сгенерированных статических ресурсов (js, css, img, fonts).
   filenameHashing: false,
-  productionSourceMap: true, // чтобы ошибки в консоле указавали точно местоположение в js
+  productionSourceMap: false, // чтобы ошибки в консоле указавали точно местоположение в js
 }

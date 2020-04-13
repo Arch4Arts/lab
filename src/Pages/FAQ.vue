@@ -5,30 +5,32 @@
 
 	<v-expansion-panels accordion dark>
 		<v-expansion-panel>
-		<v-expansion-panel-header class="header-panels">
+		<v-expansion-panel-header>
 			<!-- Заголовок: Об игре -->
 			<div v-if="$store.state.gameLang">General information</div>
 			<div v-else>Общая информация</div>
 		</v-expansion-panel-header>
 	  <!-- Содержимое: Об игре -->
-		<v-expansion-panel-content class="content-panels">
-			<AboutGame />
+		<v-expansion-panel-content>
+			<v-flex text-center class="Page">
+				<AboutGame />
+			</v-flex>
 		</v-expansion-panel-content>
 		</v-expansion-panel>
 		<!-- FAQ -->
 		<v-expansion-panel v-if="$store.state.gameLang">
-				<v-expansion-panel-header class="header-panels">
+				<v-expansion-panel-header>
 					<div> Frequently asked question </div>
 				</v-expansion-panel-header>
-			<v-expansion-panel-content class="content-panels">
+			<v-expansion-panel-content>
 				<v-expansion-panels popout>
 				<v-expansion-panel
 					v-for="(FAQ, i) in FAQ_en"
 					:key="i">
-					<v-expansion-panel-header class="content-panels">
+					<v-expansion-panel-header>
 						<div>{{ FAQ.header }}</div>
 					</v-expansion-panel-header>
-					<v-expansion-panel-content class="content-panels">
+					<v-expansion-panel-content>
 						{{ FAQ.content }}
 					</v-expansion-panel-content>
 				</v-expansion-panel>
@@ -37,18 +39,18 @@
 		</v-expansion-panel>
 
 		<v-expansion-panel v-else>
-			<v-expansion-panel-header class="header-panels">
+			<v-expansion-panel-header>
 				<div> Часто задаваемые вопросы </div>
 			</v-expansion-panel-header>
-			<v-expansion-panel-content class="content-panels">
+			<v-expansion-panel-content>
 				<v-expansion-panels popout>
 				<v-expansion-panel
 					v-for="(FAQ, i) in FAQ_ru"
 					:key="i">
-					<v-expansion-panel-header class="header-panels">
+					<v-expansion-panel-header >
 						<div>{{ FAQ.header }}</div>
 					</v-expansion-panel-header>
-					<v-expansion-panel-content class="content-panels">
+					<v-expansion-panel-content>
 						{{ FAQ.content }}
 					</v-expansion-panel-content>
 				</v-expansion-panel>
@@ -100,13 +102,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.header-panels {
-	background: var(--header-panels--background) !important;
-}
-
-.content-panels {
-	background: var(--content-panels--background) !important;
-}
 
 </style>

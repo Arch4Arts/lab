@@ -52,6 +52,7 @@
 <v-btn @click='$root.sendMessage(mChatHistory_ChatID, author, "text", { text: "Lorum ipsum orom!" })'>Support text...</v-btn>
 <v-btn @click='$root.sendMessage(mChatHistory_ChatID, author, "text", { text: "Ipsum lorom odno id narokomoron is naruch begin end" })'>Support long text...</v-btn>
 <v-btn @click='$root.sendMessage(mChatHistory_ChatID, author, "image", { src: require("../../Media/img/2.gif") })'>Support image gif...</v-btn>
+<v-divider vertical></v-divider>
 <v-btn @click='$root.sendMessage(mChatHistory_ChatID, author, "video", { src: require("../../Media/video/Carmelita.mp4") })'>Support video...</v-btn>
 <v-btn @click='$root.sendMessage(mChatHistory_ChatID, author, "audio", { src: require("../../Media/audio/Achievements.mp3") })'>Support audio..</v-btn>
 <v-btn @click='$root.sendMessage(mChatHistory_ChatID, author, "emoji", { src: require("../../Media/img/smiling-face.png") })'>Support emoji..</v-btn>

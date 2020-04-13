@@ -79,7 +79,7 @@
       <v-btn
         v-if="visible != true"
         transition="scale-transition"
-        class="radial-menu-btn return"
+        class="radial-menu-btn return-btn"
         dark
         icon
         v-show="RadialMenuStatus"
@@ -128,7 +128,7 @@ export default {
   color: var(--RadialMenu--radial-menu-btns--color) !important;
 }
 
-.return {
+.return-btn {
   position: fixed;
   right: 0px;
   bottom: 0px;

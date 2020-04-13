@@ -1,162 +1,86 @@
 <template>
-        <!-- ENGLISH -->
+<!-- ENGLISH -->
+<section v-if="$store.state.gameLang">
 
-        <section v-if="$store.state.gameLang">
+</section>
 
-        <v-expansion-panels id="layout" class="bg_panels">
+<!-- RUSSIAN -->
+<section :id="parentBlockNameID" v-else>
+  <!-- Панель -->
+  <v-expansion-panels id="layout" >
 
-        <v-expansion-panel class="bg_panels">
-        <v-expansion-panel-content  v-for="(character, i) in characters" :key="i" hide-actions>
-        <!-- EN АВАТАР В ШАПКЕ  --> 
-        <template v-slot:header>
-          <v-layout align-center row spacer>
-            <v-flex xs4 sm2 md1>
-              <v-avatar size="36px" >
-                <img v-if="character.avatar" :src="character.avatar" alt="Avatar">
-                <v-icon v-else :color="character.color" v-text="character.icon"></v-icon>
-              </v-avatar>
-            </v-flex>
-        <!-- EN ИМЯ В ШАПКЕ -->
-            <v-flex sm5 md3 hidden-xs-only>
-              <strong v-html="character.name"></strong>
-              <span v-if="character.total" class="grey--text">
-                &nbsp;({{ character.total }})
-              </span>
-            </v-flex>
-        <!-- EN КТО ЭТО? В ШАПКЕ -->
-            <v-flex text-no-wrap xs5 sm3>
-              <strong v-html="character.title"></strong>
-            </v-flex>
-        <!-- EN ЦИТАТА В ШАПКЕ -->
-            <v-flex v-if="character.quote" class="grey--text" ellipsis hidden-sm-and-down>
-              &mdash;
-              {{ character.quote }}
-            </v-flex>
-          </v-layout>
+  <v-expansion-panel >
+  <!-- АВАТАР В ШАПКЕ -->
+  <v-expansion-panel-header >
+    <v-layout align-center row spacer>
+      <v-flex xs4 sm2 md1>
+        <v-avatar size="36px" >
+          <img v-if="character_ru.avatar" :src="character_ru.avatar" alt="Avatar">
+          <v-icon v-else :color="character_ru.color" v-text="character_ru.icon"></v-icon>
+        </v-avatar>
+      </v-flex>
+      <!-- ИМЯ В ШАПКЕ -->
+      <v-flex sm5 md3 hidden-xs-only>
+        <strong v-html="character_ru.name"></strong>
+        <span v-if="character_ru.total" class="grey--text">
+          &nbsp;({{ character_ru.total }})
+        </span>
+      </v-flex>
+      <!-- КТО ЭТО? В ШАПКЕ -->
+      <v-flex text-no-wrap xs5 sm3>
+        <strong v-html="character_ru.title"></strong>
+      </v-flex>
+      <!-- ЦИТАТА В ШАПКЕ -->
+      <v-flex v-if="character_ru.quote" class="grey--text" ellipsis hidden-sm-and-down>
+        &mdash;
+        {{ character_ru.quote }}
+      </v-flex>
+    </v-layout>
 
-        </template>
+  </v-expansion-panel-header>
 
-        <v-card class="bg_panels">
-        <v-divider></v-divider>
-            <v-card-text>
-            <v-layout align-start row>
-            <!-- EN ЦИТАТА В БЛОКЕ -->
-            <v-flex xs12 md6>
-            <p v-if="character.Declination == 'mc'" :style="{'color': $store.state.chars.mcColor}"> {{ character.quote }} </p>
-            <p v-if="character.Declination == 'sister'" :style="{'color': $store.state.chars.sisterColor}"> {{ character.quote }} </p>
-            </v-flex>
-            <!-- EN ВЫБОР ЦВЕТА ЦИТАТЫ (РЕПЛИК) -->
-            <color-picker @colorChange="applyColorChange" :currentColor="$store.state.chars.mcColor" />
-            <!-- <v-flex d-flex lg1 md1 sm1 xs1>
-                <color-picker :change="mcUpdateColor" :extColor="this.$root.convertColor(this.$store.state.chars.mcColor)"></color-picker>
-            </v-flex> -->
-            </v-layout>
-            <!-- EN ЗАПОЛНЕНИЕ ИМЕНИ -->
-            <v-form ref="form" v-model="validation" lazy-validation>
-                <v-flex sm5 md5>
-                <v-text-field v-if="character.Declination == 'mc'" v-model="mc" :rules="nameRules" label="Name" color="grey lighten-2" required></v-text-field>
-                <v-text-field v-if="character.Declination == 'sister'" v-model="sister" :rules="nameRules" label="Name" color="grey lighten-2" required></v-text-field>  <!-- ИМЯ -->
-                </v-flex>
-            </v-form>
+  <v-expansion-panel-content>
+  <v-card elevation='0'>
+  <v-divider></v-divider>
+      <v-card-text class="font-color">
+      <p :style="{'color': $store.state.chars.mcColor}"> {{ character_ru.quote }} </p>
+      <!-- ВЫБОР ЦВЕТА ЦИТАТЫ (РЕПЛИК) -->
+      <!-- Смена цвета (слушает событий colorChange в компоненте) -->
+      <color-picker 
+        @colorChange="applyColorChange" 
+        :currentColor="$store.state.chars.mcColor"
+        :parentBlockNameID="parentBlockNameID"
+      />
+      <!-- ЗАПОЛНЕНИЕ ИМЕНИ -->
+      <v-form ref="form" v-model="validation" lazy-validation>
+        <v-flex sm5 md5>
+        <v-text-field v-model="Declination" :rules="nameRules_ru" label="Имя" dark color="grey lighten-2" required></v-text-field>  <!-- ИМЯ -->
+        <br/>  
+        <!-- КАК БЫЛО ПРОСКЛОНЕНО -->
+        <blockquote class="blockquote">Вот сидит на стуле <b> {{ character_ru.Im }}. </b>
+        <br>Кто б мы были без <b> {{ character_ru.Rod }}? </b>
+        <br>Подарите что-нибудь <b> {{ character_ru.Dat }}! </b>
+        <br><b> {{character_ru.Vin }} </b> нужно поздравить.
+        <br><b> {{ character_ru.Tvor }} </b> все гордятся.
+        <br/>Не забывайте о <b>{{ character_ru.Pred }}</b>
+        </blockquote>
+        <!-- ПРОСКЛОНЯТЬ ВРУЧНУЮ -->
+        <v-checkbox color="grey lighten-2" v-model="character_ru.manualDeclination" dark :label="'Просклонять вручную'"></v-checkbox>
+        <v-text-field v-model="character_ru.Rod" :disabled="!character_ru.manualDeclination" :rules="nameRules_ru" label="Родительный (кого, чего?)" dark color="grey lighten-2" required></v-text-field>
+        <v-text-field v-model="character_ru.Dat" :disabled="!character_ru.manualDeclination" :rules="nameRules_ru" label="Дательный (кому, чему?	)" dark color="grey lighten-2" required></v-text-field>
+        <v-text-field v-model="character_ru.Vin" :disabled="!character_ru.manualDeclination" :rules="nameRules_ru" label="Винительный (кого, что?)" dark color="grey lighten-2" required></v-text-field>
+        <v-text-field v-model="character_ru.Tvor" :disabled="!character_ru.manualDeclination" :rules="nameRules_ru" label="Творительный (кем, чем?)" dark color="grey lighten-2" required></v-text-field>
+        <v-text-field v-model="character_ru.Pred" :disabled="!character_ru.manualDeclination" :rules="nameRules_ru" label="Предложный (о ком, о чём?)" dark color="grey lighten-2" required></v-text-field>
+        </v-flex>
+      </v-form>
 
-            </v-card-text>
-        </v-card>
-        </v-expansion-panel-content>
-        </v-expansion-panel>
+      </v-card-text>
+  </v-card>
+  </v-expansion-panel-content>
+  </v-expansion-panel>
 
-        </v-expansion-panels>
-
-        </section>
-
-        <!-- RUSSIAN -->
-
-        <section :id="parentBlockNameID" v-else>
-
-        <v-expansion-panels id="layout" >
-
-        <v-expansion-panel >
-        <!-- АВАТАР В ШАПКЕ -->
-        <v-expansion-panel-header >
-          <v-layout align-center row spacer>
-            <v-flex xs4 sm2 md1>
-              <v-avatar size="36px" >
-                <img v-if="character_ru.avatar" :src="character_ru.avatar" alt="Avatar">
-                <v-icon v-else :color="character_ru.color" v-text="character_ru.icon"></v-icon>
-              </v-avatar>
-            </v-flex>
-        <!-- ИМЯ В ШАПКЕ -->
-            <v-flex sm5 md3 hidden-xs-only>
-              <strong v-html="character_ru.name"></strong>
-              <span v-if="character_ru.total" class="grey--text">
-                &nbsp;({{ character_ru.total }})
-              </span>
-            </v-flex>
-        <!-- КТО ЭТО? В ШАПКЕ -->
-            <v-flex text-no-wrap xs5 sm3>
-              <strong v-html="character_ru.title"></strong>
-            </v-flex>
-        <!-- ЦИТАТА В ШАПКЕ -->
-            <v-flex v-if="character_ru.quote" class="grey--text" ellipsis hidden-sm-and-down>
-              &mdash;
-              {{ character_ru.quote }}
-            </v-flex>
-          </v-layout>
-
-        </v-expansion-panel-header>
-
-        <v-expansion-panel-content class="bg_panels">
-        <v-card elevation='0' class="bg_panels">
-        <v-divider></v-divider>
-            <v-card-text class="font-color">
-            <v-layout align-start row>
-            <!-- ЦИТАТА В БЛОКЕ -->
-            <v-flex xs12 md6>
-            <p :style="{'color': $store.state.chars.mcColor}"> {{ character_ru.quote }} </p>
-            </v-flex>
-            <!-- ВЫБОР ЦВЕТА ЦИТАТЫ (РЕПЛИК) -->
-            <!-- Смена цвета (слушает событий colorChange в компоненте) -->
-            <!-- <v-flex d-flex lg1 md1 sm1 xs1>
-                <color-picker :change="mcUpdateColor" :extColor="this.$root.convertColor(this.$store.state.chars.mcColor)"></color-picker>
-            </v-flex> -->
-            </v-layout>
-            <color-picker 
-            @colorChange="applyColorChange" 
-            :currentColor="$store.state.chars.mcColor"
-            :parentBlockNameID="parentBlockNameID"
-             />
-            <!-- ЗАПОЛНЕНИЕ ИМЕНИ -->
-            <v-form ref="form" v-model="validation" lazy-validation>
-                <v-flex sm5 md5>
-                <v-text-field v-model="Declination" :rules="nameRules_ru" label="Имя" dark color="grey lighten-2" required></v-text-field>  <!-- ИМЯ -->
-                <br/>  
-                <!-- КАК БЫЛО ПРОСКЛОНЕНО -->
-
-			          <blockquote class="blockquote">Вот сидит на стуле <b> {{ character_ru.Im }}. </b>
-			          <br>Кто б мы были без <b> {{ character_ru.Rod }}? </b>
-			          <br>Подарите что-нибудь <b> {{ character_ru.Dat }}! </b>
-			          <br><b> {{character_ru.Vin }} </b> нужно поздравить.
-			          <br><b> {{ character_ru.Tvor }} </b> все гордятся.
-                <br/>Не забывайте о <b>{{ character_ru.Pred }}</b>
-                </blockquote>
-
-                <v-checkbox color="grey lighten-2" v-model="character_ru.manualDeclination" dark :label="'Просклонять вручную'"></v-checkbox>
-                <!-- ПРОСКЛОНЯТЬ ВРУЧНУЮ -->
-                <v-text-field v-model="character_ru.Rod" :disabled="!character_ru.manualDeclination" :rules="nameRules_ru" label="Родительный (кого, чего?)" dark color="grey lighten-2" required></v-text-field>
-                <v-text-field v-model="character_ru.Dat" :disabled="!character_ru.manualDeclination" :rules="nameRules_ru" label="Дательный (кому, чему?	)" dark color="grey lighten-2" required></v-text-field>
-                <v-text-field v-model="character_ru.Vin" :disabled="!character_ru.manualDeclination" :rules="nameRules_ru" label="Винительный (кого, что?)" dark color="grey lighten-2" required></v-text-field>
-                <v-text-field v-model="character_ru.Tvor" :disabled="!character_ru.manualDeclination" :rules="nameRules_ru" label="Творительный (кем, чем?)" dark color="grey lighten-2" required></v-text-field>
-                <v-text-field v-model="character_ru.Pred" :disabled="!character_ru.manualDeclination" :rules="nameRules_ru" label="Предложный (о ком, о чём?)" dark color="grey lighten-2" required></v-text-field>
-                </v-flex>
-            </v-form>
-
-            </v-card-text>
-        </v-card>
-        </v-expansion-panel-content>
-        </v-expansion-panel>
-
-        </v-expansion-panels>
-
-        </section>
+  </v-expansion-panels>
+</section>
 </template>
 
 <script>
@@ -256,6 +180,10 @@ export default {
 </script>
 
 <style scoped>
+
+.v-card {
+  background: var(--Page--background) !important;
+}
 
 #layout {
   z-index: 0;

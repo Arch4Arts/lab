@@ -23,20 +23,20 @@
         This game uses sound alerts for certain events, you can turn off the sound completely, or only selected ones, and adjust the volume
         <br>
 
-        <v-btn color="grey lighten-2" outline dark @click="$root.notif_AchievementSoundEnable()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> Getting achievement </v-btn>
+        <v-btn outline dark @click="$root.notif_AchievementSoundEnable()"> <v-icon left>fas fa-play</v-icon> Getting achievement </v-btn>
         
-        <v-switch v-model="$store.state.notif_AchievementSoundEnable" @click.stop="Switch('notif_AchievementSoundEnable')" color="grey lighten-2" dark :label="($store.state.notif_AchievementSoundEnable) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.notif_AchievementVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_AchievementSoundEnable" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
+        <v-switch v-model="$store.state.notif_AchievementSoundEnable" @click.stop="Switch('notif_AchievementSoundEnable')" dark :label="($store.state.notif_AchievementSoundEnable) ? 'ON' : 'OFF' "></v-switch>
+        <v-slider v-model="$store.state.notif_AchievementVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_AchievementSoundEnable" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
         
-        <v-btn color="grey lighten-2" outline dark @click="$root.notif_DiarySoundEnable()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> A new entry in the diary </v-btn>
+        <v-btn outline dark @click="$root.notif_DiarySoundEnable()"> <v-icon left>fas fa-play</v-icon> A new entry in the diary </v-btn>
         
-        <v-switch v-model="$store.state.notif_DiarySoundEnable" @click.stop="Switch('notif_DiarySoundEnable')" color="grey lighten-2" dark :label="($store.state.notif_DiarySoundEnable) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.notif_DiaryVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_DiarySoundEnable" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
+        <v-switch v-model="$store.state.notif_DiarySoundEnable" @click.stop="Switch('notif_DiarySoundEnable')" dark :label="($store.state.notif_DiarySoundEnable) ? 'ON' : 'OFF' "></v-switch>
+        <v-slider v-model="$store.state.notif_DiaryVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_DiarySoundEnable" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
         
-        <v-btn color="grey lighten-2" outline dark @click="$root.notif_SmartphoneSoundEnable()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> A new message in the phone </v-btn>
+        <v-btn outline dark @click="$root.notif_SmartphoneSoundEnable()"> <v-icon left>fas fa-play</v-icon> A new message in the phone </v-btn>
 
-        <v-switch v-model="$store.state.notif_SmartphoneSoundEnable" @click.stop="Switch('notif_SmartphoneSoundEnable')" color="grey lighten-2" dark :label="($store.state.notif_SmartphoneSoundEnable) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.notif_SmartphoneVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_SmartphoneSoundEnable" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
+        <v-switch v-model="$store.state.notif_SmartphoneSoundEnable" @click.stop="Switch('notif_SmartphoneSoundEnable')" dark :label="($store.state.notif_SmartphoneSoundEnable) ? 'ON' : 'OFF' "></v-switch>
+        <v-slider v-model="$store.state.notif_SmartphoneVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_SmartphoneSoundEnable" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
         
         </v-card-text>
         </v-card>
@@ -99,8 +99,8 @@
             <!-- EN ЗАПОЛНЕНИЕ ИМЕНИ -->
             <v-form ref="form" v-model="validation" lazy-validation>
                 <v-flex sm5 md5>
-                <v-text-field v-if="character.Declination == 'mc'" v-model="mc" :rules="nameRules" label="Name" color="grey lighten-2" required></v-text-field>
-                <v-text-field v-if="character.Declination == 'sister'" v-model="sister" :rules="nameRules" label="Name" color="grey lighten-2" required></v-text-field>  <!-- ИМЯ -->
+                <v-text-field v-if="character.Declination == 'mc'" v-model="mc" :rules="nameRules" label="Name" required></v-text-field>
+                <v-text-field v-if="character.Declination == 'sister'" v-model="sister" :rules="nameRules" label="Name" required></v-text-field>  <!-- ИМЯ -->
                 </v-flex>
             </v-form>
 
@@ -134,20 +134,20 @@
         В данной игре используются звуковые оповещения при определённых событиях, вы можете отключить звук полностью, или только выбранные, а отрегулировать громкость
         <br>
 
-        <v-btn color="grey lighten-2" outline dark @click="$root.notif_AchievementSoundEnable()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> Получение достижения </v-btn>
+        <v-btn outline dark @click="$root.notif_AchievementSoundEnable()"> <v-icon left>fas fa-play</v-icon> Получение достижения </v-btn>
         
-        <v-switch v-model="$store.state.notif_AchievementSoundEnable" @click.stop="Switch('notif_AchievementSoundEnable')" color="grey lighten-2" dark :label="($store.state.notif_AchievementSoundEnable) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.notif_AchievementVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_AchievementSoundEnable" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
+        <v-switch v-model="$store.state.notif_AchievementSoundEnable" @click.stop="Switch('notif_AchievementSoundEnable')" dark :label="($store.state.notif_AchievementSoundEnable) ? 'ON' : 'OFF' "></v-switch>
+        <v-slider v-model="$store.state.notif_AchievementVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_AchievementSoundEnable" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
         
-        <v-btn color="grey lighten-2" outline dark @click="$root.notif_DiarySoundEnable()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> Новая запись в дневнике </v-btn>
+        <v-btn outline dark @click="$root.notif_DiarySoundEnable()"> <v-icon left>fas fa-play</v-icon> Новая запись в дневнике </v-btn>
         
-        <v-switch v-model="$store.state.notif_DiarySoundEnable" @click.stop="Switch('notif_DiarySoundEnable')" color="grey lighten-2" dark :label="($store.state.notif_DiarySoundEnable) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.notif_DiaryVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_DiarySoundEnable" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
+        <v-switch v-model="$store.state.notif_DiarySoundEnable" @click.stop="Switch('notif_DiarySoundEnable')" dark :label="($store.state.notif_DiarySoundEnable) ? 'ON' : 'OFF' "></v-switch>
+        <v-slider v-model="$store.state.notif_DiaryVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_DiarySoundEnable" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
         
-        <v-btn color="grey lighten-2" outline dark @click="$root.notif_SmartphoneSoundEnable()"> <v-icon color="grey lighten-2" left>fas fa-play</v-icon> Новое сообщение в телефоне </v-btn>
+        <v-btn outline dark @click="$root.notif_SmartphoneSoundEnable()"> <v-icon left>fas fa-play</v-icon> Новое сообщение в телефоне </v-btn>
 
-        <v-switch v-model="$store.state.notif_SmartphoneSoundEnable" @click.stop="Switch('notif_SmartphoneSoundEnable')" color="grey lighten-2" dark :label="($store.state.notif_SmartphoneSoundEnable) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.notif_SmartphoneVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_SmartphoneSoundEnable" color="grey lighten-2" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
+        <v-switch v-model="$store.state.notif_SmartphoneSoundEnable" @click.stop="Switch('notif_SmartphoneSoundEnable')" dark :label="($store.state.notif_SmartphoneSoundEnable) ? 'ON' : 'OFF' "></v-switch>
+        <v-slider v-model="$store.state.notif_SmartphoneVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.notif_SmartphoneSoundEnable" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
         
         </v-card-text>
         </v-card>
@@ -212,8 +212,8 @@
             <!-- ЗАПОЛНЕНИЕ ИМЕНИ -->
             <v-form ref="form" v-model="validation" lazy-validation>
                 <v-flex sm5 md5>
-                <v-text-field v-if="character.Declination == 'mc'" v-model="mcDeclination" :rules="nameRules_ru" label="Имя" color="grey lighten-2" required></v-text-field>
-                <v-text-field v-if="character.Declination == 'sister'" v-model="sisterDeclination" :rules="nameRules_ru" label="Имя" color="grey lighten-2" required></v-text-field>  <!-- ИМЯ -->
+                <v-text-field v-if="character.Declination == 'mc'" v-model="mcDeclination" :rules="nameRules_ru" label="Имя" required></v-text-field>
+                <v-text-field v-if="character.Declination == 'sister'" v-model="sisterDeclination" :rules="nameRules_ru" label="Имя" required></v-text-field>  <!-- ИМЯ -->
                 <br/>  
                 <!-- КАК БЫЛО ПРОСКЛОНЕНО -->
 
@@ -225,13 +225,13 @@
                 <br/>Не забывайте о <b>{{ character.Pred }}</b>
                 </blockquote>
 
-                <v-checkbox color="grey lighten-2" v-model="character.manualDeclination" :label="'Просклонять вручную'"></v-checkbox>
+                <v-checkbox v-model="character.manualDeclination" :label="'Просклонять вручную'"></v-checkbox>
                 <!-- ПРОСКЛОНЯТЬ ВРУЧНУЮ -->
-                <v-text-field v-model="character.Rod" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Родительный (кого, чего?)" color="grey lighten-2" required></v-text-field>
-                <v-text-field v-model="character.Dat" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Дательный (кому, чему?	)" color="grey lighten-2" required></v-text-field>
-                <v-text-field v-model="character.Vin" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Винительный (кого, что?)" color="grey lighten-2" required></v-text-field>
-                <v-text-field v-model="character.Tvor" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Творительный (кем, чем?)" color="grey lighten-2" required></v-text-field>
-                <v-text-field v-model="character.Pred" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Предложный (о ком, о чём?)" color="grey lighten-2" required></v-text-field>
+                <v-text-field v-model="character.Rod" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Родительный (кого, чего?)" required></v-text-field>
+                <v-text-field v-model="character.Dat" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Дательный (кому, чему?	)" required></v-text-field>
+                <v-text-field v-model="character.Vin" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Винительный (кого, что?)" required></v-text-field>
+                <v-text-field v-model="character.Tvor" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Творительный (кем, чем?)" required></v-text-field>
+                <v-text-field v-model="character.Pred" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Предложный (о ком, о чём?)" required></v-text-field>
                 </v-flex>
             </v-form>
 

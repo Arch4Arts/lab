@@ -1,7 +1,7 @@
 <template>
 <section>
     <v-color-picker 
-    :width='calcWidth - 48' 
+    :width='calcWidth - 32' 
     flat 
     mode='hexa'
     v-model="color"

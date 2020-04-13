@@ -18,7 +18,7 @@ export default function chatThemes(){
       document.documentElement.style.setProperty('--contacts-page__bar__nav-btn--color', '#37addf');
       document.documentElement.style.setProperty('--contacts-page__bar__palette-btn--color', '#37addf');
       document.documentElement.style.setProperty('--contacts-page__bar__search_btn--color', '#37addf');
-      document.documentElement.style.setProperty('--contacts-page__v-btn--hover--background', 'transparent');
+      document.documentElement.style.setProperty('--contacts-page__v-btn--background', 'transparent');
       document.documentElement.style.setProperty('--contacts-page__palette-menu-bg--background', '#fff');
       document.documentElement.style.setProperty('--contacts-page__palette-menu-font--color', '#4c4c4c');
       document.documentElement.style.setProperty('--contacts-page__vlist--contact-badge--color', '#37addf');
@@ -101,7 +101,7 @@ export default function chatThemes(){
       document.documentElement.style.setProperty('--contacts-page__bar__nav-btn--color', '#fff');
       document.documentElement.style.setProperty('--contacts-page__bar__palette-btn--color', '#fff');
       document.documentElement.style.setProperty('--contacts-page__bar__search_btn--color', '#fff');
-      document.documentElement.style.setProperty('--contacts-page__v-btn--hover--background', 'transparent');
+      document.documentElement.style.setProperty('--contacts-page__v-btn--background', 'transparent');
       document.documentElement.style.setProperty('--contacts-page__palette-menu-bg--background', '#242933');
       document.documentElement.style.setProperty('--contacts-page__palette-menu-font--color', '#ECEFF4');
       document.documentElement.style.setProperty('--contacts-page__vlist--contact-badge--color', '#88c0d0');

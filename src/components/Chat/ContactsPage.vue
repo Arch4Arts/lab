@@ -4,13 +4,13 @@
         <!-- шапка -->
         <v-toolbar class="contacts-page__bar" dark height="50" flat>
           <!-- Декоративная кнопка -->
-          <v-app-bar-nav-icon class="contacts-page__bar__nav-btn v-btn--hover"></v-app-bar-nav-icon>
+          <v-app-bar-nav-icon class="contacts-page__bar__nav-btn"></v-app-bar-nav-icon>
           <!-- <v-toolbar-title>Inbox</v-toolbar-title> -->
           <v-spacer></v-spacer>
           <!-- Меню выбора темы -->
           <v-menu offset-y class="contacts-page__palette-menu-bg">
           <template v-slot:activator="{ on }">
-            <v-btn class="contacts-page__bar__palette-btn v-btn--hover" icon v-on="on">
+            <v-btn class="contacts-page__bar__palette-btn" icon v-on="on">
               <v-icon size="20"> fas fa-palette </v-icon>
             </v-btn>
           </template>
@@ -26,7 +26,7 @@
           </v-list>
         </v-menu>
         <!-- Декоративная кнопка -->
-        <v-btn class="contacts-page__bar__search_btn v-btn--hover" icon>
+        <v-btn class="contacts-page__bar__search_btn" icon>
           <v-icon size="20"> fas fa-search </v-icon>
         </v-btn>
         </v-toolbar>
@@ -132,8 +132,8 @@ export default {
 
 <style scoped>
 
-.v-btn--hover:hover {
-  background: var(--contacts-page__v-btn--hover--background) !important;
+.v-btn {
+  background: var(--contacts-page__v-btn--background) !important;
 }
 
 .contacts-page {
