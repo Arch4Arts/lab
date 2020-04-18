@@ -1,50 +1,29 @@
 <template>
-  <div>
-    <form class="inputArea">
-      <div
-        role="button"
-        tabIndex="0"
-        contentEditable="false"
-        :placeholder="($store.state.gameLang) ? 'Write a message...': 'Введите текст...'"
-        class="text-input"
-      ></div>
-      <div class="inputArea buttons-container">
-          <v-icon class="plus-icon">far fa-plus</v-icon>
-          <v-icon class="send-icon">send</v-icon>
-          <v-icon class="smile-icon">far fa-smile</v-icon>
-          <v-icon class="microphone-icon">fas fa-microphone</v-icon>
-          <!-- <v-icon class="paperclip-icon">far fa-paperclip</v-icon> -->
-      </div>
-    </form>
-  </div>
+<div>
+  <div class="inputArea">
+    <div
+      :placeholder="($store.state.gameLang) ? 'Write a message...': 'Введите текст...'"
+      class="text-input"
+    ></div>
+    <div class="inputArea buttons-container">
+        <v-icon class="plus-icon">far fa-plus</v-icon>
+        <v-icon class="send-icon">send</v-icon>
+        <v-icon class="smile-icon">far fa-smile</v-icon>
+        <v-icon class="microphone-icon">fas fa-microphone</v-icon>
+        <!-- <v-icon class="paperclip-icon">far fa-paperclip</v-icon> -->
+    </div>
+  </div>  
+</div>
 </template>
 
-
 <script>
-import Suggestions from './Suggestions.vue'
-
 export default {
-  components: {
-    Suggestions
-  },
-  props: {
-    suggestions: {
-      type: Array,
-      default: () => []
-    },
-  },
-  data () {
-    return {
-      file: null,
-      inputActive: false,
-    }
-  },
-  methods: {
-  }
+
 }
 </script>
 
 <style lang="scss">
+
 
 .inputArea { // Зона размещения поля ввода и кнопок
   min-height: 55px;
@@ -122,6 +101,7 @@ export default {
 }
 
 @media (max-width: 450px) {
+
   .inputArea {
     width: 100%;
   }

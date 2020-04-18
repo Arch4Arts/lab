@@ -6,10 +6,11 @@
         from_them: message.author !== 'me' && message.type !== 'system',
         system: message.type === 'system'  // Свой стиль
       }">
-      <!-- Аватар отправившего сообщение -->
-      <div v-if="message.type !== 'system' && message.type !== 'suggestion'" 
-      :title="authorName" class="avatar" 
-      :style="{ backgroundImage: `url(${chatImageUrl})` }">
+      <!-- Аватар отправителя -->
+      <div 
+        v-if="message.type !== 'system' && message.type !== 'suggestion' && !$store.state.mChat.mChat_HideAvatars" 
+        :title="authorName" class="avatar" 
+        :style="{ backgroundImage: `url(${chatImageUrl})` }">
       </div>
       <!-- Различные типы сообщений -->
       <TextMessage v-if="message.type === 'text'" :data="message.data" />

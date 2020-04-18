@@ -1,27 +1,27 @@
 <template>
 <div class="message-list" ref="scrollList" @scroll="handleScroll">
-      <!-- Верхняя панель с кнопками -->
-      <v-toolbar class="bar" dark height="50" flat>
-        <!-- Кнопка возвращения к списку контактов -->
-        <v-btn class="bar__back-btn" icon @click="backToContactsPage()">
-          <v-icon size="18"> fas fa-arrow-left </v-icon>
-        </v-btn>
+  <!-- Верхняя панель с кнопками -->
+  <v-toolbar class="bar" dark height="50" flat>
+    <!-- Кнопка возвращения к списку контактов -->
+    <v-btn class="bar__back-btn" icon @click="backToContactsPage()">
+      <v-icon size="18"> fas fa-arrow-left </v-icon>
+    </v-btn>
 
-        <v-spacer/>
-        <!-- ЗАГОЛОВОК ЧАТА преобразует tailor в Tailor -->
-        <v-toolbar-title class="bar__title"> 
-          {{ this.$store.state.mChat.mChat_ContactClikedName }} 
-        </v-toolbar-title>
+    <v-spacer/>
+    <!-- ЗАГОЛОВОК ЧАТА преобразует tailor в Tailor -->
+    <v-toolbar-title class="bar__title"> 
+      {{ this.$store.state.mChat.mChat_ContactClikedName }} 
+    </v-toolbar-title>
 
-        <v-spacer/>
-        <!-- Декоративная кнопка -->
-        <v-btn class="bar__phone-btn" icon>
-          <v-icon size="18"> fas fa-phone </v-icon>
-        </v-btn>
-      </v-toolbar>
+    <v-spacer/>
+    <!-- Декоративная кнопка -->
+    <v-btn class="bar__phone-btn" icon>
+      <v-icon size="18"> fas fa-phone </v-icon>
+    </v-btn>
+  </v-toolbar>
   
   <!-- Зона прокрутки -->
-  <virtual-list class="message-list v-list" ref="scrollList" :size="65" :remain="12">
+  <virtual-list class="message-list" ref="scrollList" :size="65" :remain="12">
   <!-- <RecycleScroller :items="messages" :item-size="1" key-field="idx"> -->
     <!-- Сообщение -->
     <Message v-for="(message, idx) in messages" :message="message" :chatImageUrl="chatImageUrl(message.author)" :authorName="authorName(message.author)" :key="idx" :messageStyling="messageStyling" />
@@ -30,10 +30,8 @@
   <!-- </RecycleScroller> -->
   </virtual-list>
   <!-- Декоративная панель ввода -->
-  <UserInput /> 
-  <!-- <Message v-show="mChat_TypingIndicatorEnable !== ''" :message="{author: mChat_TypingIndicatorEnable, type: 'typing'}" :chatImageUrl="chatImageUrl(mChat_TypingIndicatorEnable)" :colors="colors" :messageStyling="messageStyling" /> -->
+  <UserInput v-if="!$store.state.mChat.mChat_HideInput" /> 
 </div>
-
 </template>
 
 <script>
@@ -137,7 +135,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .v-btn {
   background: var(--message-list__v-btn--background) !important;
@@ -149,22 +147,21 @@ export default {
   background-size: 100%;
   -ms-overflow-style: none;  /* IE 10+ */
   scrollbar-width: none;  /* Firefox */
+
+  background: var(--message-list--background) !important;
+
+  &::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */  
+  }
 }
 
 .v-list {
-  max-height: 485px;
-}
-
-.message-list {
-	background: var(--message-list--background) !important;
-}
-
-.message-list::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
+  /* max-height: 485px; */
 }
 
 .bar {
   background-color: var(--message-list--bar--background-color) !important;
+  z-index: 4;
 }
 
 .bar__title {
@@ -190,6 +187,7 @@ export default {
 }
 
 @media (max-width: 450px) {
+
   .message-list {
     width: 100%;
   }

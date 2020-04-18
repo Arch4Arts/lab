@@ -45,6 +45,7 @@ const store = new Vuex.Store({
     gameAgeWarningDialog: true, // предупреждающее окно 18+
 
     radialMenuShow: true, // Плавающая иконка с меню для мобильных устройств, при скрытой панели навигации
+    autoCloseSavesDrawer: true, // Автоматически закрывать панель сохранений, после нового сохранения / перезаписи / загрузки
     isOpenSettingsDrawer: false, // Открытие/Закрытия панели настройек
     isOpenSavesDrawer: false,
     appHeaderEnable: false, // По умолчанию выкл, на время показа стартовой страницы с информацией об игре.

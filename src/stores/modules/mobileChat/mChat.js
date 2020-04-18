@@ -6,6 +6,8 @@ const mChat = {
         mChat_Show: false, // Статус отображения чата
         mChat_ContactsPageShow: true, // Отображение списка контактов
 
+        mChat_HideAvatars: false, // Скрытие аватарок в чате
+        mChat_HideInput: false, // Скрытие декоративной панели ввода в чате
         mChat_TypingIndicatorEnable: true, // Если true отображается имитация набора текста, если false, то ничего не отображается
         
         mChat_VideoPlyrVolume: 0.50, // Громкость видео плеера чата (По умолчанию выкл как и весь звук игры)

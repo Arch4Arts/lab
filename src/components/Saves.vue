@@ -10,7 +10,7 @@
     width="700"
     class="v-navigation-drawer"
   >
-  <!-- Поле ввода + список сохранений -->
+    <!-- Поле ввода + список сохранений -->
     <v-card dark elevation="0">
       <!-- Ввод имени сохранения + кнопка -->
       <v-flex xs12 sm12 md12 class="input-area">
@@ -328,7 +328,11 @@ export default {
     }
     this.savesNumber = this.numberSavesIDB;
   },
-  methods:{
+  methods:{    
+    // Сортировка по...
+    sortBy(key) { // (убыванию) desc <, asc (возрастанию) >
+      return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
+    },
     // Обновляет кол-во сохранений, при новом сохранении, или удалении и т.д.
     async updateNumberSavesIDB(){
       this.numberSavesIDB = await localforage.length().then(lf_length => this.numberSavesIDB = lf_length); // Кол-во сохранений в IndexedDB
@@ -342,10 +346,6 @@ export default {
         this.savesList = this.savesList.concat(newElements); // Склеиваем список сохранений и скопированную часть массива 
         // (this.savesList.length === this.numberSavesIDB) ? this.isEndSaveList = true : this.isEndSaveList = false 
       }
-    },
-    // Сортировка по...
-    sortBy(key) { // (убыванию) desc <, asc (возрастанию) >
-      return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
     },
     // Сохранение игры
     async saveGame(){
@@ -378,6 +378,8 @@ export default {
         })
         this.savesList.sort(this.sortBy('saveID'));
         this.updateNumberSavesIDB()
+        // Автоматическое закрытие панели сохранений, если включено
+        if (this.$store.state.autoCloseSavesDrawer) this.autoCloseDrawer()
       }
       catch(error) {
         this.$root.errNotify(error)
@@ -407,6 +409,8 @@ export default {
         this.savesList.sort(this.sortBy('saveID'));
         // Удаляем выбранное сохранение для перезаписи, если шифрование не сработает, сохранение не будет удалённо
         localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVer}`)
+        // Автоматическое закрытие панели сохранений, если включено
+        if (this.$store.state.autoCloseSavesDrawer) this.autoCloseDrawer()
       }
       catch(error) {
         this.$root.errNotify(error)
@@ -425,6 +429,8 @@ export default {
         updateAllThemes()
         // Очистка списка выбранных сохранеий (т.к они выбираются при нажатии кнопок: Перезаписи и Загрузки сохранения)
         this.ListSelectedSaves = [];
+        // Автоматическое закрытие панели сохранений, если включено
+        if (this.$store.state.autoCloseSavesDrawer) this.autoCloseDrawer()
         // Оповещение
         this.$store.state.gameLang 
           ? iziToast.info({message: 'Game loaded successfully', position: 'bottomCenter', backgroundColor: 'rgb(255, 254, 173)'})
@@ -646,6 +652,9 @@ export default {
       await resetState()
       await localStorage.removeItem(`vuex`);
       await location.reload()
+    },
+    autoCloseDrawer(){
+      this.$store.state.isOpenSavesDrawer = !this.$store.state.isOpenSavesDrawer
     },
     // Записывает изменения стейта из v-model
     drawerShowState(isShow){

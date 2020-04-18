@@ -8,18 +8,18 @@
     dark
     @input="drawerShowState"
     width="700"
-    class="v-navigation-drawer">
-
+    class="v-navigation-drawer"
+  >
     <!-- ENGLISH -->
     <section v-if="$store.state.gameLang">
 
     </section>
 
     <!-- RUSSIAN -->
-    <section class="options" v-else>
-      <v-expansion-panels accordion class="options__item">
+    <section class="settings" v-else>
+      <v-expansion-panels accordion>
         <!-- Звук -->
-        <v-expansion-panel class="options__item test">
+        <v-expansion-panel>
           <v-expansion-panel-header>
             <div class="v-expansion-panel header-icon">
               <v-icon large left v-if="$store.state.sound.gameGlobalSoundsEnable">fas fa-volume</v-icon>
@@ -31,107 +31,104 @@
             <settings-sound />
           </v-expansion-panel-content>
         </v-expansion-panel>
-
+        <!-- Внешний вид -->
         <v-expansion-panel >
           <v-expansion-panel-header>
             <div class="v-expansion-panel header-icon"><v-icon large left>far fa-eye</v-icon></div>
             Внешний вид
           </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <div class="text-center">
-              <v-btn-toggle v-model="launguage" rounded>
-                <v-btn text width="130">Русский</v-btn>
-                <v-btn text @click="$store.commit('langChange')">Английский</v-btn>
-              </v-btn-toggle>
-            </div>
-            <v-select
-              v-model="fontFamily"
-              :items="fontListRu"
-              menu-props="auto"
-              label="Font Selector"
-              hide-details
-              prepend-icon="far fa-font"
-              single-line
-            ></v-select>
-            <br>
-            <v-slider
-              class="sound-options-container__slider"
-              prepend-icon="far fa-text-size"
-              v-model="fontSize"
-              thumb-label
-              min="10"
-              max="24"
-            ></v-slider>
-            <v-btn @click="Dark()">Dark</v-btn>
-            <v-btn @click="NordDark()">NordDark</v-btn>
-            <v-btn @click="NordLight()">NordLight</v-btn>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            <settings-appearance />
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
+      <!-- Настройки различных параметров (ползунки) -->
+      <v-list subheader two-line flat>
+        <v-subheader class="v-list-item__header">Панель сохранений</v-subheader>
+        <!-- Панелья сохранений -->
+        <v-list-item-group multiple>
+          <v-list-item class="v-list-item">
+            <v-list-item-content @click="autoCloseSavesDrawer()">
+              <v-list-item-title>Автоматически закрывать</v-list-item-title>
+              <v-list-item-subtitle>После операции сохранения, перезаписи, загрузки</v-list-item-subtitle>
+            </v-list-item-content>
+            <!-- Тумблер -->
+            <v-list-item-action>
+              <v-switch
+                v-model="$store.state.autoCloseSavesDrawer"
+                @click.stop="autoCloseSavesDrawer()"
+              ></v-switch>
+            </v-list-item-action>
+          </v-list-item>
+        </v-list-item-group>
+        <v-subheader class="v-list-item__header">Настройки чата</v-subheader>
+        <!-- Настройки чата -->
+        <v-list-item-group multiple>
+          <!-- Отключение показа аватарок в чате -->
+          <v-list-item class="v-list-item">
+            <v-list-item-content @click="mChatHideAvatars()">
+              <v-list-item-title>Скрыть аватарки</v-list-item-title>
+            </v-list-item-content>
+            <!-- Тумблер -->
+            <v-list-item-action>
+              <v-switch
+                v-model="$store.state.mChat.mChat_HideAvatars"
+                @click.stop="mChatHideAvatars()"
+              ></v-switch>
+            </v-list-item-action>
+          </v-list-item>
+          <v-divider />
+          <!-- Отключение наборной панели в чате -->
+          <v-list-item class="v-list-item">
+            <v-list-item-content @click="mChatHideInput()">
+              <v-list-item-title>Скрыть наборный элемент</v-list-item-title>
+              <v-list-item-subtitle>Скрывает нижний декоративный наборный элемент чата</v-list-item-subtitle>
+            </v-list-item-content>
+            <!-- Тумблер -->
+            <v-list-item-action>
+              <v-switch
+                v-model="$store.state.mChat.mChat_HideInput"
+                @click.stop="mChatHideInput()"
+              ></v-switch>
+            </v-list-item-action>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
     </section>
   </v-navigation-drawer>
 </template>
 
 <script>
-
-import extractNumbers from 'extract-numbers' // Для FontSize
+import SettingsAppearance from './SettingsAppearance'
 import SettingsSound from './SettingsSound'
+
 
 export default {
   data(){
     return {
-      settings: [], // Пустышка
-      test: 3,
-      fontList: ['Roboto', 'Roboto Slab', 'Open Sans', 'Lato', 'Merriweather', 'Minion Pro'],
-      fontListRu: ['Roboto', 'Roboto Slab', 'Open Sans', 'Merriweather', 'Minion Pro', 'Slut'],
+
     }
   },
   methods: {
     drawerShowState(isShow){ // Записывает изменения стейта из v-model
       if (!isShow) this.$store.commit('updateStores')
+    },
+    autoCloseSavesDrawer(){
+      this.$store.state.autoCloseSavesDrawer =! this.$store.state.autoCloseSavesDrawer
+    },
+    mChatHideAvatars(){
+      this.$store.state.mChat.mChat_HideAvatars =! this.$store.state.mChat.mChat_HideAvatars
+    },
+    mChatHideInput(){
+      this.$store.state.mChat.mChat_HideInput =! this.$store.state.mChat.mChat_HideInput
     }
   },
   computed: {
-      // drawerShow: {
-      //   get: function () {
-      //     return this.$store.state.isOpenSettingsDrawer;
-      //   },
-      //   set: function () {
-      //     this.$store.commit('isOpenSettingsDrawer');
-      //   }
-      // },
-      // Выбор языка
-      launguage() {
-        let result
-        (this.$store.state.gameLang) ? result = 1 : result = 0
-        return result;
-      },
-      // Шрифт
-      fontFamily: {
-        get: function () {
-          return this.$store.state.gameFont;
-        },
-        set: function (selected) {
-          this.$store.state.gameFont = selected;
-          document.getElementById("StoryTextArea").style.fontFamily = selected;
-          this.$store.commit("updateStores");
-        }
-      },
-      // Размер шрифта
-      fontSize: {
-        get: function () {
-          return extractNumbers(this.$store.state.gameFontSize)[0];
-        },
-        set: function (selected) {
-          this.$store.state.gameFontSize = `${selected}pt`;
-          document.getElementById("StoryTextArea").style.fontSize = `${selected}pt`;
-          this.$store.commit("updateStores");
-        } 
-      }
+
   },
   components: {
-    SettingsSound
+    SettingsAppearance,
+    SettingsSound,
   }
 }
 </script>
@@ -143,13 +140,19 @@ export default {
   border-left: var(--v-navigation-drawer--border-left) !important;
 }
 
-.options {
+.settings {
   display: flex;
   flex-direction: column;
 }
 
-.options__item {
-  margin: 10px 0;
+.v-list-item {
+  padding-left: 24px;
+  background: var(--settings-v-list-item--background) !important;
+}
+
+.v-list-item__header {
+  align-items: flex-end !important;
+  padding: 0 12px 6px 12px !important;
 }
 
 .v-expansion-panel .header-icon {

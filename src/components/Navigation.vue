@@ -3,7 +3,7 @@
 		<!-- Плавающая кпнока для мобильной навигации -->
 		<Radial-Menu class="hidden-md-and-up"/> 
 		<!-- КНОПКИ В МЕНЮ -->
-		<v-app-bar v-if="!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs)" app dense="" dark class="v-app-bar" elevation="14">
+		<v-app-bar v-if="!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs)" app dense dark class="v-app-bar" elevation="14">
 			<!-- Название игры + версия -->
 			<router-link to="/" tag="span" style="cursor:pointer">
 				<v-toolbar-title>
