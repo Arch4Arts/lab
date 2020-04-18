@@ -19,7 +19,7 @@ import VuePlyr from 'vue-plyr'
 import 'plyr/dist/plyr.css'
 Vue.use(VuePlyr) // Видео/Аудио плеер
 
-import Chat from './components/Chat/index' // Чат
+import Chat from './components/Chat/index' // Мобильный чат
 Vue.use(Chat, {})
 
 import vueScrollBehavior from 'vue-scroll-behavior' // Сохранение положения прокрутки
@@ -41,6 +41,7 @@ import * as Integrations from '@sentry/integrations';
 // import 'roboto-fontface/css/roboto/roboto-fontface.css'
 
 import updateAllThemes from './styles/updateAllThemes';
+import { checkSoundsEnable } from './components/GameSound'
 
 if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена
   Sentry.init({
@@ -121,30 +122,10 @@ new Vue({
         if ( lang == 'ru' ) store.commit('langChange');
       }
       updateAllThemes()
+      checkSoundsEnable()
     })
   },
   methods: {
-    notif_AchievementSoundEnable(){
-    if (this.$store.state.notif_AchievementSoundEnable && this.$store.state.gameGlobalSoundsEnable) {
-      var audio = new Audio(require('./Media/audio/Achievements.mp3'));
-      audio.volume = this.$store.state.notif_AchievementVolume;
-      audio.play();
-    }
-    },
-    notif_DiarySoundEnable(){
-      if (this.$store.state.notif_DiarySoundEnable && this.$store.state.gameGlobalSoundsEnable) {
-        var audio = new Audio(require('./Media/audio/Diary.mp3'));
-        audio.volume = this.$store.state.notif_DiaryVolume;
-        audio.play();
-      }
-    },
-    notif_SmartphoneSoundEnable(){
-      if (this.$store.state.notif_SmartphoneSoundEnable && this.$store.state.gameGlobalSoundsEnable) {
-        var audio = new Audio(require('./Media/audio/Phone.mp3'));
-        audio.volume = this.$store.state.notif_SmartphoneVolume;
-        audio.play();
-      }
-    },
     errNotify(error){
       Sentry.captureException(error); // Отправка ошибки черезе Sentry
       console.log(error)

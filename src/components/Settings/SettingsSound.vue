@@ -1,0 +1,322 @@
+<template>
+<!-- ENGLISH -->
+<section v-if="$store.state.gameLang">
+
+</section>
+<!-- RUSSIAN -->
+<section v-else>
+  <!-- Вкл / Выкл звука глобально -->
+  <v-list subheader two-line flat>
+    <v-list-item-group v-model="settings" multiple>
+      <v-list-item class="global-sound-enable">
+        <!-- Надпись -->
+        <v-list-item-content @click="changeGlobalSoundEnable()" class="options__item__v-list__text--padding">
+          <v-list-item-title>Включить звук</v-list-item-title>
+          <v-list-item-subtitle v-if='$store.state.sound.gameGlobalSoundsEnable'>Звук включён</v-list-item-subtitle>
+          <v-list-item-subtitle v-else>Звук отключён</v-list-item-subtitle>
+        </v-list-item-content>
+        <!-- Тумблер -->
+        <v-list-item-action class="v-list-item-action--padding">
+          <v-switch
+            v-model="$store.state.sound.gameGlobalSoundsEnable"
+            @click.stop="changeGlobalSoundEnable()"
+          ></v-switch>
+        </v-list-item-action>
+      </v-list-item>
+    </v-list-item-group>
+  </v-list>
+  <!-- ДОСТИЖЕНИЯ -->
+  <!-- Громкость + выбор звука + вкл / выкл -->
+  <div class="sound-options-container">
+    <!-- Подпись слайдера -->
+    <p v-if="$store.state.sound.gameGlobalSoundsEnable && $store.state.sound.achievementSoundEnable" class="sound-options-container__slider__name">Громкость оповещения о получении достижений</p>
+    <p v-else class="sound-options-container__slider__name" style="opacity: .4">Громкость оповещения о получении достижений</p>
+    <!-- Слайдер -->
+    <v-slider
+      class="sound-options-container__slider"
+      prepend-icon="fas fa-trophy-alt"
+      thumb-label
+      min="0"
+      max="100"
+      step="1"
+      @start="volumeChangePlayLoop($store.state.sound.achievementSound, $store.state.sound.achievementVolume)"
+      @end="volumeChangeStop()"
+      @input="realtimeVolumeChange($store.state.sound.achievementVolume)"
+      :disabled="!$store.state.sound.gameGlobalSoundsEnable || !$store.state.sound.achievementSoundEnable"
+      v-model="achievementVolumeSlider"
+    ></v-slider>
+    <!-- Выбор звука + кнопка вкл / выкл -->
+    <v-menu 
+      :disabled="!$store.state.sound.achievementSoundEnable" 
+      left 
+      offset-x 
+      open-on-hover
+      :close-on-content-click="false"
+      >
+      <template v-slot:activator="{ on }">
+        <!-- Кнопка -->
+        <v-btn @click="changeSoundEnable('achievementSoundEnable')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.sound.gameGlobalSoundsEnable">
+          <v-icon v-if="$store.state.sound.achievementSoundEnable" size="20"> fas fa-music-alt </v-icon>
+          <v-icon v-else size="20" color="red"> fas fa-music-alt-slash </v-icon>
+        </v-btn>
+      </template>
+      <!-- Список звуков / показывает текущий выбранный звук / воспроизводит звук при нажатии -->
+      <v-list>
+        <v-list-item-group v-model="achievementSelectedSound">
+        <v-list-item
+          v-for="(sound, i) in $store.state.sound.soundsList"
+          :key="i"
+          :value="sound.soundName"
+          @click="playbacSelectedSound(sound.soundName, $store.state.sound.achievementVolume)"
+        >
+          <v-list-item-title>{{ sound.soundName }}</v-list-item-title>
+        </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-menu>
+  </div>
+  <!-- ДНЕВНИК -->
+  <!-- Громкость + выбор звука + вкл / выкл -->
+  <div class="sound-options-container">
+    <p v-if="$store.state.sound.gameGlobalSoundsEnable && $store.state.sound.diarySoundEnable" class="sound-options-container__slider__name">Громкость оповещений дневника</p>
+    <p v-else class="sound-options-container__slider__name" style="opacity: .4">Громкость оповещений дневника</p>
+    <!-- Слайдер -->
+    <v-slider
+      class="sound-options-container__slider"
+      prepend-icon="fas fa-book"
+      thumb-label
+      min="0"
+      max="100"
+      step="1"
+      @start="volumeChangePlayLoop($store.state.sound.diarySound, $store.state.sound.diaryVolume)"
+      @end="volumeChangeStop()"
+      @input="realtimeVolumeChange($store.state.sound.diaryVolume)"
+      :disabled="!$store.state.sound.gameGlobalSoundsEnable || !$store.state.sound.diarySoundEnable"
+      v-model="diaryVolumeSlider"
+    ></v-slider>
+    <!-- Выбор звука + кнопка вкл / выкл -->
+    <v-menu 
+      :disabled="!$store.state.sound.diarySoundEnable" 
+      left 
+      offset-x 
+      open-on-hover
+      :close-on-content-click="false"
+      >
+      <template v-slot:activator="{ on }">
+        <!-- Кнопка -->
+        <v-btn @click="changeSoundEnable('diarySoundEnable')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.sound.gameGlobalSoundsEnable">
+          <v-icon v-if="$store.state.sound.diarySoundEnable" size="20"> fas fa-music-alt </v-icon>
+          <v-icon v-else size="20" color="red"> fas fa-music-alt-slash </v-icon>
+        </v-btn>
+      </template>
+      <!-- Список звуков / показывает текущий выбранный звук / воспроизводит звук при нажатии -->
+      <v-list>
+        <v-list-item-group v-model="diarySelectedSound">
+        <v-list-item
+          v-for="(sound, i) in $store.state.sound.soundsList"
+          :key="i"
+          :value="sound.soundName"
+          @click="playbacSelectedSound(sound.soundName, $store.state.sound.diaryVolume)"
+        >
+          <v-list-item-title>{{ sound.soundName }}</v-list-item-title>
+        </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-menu>
+  </div>
+  <!-- СМАРТФОН -->
+  <!-- Громкость + выбор звука + вкл / выкл -->
+  <div class="sound-options-container">
+    <p v-if="$store.state.sound.gameGlobalSoundsEnable && $store.state.sound.smartphoneSoundEnable" class="sound-options-container__slider__name">Громкость мобильных оповещений</p>
+    <p v-else class="sound-options-container__slider__name" style="opacity: .4">Громкость мобильных оповещений</p>
+    <!-- Слайдер -->
+    <v-slider
+      class="sound-options-container__slider"
+      prepend-icon="fas fa-mobile-alt"
+      thumb-label
+      min="0"
+      max="100"
+      step="1"
+      @start="volumeChangePlayLoop($store.state.sound.smartphoneSound, $store.state.sound.smartphoneVolume)"
+      @end="volumeChangeStop()"
+      @input="realtimeVolumeChange($store.state.sound.smartphoneVolume)"
+      :disabled="!$store.state.sound.gameGlobalSoundsEnable || !$store.state.sound.smartphoneSoundEnable"
+      v-model="smartphoneVolumeSlider"
+    ></v-slider>
+    <!-- Выбор звука + кнопка вкл / выкл -->
+    <v-menu 
+      :disabled="!$store.state.sound.smartphoneSoundEnable" 
+      left 
+      offset-x 
+      open-on-hover
+      :close-on-content-click="false"
+      >
+      <template v-slot:activator="{ on }">
+        <!-- Кнопка -->
+        <v-btn @click="changeSoundEnable('smartphoneSoundEnable')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.sound.gameGlobalSoundsEnable">
+          <v-icon v-if="$store.state.sound.smartphoneSoundEnable" size="20"> fas fa-music-alt </v-icon>
+          <v-icon v-else size="20" color="red"> fas fa-music-alt-slash </v-icon>
+        </v-btn>
+      </template>
+      <!-- Список звуков / показывает текущий выбранный звук / воспроизводит звук при нажатии -->
+      <v-list>
+        <v-list-item-group v-model="smartphoneSelectedSound">
+        <v-list-item
+          v-for="(sound, i) in $store.state.sound.soundsList"
+          :key="i"
+          :value="sound.soundName"
+          @click="playbacSelectedSound(sound.soundName, $store.state.sound.smartphoneVolume)"
+        >
+          <v-list-item-title>{{ sound.soundName }}</v-list-item-title>
+        </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-menu>
+  </div>
+</section>
+</template>
+
+<script>
+import { checkSoundsEnable, soundPlay, soundPlayLoop } from '../../components/GameSound'
+
+export default {
+  data(){
+    return {
+      settings: [], // Пустышка
+    }
+  },
+  methods: {
+      // Проиграть выбранный звук (для спика)
+      playbacSelectedSound(soundName, volume){
+        soundPlay(soundName, volume)
+      },
+      // Играть звук, пока мышь удерживает ползунок слайдера
+      volumeChangePlayLoop(soundName, volume){
+        soundPlayLoop(soundName, volume)
+      },
+      // Перестать играть звук, когда мышь отпускает ползунок слайдера
+      volumeChangeStop(){
+        var soundPlayLoop = document.getElementById('soundPlayLoop')
+        soundPlayLoop.pause();
+        document.body.removeChild(soundPlayLoop); 
+      },
+      // Обновление уровня громкости в реальном времени при перетаскивании ползунка слайдера (во время проигрывании звука)      
+      realtimeVolumeChange(volume) { 
+        var soundPlayLoop = document.getElementById('soundPlayLoop')
+        if (soundPlayLoop != null) soundPlayLoop.volume = volume
+      },
+      // Вкл / выкл всех звуков в игре по нажатию на v-list-item
+      changeGlobalSoundEnable(){
+        this.$store.commit('gameGlobalSoundsEnable')
+        checkSoundsEnable() // Mute or unmute
+      },
+      // Вкл / Выкл звука по значку ноты
+      changeSoundEnable(commitName) {
+        this.$store.commit(commitName)
+      },
+  },
+  computed: {
+      // Текущий выбранный звук, выбор нового звука
+      achievementSelectedSound: { 
+        get: function () {
+          return this.$store.state.sound.achievementSound
+        },
+        set: function (soundName) {
+          this.$store.state.sound.achievementSound = soundName;
+          this.$store.commit('updateStores');
+        } 
+      },
+      diarySelectedSound: { 
+        get: function () {
+          return this.$store.state.sound.diarySound
+        },
+        set: function (soundName) {
+          this.$store.state.sound.diarySound = soundName;
+          this.$store.commit('updateStores');
+        } 
+      },
+      smartphoneSelectedSound: { 
+        get: function () {
+          return this.$store.state.sound.smartphoneSound
+        },
+        set: function (soundName) {
+          this.$store.state.sound.smartphoneSound = soundName;
+          this.$store.commit('updateStores');
+        } 
+      },
+
+      // Изменение громкости на слайдере
+      achievementVolumeSlider: {
+        get: function () {
+          var Volume = (this.$store.state.sound.achievementVolume * 100)
+          return Volume;
+        },
+        set: function (level) {
+          this.$store.state.sound.achievementVolume = (level /= 100)
+          this.$store.commit("updateStores");
+        } 
+      },
+      diaryVolumeSlider: {
+        get: function () {
+          var Volume = (this.$store.state.sound.diaryVolume * 100)
+          return Volume;
+        },
+        set: function (level) {
+          this.$store.state.sound.diaryVolume = (level /= 100)
+          this.$store.commit("updateStores");
+        } 
+      },
+      smartphoneVolumeSlider: {
+        get: function () {
+          var Volume = (this.$store.state.sound.smartphoneVolume * 100)
+          return Volume;
+        },
+        set: function (level) {
+          this.$store.state.sound.smartphoneVolume = (level /= 100)
+          this.$store.commit("updateStores");
+        } 
+      },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+
+.v-list-item-action--padding {
+  margin-right: 24px;
+}
+.options__item__v-list__text--padding {
+  margin-left: 24px;
+}
+
+.sound-options-container {
+  position: relative;
+  display: flex;
+}
+
+.sound-options-container__slider__name {
+  position: absolute;
+  top: 24px;
+  margin-bottom: 0px;
+  margin-left: 64px;
+
+  font-size: 14px;
+  color: var(--font-color--color) !important;
+  opacity: .8;
+}
+
+.sound-options-container__slider {
+  margin-left: 24px;
+  margin-right: 8px;
+}
+
+.sound-options-container__btn {
+  margin-right: 24px;
+  background: transparent !important;
+}
+
+.global-sound-enable {
+  padding: 0px !important;
+}
+
+</style>

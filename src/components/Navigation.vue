@@ -13,13 +13,13 @@
 			<v-spacer></v-spacer>
 			<!-- Кнопки -->
 			<v-toolbar-items v-if="$store.state.gameLang" class="hidden-sm-and-down">
-				<v-btn v-for="(item, i) in menuItems" :key="'btn' + i"  :to="item.route" @click="openSettings(item.icon)" text>
+				<v-btn v-for="(item, i) in menuItems" :key="'btn_' + i"  :to="item.route" @click="openSettings(item.icon)" text>
 						<v-icon left v-html="item.icon"></v-icon>
 						{{ item.title }}
 				</v-btn>
 			</v-toolbar-items>
 			<v-toolbar-items v-else class="hidden-sm-and-down">
-				<v-btn shift v-for="(item, i) in menuItems" :key="'btn' + i" color="" :to="item.route" @click="openSettings(item.icon)" text>
+				<v-btn shift v-for="(item, i) in menuItems" :key="'btn_' + i" color="" :to="item.route" @click="openSettings(item.icon)" text>
 						<v-icon left v-html="item.icon"></v-icon>
 						{{ item.title_ru }}
 				</v-btn>

@@ -6,56 +6,56 @@
     app
     touchless
     dark
+    @input="drawerShowState"
     width="700"
     class="v-navigation-drawer"
   >
+  <!-- Поле ввода + список сохранений -->
     <v-card dark elevation="0">
-      <v-list two-line subheader>
-      <v-list-item-group
-        v-model="savesSelectedList"
-        multiple
-      >
-      <v-list-item>
-        <v-list-item-content>  
-        <!-- ТЕКСТОВОЕ ПОЛЕ ДЛЯ ВВОДА ИМЕНИ СЕЙВА -->
-          <v-flex xs12 sm12 md12>
-            <v-text-field dark
-              class="save-name-input"
-              color="grey lighten-2"
-              :placeholder="($store.state.gameLang) ? defaultSaveName : defaultSaveName_ru"
-              @keyup.enter="saveGame()"
-              v-model="saveNameInput"
-            ></v-text-field>
-          </v-flex>
-        </v-list-item-content>
+      <!-- Ввод имени сохранения + кнопка -->
+      <v-flex xs12 sm12 md12 class="input-area">
+        <v-text-field dark
+          class="save-name__input"
+          color="grey lighten-2"
+          autofocus
+          :placeholder="($store.state.gameLang) ? defaultSaveName : defaultSaveName_ru"
+          @keyup.enter="saveGame()"
+          v-model="saveNameInput"
+        ></v-text-field>
         <!-- КНОПКА: СОХРАНИТЬ + ПОДСКАЗКА -->
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on }">
-              <v-btn class="save-name-input__save-btn saves-v-btns" v-on="on" @click="saveGame()" icon>
-                <v-icon color="rgb(126, 193, 255)"> fas fa-download </v-icon>
-              </v-btn>
-            </template>
-              <span v-if="$store.state.gameLang">New save</span>
-              <span v-else>Новое сохранение</span>
-          </v-tooltip>
-      </v-list-item>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn class="save-name__btn saves-v-btns" v-on="on" @click="saveGame()" icon>
+              <v-icon color="rgb(126, 193, 255)"> fas fa-download </v-icon>
+            </v-btn>
+          </template>
+            <span v-if="$store.state.gameLang">New save</span>
+            <span v-else>Новое сохранение</span>
+        </v-tooltip>
+      </v-flex>
 
       <!-- СПИСОК СОХРАНЕНИЙ -->
+      <v-list two-line subheader>
+      <v-list-item-group v-model="ListSelectedSaves" multiple>
       <!-- A pull-down refresh saves list -->
       <div class="scroll-area--border">
-      <pull-to @infinite-scroll="loadMore" :is-top-bounce="false" :is-bottom-bounce="false" v-if="this.$store.state.isOpenSavesDrawer">
-      <!-- Зона размещения сохранений -->
+      <pull-to 
+        @infinite-scroll="loadMoreSaves" 
+        :is-top-bounce="false" 
+        :is-bottom-bounce="false" 
+        v-if="this.$store.state.isOpenSavesDrawer"
+      >
+      <!-- Список сохранений -->
       <div class="scroll-area"> 
         <!-- Если нет сохранений -->
-        <div v-if="$store.state.gameLang" v-show="IsSaveExist == 0" class="text-center"><v-divider/><br>No saves<br><br></div>
-        <div v-else v-show="IsSaveExist == 0" class="text-center"><v-divider/><br>Сохранения отсутствуют<br><br></div>
-  
+        <div v-if="$store.state.gameLang" v-show="numberSavesIDB == 0" class="text-center"><v-divider/><br>No saves<br><br></div>
+        <div v-else v-show="numberSavesIDB == 0" class="text-center"><v-divider/><br>Сохранения отсутствуют<br><br></div>
+        
         <!-- Сохранение -->
         <v-list-item
-            v-for="save in saves"
-            :key="save.saveID"
-            :value="`${save.saveName},${save.saveTime},${save.saveID}`"
-            @click="emptyFunction(save.saveID)"
+          v-for="save in savesList"
+          :key="save.saveID"
+          :value="`${save.saveName},${save.saveTime},${save.saveID},${save.saveGameVer}`"
         >
         <!-- Информация о имени и времени -->
           <v-list-item-content>
@@ -63,12 +63,24 @@
             <v-list-item-subtitle>{{ save.saveTime }}</v-list-item-subtitle>
           </v-list-item-content>
           <!-- КНОПКИ WRITE/LOAD/DELETE -->
-          <v-list-item-action v-for="(icon ,i) in btnIconsList" :key="'icon-id_' + i">
-            <!-- EN -->
+          <v-list-item-action 
+            v-for="(icon ,i) in vForBtns" 
+            :key="'icon-id_' + i"
+          >
+            <!-- EN WRITE/LOAD/DELETE-->
             <v-tooltip v-if="$store.state.gameLang" bottom>
               <template v-slot:activator="{ on }">
                 <v-btn v-on="on" icon
-                @click="(icon == 'fas fa-trash') ? deleteSave(save.saveName, save.saveTime, save.saveID) : (icon == 'fas fa-download') ? overwriteSave(save.saveName, save.saveTime, save.saveID) : loadSave(save.saveName, save.saveTime, save.saveID)"
+                @click="
+                  (icon == 'fas fa-trash') 
+                  ? 
+                  deleteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer) 
+                  : 
+                    (icon == 'fas fa-download') 
+                    ? 
+                    overwriteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer) 
+                    : 
+                    loadSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer)"
                 > 
                   <v-icon :color="(icon == 'fas fa-download') ? 'rgb(126, 193, 255)' : (icon == 'fas fa-upload') ? 'rgb(255, 254, 173)' : 'rgb(255, 102, 102)'"> {{ icon }} </v-icon>
                 </v-btn>
@@ -77,12 +89,21 @@
                 <span v-if="icon == 'fas fa-upload'">Load</span>
                 <span v-if="icon == 'fas fa-trash'">Delete</span>
             </v-tooltip>
-            <!-- RU -->
+            <!-- RU СОХРАНИТЬ/ЗАГРУЗИТЬ/УДАЛИТЬ -->
             <v-tooltip v-else bottom>
               <template v-slot:activator="{ on }">
                 <v-btn v-on="on" icon
                 class="saves-v-btns"
-                @click="(icon == 'fas fa-trash') ? deleteSave(save.saveName, save.saveTime, save.saveID) : (icon == 'fas fa-download') ? overwriteSave(save.saveName, save.saveTime, save.saveID) : loadSave(save.saveName, save.saveTime, save.saveID)"
+                @click="
+                  (icon == 'fas fa-trash') 
+                  ? 
+                  deleteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer) 
+                  : 
+                    (icon == 'fas fa-download') 
+                    ? 
+                    overwriteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer) 
+                    : 
+                    loadSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer)"
                 > 
                   <v-icon :color="(icon == 'fas fa-download') ? 'rgb(126, 193, 255)' : (icon == 'fas fa-upload') ? 'rgb(255, 254, 173)' : 'rgb(255, 102, 102)'"> {{ icon }} </v-icon>
                 </v-btn>
@@ -94,14 +115,14 @@
           </v-list-item-action>
         </v-list-item>
         <!-- Анимация прогрузки новых сохранений -->
-        <div v-if="!endOfsaveList && IsSaveExist === 1 && savesCount > 11" class="text-center pa-2">
+        <div v-if="savesList.length < numberSavesIDB" class="text-center pa-2">
           <v-progress-circular indeterminate size="28" />
         </div>
         <!-- Конец списка сохранений -->
-        <div v-if="endOfsaveList && IsSaveExist === 1" class="text-center pa-2">
+        <!-- <div v-if="numberSavesIDB > 10" class="text-center pa-2">
           <blockquote v-if="$store.state.gameLang" class="blockquote">End of list</blockquote>
           <blockquote v-else class="blockquote">Конец списка</blockquote>
-        </div>
+        </div> -->
 
       </div>
       </pull-to>
@@ -134,7 +155,8 @@
       <!-- Загрузка с диска -->
       <v-tooltip top>
         <template v-slot:activator="{ on }">
-          <v-btn class="load-save-all-btn saves-v-btns" @click="" v-on="on" icon>
+          <v-btn class="load-save-all-btn saves-v-btns" @click="chooseFiles()" v-on="on" icon>
+            <input type="file" id="saveUpload" @change="loadFromDisk($event)" multiple hidden />
             <v-icon color="rgb(255, 254, 173)"> far fa-hdd </v-icon>
           </v-btn>
         </template>
@@ -144,7 +166,7 @@
       <!-- Удаление всех сохранений -->
       <v-tooltip top>
         <template v-slot:activator="{ on }">
-          <v-btn class="delete-all-saves-btn saves-v-btns" @click="showModalDelSavesAll = !showModalDelSavesAll" :disabled="(IsSaveExist > 0) ? false : true" v-on="on" icon>
+          <v-btn class="delete-all-saves-btn saves-v-btns" @click="showModalDelSavesAll = !showModalDelSavesAll" :disabled="(numberSavesIDB == 0) ? true : false" v-on="on" icon>
             <v-icon color="rgb(255, 102, 102)"> fas fa-trash-alt </v-icon>
           </v-btn>
         </template>
@@ -155,8 +177,8 @@
       <!-- Счётчик кол-ва сохранений -->
       <v-tooltip top>
         <template v-slot:activator="{ on }">
-          <div v-if="$store.state.gameLang" class="text-center" v-on="on">Number of saves: {{savesCount}}</div>
-          <div v-else class="text-center" v-on="on">Кол-во сохранений: {{savesCount}}</div>
+          <div v-if="$store.state.gameLang" class="text-center" v-on="on">Number of saves: {{numberSavesIDB}}</div>
+          <div v-else class="text-center" v-on="on">Кол-во сохранений: {{numberSavesIDB}}</div>
         </template>
           <span v-if="$store.state.gameLang">A large number of saves can cause performance degradation.</span>
           <span v-else>Большое количество сохранений могут вызвать падение производительности.</span>
@@ -242,19 +264,17 @@ import advancedFormat from 'dayjs/plugin/advancedFormat'; // Плагин
 dayjs.extend(advancedFormat);
 
 import WebCrypto from '../components/WebCrypto'; // Модуль для шифрования и дешифрования сохранений
+import localforage from 'localforage';
 import { resetState }  from '../stores/store';
 import store from '../stores/store';
 
-// var CryptoJS = require("crypto-js");
+import PullTo from 'vue-pull-to';
 
 import iziToast from 'izitoast/dist/js/iziToast.min.js';
 
-import PullTo from 'vue-pull-to';
-
-import localforage from 'localforage';
-
 import updateAllThemes from '../styles/updateAllThemes';
 
+// Конфиги
 localforage.config({
     name: 'vuex',
     storeName: 'saves'
@@ -272,162 +292,140 @@ iziToast.settings({
 
 export default {
   data: () => ({
-      showModalRestart: false, // Для показа модального окна, меняется при нажатия на кнопку и появляется диалог
-      showModalDelSavesAll: false, // Для показа модального окна, меняется при нажатия на кнопку и появляется диалог
-      IsSaveExist: -1, // Есть ли сейвы
-      savesCount: 0, // Кол-во сейвов
-      btnIconsList: ['fas fa-download','fas fa-upload','fas fa-trash'],
-      savesSelectedList: [],
-      saveNameInput: '', // Поле ввода сохранения
-      defaultSaveName: 'New save', // Placeholder поля ввода
-      defaultSaveName_ru: 'Новое сохранение',
-      saves: [],
-      IDBsavesList: [], // Список сохранений, для сортировки
-      IDBsavesListSorted: [], // Отсортированные сохранения (по дате Unix)
-      IDBsaveslength: 0, //  Кол-во сохранений в БД
-      savesListStartCount: 12, // Сколько показываются сохранений при первой отрисовке
-      endOfsaveList: false, // Достигнут ли конец списка
-  }),
-  components: {
-    PullTo
-  },
-  // asyncComputed: {
-  //   SaveList: {
-  //     async get() {
-  //         var IDBsavesList = await localforage.keys().then(keysList => this.IDBsavesList = keysList); // все ключи из localStorage
-  //         var length = await localforage.length().then(lf_length => this.length = lf_length);
-  //         // var saves = [];
-  //         (this.length > 0) ? this.IsSaveExist = 1 : this.IsSaveExist = 0 // Проверка на наличие сейвов
-  //         if (this.IsSaveExist === 1) {
-  //         this.overlay = true
-  //         for (let i = 0; i < length; i++) {
-  //           var saveData = IDBsavesList[i].split(',')
-  //           this.saves.push({saveName: saveData[0],saveTime: saveData[1],saveID: saveData[2]})
-  //         }}
-  //         this.savesCount = length
-  //         this.overlay = false
-  //         const sortBy = (key) => { // desc <, asc >
-  //           return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
-  //         };
+    showModalRestart: false, // Для показа модального окна, меняется при нажатия на кнопку и появляется диалог
+    showModalDelSavesAll: false, // Для показа модального окна, меняется при нажатия на кнопку и появляется диалог
 
-  //         return this.saves.concat().sort(sortBy('saveID'));
-  //         // return _.orderBy(this.saves, 'saveID', 'desc')
-  //     },
-  // }
-  // },
+    // IsSaveExist: -1, // Есть ли сейвы
+    isEndSaveList: false, // Достигнут ли конец списка
+    savesNumber: 0, // Кол-во сейвов
+
+    vForBtns: ['fas fa-download','fas fa-upload','fas fa-trash'],
+
+    ListSelectedSaves: [],
+
+    saveNameInput: '', // Поле ввода сохранения
+    defaultSaveName: 'New save', // Placeholder поля ввода
+    defaultSaveName_ru: 'Новое сохранение',
+
+    savesList: [], // Рабочий список отсортированных сохранений
+    savesHeaderIDB: [], // Список сохранений, для сортировки
+    savesHeaderIDBSorted: [], // Отсортированные сохранения (по дате Unix)
+    numberSavesIDB: 0, //  Кол-во сохранений в БД
+    startNumberSavesRender: 12, // Сколько показываются сохранений при первой отрисовке
+  }),
   created: async function () {
-    this.IDBsavesList = await localforage.keys().then(keysList => this.IDBsavesList = keysList); // все ключи из IndexedDB
-    this.IDBsaveslength = await localforage.length().then(lf_length => this.IDBsaveslength = lf_length); // Кол-во сохранений в IndexedDB
+    this.savesHeaderIDB = await localforage.keys().then(keysList => this.savesHeaderIDB = keysList); // все ключи из IndexedDB
+    this.numberSavesIDB = await localforage.length().then(lf_length => this.numberSavesIDB = lf_length); // Кол-во сохранений в IndexedDB
     var saves = [];
-    (this.IDBsaveslength > 0) ? this.IsSaveExist = 1 : this.IsSaveExist = 0 // Проверка на наличие сейвов
-    if (this.IsSaveExist === 1) {
-      for (let i = 0; i < this.IDBsaveslength; i++) { // Преобразуем строку в объект для сортировки
-        var saveData = this.IDBsavesList[i].split(',');
-        this.IDBsavesListSorted.push({saveName: saveData[0],saveTime: saveData[1],saveID: saveData[2]}); 
+    // (this.numberSavesIDB > 0) ? this.IsSaveExist = 1 : this.IsSaveExist = 0 // Проверка на наличие сейвов
+    if (this.numberSavesIDB > 0) {
+      for (let i = 0; i < this.numberSavesIDB; i++) { // Преобразуем строку в объект для сортировки
+        var saveHeader = this.savesHeaderIDB[i].split(',');
+        this.savesHeaderIDBSorted.push({saveName: saveHeader[0],saveTime: saveHeader[1],saveID: saveHeader[2],saveGameVer: saveHeader[3]}); 
       }
-      this.IDBsavesListSorted.sort(this.sortBy('saveID')); // сортируем
-      this.saves = this.IDBsavesListSorted.slice(0, this.savesListStartCount); // копируем диапазон от сортированного массива в массив для первичной отрисовки
+      this.savesHeaderIDBSorted.sort(this.sortBy('saveID')); // сортируем
+      this.savesList = this.savesHeaderIDBSorted.slice(0, this.startNumberSavesRender); // копируем диапазон от сортированного массива в массив для первичной отрисовки
     }
-    this.savesCount = this.IDBsaveslength;
-    // return this.saves.sort(this.sortBy('saveTime'));
-    // return _.orderBy(this.saves, 'saveTime', 'desc')
+    this.savesNumber = this.numberSavesIDB;
   },
   methods:{
-    async updateIDB(){
-      return this.IDBsaveslength = await localforage.length().then(lf_length => this.IDBsaveslength = lf_length); // Кол-во сохранений в IndexedDB
+    // Обновляет кол-во сохранений, при новом сохранении, или удалении и т.д.
+    async updateNumberSavesIDB(){
+      this.numberSavesIDB = await localforage.length().then(lf_length => this.numberSavesIDB = lf_length); // Кол-во сохранений в IndexedDB
     },
-
-    loadMore() {
-      this.updateIDB();
-      if (!this.endOfsaveList) {
-        let newElements = this.IDBsavesListSorted.slice(this.saves.length, this.saves.length + 9); // Копируем часть отсортированного массива в newElements
-        this.saves = this.saves.concat(newElements); // Склеиваем список сохранений и скопированную часть массива 
-        (this.saves.length === this.IDBsaveslength) ? this.endOfsaveList = true : this.endOfsaveList = false 
+    // Подгружает сихранений при прокрутке вниз
+    loadMoreSaves() {
+      this.updateNumberSavesIDB();
+      // console.log(`В базе: ${this.numberSavesIDB}, в списке: ${this.savesList.length}`)
+      if (this.savesList.length < this.numberSavesIDB) {
+        let newElements = this.savesHeaderIDBSorted.slice(this.savesList.length, this.savesList.length + 9); // Копируем часть отсортированного массива в newElements
+        this.savesList = this.savesList.concat(newElements); // Склеиваем список сохранений и скопированную часть массива 
+        // (this.savesList.length === this.numberSavesIDB) ? this.isEndSaveList = true : this.isEndSaveList = false 
       }
     },
-
-    sortBy(key) { // desc <, asc >
+    // Сортировка по...
+    sortBy(key) { // (убыванию) desc <, asc (возрастанию) >
       return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
     },
-
-    keyGen(saveName){ // Генерация уникального ключа на основе saveID
-        var salt = '3F4428472B4B6250';
-        return CryptoJS.PBKDF2(saveName, salt, { keySize: 256 / 32 , iterations: 1}).toString();
-    },
-
+    // Сохранение игры
     async saveGame(){
       try {
-        var name = this.saveNameInput // Копирует значение
+        var name = this.saveNameInput // Копируем значение
         this.saveNameInput = '' // И очищаем поле ввода
         if (name === '') // Проверка введенно ли имя сохранения, если нет, назначаем стандартное
           (this.$store.state.gameLang) ? name = 'New Save' : name = 'Новое сохранение'
-        this.$store.state.saveName = name;
+
+        this.$store.state.saveName = name; // Имя
         this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm"); // Время сохранения
-        // var newSaveID = (function random(min = 0, max = 999999) {
-        //   var rand = min + Math.random() * (max + 1 - min);
-        //   rand = Math.floor(rand);
-        //   return rand;
-        // }()); 
 
-        this.$store.state.saveID = dayjs().format("x"); // milliseconds since the Unix Epoch
+        this.$store.state.saveID = dayjs().format("x"); // миллисекунды с начала эпохи Unix
+        this.$store.state.saveGameVer = this.$store.state.gameVersion; // Версия игры на момент сохранения
 
-        var ID = `${this.$store.state.saveName},${this.$store.state.saveTime},${this.$store.state.saveID}`;
-        await WebCrypto(ID, JSON.stringify(this.$store.state))
+        // Объединяем все данные в один заголовок
+        var saveHeader = `${this.$store.state.saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$store.state.saveGameVer}`;
+        // Шифруем
+        await WebCrypto(saveHeader, JSON.stringify(this.$store.state))
+        // Оповещение
         this.$store.state.gameLang 
           ? iziToast.info({message: 'Game successfully saved', position: 'bottomCenter'})
           : iziToast.info({message: 'Игра успешно сохранена', position: 'bottomCenter'})
-
-        this.saves.unshift({saveName: this.$store.state.saveName,saveTime: this.$store.state.saveTime,saveID: this.$store.state.saveID})
-        this.IsSaveExist = 1
-        this.saves.sort(this.sortBy('saveID'));
-        this.savesCount = this.saves.length
-        // this.saves = []
-        // this.$asyncComputed.SaveList.update()
+        // Добавляем новоё сохранение в отображаемый список
+        this.savesList.unshift({ 
+          saveName: this.$store.state.saveName, 
+          saveTime: this.$store.state.saveTime, 
+          saveID: this.$store.state.saveID, 
+          saveGameVer: this.$store.state.saveGameVer
+        })
+        this.savesList.sort(this.sortBy('saveID'));
+        this.updateNumberSavesIDB()
       }
       catch(error) {
         this.$root.errNotify(error)
       }
     },
-
-    async overwriteSave(saveName, saveTime, saveID){
+    // Перезапись сохранения
+    async overwriteSave(saveName, saveTime, saveID, saveGameVer){
       try {
-        localforage.removeItem(`${saveName},${saveTime},${saveID}`) // Удаление сейва
         this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm"); // Обновляем время сохранения
-        // var saveData = await WebCrypto(`${saveName},${saveTime},${saveID}`)
-        // this.$store.state.saveName = saveData.saveName
-        // this.$store.state.saveID = saveID
-
-        this.$store.state.saveID = dayjs().format("x");
-        await WebCrypto(`${saveName},${this.$store.state.saveTime},${this.$store.state.saveID}`, JSON.stringify(this.$store.state)) // Добавем новый за место старого (удалённого)
+        this.$store.state.saveID = dayjs().format("x");// миллисекунды с начала эпохи Unix
+        
+        // Объединяем все данные в один заголовок
+        var saveHeader = `${saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$store.state.gameVersion}`;
+        await WebCrypto(saveHeader, JSON.stringify(this.$store.state)) // Добавем новый за место старого (удалённого)
+        // Оповещение
         this.$store.state.gameLang 
           ? iziToast.info({message: 'Saving successfully overwritten', position: 'bottomCenter'})
           : iziToast.info({message: 'Сохранение успешно перезаписано', position: 'bottomCenter'})
-
-        this.saves.find(function(item) {
+        // Ищем выбранное сохранение для перезаписи и обновляем его время и ID (чтобы не перерендоривать весь список)
+        this.savesList.find(function(item) {
           if (item.saveID === saveID) {
             item.saveTime = dayjs().format("DD.MM.YYYY - HH:mm");
             item.saveID = store.state.saveID;
           }
         })
-        this.saves.sort(this.sortBy('saveID'));
-        // this.saves = []
-        // this.$asyncComputed.SaveList.update()
+        // Сортируем (чтобы новый элемент в списке вышел на первое место (по времени))
+        this.savesList.sort(this.sortBy('saveID'));
+        // Удаляем выбранное сохранение для перезаписи, если шифрование не сработает, сохранение не будет удалённо
+        localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVer}`)
       }
       catch(error) {
         this.$root.errNotify(error)
       }
     },
-
-    async loadSave(saveName, saveTime, saveID){
+    // Загрузка сохранения
+    async loadSave(saveName, saveTime, saveID, saveGameVer){
       try {
-        // console.log(`${saveName},${saveTime},${saveID}`)
-        await this.$store.replaceState(await WebCrypto(`${saveName},${saveTime},${saveID}`));
+        // Заменяем store
+        await this.$store.replaceState(await WebCrypto(`${saveName},${saveTime},${saveID},${saveGameVer}`));
         // Перерисовываем компоненты плееров для применянения настроек звука
         this.$store.state.reRender_mChatPlayersVolume += 1;
-
-        this.$store.commit('updateStores'); // Фиксируем новые переменные
+        // Фиксируем новые переменные
+        this.$store.commit('updateStores');
+        // Обновляем темы
         updateAllThemes()
-
+        // Очистка списка выбранных сохранеий (т.к они выбираются при нажатии кнопок: Перезаписи и Загрузки сохранения)
+        this.ListSelectedSaves = [];
+        // Оповещение
         this.$store.state.gameLang 
           ? iziToast.info({message: 'Game loaded successfully', position: 'bottomCenter', backgroundColor: 'rgb(255, 254, 173)'})
           : iziToast.info({message: 'Игра загружена успешно', position: 'bottomCenter', backgroundColor: 'rgb(255, 254, 173)'})
@@ -436,68 +434,99 @@ export default {
         this.$root.errNotify(error)
       }
     },
-
-    deleteSave(saveName, saveTime, saveID) {
+    // Удаление сохранения
+    deleteSave(saveName, saveTime, saveID, saveGameVer) {
       try {
-        localforage.removeItem(`${saveName},${saveTime},${saveID}`) // Удаление сейва
+        // Удаляем
+        localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVer}`)
+        // Оповещенеие
         this.$store.state.gameLang 
           ? iziToast.info({message: 'Saving has been deleted!', position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
           : iziToast.info({message: 'Сохранение было удалено!', position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
-
-        let findIndex = this.saves.findIndex(function(item) {
+        // Находим в отображаемом списке удалённое сохранение
+        let indexDeletedSave = this.savesList.findIndex(function(item) {
           return (item.saveID === saveID)
         })
-        this.saves.splice(findIndex, 1);
-        (this.saves.length > 0) ? this.saves.sort(this.sortBy('saveID')) : this.IsSaveExist = 0
-        this.savesCount += -1
-        this.updateIDB()
-        // this.saves.splice(findIndex, 1)
-        // this.saves = []
-        // this.$asyncComputed.SaveList.update()
+        // Удаляем из списка
+        this.savesList.splice(indexDeletedSave, 1);
+        // Стал ли список пустым?
+        // Обновляем кол-во сохранение в БД
+        this.updateNumberSavesIDB()
       }
       catch(error) {
         this.$root.errNotify(error)
       }
     },
-
+    // Удаление всех сохранений
     async DeleteAllSaves(){
       try {
+        // Очистка хранилища
         await localforage.clear()
+        // Оповещение
         this.$store.state.gameLang 
           ? iziToast.warning({message: 'All saves have been deleted!', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
           : iziToast.warning({message: 'Всё сохранения были удалены!', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
+        // Закрываем модальное окно
         this.showModalDelSavesAll = false
-        this.IsSaveExist = 0
-        this.saves = []
-        this.savesCount = this.saves.length
-        // this.$asyncComputed.SaveList.update()
+        // Обнуляем список сохранений (перерисовываем список)
+        this.savesList = []
+        this.updateNumberSavesIDB()
       }
       catch(error) {
         this.$root.errNotify(error)
       }
     },
-
-    ab2str(buf) {
-      return String.fromCharCode.apply(null, new Uint16Array(buf));
-    },
-
+    // Подготовка данных к сохранению на диск пользователя
     async prepareDataSaveToDisk() {
-      var data;
-      if (this.savesSelectedList.length > 0) {
-        for (var key in this.savesSelectedList) {
-          var test = await localforage.getItem(this.savesSelectedList[key]).then(data => new TextDecoder().decode(data.cipherData))
-          data = `save:${this.savesSelectedList[key]},data:${test}`
-          console.log(data)
+      var saveFile = ''
+      // Выбранны ли определённые сохранения пользователем
+      if (this.ListSelectedSaves.length > 0) {
+        for (var i = 0; i < this.ListSelectedSaves.length; i++) {
+          // Извлекаем данные
+          let saveData = await localforage.getItem(this.ListSelectedSaves[i]).then(data => data)
+          // Преобразовываем буфер в строку
+          let cipherData = String.fromCharCode.apply(null, new Uint8Array(saveData.cipherData));
+          // Преобразовываем представление Uint8 в строку
+          let iv = String.fromCharCode.apply(null, new Uint8Array(saveData.iv));
+          // Устранение двух пробелов в самом начале, если сейф в файле один
+          if (saveFile.length > 0)
+            saveFile = `${saveFile}\n\n((${this.ListSelectedSaves[i]},cipherData${cipherData}iv${iv}))`
+          else
+            saveFile = `${saveFile}((${this.ListSelectedSaves[i]},cipherData${cipherData}iv${iv}))`
         }
+        if (this.$store.state.gameLang)
+          this.saveToDisk(`${this.$store.state.gameName}.${(i == 1 ? 'save' : 'saves')}`, saveFile)
+        else
+          this.saveToDisk(`${this.$store.state.gameName}.${(i == 1 ? 'save' : 'saves')}`, saveFile)
+      }
+      else if (this.numberSavesIDB > 0) { // Если нет, обрабатываем всё
+        var allSavesKey = await localforage.keys().then(keysList => keysList)
+        for (var i = 0; i < allSavesKey.length; i++) {
+          // Извлекаем данные
+          let saveData = await localforage.getItem(allSavesKey[i]).then(data => data)
+          // Преобразовываем буфер в строку
+          // Преобразовываем буфер в строку
+          let cipherData = String.fromCharCode.apply(null, new Uint8Array(saveData.cipherData));
+          // Преобразовываем представление Uint8 в строку
+          let iv = String.fromCharCode.apply(null, new Uint8Array(saveData.iv));
+          // Устранение двух пробелов в самом начале, если сейф в файле один
+          if (saveFile.length > 0)
+            saveFile = `${saveFile}\n\n((${allSavesKey[i]},cipherData${cipherData}iv${iv}))`
+          else
+            saveFile = `${saveFile}((${allSavesKey[i]},cipherData${cipherData}iv${iv}))`
+        }
+        if (this.$store.state.gameLang)
+          this.saveToDisk(`${this.$store.state.gameName}.saves`, saveFile)
+        else
+          this.saveToDisk(`${this.$store.state.gameName}.saves`, saveFile)
       }
       else {
-        // var allSavesList;
-        // var savesData;
-        // await localforage.keys().then(saves => allSavesList = saves);
-
+        this.$store.state.gameLang 
+          ? iziToast.info({message: 'There are no saves', position: 'bottomCenter'})
+          : iziToast.info({message: 'Сохранения отсутствуют', position: 'bottomCenter'})
       }
     },
-
+    // Сохранение на диск
     saveToDisk(filename, data, mime, bom) {
         var blobData = (typeof bom !== 'undefined') ? [bom, data] : [data]
         var blob = new Blob(blobData, {type: mime || 'application/octet-stream'});
@@ -521,16 +550,111 @@ export default {
             }, 0)
         }
     },
-
+    // Для выбора файлов на загрузку
+    chooseFiles() {
+      document.getElementById("saveUpload").click()
+    },
+    // Загрузка файлов с диска пользователя
+    loadFromDisk(event){
+      // Файлы
+      var files = event.target.files 
+      // Если файлов несколько, обрабатываем каждый
+      for (var file of files) {
+        // Процесс чтения данных из файла (нужен для FileReader, т.е он асинхронный)
+        var processFile = new Promise((resolve, reject) => {
+          let reader = new FileReader();
+          // Если данные были успешно прочитаны
+          reader.onload = function() {
+            // Передаём результат к обработчику then()
+            resolve(reader.result);
+          };
+          // Если произошла ошибка при открытии данных
+          reader.onerror = function() {
+            // Передаём результат к обработчику cath()
+            reject(reader.error)
+          };
+          reader.readAsText(file);
+        })
+        processFile.then(result => {
+          if (result.indexOf('cipherData') > 0) {
+            // Функция преобразования в ArrayBuffer и BufferView, завращаются два этих представления
+            let str2ab = function(str) {
+              var data = new Object();
+              data.buf = new ArrayBuffer(str.length);
+              data.bufView = new Uint8Array(data.buf);
+              for (var i = 0, strLen = str.length; i < strLen; i++) {
+                data.bufView[i] = str.charCodeAt(i);
+              }
+              return data;
+            };
+            // Функция определения содержится ли в файле больше одного сохранения
+            let detectMultiSave = function(str, substr) {
+              let listIdx = []
+              let lastIndex = -1
+              while ((lastIndex = str.indexOf(substr, lastIndex + 1)) !== -1) {
+                listIdx.push(lastIndex)
+              }
+              return listIdx
+            };
+            // Количество сохранений в одном файле
+            let savesNumber = detectMultiSave(result, 'cipherData').length
+            // Перебираем все сохранения в файле
+            for (var i = 0; i < savesNumber; i++) {
+              // Определяем позиции заголовка сохранения
+              let saveHeader_Start = result.indexOf("((") + 2;
+              let saveHeader_End = result.indexOf(",cipherData", 0);
+              // Извлекаем заголовок сохранения
+              let saveHeader = result.slice(saveHeader_Start, saveHeader_End);
+              // Делим строку на подстроки
+              let saveHeaderElem = saveHeader.split(',');
+              // Определяем позицию cipherData и iv
+              let cipherData_Pos = result.indexOf('cipherData', saveHeader_End) + 10;
+              let iv_Pos = result.indexOf('iv', cipherData_Pos);
+              let iv_PosEnd = result.indexOf('))', iv_Pos);
+              // Извлекаем cipherData и iv
+              let cipherData = result.slice(cipherData_Pos, iv_Pos)
+              let iv = result.slice(iv_Pos + 2, iv_PosEnd)
+              // Удаляем ту часть сохранения, которая уже была обработана
+              result = result.slice(iv_PosEnd, result.length)
+              // Загружаем данные в IDB
+              localforage.setItem(saveHeader, { cipherData: str2ab(cipherData).buf, iv: str2ab(iv).bufView })
+              // Добавляем сохранение в отображаемый список
+              this.savesList.unshift({ 
+                saveName: saveHeaderElem[0], 
+                saveTime: saveHeaderElem[1], 
+                saveID: saveHeaderElem[2], 
+                saveGameVer: saveHeaderElem[3]
+              })
+            }
+          } else {
+          this.$store.state.gameLang 
+            ? iziToast.warning({message: 'This file does not contain any save data', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
+            : iziToast.warning({message: 'В данном файле не содержится данные сохранения', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
+          }
+        }).then(() => {
+            // Сортируем
+            this.savesList.sort(this.sortBy('saveID'));
+            this.updateNumberSavesIDB()
+        })
+        .catch(error => {
+          this.$root.errNotify(error)
+        })   
+      }
+    },
+    // Перезапуск игры
     async restartGame(){
       await resetState()
       await localStorage.removeItem(`vuex`);
-      // this.$store.replaceState({})
       await location.reload()
     },
-    
-    emptyFunction(saveID){} // Заглушка, для того, чтобы v-list выделялся при наведении @click
-  }
+    // Записывает изменения стейта из v-model
+    drawerShowState(isShow){
+      if (!isShow) this.$store.commit('updateStores')
+    },
+  },
+  components: {
+    PullTo
+  },
 }
 </script>
 
@@ -546,13 +670,13 @@ export default {
 }
 
 .vue-pull-to-wrapper > .scroll-container[data-v-81faaf1a]::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
-    width: 0px;  /* ширина scrollbar'a */
+  display: none;  /* Safari and Chrome */
+  width: 0px;  /* ширина scrollbar'a */
 }
 
 .vue-pull-to-wrapper > .scroll-container[data-v-81faaf1a] { 
-    -ms-overflow-style: none;  /* IE 10+ */
-    scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE 10+ */
+  scrollbar-width: none; /* Firefox */
 }
 
 .scroll-area {
@@ -586,12 +710,18 @@ export default {
   margin-right: 10px;
 }
 
-.save-name-input {
+.input-area {
+  display: flex;
+  align-items: center;
+  background: var(--v-navigation-drawer--background) !important
+}
+
+.save-name__input {
   margin-left: 16%; 
 }
 
-.save-name-input__save-btn {
-  margin-right: 77px;
+.save-name__btn {
+  margin-right: 16%;
   margin-left: 4px;
   background: transparent !important;
 }
@@ -603,13 +733,13 @@ export default {
 
 
 @media (max-width: 450px) {
-  .save-name-input {
+  .save-name__input {
     width: 100%;
-    margin-left: 0px; 
+    margin-left: 4px; 
   }
 
-  .save-name-input__save-btn {
-    margin-right: 0px;
+  .save-name__btn {
+    margin-right: 4px;
   }
 
   .scroll-area {

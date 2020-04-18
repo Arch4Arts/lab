@@ -8,23 +8,23 @@
           <!-- <v-toolbar-title>Inbox</v-toolbar-title> -->
           <v-spacer></v-spacer>
           <!-- Меню выбора темы -->
-          <v-menu offset-y class="contacts-page__palette-menu-bg">
-          <template v-slot:activator="{ on }">
-            <v-btn class="contacts-page__bar__palette-btn" icon v-on="on">
-              <v-icon size="20"> fas fa-palette </v-icon>
-            </v-btn>
-          </template>
-          <v-list class="contacts-page__palette-menu-bg">
-            <v-list-item
-              class="contacts-page__vlist--hover"
-              v-for="(ThemesList, index) in $store.state.mChat.mChat_ThemesList"
-              :key="index"
-              @click="chatThemes(ThemesList.themeName)"
-            >
-              <v-list-item-title class="contacts-page__palette-menu-font">{{ ThemesList.themeName }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
+          <v-menu open-on-hover offset-y class="contacts-page__palette-menu">
+            <template v-slot:activator="{ on }">
+              <v-btn class="contacts-page__bar__palette-btn" icon v-on="on">
+                <v-icon size="20"> fas fa-palette </v-icon>
+              </v-btn>
+            </template>
+            <v-list class="contacts-page__palette-menu">
+              <v-list-item
+                class="contacts-page__palette-menu--hover"
+                v-for="(ThemesList, index) in $store.state.mChat.mChat_ThemesList"
+                :key="index"
+                @click="chatThemes(ThemesList.themeName)"
+              >
+                <v-list-item-title class="contacts-page__palette-menu-font">{{ ThemesList.themeName }}</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         <!-- Декоративная кнопка -->
         <v-btn class="contacts-page__bar__search_btn" icon>
           <v-icon size="20"> fas fa-search </v-icon>
@@ -37,7 +37,7 @@
 
             <!-- Контакт -->
             <v-list-item
-              class="contacts-page__vlist-item contacts-page__vlist--hover"
+              class="contacts-page__vlist-item contacts-page__palette-menu--hover"
               :key="contact.mChatHistory_ContactID"
               @click="ClickOnContact(contact.mChatHistory_ContactID, contact.mChatHistory_ContactName, contact.mChatHistory_unReadMsgCount)"
             >
@@ -191,9 +191,7 @@ export default {
     height: var(--contacts-page__vlist--contact-badge--height) !important;
 }
 
-.contacts-page__vlist--hover:hover {
-  background: var(--contacts-page__vlist--hover--background) !important;
-}
+
 
 .contacts_page__vlist__avatar_badge {
   width: 54px;
@@ -201,8 +199,12 @@ export default {
   box-shadow: var(--contacts_page__vlist__avatar_badge--box-shadow) !important;
 }
 
-.contacts-page__palette-menu-bg {
-  background: var(--contacts-page__palette-menu-bg--background) !important;
+.contacts-page__palette-menu--hover:hover {
+  background: var(--contacts-page__palette-menu--hover--background) !important;
+}
+
+.contacts-page__palette-menu {
+  background: var(--contacts-page__palette-menu--background) !important;
 }
 
 .contacts-page__palette-menu-font {

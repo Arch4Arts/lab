@@ -73,6 +73,7 @@ export default {
         loadSprite: false,
         controls: ['play','progress','play-large','volume','pip','airplay','fullscreen'],
         loop: { active: true },
+        muted: !this.$store.state.sound.gameGlobalSoundsEnable,
         volume: this.$store.state.mChat.mChat_VideoPlyrVolume, // Значение по умолчанию, потом плеер берёт данные из plyr-video
         storage: { enabled: false, key: 'plyr-video' },
       }

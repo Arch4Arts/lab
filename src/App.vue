@@ -3,13 +3,13 @@
   <v-layout v-touch="{ right: () => SwipeRight(), left: () => SwipeLeft(), down: () => SwipeBottom(), up: () => SwipeTop() }">
     <v-content>
     <!-- Pages -->
-    <StartPageInfo v-if="$store.state.gameDisplayingStartPage"/>
+    <StartPageInfo v-if="$store.state.gameDisplayingStartPage" />
     <!-- Components -->
-    <Age18WarningDialog/>
-    <Settings/>
-    <Saves/>
-    <navigation v-if="$store.state.appHeaderEnable"/>
-      <router-view v-if="!$store.state.gameDisplayingStartPage"/>
+    <Age18WarningDialog />
+    <Settings />
+    <Saves />
+    <navigation v-if="$store.state.appHeaderEnable" />
+      <router-view v-if="!$store.state.gameDisplayingStartPage" />
     </v-content>
   </v-layout>  
   </v-app>
@@ -19,7 +19,6 @@
 import Age18WarningDialog from "./components/Age18WarningDialog";
 import Navigation from "./components/Navigation";
 import StartPageInfo from "./Pages/StartPageInfo";
-import Settings from './components/Settings';
 import Entry from "./Pages/Entry";
 
 export default {
@@ -68,7 +67,7 @@ export default {
     Navigation,
     StartPageInfo,
     Entry,
-    Settings,
+    Settings: () => import('./components/Settings/Settings'),
     Saves: () => import('./components/Saves') // Ленивая загрузка компонента (Dynamic Imports) для повышения производительности
   },
 }

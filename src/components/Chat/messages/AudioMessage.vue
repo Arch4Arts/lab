@@ -74,6 +74,7 @@ export default {
       options: {
         loadSprite: false,
         controls: ['play','progress','current-time','volume'],
+        muted: !this.$store.state.sound.gameGlobalSoundsEnable,
         volume: this.$store.state.mChat.mChat_AudioPlyrVolume, // Значение по умолчанию, потом плеер берёт данные из plyr-audio
         storage: { enabled: false, key: 'plyr-audio' }
       }
@@ -94,7 +95,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 
 .container {
   overflow: hidden;

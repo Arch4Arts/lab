@@ -42,7 +42,7 @@
   <v-expansion-panel-content>
   <v-card elevation='0'>
   <v-divider></v-divider>
-      <v-card-text class="font-color">
+      <v-card-text>
       <p :style="{'color': $store.state.chars.mcColor}"> {{ character_ru.quote }} </p>
       <!-- ВЫБОР ЦВЕТА ЦИТАТЫ (РЕПЛИК) -->
       <!-- Смена цвета (слушает событий colorChange в компоненте) -->
@@ -135,7 +135,7 @@ export default {
         this.$store.state.chars.mcName = text;
         this.character.name = this.$store.state.chars.mcName
         this.character.Im = this.$store.state.chars.mcName
-        this.$store.commit('saveCharNames', 'en')
+        this.$store.commit('saveCharsName', 'en')
       }
     },
     // ДЛЯ РУССКОЙ ВЕРСИИ С ФУНКЦИЕЙ СКЛОНЕНИЯ ИМЁН
@@ -161,7 +161,7 @@ export default {
           this.character_ru.Vin = name.fullName(name.gcaseVin)
           this.character_ru.Tvor = name.fullName(name.gcaseTvor)
           this.character_ru.Pred = name.fullName(name.gcasePred)
-          this.$store.commit('saveCharNames', 'ru')
+          this.$store.commit('saveCharsName', 'ru')
         }
       }
   },
@@ -170,7 +170,7 @@ export default {
     applyColorChange(color){ // Обработчик сообытия из дочернего элемента (ColorPicker)
       this.color = color
       this.$store.state.chars.mcColor = this.color;
-      this.$store.commit('saveColorsChar');
+      this.$store.commit('saveColorChars');
     }
   },
   components: {

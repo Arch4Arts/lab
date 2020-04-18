@@ -4,6 +4,7 @@ import createPersistedState from 'vuex-persistedstate'
 
 import mChat from './modules/mobileChat/mChat'
 import mChatHistory from './modules/mobileChat/mChatHistory'
+import sound from './modules/sound'
 import chars from './modules/chars'
 
 var packageJson = require('../../package.json');
@@ -48,15 +49,6 @@ const store = new Vuex.Store({
     isOpenSavesDrawer: false,
     appHeaderEnable: false, // По умолчанию выкл, на время показа стартовой страницы с информацией об игре.
 
-    notif_AchievementVolume: 0.50, // Громкость уведомления о получении достижения
-    notif_DiaryVolume: 0.50, // Громкость уведомления дневника
-    notif_SmartphoneVolume: 0.50, // Громкость уведомления смартфона
-
-    gameGlobalSoundsEnable: false, // Откл все звуки по умолчанию
-    notif_AchievementSoundEnable: true, // Вкл/Выкл звука
-    notif_DiarySoundEnable: true, // Вкл/Выкл звука
-    notif_SmartphoneSoundEnable: true, // Вкл/Выкл звука
-
     patreon_link: 'https://patreon',
     tfgames_link: 'https://tfgames.site',
     f95zone_link: 'https://f95zone.to',
@@ -65,6 +57,8 @@ const store = new Vuex.Store({
     saveName: '', // Название сохранения
     saveTime: '', // Когда была сохранена игра
     saveID: 0, // Номер сейва, совпадает с названием в localStorage
+    saveGameVer: '', // Версия сохранённой игры
+    incompatibleSavesVer: 0,
   },
   plugins: [createPersistedState({ // WebCrypto здесь не подходит, тут однопоток.
     setState(key, state, storage) {
@@ -108,71 +102,22 @@ const store = new Vuex.Store({
       this.state.appHeaderEnable = !this.state.appHeaderEnable;
     },
 
-    // Громкость звука
-    notif_AchievementVolume(){
-      this.state.notif_AchievementVolume = this.state.notif_AchievementVolume;
+    isOpenSettingsDrawer(){
+      this.state.isOpenSettingsDrawer = !this.state.isOpenSettingsDrawer;
     },
-    notif_DiaryVolume(){
-      this.state.notif_DiaryVolume = this.state.notif_DiaryVolume;
-    },
-    notif_SmartphoneVolume(){
-      this.state.notif_SmartphoneVolume = this.state.notif_SmartphoneVolume;
-    },
-
-    // Вкл/Выкл звука
-    gameGlobalSoundsEnable(){
-      this.state.gameGlobalSoundsEnable = !this.state.gameGlobalSoundsEnable;
-    },
-    notif_AchievementSoundEnable(){
-      this.state.notif_AchievementSoundEnable = !this.state.notif_AchievementSoundEnable;
-    },
-    notif_DiarySoundEnable(){
-      this.state.notif_DiarySoundEnable = !this.state.notif_DiarySoundEnable;
-    },
-    notif_SmartphoneSoundEnable(){
-      this.state.notif_SmartphoneSoundEnable = !this.state.notif_SmartphoneSoundEnable;
+    isOpenSavesDrawer(){
+      this.state.isOpenSavesDrawer = !this.state.isOpenSavesDrawer;
     },
 
     // Смена языка
     langChange(){
       this.state.gameLang = !this.state.gameLang;
     },
-
-    // Сохранение имен при настройке
-    saveColorsChar(Color){
-      this.state.mcColor = this.state.mcColor;
-      this.state.sisterColor = this.state.sisterColor;
-    },
-    saveCharNames(state, lang){
-      if ( lang == 'ru' ) { // если ru, сохраняем имена с учетом склонения
-        this.state.mcIm = this.state.mcIm;
-        this.state.mcRod = this.state.mcRod;
-        this.state.mcDat = this.state.mcDat;
-        this.state.mcVin = this.state.mcVin;
-        this.state.mcTvor = this.state.mcTvor;
-        this.state.mcPred = this.state.mcPred;
-
-        this.state.sisterIm = this.state.sisterIm;
-        this.state.sisterRod = this.state.sisterRod;
-        this.state.sisterDat = this.state.sisterDat;
-        this.state.sisterVin = this.state.sisterVin;
-        this.state.sisterTvor = this.state.sisterTvor;
-        this.state.sisterPred = this.state.sisterPred;
-
-        // Обновление имен для чата
-
-        state.mChatHistory[0].name = this.state.mcIm
-      } else { // простые английские имена
-        this.state.mcName = this.state.mcName;
-        this.state.sisterName = this.state.sisterName;
-
-        // Обновление имен для чата
-      }
-    },
   },
   modules: {
     mChat,
     mChatHistory,
+    sound,
     chars,
   }
 })
