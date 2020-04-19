@@ -50,7 +50,7 @@ const chars = {
         this.state.sisterPred = this.state.sisterPred;
 
         // Обновление имен для чата
-        store.state.mChatHistory[0].name = state.mcIm
+        store.state.mChatData[0].name = state.mcIm
       } else { // простые английские имена
         this.state.mcName = this.state.mcName;
         this.state.sisterName = this.state.sisterName;

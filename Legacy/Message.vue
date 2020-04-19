@@ -2,41 +2,44 @@
   <div class="chat-area">
     <!-- Стиливая сообщения -->
     <div class="messages-container" :class="{
-        from_me: source.author === 'me',
-        from_them: source.author !== 'me' && source.type !== 'system',
-        system: source.type === 'system'  // Свой стиль
+        from_me: message.author === 'me',
+        from_them: message.author !== 'me' && message.type !== 'system',
+        system: message.type === 'system'  // Свой стиль
       }">
       <!-- Аватар отправителя -->
       <div 
-        v-if="source.type !== 'system' && source.type !== 'suggestion' && $store.state.mChat.mChat_ShowAvatars" 
-        :title="authorName(source.author)" class="avatar" 
-        :style="{ backgroundImage: `url(${chatImageUrl(source.author)})` }">
+        v-if="message.type !== 'system' && message.type !== 'suggestion' && !$store.state.mChat.mChat_ShowAvatars" 
+        :title="authorName" class="avatar" 
+        :style="{ backgroundImage: `url(${chatImageUrl})` }">
       </div>
       <!-- Различные типы сообщений -->
-      <TextMessage v-if="source.type === 'text'" :data="source.data" />
-      <EmojiMessage v-else-if="source.type === 'emoji'" :data="source.data" />
-      <TypingMessage v-else-if="source.type === 'typing'" />
-      <SystemMessage v-else-if="source.type === 'system'" :data="source.data" />
-      <ImageMessage v-else-if="source.type === 'image'"  :data="source.data" />
-      <VideoMessage v-else-if="source.type === 'video'" :data="source.data" />
-      <AudioMessage v-else-if="source.type === 'audio'" :data="source.data" />
+      <TextMessage v-if="message.type === 'text'" :data="message.data" />
+      <EmojiMessage v-else-if="message.type === 'emoji'" :data="message.data" />
+      <TypingMessage v-else-if="message.type === 'typing'" />
+      <SystemMessage v-else-if="message.type === 'system'" :data="message.data" />
+      <ImageMessage v-else-if="message.type === 'image'"  :data="message.data" />
+      <VideoMessage v-else-if="message.type === 'video'" :data="message.data" />
+      <AudioMessage v-else-if="message.type === 'audio'" :data="message.data" />
     </div>
   </div>
 </template>
 
 <script>
-import TextMessage from './message type/TextMessage'
-import EmojiMessage from './message type/EmojiMessage.vue'
-import TypingMessage from './message type/TypingMessage.vue'
-import SystemMessage from './message type/SystemMessage.vue'
-import ImageMessage from './message type/ImageMessage.vue'
-import VideoMessage from './message type/VideoMessage.vue'
-import AudioMessage from './message type/AudioMessage.vue'
+import TextMessage from './messages/TextMessage'
+import EmojiMessage from './messages/EmojiMessage.vue'
+import TypingMessage from './messages/TypingMessage.vue'
+import SystemMessage from './messages/SystemMessage.vue'
+import ImageMessage from './messages/ImageMessage.vue'
+import VideoMessage from './messages/VideoMessage.vue'
+import AudioMessage from './messages/AudioMessage.vue'
 import defaultAvatar from './assets/user-default-avatar.svg'
-import Suggestions from './Suggestions'
-
 
 export default {
+  data () {
+    return {
+
+    }
+  },
   components: {
     TextMessage,
     EmojiMessage,
@@ -45,38 +48,25 @@ export default {
     ImageMessage,
     VideoMessage,
     AudioMessage,
-    Suggestions,
   },
   props: {
-    source: { 
+    message: {
       type: Object,
-      required: true,
+      required: true
     },
-    // chatImageUrl: {
-    //   type: String,
-    //   default: defaultAvatar // Аватарка по умолчанию, если у пользователя она не назначенна.
-    // },
-    // authorName: {
-    //   type: String
-    // },
-    // messageStyling: {
-    //   type: Boolean,
-    //   // required: true
-    // }
+    chatImageUrl: {
+      type: String,
+      default: defaultAvatar // Аватарка по умолчанию, если у пользователя она не назначенна.
+    },
+    authorName: {
+      type: String
+    },
+    messageStyling: {
+      type: Boolean,
+      required: true
+    }
   },
   methods: {
-    profile(author) {
-      const profile = this.$store.state.mChatData.find(profile => profile.mChatData_ContactID === author)
-
-      // A profile may not be found for system messages or messages by 'me'
-      return profile || {mChatData_AvatarImg: '', mChatData_ContactName: ''}
-    },
-    chatImageUrl(author) {
-      return this.profile(author).mChatData_AvatarImg
-    },
-    authorName(author) {
-      return this.profile(author).mChatData_ContactName
-    }
   }
 }
 </script>
@@ -154,7 +144,7 @@ export default {
 
 .chat-area { // стиль окна чата
   width: 320px;
-  margin-left: 9px;
+  margin-left: 8px;
   margin-right: 8px;
   padding-bottom: 10px; // интервал между сообщениями
   display: flex;
@@ -268,7 +258,6 @@ export default {
 }
 
 @media (max-width: 450px) {
-
   .chat-area { // стиль окна чата
     width: 94%;
     margin-left: 8px;
@@ -278,4 +267,5 @@ export default {
     flex-direction: column;
   }
 }
+
 </style>

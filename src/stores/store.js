@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 
 import mChat from './modules/mobileChat/mChat'
-import mChatHistory from './modules/mobileChat/mChatHistory'
+import mChatData from './modules/mobileChat/mChatData'
 import sound from './modules/sound'
 import chars from './modules/chars'
 
@@ -117,7 +117,7 @@ const store = new Vuex.Store({
   },
   modules: {
     mChat,
-    mChatHistory,
+    mChatData,
     sound,
     chars,
   }

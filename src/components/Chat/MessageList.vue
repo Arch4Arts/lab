@@ -1,36 +1,54 @@
 <template>
 <div class="message-list" ref="scrollList" @scroll="handleScroll">
-  <!-- Верхняя панель с кнопками -->
-  <v-toolbar class="bar" dark height="50" flat>
-    <!-- Кнопка возвращения к списку контактов -->
-    <v-btn class="bar__back-btn" icon @click="backToContactsPage()">
-      <v-icon size="18"> fas fa-arrow-left </v-icon>
-    </v-btn>
 
-    <v-spacer/>
-    <!-- ЗАГОЛОВОК ЧАТА преобразует tailor в Tailor -->
-    <v-toolbar-title class="bar__title"> 
-      {{ this.$store.state.mChat.mChat_ContactClikedName }} 
-    </v-toolbar-title>
+    <!-- <v-toolbar class="bar" dark height="50" flat>
+      <v-btn class="bar__back-btn" icon @click="backToContactsPage()">
+        <v-icon size="18"> fas fa-arrow-left </v-icon>
+      </v-btn>
 
-    <v-spacer/>
-    <!-- Декоративная кнопка -->
-    <v-btn class="bar__phone-btn" icon>
-      <v-icon size="18"> fas fa-phone </v-icon>
-    </v-btn>
-  </v-toolbar>
+      <v-spacer/>
+      <v-toolbar-title class="bar__title"> 
+        {{ this.$store.state.mChat.mChat_ContactClikedName }} 
+      </v-toolbar-title>
+
+      <v-spacer/>
+      <v-btn class="bar__phone-btn" icon>
+        <v-icon size="18"> fas fa-phone </v-icon>
+      </v-btn>
+    </v-toolbar> -->
+
+  <!-- Зона прокрутки -->
+  <virtual-list
+    :size="65"
+    :keeps="30"
+
+    data-key="uid"
+    :data-sources="messages"
+    :data-component="itemComponent"
+  />
+  <!-- Выбор ответа -->
+  <Suggestions :suggestions="getSuggestions()" v-on:sendSuggestion="_submitSuggestion"/>
+  <!-- Декоративная панель ввода -->
+  <!-- <UserInput v-if="!$store.state.mChat.mChat_ShowInput" />  -->
+
   
   <!-- Зона прокрутки -->
-  <virtual-list class="message-list" ref="scrollList" :size="65" :remain="12">
+  <!-- <virtual-list class="message-list" ref="scrollList" :size="65" :remain="12"> -->
   <!-- <RecycleScroller :items="messages" :item-size="1" key-field="idx"> -->
     <!-- Сообщение -->
-    <Message v-for="(message, idx) in messages" :message="message" :chatImageUrl="chatImageUrl(message.author)" :authorName="authorName(message.author)" :key="idx" :messageStyling="messageStyling" />
+    <!-- <Message v-for="(message, idx) in messages" 
+      :message="message" 
+      :chatImageUrl="chatImageUrl(message.author)" 
+      :authorName="authorName(message.author)" 
+      :key="idx" 
+      :messageStyling="messageStyling" 
+    /> -->
     <!-- Выбор ответа -->
-    <Suggestions :suggestions="getSuggestions()" v-on:sendSuggestion="_submitSuggestion"/>
+    <!-- <Suggestions :suggestions="getSuggestions()" v-on:sendSuggestion="_submitSuggestion"/> -->
   <!-- </RecycleScroller> -->
-  </virtual-list>
+  <!-- </virtual-list> -->
   <!-- Декоративная панель ввода -->
-  <UserInput v-if="!$store.state.mChat.mChat_HideInput" /> 
+  <!-- <UserInput v-if="!$store.state.mChat.mChat_ShowInput" />  -->
 </div>
 </template>
 
@@ -38,16 +56,19 @@
 import chatIcon from './assets/user-default-avatar.svg'
 
 import Message from './Message.vue'
-import UserInput from './UserInput.vue'
 import Suggestions from './Suggestions.vue'
 
 import virtualList from 'vue-virtual-scroll-list'
 
 export default {
+  data () {
+    return {
+      itemComponent: Message,
+    }
+  },
   components: {
     Message,
-    UserInput,
-    Suggestions
+    Suggestions,
   },
   props: {
     contacts: {
@@ -74,14 +95,14 @@ export default {
   methods: {
     onSubmitSuggestion(suggestion){ // Импорт для userInput (Suggestions)
       // this.messageList = [...this.messageList, message]
-      var users = this.$store.state.mChatHistory; // Не копируем массив, чтобы изменять оригинал
+      var users = this.$store.state.mChatData; // Не копируем массив, чтобы изменять оригинал
       var selectedUser = this.$store.state.mChat.mChat_ContactClikedID
       for (let user of users) { // Перебираем для каждого пользователя
-        if (user.mChatHistory_ContactID === selectedUser) {
+        if (user.mChatData_ContactID === selectedUser) {
           // если отправляемый suggestion автономен, то нужно удалить его запись из истории, и добавить уже в виде ответа от ME
-          if (user.mChatHistory_MsgHistory[user.mChatHistory_MsgHistory.length - 1].type === 'suggestion') user.mChatHistory_MsgHistory.splice([user.mChatHistory_MsgHistory.length - 1], 1)
+          if (user.mChatData_MsgHistory[user.mChatData_MsgHistory.length - 1].type === 'suggestion') user.mChatData_MsgHistory.splice([user.mChatData_MsgHistory.length - 1], 1)
           // В противном случае просто отправить ответ от ME, т.к suggestion был привязан к THEM
-          user.mChatHistory_MsgHistory = [...user.mChatHistory_MsgHistory, suggestion]
+          user.mChatData_MsgHistory = [...user.mChatData_MsgHistory, suggestion]
           this.$store.commit('updateStores');
         }
       }
@@ -91,10 +112,6 @@ export default {
     },
     _submitSuggestion(suggestion) {
       this.onSubmitSuggestion({author: 'me', type: 'text', data: { text: suggestion }})
-    },
-    backToContactsPage(){
-      this.$store.state.mChat.mChat_ContactsPageShow = !this.$store.state.mChat.mChat_ContactsPageShow
-      this.$store.commit('updateStores');
     },
     _scrollDown () {
       this.$refs.scrollList.scrollTop = this.$refs.scrollList.scrollHeight
@@ -108,16 +125,16 @@ export default {
       return this.alwaysScrollToBottom || (this.$refs.scrollList.scrollTop > this.$refs.scrollList.scrollHeight - 600)
     },
     profile(author) {
-      const profile = this.contacts.find(profile => profile.mChatHistory_ContactID === author)
+      const profile = this.contacts.find(profile => profile.mChatData_ContactID === author)
 
       // A profile may not be found for system messages or messages by 'me'
-      return profile || {mChatHistory_AvatarImg: '', mChatHistory_ContactName: ''}
+      return profile || {mChatData_AvatarImg: '', mChatData_ContactName: ''}
     },
     chatImageUrl(author) {
-      return this.profile(author).mChatHistory_AvatarImg
+      return this.profile(author).mChatData_AvatarImg
     },
     authorName(author) {
-      return this.profile(author).mChatHistory_ContactName
+      return this.profile(author).mChatData_ContactName
     }
   },
   computed: {
@@ -126,6 +143,7 @@ export default {
     }
   },
   mounted () {
+    // console.log(this.messages)
     this._scrollDown()
   },
   updated () {
@@ -170,20 +188,20 @@ export default {
 }
 
 .bar__back-btn {
-    color: var(--message-list--bar__back-btn--color) !important;
+  color: var(--message-list--bar__back-btn--color) !important;
 }
 
 .bar__phone-btn {
-    color: var(--message-list--bar__phone-btn--color) !important;
+  color: var(--message-list--bar__phone-btn--color) !important;
 }
 
 .bar__video-btn {
-    color: var(--message-list--bar__video-btn--color) !important;
-    background-color: transparent !important;
+  color: var(--message-list--bar__video-btn--color) !important;
+  background-color: transparent !important;
 }
 
 .bar__ellipsis-btn {
-    color: var(--message-list--bar__ellipsis-btn--color) !important;
+  color: var(--message-list--bar__ellipsis-btn--color) !important;
 }
 
 @media (max-width: 450px) {

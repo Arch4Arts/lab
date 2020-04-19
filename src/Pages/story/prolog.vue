@@ -2,16 +2,6 @@
 <section>
 
 <section v-if="$store.state.gameLang">
-<v-btn @click='$root.sendMessage("mc_support", "support", "text", { text: "lorum!"})'>Support short text...</v-btn>
-<v-btn @click='$root.sendMessage("mc_support", "support", "text", { text: "Lorum ipsum orom!"})'>Support text...</v-btn>
-
-<v-btn @click='$root.sendMessage("mc_support", "support", "text", { text: "Ipsum lorom odno id narokomoron is naruch begin end" })'>Support long text...</v-btn>
-<v-btn @click='$root.sendMessage("mc_support", "support", "image", { src: require("../../Media/img/2.gif") })'>Support image gif...</v-btn>
-<v-btn @click='$root.sendMessage("mc_support", "support", "video", { src: require("../../Media/video/Carmelita.mp4") })'>Support video...</v-btn>
-<v-btn @click='$root.sendMessage("mc_support", "support", "audio", { src: require("../../Media/audio/Notifications/Moan.mp3") })'>Support audio..</v-btn>
-<v-btn @click='$root.sendMessage("mc_support", "support", "emoji", { src: require("../../Media/img/smiling-face.png") })'>Support emoji..</v-btn>
-<v-btn @click='$root.sendMessage("mc_support", "support", "suggestion", undefined, ["no", "Yes"])'>Support suggestion...</v-btn>
-<v-btn @click="$root.addContactToChatList('mc')">Add mc to contacts</v-btn>
 <br><br>
   <h1>prologue</h1>
   <h2>prologue</h2>
@@ -34,30 +24,7 @@
 
 <section v-else>
 <br><br>
-<v-card>
-<v-card-text>
-          <v-text-field
-            v-model="mChatHistory_ChatID"
-            placeholder="mc_support"
-            label="mChatHistory_ChatID"
-          ></v-text-field>
-          <v-text-field
-            v-model="author"
-            placeholder="support"
-            label="author"
-          ></v-text-field>
-  </v-card-text>
- </v-card>
-<v-btn @click='$root.sendMessage(mChatHistory_ChatID, author, "text", { text: "lorum!" })'>Support short text...</v-btn>
-<v-btn @click='$root.sendMessage(mChatHistory_ChatID, author, "text", { text: "Lorum ipsum orom!" })'>Support text...</v-btn>
-<v-btn @click='$root.sendMessage(mChatHistory_ChatID, author, "text", { text: "Ipsum lorom odno id narokomoron is naruch begin end" })'>Support long text...</v-btn>
-<v-btn @click='$root.sendMessage(mChatHistory_ChatID, author, "image", { src: require("../../Media/img/2.gif") })'>Support image gif...</v-btn>
-<v-divider vertical></v-divider>
-<v-btn @click='$root.sendMessage(mChatHistory_ChatID, author, "video", { src: require("../../Media/video/Carmelita.mp4") })'>Support video...</v-btn>
-<v-btn @click='$root.sendMessage(mChatHistory_ChatID, author, "audio", { src: require("../../Media/audio/Notifications/Moan.mp3") })'>Support audio..</v-btn>
-<v-btn @click='$root.sendMessage(mChatHistory_ChatID, author, "emoji", { src: require("../../Media/img/smiling-face.png") })'>Support emoji..</v-btn>
-<v-btn @click='$root.sendMessage(mChatHistory_ChatID, author, "suggestion", undefined, ["no", "Yes"])'>Support suggetion...</v-btn>
-<v-btn text @click="$root.addContactToChatList('mc')">Добавить mc в контакты</v-btn>
+  <mChatTestPage />
 <br><br>
   <h1>Пролог</h1>
   <h2>Пролог</h2>
@@ -86,23 +53,22 @@
 import MC from '../../components/CharStyles/MC'
 import Sister from '../../components/CharStyles/Sister'
 import mcSettings from '../../components/CharSettings/mcSettings'
-import PullTo from 'vue-pull-to'
+import mChatTestPage from '../../components/mChatTestPage'
 
 export default {
     data(){
         return {
-            author: '',
-            mChatHistory_ChatID: '',
+            author: 'support',
+            mChatData_ChatID: 'mc_support',
         }
     },
     components: {
         MC,
         Sister,
         mcSettings,
-        PullTo,
+        mChatTestPage
     },
     methods: {
-
     }
 }
 </script>

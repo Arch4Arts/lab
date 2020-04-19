@@ -8,6 +8,7 @@
     <ContactsPage class="contacts-page" v-if="$store.state.mChat.mChat_ContactsPageShow"></ContactsPage>
     <!-- Чат с конкретным контактом -->
     <div v-if="!$store.state.mChat.mChat_ContactsPageShow" class="chat-window">
+      <MessageListToolbar />
       <MessageList
         :messages="messageList"
         :contacts="contacts"
@@ -16,23 +17,24 @@
         :messageStyling="messageStyling"
         @scrollToTop="$emit('scrollToTop')"
       />
+      <MessageListInput v-if="$store.state.mChat.mChat_ShowInput" /> 
      </div>
   </div>
 </template>
 
 <script>
+import MessageListToolbar from './MessageListToolbar.vue'
+import MessageListInput from './MessageListInput.vue'
 import MessageList from './MessageList.vue'
-import UserInput from './UserInput.vue'
-// import UserList from './UserList.vue'
 
 import ContactsPage from './ContactsPage'
 
 export default {
   components: {
+    MessageListToolbar,
+    MessageListInput,    
+    ContactsPage,
     MessageList,
-    UserInput,
-    // UserList,
-    ContactsPage
   },
   props: {
     contacts: {
@@ -60,15 +62,14 @@ export default {
     messageList() {
       // let messages = this.messageList
       this.$store.state.mChat.mChat_ContactsPageShow // обновляет список сообщений при каждом открытии и закрытии списка пользователей
-
+      
       let messages;
-      var users = this.$store.state.mChatHistory;
+      var users = this.$store.state.mChatData;
       var selectedUser = this.$store.state.mChat.mChat_ContactClikedID
       for (let user of users) { // Перебираем для каждого пользователя
-        if (user.mChatHistory_ContactID === selectedUser) {
-          user.mChatHistory_unReadMsgCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
-          console.log(user.mChatHistory_MsgHistory.length)
-          return messages = user.mChatHistory_MsgHistory
+        if (user.mChatData_ContactID === selectedUser) {
+          user.mChatData_unReadMsgCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
+          return messages = user.mChatData_MsgHistory
         }
       }
     }
@@ -76,14 +77,14 @@ export default {
   methods: {
     onSubmitSuggestion(suggestion){ // Импорт для userInput (Suggestions)
       // this.messageList = [...this.messageList, message]
-      var users = this.$store.state.mChatHistory; // Не копируем массив, чтобы изменять оригинал
+      var users = this.$store.state.mChatData; // Не копируем массив, чтобы изменять оригинал
       var selectedUser = this.$store.state.mChat.mChat_ContactClikedID
       for (let user of users) { // Перебираем для каждого пользователя
-        if (user.mChatHistory_ContactID === selectedUser) {
+        if (user.mChatData_ContactID === selectedUser) {
           // если отправляемый suggestion автономен, то нужно удалить его запись из истории, и добавить уже в виде ответа от ME
-          if (user.mChatHistory_MsgHistory[user.mChatHistory_MsgHistory.length - 1].type === 'suggestion') user.mChatHistory_MsgHistory.splice([user.mChatHistory_MsgHistory.length - 1], 1)
+          if (user.mChatData_MsgHistory[user.mChatData_MsgHistory.length - 1].type === 'suggestion') user.mChatData_MsgHistory.splice([user.mChatData_MsgHistory.length - 1], 1)
           // В противном случае просто отправить ответ от ME, т.к suggestion был привязан к THEM
-          user.mChatHistory_MsgHistory = [...user.mChatHistory_MsgHistory, suggestion]
+          user.mChatData_MsgHistory = [...user.mChatData_MsgHistory, suggestion]
           this.$store.commit('updateStores');
         }
       }

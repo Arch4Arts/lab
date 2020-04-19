@@ -38,29 +38,29 @@
             <!-- Контакт -->
             <v-list-item
               class="contacts-page__vlist-item contacts-page__palette-menu--hover"
-              :key="contact.mChatHistory_ContactID"
-              @click="ClickOnContact(contact.mChatHistory_ContactID, contact.mChatHistory_ContactName, contact.mChatHistory_unReadMsgCount)"
+              :key="contact.mChatData_ContactID"
+              @click="ClickOnContact(contact.mChatData_ContactID, contact.mChatData_ContactName, contact.mChatData_unReadMsgCount)"
             >
               <!-- Аватар -->
               <v-list-item-avatar size="52">
-                <img :class="{ contacts_page__vlist__avatar_badge: contact.mChatHistory_unReadMsgCount > 0 }" :src="contact.mChatHistory_AvatarImg">
+                <img :class="{ contacts_page__vlist__avatar_badge: contact.mChatData_unReadMsgCount > 0 }" :src="contact.mChatData_AvatarImg">
               </v-list-item-avatar>
 
               <!-- Основной блок с информацией -->
               <v-list-item-content>
                 <!-- Имя контакта -->
                 <v-list-item-title class="ml-2 contacts-page__vlist--contact-title">
-                  {{ contact.mChatHistory_ContactName }}
+                  {{ contact.mChatData_ContactName }}
                 </v-list-item-title>
                 <!-- Текст последнего сообщения -->
                 <v-list-item-subtitle class="ml-2 contacts-page__vlist--contact-subtitle" 
-                v-if="contact.mChatHistory_MsgHistory.type === 'text' || contact.mChatHistory_MsgHistory.type === 'system'"> 
-                  {{ contact.mChatHistory_MsgHistory.data.text }} 
+                v-if="contact.mChatData_MsgHistory.type === 'text' || contact.mChatData_MsgHistory.type === 'system'"> 
+                  {{ contact.mChatData_MsgHistory.data.text }} 
                 </v-list-item-subtitle>
                 <!-- Смайлик -->
                 <v-list-item-subtitle class="ml-2" 
-                v-else-if="contact.mChatHistory_MsgHistory.type === 'emoji'"> 
-                  <img width="28" :src="contact.mChatHistory_MsgHistory.data.src" />
+                v-else-if="contact.mChatData_MsgHistory.type === 'emoji'"> 
+                  <img width="28" :src="contact.mChatData_MsgHistory.data.src" />
                 </v-list-item-subtitle>
                 <!-- Иконка фото/видео контента в сообщении -->
                 <v-list-item-subtitle class="ml-2" v-else> 
@@ -70,8 +70,8 @@
 
               <!-- Кол-во непрочитанных сообщений -->
               <v-list-item-action class="text-no-wrap">
-                <div v-if="contact.mChatHistory_unReadMsgCount > 0" class="contacts-page__vlist--contact-badge">
-                  {{ contact.mChatHistory_unReadMsgCount }}
+                <div v-if="contact.mChatData_unReadMsgCount > 0" class="contacts-page__vlist--contact-badge">
+                  {{ contact.mChatData_unReadMsgCount }}
                 </div>
               </v-list-item-action>
             </v-list-item>
@@ -89,16 +89,16 @@ export default {
     ContactsList: {
       get() {
         var contacts = this.$store.state.mChat.mChat_CurrentContacts_MC // Контакты в телефоне персонажа
-        var users = JSON.parse(JSON.stringify(this.$store.state.mChatHistory)); // История всех чатов
+        var users = JSON.parse(JSON.stringify(this.$store.state.mChatData)); // История всех чатов
         var showContactsList = [] // обработанные контакты для отображения
         for (let i = 0; i < contacts.length; i++) { // Перебираем столько раз, сколько контактов в contacts
           for (let user of users) { // Перебираем для каждого пользователя
-            if (user.mChatHistory_ContactID === contacts[i]) {
+            if (user.mChatData_ContactID === contacts[i]) {
               showContactsList.push(user)
-              user.mChatHistory_MsgHistory.find(function(item) {
-                // if (item.type === 'text' && item.author === contacts[i]) showContactsList[i].mChatHistory_MsgHistory = item.data.text;
-                // if (item.type === 'text' && item.author === contacts[i]) showContactsList[i].mChatHistory_MsgHistory = item.data.text; // Забирем первое значение удовлетворяющее условию
-                if (item.type !== 'suggestion') showContactsList[i].mChatHistory_MsgHistory = item
+              user.mChatData_MsgHistory.find(function(item) {
+                // if (item.type === 'text' && item.author === contacts[i]) showContactsList[i].mChatData_MsgHistory = item.data.text;
+                // if (item.type === 'text' && item.author === contacts[i]) showContactsList[i].mChatData_MsgHistory = item.data.text; // Забирем первое значение удовлетворяющее условию
+                if (item.type !== 'suggestion') showContactsList[i].mChatData_MsgHistory = item
               })
             }
           }
@@ -111,11 +111,11 @@ export default {
     ClickOnContact(contactID, contactName, contactUnReadMsgCount){
       this.$store.state.mChat.mChat_ContactClikedID = contactID
       this.$store.state.mChat.mChat_ContactClikedName = contactName
-      var contacts = JSON.parse(JSON.stringify(this.$store.state.mChatHistory)); // История всех чатов
+      var contacts = JSON.parse(JSON.stringify(this.$store.state.mChatData)); // История всех чатов
         for (let contact of contacts) { // Перебираем для каждого контакта
-          if (contact.mChatHistory_ContactID === contactID) { // Если это тот кто был выбран
+          if (contact.mChatData_ContactID === contactID) { // Если это тот кто был выбран
             // Отниманием кол-во непричитанных сообщений у контакта из общего счётчика
-            this.$store.state.mChat.mChat_NewMessagesCount = this.$store.state.mChat.mChat_NewMessagesCount - contact.mChatHistory_unReadMsgCount
+            this.$store.state.mChat.mChat_NewMessagesCount = this.$store.state.mChat.mChat_NewMessagesCount - contact.mChatData_unReadMsgCount
           }
         }
       this.$store.state.mChat.mChat_ContactsPageShow = !this.$store.state.mChat.mChat_ContactsPageShow

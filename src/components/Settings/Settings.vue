@@ -45,12 +45,12 @@
       <!-- Настройки различных параметров (ползунки) -->
       <v-list subheader two-line flat>
         <v-subheader class="v-list-item__header">Панель сохранений</v-subheader>
-        <!-- Панелья сохранений -->
+        <!-- Панель сохранений -->
         <v-list-item-group multiple>
           <v-list-item class="v-list-item">
             <v-list-item-content @click="autoCloseSavesDrawer()">
-              <v-list-item-title>Автоматически закрывать</v-list-item-title>
-              <v-list-item-subtitle>После операции сохранения, перезаписи, загрузки</v-list-item-subtitle>
+              <v-list-item-title>Автоматически скрывать</v-list-item-title>
+              <v-list-item-subtitle>Автоматически скрывать панель, после операции сохранения, перезаписи, загрузки</v-list-item-subtitle>
             </v-list-item-content>
             <!-- Тумблер -->
             <v-list-item-action>
@@ -64,30 +64,59 @@
         <v-subheader class="v-list-item__header">Настройки чата</v-subheader>
         <!-- Настройки чата -->
         <v-list-item-group multiple>
-          <!-- Отключение показа аватарок в чате -->
+          <!-- Автоматическое воспроизведение видео -->
           <v-list-item class="v-list-item">
-            <v-list-item-content @click="mChatHideAvatars()">
-              <v-list-item-title>Скрыть аватарки</v-list-item-title>
+            <v-list-item-content @click="autoPlayMsgVideoOnHover()">
+              <v-list-item-title>Автоматическое воспроизведение</v-list-item-title>
+              <v-list-item-subtitle>Автоматическое воспроизведение видео при наведении мыши</v-list-item-subtitle>
             </v-list-item-content>
             <!-- Тумблер -->
             <v-list-item-action>
               <v-switch
-                v-model="$store.state.mChat.mChat_HideAvatars"
+                v-model="$store.state.mChat.mChat_autoPlayMsgVideoOnHover"
+                @click.stop="autoPlayMsgVideoOnHover()"
+              ></v-switch>
+            </v-list-item-action>
+          </v-list-item>
+          <!-- Имитация набора сообщения -->
+          <v-list-item class="v-list-item">
+            <v-list-item-content @click="mChatTypingIndicatorEnable()">
+              <v-list-item-title>Имитация набора сообщения</v-list-item-title>
+              <v-list-item-subtitle>Анимация набора сообщений участником чата</v-list-item-subtitle>
+            </v-list-item-content>
+            <!-- Тумблер -->
+            <v-list-item-action>
+              <v-switch
+                v-model="$store.state.mChat.mChat_TypingIndicatorEnable"
+                @click.stop="mChatTypingIndicatorEnable()"
+              ></v-switch>
+            </v-list-item-action>
+          </v-list-item>
+          <!-- Отключение показа аватарок в чате -->
+          <v-list-item class="v-list-item">
+            <v-list-item-content @click="mChatHideAvatars()">
+              <v-list-item-title>Аватар</v-list-item-title>
+              <v-list-item-subtitle>Отключает отображение аватарки у участника чата</v-list-item-subtitle>
+            </v-list-item-content>
+            <!-- Тумблер -->
+            <v-list-item-action>
+              <v-switch
+                v-model="$store.state.mChat.mChat_ShowAvatars"
                 @click.stop="mChatHideAvatars()"
               ></v-switch>
             </v-list-item-action>
           </v-list-item>
           <v-divider />
-          <!-- Отключение наборной панели в чате -->
+          <!-- Отключение наборного элемента в чате -->
           <v-list-item class="v-list-item">
             <v-list-item-content @click="mChatHideInput()">
-              <v-list-item-title>Скрыть наборный элемент</v-list-item-title>
-              <v-list-item-subtitle>Скрывает нижний декоративный наборный элемент чата</v-list-item-subtitle>
+              <v-list-item-title>Наборный элемент</v-list-item-title>
+              <v-list-item-subtitle>Нижний декоративный наборный элемент чата</v-list-item-subtitle>
             </v-list-item-content>
             <!-- Тумблер -->
             <v-list-item-action>
               <v-switch
-                v-model="$store.state.mChat.mChat_HideInput"
+                v-model="$store.state.mChat.mChat_ShowInput"
                 @click.stop="mChatHideInput()"
               ></v-switch>
             </v-list-item-action>
@@ -102,7 +131,6 @@
 import SettingsAppearance from './SettingsAppearance'
 import SettingsSound from './SettingsSound'
 
-
 export default {
   data(){
     return {
@@ -116,12 +144,18 @@ export default {
     autoCloseSavesDrawer(){
       this.$store.state.autoCloseSavesDrawer =! this.$store.state.autoCloseSavesDrawer
     },
+    autoPlayMsgVideoOnHover(){
+      this.$store.state.mChat.mChat_autoPlayMsgVideoOnHover =! this.$store.state.mChat.mChat_autoPlayMsgVideoOnHover
+    },
+    mChatTypingIndicatorEnable(){
+      this.$store.state.mChat.mChat_TypingIndicatorEnable =! this.$store.state.mChat.mChat_TypingIndicatorEnable
+    },
     mChatHideAvatars(){
-      this.$store.state.mChat.mChat_HideAvatars =! this.$store.state.mChat.mChat_HideAvatars
+      this.$store.state.mChat.mChat_ShowAvatars =! this.$store.state.mChat.mChat_ShowAvatars
     },
     mChatHideInput(){
-      this.$store.state.mChat.mChat_HideInput =! this.$store.state.mChat.mChat_HideInput
-    }
+      this.$store.state.mChat.mChat_ShowInput =! this.$store.state.mChat.mChat_ShowInput
+    },
   },
   computed: {
 
@@ -151,8 +185,18 @@ export default {
 }
 
 .v-list-item__header {
+  font-size: 1rem !important;
+
   align-items: flex-end !important;
   padding: 0 12px 6px 12px !important;
+}
+
+.v-list-item__title {
+  font-size: 0.950rem !important;
+}
+
+.v-list-item__subtitle {
+  font-size: 0.800rem !important;
 }
 
 .v-expansion-panel .header-icon {

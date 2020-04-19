@@ -33,9 +33,6 @@ Vue.use(VueIziToast);
 import VueVirtualScroller from 'vue-virtual-scroller'
 Vue.use(VueVirtualScroller)
 
-import AsyncComputed from 'vue-async-computed'
-Vue.use(AsyncComputed)
-
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
 // import 'roboto-fontface/css/roboto/roboto-fontface.css'
@@ -132,48 +129,7 @@ new Vue({
       this.$store.state.gameLang 
       ? iziToast.info({message: `Error: ${error}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
       : iziToast.info({message: `Ошибка: ${error}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
-    },
-    sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    },
-    sendMessage(mChatHistory_ChatID ,author, type, data, suggestions) { // Для suggestion ONLY нужно указать type: suggestion и data: undefined
-      this.$store.state.mChat.mChat_NewMessagesCount = this.mChat_Show ? this.$store.state.mChat.mChat_NewMessagesCount : this.$store.state.mChat.mChat_NewMessagesCount + 1
-
-      // setTimeout можно заменить на sleep(ms)
-      if (this.$store.state.mChat.mChat_TypingIndicatorEnable && type !== 'suggestion' && this.$store.state.mChat.mChat_ContactsPageShow === false){
-        this.onMessageWasSent(mChatHistory_ChatID, {author: author, type: 'typing', data: undefined, suggestions: undefined});
-        (type === 'text' && data.text.length <= '8') 
-        ? setTimeout(() => this.onMessageWasSent(mChatHistory_ChatID, {author: author, type: type, data: data, suggestions: suggestions}), 500) 
-        : (type === 'text' && data.text.length <= '20') 
-        ? setTimeout(() => this.onMessageWasSent(mChatHistory_ChatID, {author: author, type: type, data: data, suggestions: suggestions}), 1000)
-        : setTimeout(() => this.onMessageWasSent(mChatHistory_ChatID, {author: author, type: type, data: data, suggestions: suggestions}), 3000)
-      }
-      else this.onMessageWasSent(mChatHistory_ChatID, {author: author, type: type, data: data, suggestions: suggestions})
-    },
-    onMessageWasSent(mChatHistory_ChatID, message){ // Импорт для userInput (Suggestions)
-      // this.messageList = [...this.messageList, message]
-      var users = this.$store.state.mChatHistory; // Не копируем массив, чтобы изменять оригинал
-      for (let user of users) { // Перебираем для каждого пользователя
-        if (user.mChatHistory_ChatID === mChatHistory_ChatID) {
-          user.mChatHistory_unReadMsgCount += 1
-          // Удаляем сообщение typing, если используется имитация набора
-          if (user.mChatHistory_MsgHistory[user.mChatHistory_MsgHistory.length - 1].type === 'typing') user.mChatHistory_MsgHistory.splice([user.mChatHistory_MsgHistory.length - 1], 1)
-          user.mChatHistory_MsgHistory = [...user.mChatHistory_MsgHistory, message]
-          this.$store.commit('updateStores');
-        }
-      }
-    },
-    addContactToChatList(newContact){
-      let doubleDetect = false;
-      let contacts = this.$store.state.mChat.mChat_CurrentContacts_MC
-      for (let contact of contacts) {
-        if (contact === newContact) doubleDetect = true;
-      }
-      if (doubleDetect === false) {
-        this.$store.state.mChat.mChat_CurrentContacts_MC.push(newContact);
-        this.$store.commit('updateStores');
-      }
-    },
+    }
   },
   render: function (h) { return h(App) }
 }).$mount('#app')

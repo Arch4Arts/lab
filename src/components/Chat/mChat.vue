@@ -19,7 +19,7 @@ export default {
   name: 'mChatApp',
   data() {
     return {
-      contacts: this.$store.state.mChatHistory,
+      contacts: this.$store.state.mChatData,
       mChat_TypingIndicatorEnable: '',
       alwaysScrollToBottom: true,
       messageStyling: false, // Не работает в независимости от этого ключа

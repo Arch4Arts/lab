@@ -31,7 +31,7 @@ html {
 		--contacts-page__vlist--contact-badge--height: 26px;
 		// Чат
 		--message-list__v-btn--background: transparent;
-		--message-list--bar--background-color: transparent;
+		--message-list--bar--background-color: #fff;
 		--message-list--bar__title--color: #606060;
 		--message-list--bar__title--font-weight: 400;
 		--message-list--bar__back-btn--color: #37addf;
@@ -52,9 +52,9 @@ html {
 		--suggestions-element--color: #37addf;
 		--suggestions-element--background: transparent;
 		--typing-indicator__span--background: #9E9EA1;
-		--plyr--audio--color: black;
+		// --plyr--audio--color: black;
 		// Панель ввода
-		--inputArea--background: transparent;
+		--inputArea--background: #fff;
 		--inputArea__text-input--width: 250px;
 		--inputArea__text-input--height: 50px;
 		--inputArea__text-input--border-radius: 17px;
@@ -115,7 +115,7 @@ html {
 		--contacts-page__vlist--contact-badge--height: 26px;
 		// Чат
 		--message-list__v-btn--background: transparent;
-		--message-list--bar--background-color: transparent;
+		--message-list--bar--background-color: #242933;
 		--message-list--bar__title--color: #ECEFF4;
 		--message-list--bar__title--font-weight: 400;
 		--message-list--bar__back-btn--color: #fff;
@@ -139,7 +139,7 @@ html {
 		--typing-indicator__span--background: #9E9EA1;
 		--plyr--audio--color: #fff;
 		// Панель ввода
-		--inputArea--background: transparent;
+		--inputArea--background: #242933;
 		--inputArea__text-input--width: 250px;
 		--inputArea__text-input--height: 50px;
 		--inputArea__text-input--border-radius: 17px;
@@ -172,3 +172,16 @@ html {
 		--inputArea-microphone-icon--color: #88C0D0;
 	}
 };
+
+.plyr--audio .plyr__controls {
+  background: transparent !important;
+  color: var(--plyr--audio--color);
+}
+
+.plyr__controls__item.plyr__control {
+	color: var(--plyr--audio--color);
+}
+
+.plyr__controls__item.plyr__time--current.plyr__time {
+	color: var(--plyr--audio--color);
+}

@@ -6,7 +6,7 @@
 		<v-app-bar v-if="!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs)" app dense dark class="v-app-bar" elevation="14">
 			<!-- Название игры + версия -->
 			<router-link to="/" tag="span" style="cursor:pointer">
-				<v-toolbar-title>
+				<v-toolbar-title style="opacity: 0.6">
 						{{ $store.state.gameName + ' ' + $store.state.gameVersion }} 
 				</v-toolbar-title>
 			</router-link>

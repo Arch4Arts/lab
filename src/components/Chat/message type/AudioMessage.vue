@@ -1,8 +1,11 @@
 <template>
-<div @mouseenter="play" class="video-message" @click="saveVolumeSettings()"> 
-  <vue-plyr ref="VideoMessagePlyr" class="video-message" :options="options" :key="$store.state.reRender_mChatPlayersVolume"> 
-    <video :poster="data.img" :src="data.src"></video>
-
+<div @click="saveVolumeSettings()" class="container"> 
+  <vue-plyr ref="AudioMessagePlyr" id="plyr--audio" :options="options" :key="$store.state.reRender_mChatPlayersVolume">
+    <audio>
+      <source :src="data.src" :type="data.type"/> 
+      <!-- audio/mp3 -->
+    </audio>
+    
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <symbol id="plyr-airplay">
             <path d="M16 1H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3v-2H3V3h12v8h-2v2h3a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
@@ -59,23 +62,21 @@
             <path d="M11.282 5.282a.909.909 0 0 0 0 1.316c.735.735.995 1.458.995 2.402 0 .936-.425 1.917-.995 2.487a.909.909 0 0 0 0 1.316c.145.145.636.262 1.018.156a.725.725 0 0 0 .298-.156C13.773 11.733 14.13 10.16 14.13 9c0-.17-.002-.34-.011-.51-.053-.992-.319-2.005-1.522-3.208a.909.909 0 0 0-1.316 0zm-7.496.726H.714C.286 6.008 0 6.31 0 6.76v4.512c0 .452.286.752.714.752h3.072l4.071 3.858c.5.3 1.143 0 1.143-.602V2.752c0-.601-.643-.977-1.143-.601L3.786 6.008z" />
         </symbol>
     </svg>
-    
+
   </vue-plyr>
 </div>
 </template>
 
 <script>
-
 export default {
   data() {
     return {
       options: {
         loadSprite: false,
-        controls: ['play','progress','play-large','volume','pip','airplay','fullscreen'],
-        loop: { active: true },
+        controls: ['play','progress','current-time','volume'],
         muted: !this.$store.state.sound.gameGlobalSoundsEnable,
-        volume: this.$store.state.mChat.mChat_VideoPlyrVolume, // Значение по умолчанию, потом плеер берёт данные из plyr-video
-        storage: { enabled: false, key: 'plyr-video' },
+        volume: this.$store.state.mChat.mChat_AudioPlyrVolume, // Значение по умолчанию, потом плеер берёт данные из plyr-audio
+        storage: { enabled: false, key: 'plyr-audio' }
       }
     };
   },
@@ -87,32 +88,22 @@ export default {
   },
   methods: {
     saveVolumeSettings(){
-      this.$store.state.mChat.mChat_VideoPlyrVolume = this.$refs.VideoMessagePlyr.player.volume
+      this.$store.state.mChat.mChat_AudioPlyrVolume = this.$refs.AudioMessagePlyr.player.volume
       this.$store.commit('updateStores');
-    },
-    play(){
-      if (this.$store.state.mChat.mChat_HoverPlayMsgVideo) this.$refs.VideoMessagePlyr.player.play()
-    },
-    pause(){
-      this.$refs.VideoMessagePlyr.player.pause()
-    }
-  },
+    },    
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 
-svg {
-  display: none;
-  border-radius: 20px;
+.container {
   overflow: hidden;
+  padding: 0 !important;
 }
 
-.video-message {
-  width: 270px;
-  border-radius: 20px;
-  overflow: hidden;
-  z-index: 1; // Не удалять!!!
+svg {
+  display: none
 }
 
 </style>
