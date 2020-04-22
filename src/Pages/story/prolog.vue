@@ -54,22 +54,36 @@ import MC from '../../components/CharStyles/MC'
 import Sister from '../../components/CharStyles/Sister'
 import mcSettings from '../../components/CharSettings/mcSettings'
 import mChatTestPage from '../../components/mChatTestPage'
+import hotkeys from 'hotkeys-js';
 
 export default {
-    data(){
-        return {
-            author: 'support',
-            mChatData_ChatID: 'mc_support',
-        }
-    },
-    components: {
-        MC,
-        Sister,
-        mcSettings,
-        mChatTestPage
-    },
-    methods: {
+  data(){
+    return {
+      author: 'support',
+      mChatData_ChatID: 'mc_support',
     }
+  },
+  components: {
+    MC,
+    Sister,
+    mcSettings,
+    mChatTestPage
+  },
+  methods: {
+
+  },
+  mounted: function () {
+    // document.body.addEventListener('keyup', function(e) {
+    //   var keycode = require('keycode');
+    //   var keyname = keycode(e)
+    //   console.log(keyname)
+    //   hotkeys(keyname, function(event, handler){
+    //     // Prevent the default refresh event under WINDOWS system
+    //     event.preventDefault() 
+    //     console.log('HOTKEY') 
+    //   });
+    // })
+  }
 }
 </script>
 

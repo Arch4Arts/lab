@@ -7,16 +7,14 @@
 <section v-else>
   <!-- Вкл / Выкл звука глобально -->
   <v-list subheader two-line flat>
-    <v-list-item-group v-model="settings" multiple>
-      <v-list-item class="global-sound-enable">
+    <v-list-item-group multiple>
+      <v-list-item class="v-list-item--padding">
         <!-- Надпись -->
-        <v-list-item-content @click="changeGlobalSoundEnable()" class="options__item__v-list__text--padding">
-          <v-list-item-title>Включить звук</v-list-item-title>
-          <v-list-item-subtitle v-if='$store.state.sound.gameGlobalSoundsEnable'>Звук включён</v-list-item-subtitle>
-          <v-list-item-subtitle v-else>Звук отключён</v-list-item-subtitle>
+        <v-list-item-content @click="changeGlobalSoundEnable()" class="v-list-item__content">
+          <v-list-item-title>Звук</v-list-item-title>
         </v-list-item-content>
         <!-- Тумблер -->
-        <v-list-item-action class="v-list-item-action--padding">
+        <v-list-item-action class="v-list-item__action">
           <v-switch
             v-model="$store.state.sound.gameGlobalSoundsEnable"
             @click.stop="changeGlobalSoundEnable()"
@@ -28,9 +26,16 @@
   <!-- ДОСТИЖЕНИЯ -->
   <!-- Громкость + выбор звука + вкл / выкл -->
   <div class="sound-options-container">
-    <!-- Подпись слайдера -->
-    <p v-if="$store.state.sound.gameGlobalSoundsEnable && $store.state.sound.achievementSoundEnable" class="sound-options-container__slider__name">Громкость оповещения о получении достижений</p>
-    <p v-else class="sound-options-container__slider__name" style="opacity: .4">Громкость оповещения о получении достижений</p>
+    <p 
+      :class="
+      ($store.state.sound.gameGlobalSoundsEnable && $store.state.sound.achievementSoundEnable)
+      ? 
+      'sound-options-container__slider__name'
+      :
+      'sound-options-container__slider__name disabled'"
+    >
+      Громкость оповещения о получении достижений
+    </p>
     <!-- Слайдер -->
     <v-slider
       class="sound-options-container__slider"
@@ -78,8 +83,16 @@
   <!-- ДНЕВНИК -->
   <!-- Громкость + выбор звука + вкл / выкл -->
   <div class="sound-options-container">
-    <p v-if="$store.state.sound.gameGlobalSoundsEnable && $store.state.sound.diarySoundEnable" class="sound-options-container__slider__name">Громкость оповещений дневника</p>
-    <p v-else class="sound-options-container__slider__name" style="opacity: .4">Громкость оповещений дневника</p>
+    <p 
+      :class="
+      ($store.state.sound.gameGlobalSoundsEnable && $store.state.sound.diarySoundEnable)
+      ? 
+      'sound-options-container__slider__name'
+      :
+      'sound-options-container__slider__name disabled'"
+    >
+    Громкость оповещений дневника
+    </p>
     <!-- Слайдер -->
     <v-slider
       class="sound-options-container__slider"
@@ -127,8 +140,16 @@
   <!-- СМАРТФОН -->
   <!-- Громкость + выбор звука + вкл / выкл -->
   <div class="sound-options-container">
-    <p v-if="$store.state.sound.gameGlobalSoundsEnable && $store.state.sound.smartphoneSoundEnable" class="sound-options-container__slider__name">Громкость мобильных оповещений</p>
-    <p v-else class="sound-options-container__slider__name" style="opacity: .4">Громкость мобильных оповещений</p>
+    <p 
+      :class="
+      ($store.state.sound.gameGlobalSoundsEnable && $store.state.sound.smartphoneSoundEnable)
+      ? 
+      'sound-options-container__slider__name'
+      :
+      'sound-options-container__slider__name disabled'"
+    >
+      Громкость мобильных оповещений
+    </p>
     <!-- Слайдер -->
     <v-slider
       class="sound-options-container__slider"
@@ -182,7 +203,7 @@ import { checkSoundsEnable, soundPlay, soundPlayLoop } from '../../components/Ga
 export default {
   data(){
     return {
-      settings: [], // Пустышка
+      
     }
   },
   methods: {
@@ -282,11 +303,16 @@ export default {
 
 <style lang="scss" scoped>
 
-.v-list-item-action--padding {
-  margin-right: 24px;
+.v-list-item--padding { // Название не менять!
+  padding: 0px !important;
 }
-.options__item__v-list__text--padding {
-  margin-left: 24px;
+
+.v-list-item__content {
+  margin-left: 16px;
+}
+
+.v-list-item__action {
+  margin-right: 16px;
 }
 
 .sound-options-container {
@@ -303,20 +329,19 @@ export default {
   font-size: 14px;
   color: var(--font-color--color) !important;
   opacity: .8;
+  &.disabled {
+    opacity: .4;
+  }
 }
 
 .sound-options-container__slider {
-  margin-left: 24px;
+  margin-left: 16px;
   margin-right: 8px;
 }
 
 .sound-options-container__btn {
-  margin-right: 24px;
+  margin-right: 16px;
   background: transparent !important;
-}
-
-.global-sound-enable {
-  padding: 0px !important;
 }
 
 </style>

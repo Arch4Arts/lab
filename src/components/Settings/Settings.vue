@@ -41,6 +41,16 @@
             <settings-appearance />
           </v-expansion-panel-content>
         </v-expansion-panel>
+        <!-- Горячие клавиши -->
+        <v-expansion-panel >
+          <v-expansion-panel-header>
+            <div class="v-expansion-panel header-icon"><v-icon large left>fas fa-keyboard</v-icon></div>
+            Горячие клавиши
+          </v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <settings-hotkeys id="hotkeys" />
+          </v-expansion-panel-content>
+        </v-expansion-panel>
       </v-expansion-panels>
       <!-- Настройки различных параметров (ползунки) -->
       <v-list subheader two-line flat>
@@ -129,6 +139,7 @@
 
 <script>
 import SettingsAppearance from './SettingsAppearance'
+import SettingsHotkeys from './SettingsHotkeys'
 import SettingsSound from './SettingsSound'
 
 export default {
@@ -162,6 +173,7 @@ export default {
   },
   components: {
     SettingsAppearance,
+    SettingsHotkeys,
     SettingsSound,
   }
 }

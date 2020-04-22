@@ -37,18 +37,41 @@ const store = new Vuex.Store({
       { themeName: 'NordDark' },
       { themeName: 'CustomDark' }
     ],
+    gameHotkeysEnable: false, // Горячие клавиши в игре 
+    keyboardShortcutsVersion: '0',   
+    settingsHotkeys: {
+      settingsOpen: 'O',                    // Открыть журнала
+      settingsToggleGlobalSoundEnable: 'P', // Вкл / выкл звук глобально
+    },
+    journalHotkeys: {
+      journalOpen: 'Q',            // Открыть журнала
+      journalTabCharacters: 'W',   // Открыть вкладку с персонажами 
+      journalTabDiary: 'E',        // Открыть вкладку с дневником
+      journalTabAchievements: 'R', // Открыть вкладку с достижениями   
+    },
+    savesHotkeys: {
+      savesOpen: 'A',      // Открыть сохранения
+      savesQuickSave: '1', // Быстрое сохранение
+      savesQuickLoad: '3', // Быстрая загрузка
+    },
+    mChatHotkeys: {
+      mChatOpen: 'D',      // Открыть чат
+    },
+
     
     reRender_mChatPlayersVolume: 0, // Используется для перерендера плееров в чате, изменяется в Saves.vue 
     reRender_ColorPickerCanvas: 0, // Для перерисовски окна с выбором цвета (исчезает при изменении размера)
+
     gameFirstLoad: true, // Проверка, первый ли запуск игры (Для определения языка) gameDisplayingStartPage
     gameDisplayingStartPage: true, // Для отображения StartPage
     gameAgeWarningDialog: true, // предупреждающее окно 18+
 
     radialMenuShow: true, // Плавающая иконка с меню для мобильных устройств, при скрытой панели навигации
+    appHeaderEnable: false, // По умолчанию выкл, на время показа стартовой страницы с информацией об игре.
+
     autoCloseSavesDrawer: true, // Автоматически закрывать панель сохранений, после нового сохранения / перезаписи / загрузки
     isOpenSettingsDrawer: false, // Открытие/Закрытия панели настройек
     isOpenSavesDrawer: false,
-    appHeaderEnable: false, // По умолчанию выкл, на время показа стартовой страницы с информацией об игре.
 
     patreon_link: 'https://patreon',
     tfgames_link: 'https://tfgames.site',
@@ -114,6 +137,10 @@ const store = new Vuex.Store({
     langChange(){
       this.state.gameLang = !this.state.gameLang;
     },
+
+    gameHotkeysEnable(){
+      this.state.gameHotkeysEnable = !this.state.gameHotkeysEnable;
+    }
   },
   modules: {
     mChat,

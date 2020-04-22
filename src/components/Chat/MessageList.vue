@@ -1,22 +1,5 @@
 <template>
 <div class="message-list" ref="scrollList" @scroll="handleScroll">
-
-    <!-- <v-toolbar class="bar" dark height="50" flat>
-      <v-btn class="bar__back-btn" icon @click="backToContactsPage()">
-        <v-icon size="18"> fas fa-arrow-left </v-icon>
-      </v-btn>
-
-      <v-spacer/>
-      <v-toolbar-title class="bar__title"> 
-        {{ this.$store.state.mChat.mChat_ContactClikedName }} 
-      </v-toolbar-title>
-
-      <v-spacer/>
-      <v-btn class="bar__phone-btn" icon>
-        <v-icon size="18"> fas fa-phone </v-icon>
-      </v-btn>
-    </v-toolbar> -->
-
   <!-- Зона прокрутки -->
   <virtual-list
     :size="65"
@@ -26,29 +9,8 @@
     :data-sources="messages"
     :data-component="itemComponent"
   />
-  <!-- Выбор ответа -->
+  <!-- Варианты ответов -->
   <Suggestions :suggestions="getSuggestions()" v-on:sendSuggestion="_submitSuggestion"/>
-  <!-- Декоративная панель ввода -->
-  <!-- <UserInput v-if="!$store.state.mChat.mChat_ShowInput" />  -->
-
-  
-  <!-- Зона прокрутки -->
-  <!-- <virtual-list class="message-list" ref="scrollList" :size="65" :remain="12"> -->
-  <!-- <RecycleScroller :items="messages" :item-size="1" key-field="idx"> -->
-    <!-- Сообщение -->
-    <!-- <Message v-for="(message, idx) in messages" 
-      :message="message" 
-      :chatImageUrl="chatImageUrl(message.author)" 
-      :authorName="authorName(message.author)" 
-      :key="idx" 
-      :messageStyling="messageStyling" 
-    /> -->
-    <!-- Выбор ответа -->
-    <!-- <Suggestions :suggestions="getSuggestions()" v-on:sendSuggestion="_submitSuggestion"/> -->
-  <!-- </RecycleScroller> -->
-  <!-- </virtual-list> -->
-  <!-- Декоративная панель ввода -->
-  <!-- <UserInput v-if="!$store.state.mChat.mChat_ShowInput" />  -->
 </div>
 </template>
 

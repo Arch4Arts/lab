@@ -39,6 +39,7 @@ import * as Integrations from '@sentry/integrations';
 
 import updateAllThemes from './styles/updateAllThemes';
 import { checkSoundsEnable } from './components/GameSound'
+import { bindHotkeys, unbindHotkeys }from './components/Hotkeys'
 
 if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена
   Sentry.init({
@@ -120,6 +121,7 @@ new Vue({
       }
       updateAllThemes()
       checkSoundsEnable()
+      bindHotkeys()
     })
   },
   methods: {
@@ -129,6 +131,14 @@ new Vue({
       this.$store.state.gameLang 
       ? iziToast.info({message: `Error: ${error}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
       : iziToast.info({message: `Ошибка: ${error}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
+    }
+  },
+  watch: { // Клавиатурные сокращения
+    '$store.state.keyboardShortcutsVersion': function () {
+      // Отвязываем обработчик со старыми значениями
+      unbindHotkeys()
+      // Привязываем обработчик с новыми значениями
+      bindHotkeys()
     }
   },
   render: function (h) { return h(App) }

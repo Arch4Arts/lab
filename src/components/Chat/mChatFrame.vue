@@ -8,7 +8,9 @@
     <ContactsPage class="contacts-page" v-if="$store.state.mChat.mChat_ContactsPageShow"></ContactsPage>
     <!-- Чат с конкретным контактом -->
     <div v-if="!$store.state.mChat.mChat_ContactsPageShow" class="chat-window">
+      <!-- Шапка -->
       <MessageListToolbar />
+      <!-- Область прокрутки с сообщениями -->
       <MessageList
         :messages="messageList"
         :contacts="contacts"
@@ -17,6 +19,7 @@
         :messageStyling="messageStyling"
         @scrollToTop="$emit('scrollToTop')"
       />
+      <!-- Декоративная панель ввода -->
       <MessageListInput v-if="$store.state.mChat.mChat_ShowInput" /> 
      </div>
   </div>

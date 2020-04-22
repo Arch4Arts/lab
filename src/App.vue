@@ -122,7 +122,7 @@ a:hover {
 }
 
 /* Отключаем показ полосы прокрутки (вертикальной) */
-html {
+* {
   -ms-overflow-style: none;
   /* IE 10+ */
   scrollbar-width: none;

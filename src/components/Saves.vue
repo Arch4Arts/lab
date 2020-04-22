@@ -36,98 +36,98 @@
 
       <!-- СПИСОК СОХРАНЕНИЙ -->
       <v-list two-line subheader>
-      <v-list-item-group v-model="ListSelectedSaves" multiple>
-      <!-- A pull-down refresh saves list -->
-      <div class="scroll-area--border">
-      <pull-to 
-        @infinite-scroll="loadMoreSaves" 
-        :is-top-bounce="false" 
-        :is-bottom-bounce="false" 
-        v-if="this.$store.state.isOpenSavesDrawer"
-      >
-      <!-- Список сохранений -->
-      <div class="scroll-area"> 
-        <!-- Если нет сохранений -->
-        <div v-if="$store.state.gameLang" v-show="numberSavesIDB == 0" class="text-center"><v-divider/><br>No saves<br><br></div>
-        <div v-else v-show="numberSavesIDB == 0" class="text-center"><v-divider/><br>Сохранения отсутствуют<br><br></div>
-        
-        <!-- Сохранение -->
-        <v-list-item
-          v-for="save in savesList"
-          :key="save.saveID"
-          :value="`${save.saveName},${save.saveTime},${save.saveID},${save.saveGameVer}`"
+        <v-list-item-group v-model="ListSelectedSaves" multiple>
+        <!-- A pull-down refresh saves list -->
+        <div class="scroll-area--border">
+        <pull-to 
+          @infinite-scroll="loadMoreSaves" 
+          :is-top-bounce="false" 
+          :is-bottom-bounce="false" 
+          v-if="this.$store.state.isOpenSavesDrawer"
         >
-        <!-- Информация о имени и времени -->
-          <v-list-item-content>
-            <v-list-item-title>{{ save.saveName }}</v-list-item-title>
-            <v-list-item-subtitle>{{ save.saveTime }}</v-list-item-subtitle>
-          </v-list-item-content>
-          <!-- КНОПКИ WRITE/LOAD/DELETE -->
-          <v-list-item-action 
-            v-for="(icon ,i) in vForBtns" 
-            :key="'icon-id_' + i"
+        <!-- Список сохранений -->
+        <div class="scroll-area"> 
+          <!-- Если нет сохранений -->
+          <div v-if="$store.state.gameLang" v-show="numberSavesIDB == 0" class="text-center"><v-divider/><br>No saves<br><br></div>
+          <div v-else v-show="numberSavesIDB == 0" class="text-center"><v-divider/><br>Сохранения отсутствуют<br><br></div>
+          
+          <!-- Сохранение -->
+          <v-list-item
+            v-for="save in savesList"
+            :key="save.saveID"
+            :value="`${save.saveName},${save.saveTime},${save.saveID},${save.saveGameVer}`"
           >
-            <!-- EN WRITE/LOAD/DELETE-->
-            <v-tooltip v-if="$store.state.gameLang" bottom>
-              <template v-slot:activator="{ on }">
-                <v-btn v-on="on" icon
-                @click="
-                  (icon == 'fas fa-trash') 
-                  ? 
-                  deleteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer) 
-                  : 
-                    (icon == 'fas fa-download') 
+          <!-- Информация о имени и времени -->
+            <v-list-item-content>
+              <v-list-item-title>{{ save.saveName }}</v-list-item-title>
+              <v-list-item-subtitle>{{ save.saveTime }}</v-list-item-subtitle>
+            </v-list-item-content>
+            <!-- КНОПКИ WRITE/LOAD/DELETE -->
+            <v-list-item-action 
+              v-for="(icon ,i) in vForBtns" 
+              :key="'icon-id_' + i"
+            >
+              <!-- EN WRITE/LOAD/DELETE-->
+              <v-tooltip v-if="$store.state.gameLang" bottom>
+                <template v-slot:activator="{ on }">
+                  <v-btn v-on="on" icon
+                  @click="
+                    (icon == 'fas fa-trash') 
                     ? 
-                    overwriteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer) 
+                    deleteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer) 
                     : 
-                    loadSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer)"
-                > 
-                  <v-icon :color="(icon == 'fas fa-download') ? 'rgb(126, 193, 255)' : (icon == 'fas fa-upload') ? 'rgb(255, 254, 173)' : 'rgb(255, 102, 102)'"> {{ icon }} </v-icon>
-                </v-btn>
-              </template>
-                <span v-if="icon == 'fas fa-download'">Overwrite</span>
-                <span v-if="icon == 'fas fa-upload'">Load</span>
-                <span v-if="icon == 'fas fa-trash'">Delete</span>
-            </v-tooltip>
-            <!-- RU СОХРАНИТЬ/ЗАГРУЗИТЬ/УДАЛИТЬ -->
-            <v-tooltip v-else bottom>
-              <template v-slot:activator="{ on }">
-                <v-btn v-on="on" icon
-                class="saves-v-btns"
-                @click="
-                  (icon == 'fas fa-trash') 
-                  ? 
-                  deleteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer) 
-                  : 
-                    (icon == 'fas fa-download') 
+                      (icon == 'fas fa-download') 
+                      ? 
+                      overwriteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer) 
+                      : 
+                      loadSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer)"
+                  > 
+                    <v-icon :color="(icon == 'fas fa-download') ? 'rgb(126, 193, 255)' : (icon == 'fas fa-upload') ? 'rgb(255, 254, 173)' : 'rgb(255, 102, 102)'"> {{ icon }} </v-icon>
+                  </v-btn>
+                </template>
+                  <span v-if="icon == 'fas fa-download'">Overwrite</span>
+                  <span v-if="icon == 'fas fa-upload'">Load</span>
+                  <span v-if="icon == 'fas fa-trash'">Delete</span>
+              </v-tooltip>
+              <!-- RU СОХРАНИТЬ/ЗАГРУЗИТЬ/УДАЛИТЬ -->
+              <v-tooltip v-else bottom>
+                <template v-slot:activator="{ on }">
+                  <v-btn v-on="on" icon
+                  class="saves-v-btns"
+                  @click="
+                    (icon == 'fas fa-trash') 
                     ? 
-                    overwriteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer) 
+                    deleteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer) 
                     : 
-                    loadSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer)"
-                > 
-                  <v-icon :color="(icon == 'fas fa-download') ? 'rgb(126, 193, 255)' : (icon == 'fas fa-upload') ? 'rgb(255, 254, 173)' : 'rgb(255, 102, 102)'"> {{ icon }} </v-icon>
-                </v-btn>
-              </template>
-                <span v-if="icon == 'fas fa-download'">Перезаписать</span>
-                <span v-if="icon == 'fas fa-upload'">Загрузить</span>
-                <span v-if="icon == 'fas fa-trash'">Удалить</span>
-            </v-tooltip>
-          </v-list-item-action>
-        </v-list-item>
-        <!-- Анимация прогрузки новых сохранений -->
-        <div v-if="savesList.length < numberSavesIDB" class="text-center pa-2">
-          <v-progress-circular indeterminate size="28" />
-        </div>
-        <!-- Конец списка сохранений -->
-        <!-- <div v-if="numberSavesIDB > 10" class="text-center pa-2">
-          <blockquote v-if="$store.state.gameLang" class="blockquote">End of list</blockquote>
-          <blockquote v-else class="blockquote">Конец списка</blockquote>
-        </div> -->
+                      (icon == 'fas fa-download') 
+                      ? 
+                      overwriteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer) 
+                      : 
+                      loadSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer)"
+                  > 
+                    <v-icon :color="(icon == 'fas fa-download') ? 'rgb(126, 193, 255)' : (icon == 'fas fa-upload') ? 'rgb(255, 254, 173)' : 'rgb(255, 102, 102)'"> {{ icon }} </v-icon>
+                  </v-btn>
+                </template>
+                  <span v-if="icon == 'fas fa-download'">Перезаписать</span>
+                  <span v-if="icon == 'fas fa-upload'">Загрузить</span>
+                  <span v-if="icon == 'fas fa-trash'">Удалить</span>
+              </v-tooltip>
+            </v-list-item-action>
+          </v-list-item>
+          <!-- Анимация прогрузки новых сохранений -->
+          <div v-if="savesList.length < numberSavesIDB" class="text-center pa-2">
+            <v-progress-circular indeterminate size="28" />
+          </div>
+          <!-- Конец списка сохранений -->
+          <!-- <div v-if="numberSavesIDB > 10" class="text-center pa-2">
+            <blockquote v-if="$store.state.gameLang" class="blockquote">End of list</blockquote>
+            <blockquote v-else class="blockquote">Конец списка</blockquote>
+          </div> -->
 
-      </div>
-      </pull-to>
-      </div>
-      </v-list-item-group>
+        </div>
+        </pull-to>
+        </div>
+        </v-list-item-group>
       </v-list>
     </v-card>
     <!-- СОХР НА ДИСК / ЗАГР С ДИСКА / ПЕРЕЗАПУСК / УДАЛЕНИЕ ВСЕХ СОХРАНЕНИЙ -->
