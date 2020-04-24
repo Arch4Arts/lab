@@ -58,11 +58,11 @@ export default {
 }
 
 .continue-button {
-	background: var(--startPageInfo--continue-button--background) !important;
+	background: var(--FirstLaunchPageInfo--continue-button--background) !important;
 }
 
 .continue-button:hover {
-	background: var(--startPageInfo--continue-button--background) !important;
+	background: var(--FirstLaunchPageInfo--continue-button--background) !important;
 }
 
 </style>

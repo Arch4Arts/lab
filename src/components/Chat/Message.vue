@@ -52,17 +52,6 @@ export default {
       type: Object,
       required: true,
     },
-    // chatImageUrl: {
-    //   type: String,
-    //   default: defaultAvatar // Аватарка по умолчанию, если у пользователя она не назначенна.
-    // },
-    // authorName: {
-    //   type: String
-    // },
-    // messageStyling: {
-    //   type: Boolean,
-    //   // required: true
-    // }
   },
   methods: {
     profile(author) {

@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import RadialMenu from './RadialMenu'
+import RadialMenu from './NavigationRadialMenu'
 
 export default {
 	computed: {

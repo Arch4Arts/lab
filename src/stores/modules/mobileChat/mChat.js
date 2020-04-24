@@ -29,7 +29,9 @@ const mChat = {
         ],
      },
     mutations: {
-
+      mChat_Show(){
+        this.state.mChat.mChat_Show = !this.state.mChat.mChat_Show
+      }
      },
   }
 

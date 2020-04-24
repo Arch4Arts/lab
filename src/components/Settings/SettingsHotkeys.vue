@@ -35,7 +35,10 @@
       <div class="hotkey-section-option__desc">
         {{settings.description_ru}}
       </div>
-      <div class="hotkey-section-option__key" :class="{highlight:settings.key == selected.key}">{{settings.hotkey}}</div>
+      <div class="hotkey-section-option__key" :class="{highlight:settings.key == selected.key}">
+        <!-- Преобразуем первуб букву в заглавную -->
+        {{settings.hotkey.charAt(0).toUpperCase() + settings.hotkey.slice(1)}}
+      </div>
     </div>
   </v-card>
   <!-- Журнал -->
@@ -50,7 +53,10 @@
       <div class="hotkey-section-option__desc">
         {{journal.description_ru}}
       </div>
-      <div class="hotkey-section-option__key" :class="{highlight:journal.key == selected.key}">{{journal.hotkey}}</div>
+      <div class="hotkey-section-option__key" :class="{highlight:journal.key == selected.key}">
+        <!-- Преобразуем первуб букву в заглавную -->
+        {{journal.hotkey.charAt(0).toUpperCase() + journal.hotkey.slice(1)}}
+      </div>
     </div>
   </v-card>
   <!-- Сохранения -->
@@ -65,7 +71,10 @@
       <div class="hotkey-section-option__desc">
         {{saves.description_ru}}
       </div>
-      <div class="hotkey-section-option__key" :class="{highlight:saves.key == selected.key}">{{saves.hotkey}}</div>
+      <div class="hotkey-section-option__key" :class="{highlight:saves.key == selected.key}">
+        <!-- Преобразуем первуб букву в заглавную -->
+        {{saves.hotkey.charAt(0).toUpperCase() + saves.hotkey.slice(1)}}
+      </div>
     </div>
   </v-card>
   <!-- Чат -->
@@ -80,7 +89,10 @@
       <div class="hotkey-section-option__desc">
         {{mChat.description_ru}}
       </div>
-      <div class="hotkey-section-option__key" :class="{highlight:mChat.key == selected.key}">{{mChat.hotkey}}</div>
+      <div class="hotkey-section-option__key" :class="{highlight:mChat.key == selected.key}">
+        <!-- Преобразуем первуб букву в заглавную -->
+        {{mChat.hotkey.charAt(0).toUpperCase() + mChat.hotkey.slice(1)}}
+      </div>
     </div>
   </v-card>
   </section>
@@ -190,8 +202,6 @@ export default {
         case 'settings': {        
           // Конвертируем код в имя клавиши
           let keyName = keycode(keyCode[0]);
-          // Преобразуем первуб букву в заглавную
-          keyName = keyName.charAt(0).toUpperCase() + keyName.slice(1)
           // Записываем данные в хранилище
           this.$store.state.settingsHotkeys[this.selected.key] = keyName
           this.$store.commit('updateStores');
@@ -200,8 +210,6 @@ export default {
         case 'journal': {
           // Конвертируем код в имя клавиши
           let keyName = keycode(keyCode[0]);
-          // Преобразуем первуб букву в заглавную
-          keyName = keyName.charAt(0).toUpperCase() + keyName.slice(1)
           // Записываем данные в хранилище
           this.$store.state.journalHotkeys[this.selected.key] = keyName
           this.$store.commit('updateStores');
@@ -210,8 +218,6 @@ export default {
         case 'saves': {
           // Конвертируем код в имя клавиши
           let keyName = keycode(keyCode[0]);
-          // Преобразуем первуб букву в заглавную
-          keyName = keyName.charAt(0).toUpperCase() + keyName.slice(1)
           // Записываем данные в хранилище
           this.$store.state.savesHotkeys[this.selected.key] = keyName
           this.$store.commit('updateStores');
@@ -220,8 +226,6 @@ export default {
         case 'mChat': {
           // Конвертируем код в имя клавиши
           let keyName = keycode(keyCode[0]);
-          // Преобразуем первуб букву в заглавную
-          keyName = keyName.charAt(0).toUpperCase() + keyName.slice(1)
           // Записываем данные в хранилище
           this.$store.state.mChatHotkeys[this.selected.key] = keyName
           this.$store.commit('updateStores');

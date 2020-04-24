@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import StartPageInfo from '../Pages/StartPageInfo'
+import FirstLaunchPageInfo from '../Pages/FirstLaunchPageInfo'
 import AboutGame from '../components/AboutGame'
 
 export default {

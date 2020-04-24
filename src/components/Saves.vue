@@ -25,7 +25,7 @@
         <!-- КНОПКА: СОХРАНИТЬ + ПОДСКАЗКА -->
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-btn class="save-name__btn saves-v-btns" v-on="on" @click="saveGame()" icon>
+            <v-btn class="save-name__btn saves-v-btns" v-on="on" @click="saveGame(false)" icon>
               <v-icon color="rgb(126, 193, 255)"> fas fa-download </v-icon>
             </v-btn>
           </template>
@@ -55,7 +55,7 @@
           <v-list-item
             v-for="save in savesList"
             :key="save.saveID"
-            :value="`${save.saveName},${save.saveTime},${save.saveID},${save.saveGameVer}`"
+            :value="`${save.saveName},${save.saveTime},${save.saveID},${save.saveGameVersion}`"
           >
           <!-- Информация о имени и времени -->
             <v-list-item-content>
@@ -74,13 +74,13 @@
                   @click="
                     (icon == 'fas fa-trash') 
                     ? 
-                    deleteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer) 
+                    deleteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVersion) 
                     : 
                       (icon == 'fas fa-download') 
                       ? 
-                      overwriteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer) 
+                      overwriteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVersion) 
                       : 
-                      loadSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer)"
+                      loadSave(save.saveName, save.saveTime, save.saveID, save.saveGameVersion)"
                   > 
                     <v-icon :color="(icon == 'fas fa-download') ? 'rgb(126, 193, 255)' : (icon == 'fas fa-upload') ? 'rgb(255, 254, 173)' : 'rgb(255, 102, 102)'"> {{ icon }} </v-icon>
                   </v-btn>
@@ -97,13 +97,13 @@
                   @click="
                     (icon == 'fas fa-trash') 
                     ? 
-                    deleteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer) 
+                    deleteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVersion) 
                     : 
                       (icon == 'fas fa-download') 
                       ? 
-                      overwriteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer) 
+                      overwriteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVersion) 
                       : 
-                      loadSave(save.saveName, save.saveTime, save.saveID, save.saveGameVer)"
+                      loadSave(save.saveName, save.saveTime, save.saveID, save.saveGameVersion)"
                   > 
                     <v-icon :color="(icon == 'fas fa-download') ? 'rgb(126, 193, 255)' : (icon == 'fas fa-upload') ? 'rgb(255, 254, 173)' : 'rgb(255, 102, 102)'"> {{ icon }} </v-icon>
                   </v-btn>
@@ -118,11 +118,6 @@
           <div v-if="savesList.length < numberSavesIDB" class="text-center pa-2">
             <v-progress-circular indeterminate size="28" />
           </div>
-          <!-- Конец списка сохранений -->
-          <!-- <div v-if="numberSavesIDB > 10" class="text-center pa-2">
-            <blockquote v-if="$store.state.gameLang" class="blockquote">End of list</blockquote>
-            <blockquote v-else class="blockquote">Конец списка</blockquote>
-          </div> -->
 
         </div>
         </pull-to>
@@ -263,7 +258,7 @@ import dayjs from 'dayjs'; // библиотека для работы с вре
 import advancedFormat from 'dayjs/plugin/advancedFormat'; // Плагин
 dayjs.extend(advancedFormat);
 
-import WebCrypto from '../components/WebCrypto'; // Модуль для шифрования и дешифрования сохранений
+import WebCrypto from '../components/SavesWebCrypto'; // Модуль для шифрования и дешифрования сохранений
 import localforage from 'localforage';
 import { resetState }  from '../stores/store';
 import store from '../stores/store';
@@ -273,6 +268,8 @@ import PullTo from 'vue-pull-to';
 import iziToast from 'izitoast/dist/js/iziToast.min.js';
 
 import updateAllThemes from '../styles/updateAllThemes';
+
+import eventBus from './EventBus'
 
 // Конфиги
 localforage.config({
@@ -307,28 +304,35 @@ export default {
     defaultSaveName: 'New save', // Placeholder поля ввода
     defaultSaveName_ru: 'Новое сохранение',
 
-    savesList: [], // Рабочий список отсортированных сохранений
+    savesList: [], // Рабочий неполный (первая отрисовка) список отсортированных сохранений
     savesHeaderIDB: [], // Список сохранений, для сортировки
-    savesHeaderIDBSorted: [], // Отсортированные сохранения (по дате Unix)
+    savesHeaderIDBSorted: [], // Полный отсортированный список сохранеий (по дате Unix)
     numberSavesIDB: 0, //  Кол-во сохранений в БД
     startNumberSavesRender: 12, // Сколько показываются сохранений при первой отрисовке
   }),
   created: async function () {
     this.savesHeaderIDB = await localforage.keys().then(keysList => this.savesHeaderIDB = keysList); // все ключи из IndexedDB
     this.numberSavesIDB = await localforage.length().then(lf_length => this.numberSavesIDB = lf_length); // Кол-во сохранений в IndexedDB
-    var saves = [];
     // (this.numberSavesIDB > 0) ? this.IsSaveExist = 1 : this.IsSaveExist = 0 // Проверка на наличие сейвов
     if (this.numberSavesIDB > 0) {
       for (let i = 0; i < this.numberSavesIDB; i++) { // Преобразуем строку в объект для сортировки
         var saveHeader = this.savesHeaderIDB[i].split(',');
-        this.savesHeaderIDBSorted.push({saveName: saveHeader[0],saveTime: saveHeader[1],saveID: saveHeader[2],saveGameVer: saveHeader[3]}); 
+        this.savesHeaderIDBSorted.push({saveName: saveHeader[0],saveTime: saveHeader[1],saveID: saveHeader[2],saveGameVersion: saveHeader[3]}); 
       }
       this.savesHeaderIDBSorted.sort(this.sortBy('saveID')); // сортируем
       this.savesList = this.savesHeaderIDBSorted.slice(0, this.startNumberSavesRender); // копируем диапазон от сортированного массива в массив для первичной отрисовки
     }
     this.savesNumber = this.numberSavesIDB;
   },
-  methods:{    
+  mounted(){
+    eventBus.$on('QuickSave', this.isQuickSave)
+    eventBus.$on('QuickLoad', this.isQuickLoad)
+  },
+  beforeDestroy(){
+    eventBus.$off('QuickSave')
+    eventBus.$off('QuickLoad')
+  },
+  methods:{
     // Сортировка по...
     sortBy(key) { // (убыванию) desc <, asc (возрастанию) >
       return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
@@ -347,22 +351,62 @@ export default {
         // (this.savesList.length === this.numberSavesIDB) ? this.isEndSaveList = true : this.isEndSaveList = false 
       }
     },
+    isQuickSave(){
+      let isExist = false;
+      // Перебираем список
+      for (let key in this.savesHeaderIDBSorted) {
+        // Если быстрое сохранение найдно, перезаписываем
+        if (this.savesHeaderIDBSorted[key].saveName == 'Quick Save' || this.savesHeaderIDBSorted[key].saveName == 'Быстрое сохранение') {
+          isExist = true
+          this.overwriteSave(
+            this.savesHeaderIDBSorted[key].saveName, 
+            this.savesHeaderIDBSorted[key].saveTime, 
+            this.savesHeaderIDBSorted[key].saveID, 
+            this.savesHeaderIDBSorted[key].saveGameVersion
+          )
+          // Прерываем цикл, чтобы не создавались дубликаты
+          break;
+        }
+      }
+      // Если быстрого сохранения нет, делаем новое
+      if (!isExist) {
+        this.saveGame(true)
+      }
+    },
+    isQuickLoad(){
+      for (let key in this.savesHeaderIDBSorted) {
+        if (this.savesHeaderIDBSorted[key].saveName == 'Quick Save' || this.savesHeaderIDBSorted[key].saveName == 'Быстрое сохранение') {
+          this.loadSave(
+            this.savesHeaderIDBSorted[key].saveName, 
+            this.savesHeaderIDBSorted[key].saveTime, 
+            this.savesHeaderIDBSorted[key].saveID, 
+            this.savesHeaderIDBSorted[key].saveGameVersion
+          )
+          break;
+        }
+      }
+    },
     // Сохранение игры
-    async saveGame(){
+    async saveGame(isQuickSave){
       try {
-        var name = this.saveNameInput // Копируем значение
-        this.saveNameInput = '' // И очищаем поле ввода
-        if (name === '') // Проверка введенно ли имя сохранения, если нет, назначаем стандартное
-          (this.$store.state.gameLang) ? name = 'New Save' : name = 'Новое сохранение'
+        // Проверка на QuickSave
+        if (isQuickSave) { 
+          (this.$store.state.gameLang) ? name = 'Quick Save' : name = 'Быстрое сохранение'          
+        } else {
+          var name = this.saveNameInput // Копируем значение
+          this.saveNameInput = '' // И очищаем поле ввода
+          if (name === '') // Проверка введенно ли имя сохранения, если нет, назначаем стандартное
+            (this.$store.state.gameLang) ? name = 'New Save' : name = 'Новое сохранение'    
+        }
 
         this.$store.state.saveName = name; // Имя
         this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm"); // Время сохранения
 
         this.$store.state.saveID = dayjs().format("x"); // миллисекунды с начала эпохи Unix
-        this.$store.state.saveGameVer = this.$store.state.gameVersion; // Версия игры на момент сохранения
+        this.$store.state.saveGameVersion = this.$store.state.gameVersion; // Версия игры на момент сохранения
 
         // Объединяем все данные в один заголовок
-        var saveHeader = `${this.$store.state.saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$store.state.saveGameVer}`;
+        var saveHeader = `${this.$store.state.saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$store.state.saveGameVersion}`;
         // Шифруем
         await WebCrypto(saveHeader, JSON.stringify(this.$store.state))
         // Оповещение
@@ -374,7 +418,13 @@ export default {
           saveName: this.$store.state.saveName, 
           saveTime: this.$store.state.saveTime, 
           saveID: this.$store.state.saveID, 
-          saveGameVer: this.$store.state.saveGameVer
+          saveGameVersion: this.$store.state.saveGameVersion
+        })
+        this.savesHeaderIDBSorted.unshift({  // Для QuickSave
+          saveName: this.$store.state.saveName, 
+          saveTime: this.$store.state.saveTime, 
+          saveID: this.$store.state.saveID, 
+          saveGameVersion: this.$store.state.saveGameVersion
         })
         this.savesList.sort(this.sortBy('saveID'));
         this.updateNumberSavesIDB()
@@ -386,7 +436,7 @@ export default {
       }
     },
     // Перезапись сохранения
-    async overwriteSave(saveName, saveTime, saveID, saveGameVer){
+    async overwriteSave(saveName, saveTime, saveID, saveGameVersion){
       try {
         this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm"); // Обновляем время сохранения
         this.$store.state.saveID = dayjs().format("x");// миллисекунды с начала эпохи Unix
@@ -407,8 +457,9 @@ export default {
         })
         // Сортируем (чтобы новый элемент в списке вышел на первое место (по времени))
         this.savesList.sort(this.sortBy('saveID'));
+        this.savesHeaderIDBSorted.sort(this.sortBy('saveID')); // Для QuickSave
         // Удаляем выбранное сохранение для перезаписи, если шифрование не сработает, сохранение не будет удалённо
-        localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVer}`)
+        localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVersion}`)
         // Автоматическое закрытие панели сохранений, если включено
         if (this.$store.state.autoCloseSavesDrawer) this.autoCloseDrawer()
       }
@@ -417,10 +468,10 @@ export default {
       }
     },
     // Загрузка сохранения
-    async loadSave(saveName, saveTime, saveID, saveGameVer){
+    async loadSave(saveName, saveTime, saveID, saveGameVersion){
       try {
         // Заменяем store
-        await this.$store.replaceState(await WebCrypto(`${saveName},${saveTime},${saveID},${saveGameVer}`));
+        await this.$store.replaceState(await WebCrypto(`${saveName},${saveTime},${saveID},${saveGameVersion}`));
         // Перерисовываем компоненты плееров для применянения настроек звука
         this.$store.state.reRender_mChatPlayersVolume += 1;
         // Фиксируем новые переменные
@@ -441,10 +492,10 @@ export default {
       }
     },
     // Удаление сохранения
-    deleteSave(saveName, saveTime, saveID, saveGameVer) {
+    deleteSave(saveName, saveTime, saveID, saveGameVersion) {
       try {
         // Удаляем
-        localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVer}`)
+        localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVersion}`)
         // Оповещенеие
         this.$store.state.gameLang 
           ? iziToast.info({message: 'Saving has been deleted!', position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
@@ -455,6 +506,7 @@ export default {
         })
         // Удаляем из списка
         this.savesList.splice(indexDeletedSave, 1);
+        this.savesHeaderIDBSorted.splice(indexDeletedSave, 1); // Для QuickSave
         // Стал ли список пустым?
         // Обновляем кол-во сохранение в БД
         this.updateNumberSavesIDB()
@@ -476,6 +528,7 @@ export default {
         this.showModalDelSavesAll = false
         // Обнуляем список сохранений (перерисовываем список)
         this.savesList = []
+        this.savesHeaderIDBSorted = [] // Для QuickSave
         this.updateNumberSavesIDB()
       }
       catch(error) {
@@ -629,7 +682,7 @@ export default {
                 saveName: saveHeaderElem[0], 
                 saveTime: saveHeaderElem[1], 
                 saveID: saveHeaderElem[2], 
-                saveGameVer: saveHeaderElem[3]
+                saveGameVersion: saveHeaderElem[3]
               })
             }
           } else {
@@ -654,7 +707,7 @@ export default {
       await location.reload()
     },
     autoCloseDrawer(){
-      this.$store.state.isOpenSavesDrawer = !this.$store.state.isOpenSavesDrawer
+      if (this.$store.state.isOpenSavesDrawer) this.$store.state.isOpenSavesDrawer = false;
     },
     // Записывает изменения стейта из v-model
     drawerShowState(isShow){

@@ -3,7 +3,7 @@
   <v-layout v-touch="{ right: () => SwipeRight(), left: () => SwipeLeft(), down: () => SwipeBottom(), up: () => SwipeTop() }">
     <v-content>
     <!-- Pages -->
-    <StartPageInfo v-if="$store.state.gameDisplayingStartPage" />
+    <FirstLaunchPageInfo v-if="$store.state.gameDisplayingStartPage" />
     <!-- Components -->
     <Age18WarningDialog />
     <Settings />
@@ -18,7 +18,7 @@
 <script>
 import Age18WarningDialog from "./components/Age18WarningDialog";
 import Navigation from "./components/Navigation";
-import StartPageInfo from "./Pages/StartPageInfo";
+import FirstLaunchPageInfo from "./Pages/FirstLaunchPageInfo";
 import Entry from "./Pages/Entry";
 
 export default {
@@ -57,6 +57,7 @@ export default {
       this.$store.state.radialMenuShow = true // Не менять, на телефоне прокрутка свайпами не соотвествует направлению прокрутки на компе
       this.$store.commit('updateStores');
     },
+    // Тригеры для появления и исчезновения radialMenu
     SwipeTop(){
       this.$store.state.radialMenuShow = false
       this.$store.commit('updateStores');
@@ -65,7 +66,7 @@ export default {
   components: {
     Age18WarningDialog,
     Navigation,
-    StartPageInfo,
+    FirstLaunchPageInfo,
     Entry,
     Settings: () => import('./components/Settings/Settings'),
     Saves: () => import('./components/Saves') // Ленивая загрузка компонента (Dynamic Imports) для повышения производительности

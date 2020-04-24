@@ -1,13 +1,13 @@
 <template>
 <section>
-    <v-color-picker 
-    :width='calcWidth - 32' 
-    flat 
-    mode='hexa'
-    v-model="color"
-    :key="$store.state.reRender_ColorPickerCanvas"
-    >
-    </v-color-picker>
+  <v-color-picker 
+  :width='calcWidth - 32' 
+  flat 
+  mode='hexa'
+  v-model="color"
+  :key="$store.state.reRender_ColorPickerCanvas"
+  >
+  </v-color-picker>
 </section>
 </template>
 

@@ -1,6 +1,7 @@
 import store from '../stores/store'
+import router from '../router'
 import hotkeys from 'hotkeys-js';
-
+import eventBus from './EventBus'
 
 // Получение текущих клавиатурных сокращений
 function keyboardShortcuts(){
@@ -39,46 +40,50 @@ export function bindHotkeys(){
   // Устанавливаем привязку на текущие клавиатурные сокращения
   hotkeys(keyShortcuts.allHotkeys, function (handler){
     if (store.state.gameHotkeysEnable && !store.state.isOpenSettingsDrawer) {
-      console.log('if passed')
+      // console.log('if passed')
       switch (handler.key) {
         case keyShortcuts.settingsOpen: {
-          console.log('you pressed ctrl+a!');
+          store.commit('isOpenSettingsDrawer')
           break;
         }
         case keyShortcuts.settingsToggleGlobalSoundEnable: {
-          console.log('you pressed ctrl+b!');
+          store.commit('gameGlobalSoundsEnable')
           break;
         }
         case keyShortcuts.journalOpen: {
-          console.log('you pressed r!');
+          router.push('/Diary')
           break;
         }
         case keyShortcuts.journalTabCharacters: {
-          console.log('you pressed f!');
+
           break;
         }
         case keyShortcuts.journalTabDiary: {
-          console.log('you pressed f!');
+
           break;
         }
         case keyShortcuts.journalTabAchievements: {
-          console.log('you pressed f!');
+
           break;
         }
+        // Открыть сохранения
         case keyShortcuts.savesOpen: {
-          console.log('you pressed f!');
+          store.commit('isOpenSavesDrawer')
           break;
         }
+        // Быстрое сохранение
         case keyShortcuts.savesQuickSave: {
-          console.log(keyShortcuts.savesQuickSave);
+          eventBus.$emit('QuickSave');
           break;
         }
+        // Быстрая загрузка 
         case keyShortcuts.savesQuickLoad: {
-          console.log('savesQuickLoad');
+          eventBus.$emit('QuickLoad');
           break;
         }
+        // Открыть чат
         case keyShortcuts.mChatOpen: {
-          console.log('mChatOpen');
+          store.commit('mChat_Show')
           break;
         }
       }      

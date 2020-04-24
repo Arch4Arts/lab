@@ -40,22 +40,22 @@ const store = new Vuex.Store({
     gameHotkeysEnable: false, // Горячие клавиши в игре 
     keyboardShortcutsVersion: '0',   
     settingsHotkeys: {
-      settingsOpen: 'O',                    // Открыть журнала
-      settingsToggleGlobalSoundEnable: 'P', // Вкл / выкл звук глобально
+      settingsOpen: 'o',                    // Открыть журнала
+      settingsToggleGlobalSoundEnable: 'p', // Вкл / выкл звук глобально
     },
     journalHotkeys: {
-      journalOpen: 'Q',            // Открыть журнала
-      journalTabCharacters: 'W',   // Открыть вкладку с персонажами 
-      journalTabDiary: 'E',        // Открыть вкладку с дневником
-      journalTabAchievements: 'R', // Открыть вкладку с достижениями   
+      journalOpen: 'q',            // Открыть журнала
+      journalTabCharacters: 'w',   // Открыть вкладку с персонажами 
+      journalTabDiary: 'e',        // Открыть вкладку с дневником
+      journalTabAchievements: 'r', // Открыть вкладку с достижениями   
     },
     savesHotkeys: {
-      savesOpen: 'A',      // Открыть сохранения
+      savesOpen: 'a',      // Открыть сохранения
       savesQuickSave: '1', // Быстрое сохранение
       savesQuickLoad: '3', // Быстрая загрузка
     },
     mChatHotkeys: {
-      mChatOpen: 'D',      // Открыть чат
+      mChatOpen: 'd',      // Открыть чат
     },
 
     
@@ -81,7 +81,7 @@ const store = new Vuex.Store({
     saveName: '', // Название сохранения
     saveTime: '', // Когда была сохранена игра
     saveID: 0, // Номер сейва, совпадает с названием в localStorage
-    saveGameVer: '', // Версия сохранённой игры
+    saveGameVersion: '', // Версия сохранённой игры
     incompatibleSavesVer: 0,
   },
   plugins: [createPersistedState({ // WebCrypto здесь не подходит, тут однопоток.

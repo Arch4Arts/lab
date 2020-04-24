@@ -30,9 +30,6 @@ import 'izitoast/dist/css/iziToast.min.css';
 import iziToast from 'izitoast/dist/js/iziToast.min.js';
 Vue.use(VueIziToast);
 
-import VueVirtualScroller from 'vue-virtual-scroller'
-Vue.use(VueVirtualScroller)
-
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
 // import 'roboto-fontface/css/roboto/roboto-fontface.css'
