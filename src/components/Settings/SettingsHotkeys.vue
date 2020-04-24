@@ -6,7 +6,7 @@
   <!-- RUSSIAN -->
   <section v-else>
   <!-- Вкл/Выкл горячих клавиш -->
-  <v-list subheader two-line flat>
+  <v-list :disabled="this.$root.isTouchDevice" subheader two-line flat>
     <v-list-item-group multiple>
       <v-list-item class="v-list-item">
         <!-- Надпись -->
@@ -315,7 +315,6 @@ export default {
 .hotkey-section-option__desc {
   align-Items: center;
   display: flex;
-  height: 30px;
   width: 70%;
 
   padding-left: 8px;
@@ -329,7 +328,6 @@ export default {
   align-Items: center;
   display: flex;
 
-  height: 30px;
   width: 25%;
 
   margin-left: 6px;

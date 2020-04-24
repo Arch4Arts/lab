@@ -108,6 +108,7 @@ new Vue({
   router,
   store,
   vuetify,
+  
   data: {
     isTouchDevice: false, // Является ли устройство сенсорным
   },
@@ -126,7 +127,7 @@ new Vue({
     })
   },
   methods: {
-    detectTouchDevice(){
+    detectTouchDevice(){ // https://stackoverflow.com/a/4819886/11574854
       return !!('ontouchstart' in window  // works on most browsers 
       || navigator.maxTouchPoints);       // works on IE10/11 and Surface
     },
