@@ -108,20 +108,36 @@ new Vue({
   router,
   store,
   vuetify,
+  data: {
+    isTouchDevice: false, // Является ли устройство сенсорным
+  },
   mounted: function () { // Определение языка при первой загрузке / А также тип устройства
-    this.$nextTick(function () { 
+    this.$nextTick(function () {
+      // Определение языка ТОЛЬКО при первой загрузке 
+      this.detectLanguage()
+      // // Является ли устройство сенсорным
+      this.isTouchDevice = this.detectTouchDevice()
+      // Обновляем оформление игры
+      updateAllThemes()
+      // Подключаем горячие клавиши (проверка внутри функции)
+      bindHotkeys()
+      // проверка состояния звука
+      checkSoundsEnable()
+    })
+  },
+  methods: {
+    detectTouchDevice(){
+      return !!('ontouchstart' in window  // works on most browsers 
+      || navigator.maxTouchPoints);       // works on IE10/11 and Surface
+    },
+    detectLanguage(){
       if (store.state.gameFirstLoad) {
         let lang = window.navigator ? (window.navigator.language || window.navigator.systemLanguage || window.navigator.userLanguage) : "ru";
         lang = lang.substr(0, 2).toLowerCase();
         store.commit('gameFirstLoad');
         if ( lang == 'ru' ) store.commit('langChange');
       }
-      updateAllThemes()
-      checkSoundsEnable()
-      bindHotkeys()
-    })
-  },
-  methods: {
+    },
     errNotify(error){
       Sentry.captureException(error); // Отправка ошибки черезе Sentry
       console.log(error)

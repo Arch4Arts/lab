@@ -37,6 +37,7 @@ const store = new Vuex.Store({
       { themeName: 'NordDark' },
       { themeName: 'CustomDark' }
     ],
+
     gameHotkeysEnable: false, // Горячие клавиши в игре 
     keyboardShortcutsVersion: '0',   
     settingsHotkeys: {
@@ -57,7 +58,6 @@ const store = new Vuex.Store({
     mChatHotkeys: {
       mChatOpen: 'd',      // Открыть чат
     },
-
     
     reRender_mChatPlayersVolume: 0, // Используется для перерендера плееров в чате, изменяется в Saves.vue 
     reRender_ColorPickerCanvas: 0, // Для перерисовски окна с выбором цвета (исчезает при изменении размера)

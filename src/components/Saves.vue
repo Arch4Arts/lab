@@ -17,7 +17,7 @@
         <v-text-field dark
           class="save-name__input"
           color="grey lighten-2"
-          autofocus
+          :autofocus="(this.$root.isTouchDevice) ? false : true"
           :placeholder="($store.state.gameLang) ? defaultSaveName : defaultSaveName_ru"
           @keyup.enter="saveGame()"
           v-model="saveNameInput"
@@ -327,6 +327,8 @@ export default {
   mounted(){
     eventBus.$on('QuickSave', this.isQuickSave)
     eventBus.$on('QuickLoad', this.isQuickLoad)
+    // Проверка является ли устройство сенсорным, нужно для управлением autofocus на input 
+    if ("ontouchstart" in document.documentElement) this.hasTouch = true
   },
   beforeDestroy(){
     eventBus.$off('QuickSave')

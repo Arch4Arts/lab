@@ -9,7 +9,9 @@
     <Settings />
     <Saves />
     <navigation v-if="$store.state.appHeaderEnable" />
-      <router-view v-if="!$store.state.gameDisplayingStartPage" />
+      <router-view v-if="!$store.state.gameDisplayingStartPage">
+        <!-- Entry --> 
+      </router-view>
     </v-content>
   </v-layout>  
   </v-app>
