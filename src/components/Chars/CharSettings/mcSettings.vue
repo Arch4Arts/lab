@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import ColorPicker from "../CharSettings/ColorPicker"
+import ColorPicker from "./ColorPicker"
 // import ColorPicker from "../ColorPicker.vue"
 import RussianName from "./DeclensionRussianNames.js"
 

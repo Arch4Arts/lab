@@ -113,7 +113,7 @@ new Vue({
     isTouchDevice: false, // Является ли устройство сенсорным
   },
   mounted: function () { // Определение языка при первой загрузке / А также тип устройства
-    this.$nextTick(function () {
+    this.$nextTick(function () { // https://vuejsdevelopers.com/2019/01/22/vue-what-is-next-tick/
       // Определение языка ТОЛЬКО при первой загрузке 
       this.detectLanguage()
       // // Является ли устройство сенсорным
