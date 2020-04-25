@@ -7,7 +7,7 @@
 			<!-- Название игры + версия -->
 			<router-link to="/" tag="span" style="cursor:pointer">
 				<v-toolbar-title style="opacity: 0.75">
-						{{ $store.state.gameName + ' ' + $store.state.gameVersion }} 
+						{{ this.$root.gameName + ' ' + this.$root.gameVersion }} 
 				</v-toolbar-title>
 			</router-link>
 			<v-spacer></v-spacer>

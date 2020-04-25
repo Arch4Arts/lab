@@ -333,7 +333,7 @@ export default {
         this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm"); // Время сохранения
 
         this.$store.state.saveID = dayjs().format("x"); // миллисекунды с начала эпохи Unix
-        this.$store.state.saveGameVersion = this.$store.state.gameVersion; // Версия игры на момент сохранения
+        this.$store.state.saveGameVersion = this.$root.gameVersion; // Версия игры на момент сохранения
 
         // Объединяем все данные в один заголовок
         var saveHeader = `${this.$store.state.saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$store.state.saveGameVersion}`;
@@ -366,7 +366,7 @@ export default {
         this.$store.state.saveID = dayjs().format("x");// миллисекунды с начала эпохи Unix
         
         // Объединяем все данные в один заголовок
-        var saveHeader = `${saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$store.state.gameVersion}`;
+        var saveHeader = `${saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$root.gameVersion}`;
         await WebCrypto(saveHeader, JSON.stringify(this.$store.state)) // Добавем новый за место старого (удалённого)
         // Оповещение
         this.$store.state.gameLang 

@@ -25,9 +25,6 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    gameName: packageJson.name,
-    gameVersion: packageJson.version, 
-
     gameLang: true, // true: en / false: ru
     gameFont: 'Roboto',
     gameFontSize: '14pt',

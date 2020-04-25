@@ -4,12 +4,12 @@ import App from './App.vue'
 import router from './router.js'
 import store from './stores/store'
 import "normalize.css"
+
 import vuetify from './styles/vuetify'
 import '@fortawesome/fontawesome-free/css/all.css' // Не менять, в free скидывать файлы от Pro
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
-import favicon from './assets/favicon.png'; // Для экспорта иконки в run build
 
-Vue.config.productionTip = false
+import favicon from './assets/favicon.png'; // Для экспорта иконки в run build
 
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer'
@@ -34,7 +34,13 @@ import updateAllThemes from './styles/updateAllThemes';
 import { checkSoundsEnable } from './components/GameSound'
 import { bindHotkeys, unbindHotkeys }from './components/Hotkeys'
 
+import { SentryPush } from './components/GlobalErrorsHandling';
 import './components/GlobalErrorsHandling'
+
+
+import { name as gameName } from  '../package.json';
+import { version as gameVersion} from  '../package.json';
+Vue.config.productionTip = false
 
 new Vue({
   router,
@@ -42,8 +48,11 @@ new Vue({
   vuetify,
   
   data: {
+    gameName: gameName,
+    gameVersion: gameVersion,
+
     isTouchDevice: false, // Является ли устройство сенсорным
-    gameEdition: process.env.VUE_APP_EDITION,
+    gameEdition: process.env.VUE_APP_EDITION, // Присваивается при npm run build-special
   },
   mounted: function () { // Определение языка при первой загрузке / А также тип устройства
     this.$nextTick(function () { // https://vuejsdevelopers.com/2019/01/22/vue-what-is-next-tick/
@@ -57,7 +66,6 @@ new Vue({
       bindHotkeys()
       // проверка состояния звука
       checkSoundsEnable()
-      console.log(this.gameEdition)
     })
   },
   methods: {
@@ -74,11 +82,8 @@ new Vue({
       }
     },
     errNotify(error){
-      Sentry.captureException(error); // Отправка ошибки черезе Sentry
-      console.log(error)
-      this.$store.state.gameLang 
-      ? iziToast.info({message: `Error: ${error}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
-      : iziToast.info({message: `Ошибка: ${error}`, position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle', close: true, closeOnClick: false, drag: false, timeout: 0})
+      SentryPush(error) // Отправка ошибки через Sentry
+      console.error(`${error}`);
     }
   },
   watch: { // Клавиатурные сокращения

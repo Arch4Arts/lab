@@ -25,6 +25,7 @@
 <section v-else>
 <br><br>
   <mChatTestPage />
+  <v-btn @click="test()"></v-btn>
   <slut />
   <horo />
   <mi7 />
@@ -69,6 +70,11 @@ export default {
     slut: () => import('./slut_special'),
     mi7: () => import('./mi7_slut_special')
   },
+  methods: {
+    test(){
+      consl.log()
+    }
+  }
 }
 </script>
 
