@@ -20,7 +20,7 @@ import chatIcon from './assets/user-default-avatar.svg'
 import Message from './Message.vue'
 import Suggestions from './Suggestions.vue'
 
-import virtualList from 'vue-virtual-scroll-list'
+import VirtualList from 'vue-virtual-scroll-list'
 
 export default {
   data () {

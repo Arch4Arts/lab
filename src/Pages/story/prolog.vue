@@ -25,6 +25,9 @@
 <section v-else>
 <br><br>
   <mChatTestPage />
+  <slut />
+  <horo />
+  <mi7 />
 <br><br>
   <h1>Пролог</h1>
   <h2>Пролог</h2>
@@ -55,12 +58,16 @@ import Sister from '../../components/Chars/CharStyles/Sister'
 import mcSettings from '../../components/Chars/CharSettings/mcSettings'
 import mChatTestPage from '../../components/mChatTestPage'
 
+
 export default {
   components: {
     MC,
     Sister,
     mcSettings,
-    mChatTestPage
+    mChatTestPage,
+    horo: () => import('./horo_special'),
+    slut: () => import('./slut_special'),
+    mi7: () => import('./mi7_slut_special')
   },
 }
 </script>

@@ -63,6 +63,9 @@ export default {
     SwipeTop(){
       this.$store.state.radialMenuShow = false
       this.$store.commit('updateStores');
+    },
+    testt(){
+      console.log('11111111')
     }
   },
   components: {
@@ -70,8 +73,8 @@ export default {
     Navigation,
     FirstLaunchPageInfo,
     Entry,
-    Settings: () => import('./components/Settings/Settings'),
-    Saves: () => import('./components/Saves') // Ленивая загрузка компонента (Dynamic Imports) для повышения производительности
+    Settings: () => import('./components/Settings/Settings'), // Ленивая загрузка компонента (Dynamic Imports) для повышения производительности
+    Saves: () => import('./components/Saves/Saves'),
   },
 }
 </script>

@@ -1,10 +1,11 @@
 {
   "name": "lab",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "build-special": "vue-cli-service build --mode special"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.13.0",
@@ -24,18 +25,17 @@
     "vue": "^2.6.11",
     "vue-izitoast": "^1.2.1",
     "vue-plyr": "^6.0.4",
-    "vue-pull-to": "^0.1.8",
     "vue-router": "^3.1.6",
     "vue-scroll-behavior": "^0.2.0",
-    "vue-virtual-scroll-list": "2.1.1",
-    "vuetify": "^2.2.23",
-    "vuex": "^3.2.0",
+    "vue-virtual-scroll-list": "2.1.2",
+    "vuetify": "^2.2.25",
+    "vuex": "^3.3.0",
     "vuex-persistedstate": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.3.1",
     "@vue/cli-service": "^4.3.1",
-    "css-loader": "^3.5.2",
+    "css-loader": "^3.5.3",
     "file-loader": "^6.0.0",
     "material-design-icons-iconfont": "^5.0.1",
     "sass": "^1.26.5",
