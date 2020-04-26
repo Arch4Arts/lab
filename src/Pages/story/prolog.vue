@@ -25,10 +25,6 @@
 <section v-else>
 <br><br>
   <mChatTestPage />
-  <v-btn @click="test()"></v-btn>
-  <slut />
-  <horo />
-  <mi7 />
 <br><br>
   <h1>Пролог</h1>
   <h2>Пролог</h2>
@@ -66,14 +62,9 @@ export default {
     Sister,
     mcSettings,
     mChatTestPage,
-    horo: () => import('./horo_special'),
-    slut: () => import('./slut_special'),
-    mi7: () => import('./mi7_slut_special')
   },
   methods: {
-    test(){
-      consl.log()
-    }
+
   }
 }
 </script>
