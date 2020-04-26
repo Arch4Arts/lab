@@ -9,55 +9,44 @@
       <v-list-item-title>{{ source.saveName }}</v-list-item-title>
       <v-list-item-subtitle>{{ source.saveTime }}</v-list-item-subtitle>
     </v-list-item-content>
+
     <!-- КНОПКИ WRITE/LOAD/DELETE -->
-    <v-list-item-action 
-      v-for="(icon ,i) in saveLoadDelete_btnsIconList" 
-      :key="`icon_${i}`">
-      <!-- EN WRITE/LOAD/DELETE-->
-      <v-tooltip v-if="$store.state.gameLang" bottom>
+    <v-list-item-action class="position-btns">
+      <!-- Перезаписать-->
+      <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <v-btn v-on="on" icon
-          class="saves-v-btns"
-          @click="
-            (icon == 'fas fa-trash') 
-            ? 
-            deleteSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion) 
-            : 
-              (icon == 'fas fa-download') 
-              ? 
-              overwriteSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion) 
-              : 
-              loadSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion)"
-          > 
-            <v-icon :color="(icon == 'fas fa-download') ? 'rgb(126, 193, 255)' : (icon == 'fas fa-upload') ? 'rgb(255, 254, 173)' : 'rgb(255, 102, 102)'"> {{ icon }} </v-icon>
+            class="overwrite-btn"
+            @click="overwriteSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion)"> 
+            <v-icon>fas fa-download</v-icon>
           </v-btn>
         </template>
-          <span v-if="icon == 'fas fa-download'">Overwrite</span>
-          <span v-if="icon == 'fas fa-upload'">Load</span>
-          <span v-if="icon == 'fas fa-trash'">Delete</span>
+          <span v-if="$store.state.gameLang">Overwrite</span>
+          <span v-else>Перезаписать</span>
       </v-tooltip>
-      <!-- RU СОХРАНИТЬ/ЗАГРУЗИТЬ/УДАЛИТЬ -->
-      <v-tooltip v-else bottom>
+      <!-- Загрузить -->
+      <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <v-btn v-on="on" icon
-          class="saves-v-btns"
-          @click="
-            (icon == 'fas fa-trash') 
-            ? 
-            deleteSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion) 
-            : 
-              (icon == 'fas fa-download') 
-              ? 
-              overwriteSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion) 
-              : 
-              loadSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion)"
-          > 
-            <v-icon :color="(icon == 'fas fa-download') ? 'rgb(126, 193, 255)' : (icon == 'fas fa-upload') ? 'rgb(255, 254, 173)' : 'rgb(255, 102, 102)'"> {{ icon }} </v-icon>
+            class="load-btn"
+            @click="loadSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion)"> 
+            <v-icon>fas fa-upload</v-icon>
           </v-btn>
         </template>
-          <span v-if="icon == 'fas fa-download'">Перезаписать</span>
-          <span v-if="icon == 'fas fa-upload'">Загрузить</span>
-          <span v-if="icon == 'fas fa-trash'">Удалить</span>
+          <span v-if="$store.state.gameLang">Load</span>
+          <span v-else>Загрузить</span>
+      </v-tooltip>
+      <!-- Удалить -->
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on }">
+          <v-btn v-on="on" icon
+            class="delete-btn"
+            @click="deleteSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion)"> 
+            <v-icon>fas fa-trash</v-icon>
+          </v-btn>
+        </template>
+          <span v-if="$store.state.gameLang">Delete</span>
+          <span v-else>Удалить</span>
       </v-tooltip>
     </v-list-item-action>
   </v-list-item>    
@@ -72,10 +61,6 @@ export default {
       default () {
         return {}
       }
-    },
-    saveLoadDelete_btnsIconList: {
-      type: Array,
-      required: true
     },
     overwriteSave: {
       type: Function,
@@ -98,7 +83,23 @@ export default {
 
 <style lang="scss" scoped>
 
-.saves-v-btns {
+.position-btns {
+  display: inline;
+}
+
+.overwrite-btn {
+  color: rgb(126, 193, 255) !important;
+  background: transparent !important;
+}
+
+.load-btn {
+  color: rgb(255, 254, 173) !important;
+  background: transparent !important;
+}
+
+.delete-btn {
+  margin-left: 15px;
+  color: rgb(255, 102, 102) !important;
   background: transparent !important;
 }
 

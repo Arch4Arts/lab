@@ -32,35 +32,33 @@
             <span v-if="$store.state.gameLang">New save</span>
             <span v-else>Новое сохранение</span>
         </v-tooltip>
-        <v-btn @click="test()"></v-btn>
       </v-flex>
 
-      <!-- СПИСОК СОХРАНЕНИЙ -->
-      <v-list two-line subheader>
+      <!-- Список сохранений -->
+      <v-list v-show="numberSavesIDB > 0" two-line subheader>
         <v-list-item-group v-model="ListSelectedSaves" multiple>
-        <!-- Список сохранений -->
-        <div class="saves-list"> 
-          <!-- Если нет сохранений -->
-          <div v-if="$store.state.gameLang" v-show="numberSavesIDB == 0" class="text-center"><v-divider/><br>No saves<br><br></div>
-          <div v-else v-show="numberSavesIDB == 0" class="text-center"><v-divider/><br>Сохранения отсутствуют<br><br></div>
-          <!-- Если есть сохранения -->
           <virtual-list
-            :size="0"
-            :keeps="10"
+            class="saves-list"
+            :size="30"
+            :keeps="20"
 
             data-key="saveID"
             :data-sources="savesList"
             :data-component="component"
             :extra-props="{ 
-              saveLoadDelete_btnsIconList: saveLoadDelete_btnsIconList,
+              numberSavesIDB: numberSavesIDB,
               overwriteSave: overwriteSave,
               loadSave: loadSave,
               deleteSave: deleteSave,
             }"
           />
-        </div>
         </v-list-item-group>
       </v-list>
+      <!-- Если нет сохранений -->
+      <div class="saves-list" v-show="numberSavesIDB == 0">
+        <div v-if="$store.state.gameLang" class="text-center"><br>No saves<br><br></div>
+        <div v-else class="text-center"><br>Сохранения отсутствуют<br><br></div>
+      </div>
     </v-card>
     <!-- СОХР НА ДИСК / ЗАГР С ДИСКА / ПЕРЕЗАПУСК / УДАЛЕНИЕ ВСЕХ СОХРАНЕНИЙ -->
     <div class="text-right">
@@ -238,8 +236,6 @@ export default {
 
     isEndSaveList: false, // Достигнут ли конец списка
     savesNumber: 0, // Кол-во сейвов
-
-    saveLoadDelete_btnsIconList: ['fas fa-download','fas fa-upload','fas fa-trash'],
 
     ListSelectedSaves: [],
 
@@ -451,9 +447,9 @@ export default {
             saveFile = `${saveFile}((${this.ListSelectedSaves[i]},cipherData${cipherData}iv${iv}))`
         }
         if (this.$store.state.gameLang)
-          this.saveToDisk(`${this.$store.state.gameName}.${(i == 1 ? 'save' : 'saves')}`, saveFile)
+          this.saveToDisk(`${this.$root.gameName}.${(i == 1 ? 'save' : 'saves')}`, saveFile)
         else
-          this.saveToDisk(`${this.$store.state.gameName}.${(i == 1 ? 'save' : 'saves')}`, saveFile)
+          this.saveToDisk(`${this.$root.gameName}.${(i == 1 ? 'save' : 'saves')}`, saveFile)
       }
       else if (this.numberSavesIDB > 0) { // Если нет, обрабатываем всё
         var allSavesKey = await localforage.keys().then(keysList => keysList)
@@ -472,9 +468,9 @@ export default {
             saveFile = `${saveFile}((${allSavesKey[i]},cipherData${cipherData}iv${iv}))`
         }
         if (this.$store.state.gameLang)
-          this.saveToDisk(`${this.$store.state.gameName}.saves`, saveFile)
+          this.saveToDisk(`${this.$root.gameName}.saves`, saveFile)
         else
-          this.saveToDisk(`${this.$store.state.gameName}.saves`, saveFile)
+          this.saveToDisk(`${this.$root.gameName}.saves`, saveFile)
       }
       else {
         this.$store.state.gameLang 
@@ -611,9 +607,6 @@ export default {
     drawerShowState(isShow){
       if (!isShow) this.$store.commit('updateStores')
     },
-    test(){
-      console.log(this.savesList)
-    }
   },
   components: {
     savesListComp,
@@ -646,6 +639,7 @@ export default {
 }
 
 .v-list {
+  padding: 0px 0px 0px 0px !important;
   background: var(--saves--v-list--background) !important;
 }
 
@@ -654,6 +648,9 @@ export default {
   height: 80vh;
   overflow-y: auto;
 
+  background: var(--saves--v-list--background) !important;
+
+  margin-bottom: 8px;
   border-top: var(--saves--saves-list--border-top);
   border-bottom: var(--saves--saves-list--border-top);
 }
