@@ -43,13 +43,13 @@ module.exports = {
         ]
       : // Development
         [
-          new SentryCliPlugin({ // Обработчик ошибок
-            release: packageJson.version, // извлечение версии игры из переменной
-            include: 'D:/Dev/lab/dist/js/', // Загрузка js файлов на сервер
-            // filenameTransform: filename => '~/js/' + filename,
-            ignoreFile: '.sentrycliignore',
-            ignore: ['node_modules', 'webpack.config.js'],
-          }),
+          // new SentryCliPlugin({ // Обработчик ошибок
+          //   release: packageJson.version, // извлечение версии игры из переменной
+          //   include: 'D:/Dev/lab/dist/js/', // Загрузка js файлов на сервер
+          //   // filenameTransform: filename => '~/js/' + filename,
+          //   ignoreFile: '.sentrycliignore',
+          //   ignore: ['node_modules', 'webpack.config.js'],
+          // }),
         ]
   },
   chainWebpack: config => {

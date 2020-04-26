@@ -27,7 +27,7 @@ export function SentryPush(error){
   errorMessage(error)
 }
 
-if (process.env.NODE_ENV !== 'production') { // Включение Sentry только для продакшена
+if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена
   let uniqid = require('uniqid');
   Sentry.init({
     dsn: 'https://6b82c070a6874f70ad6e9fe5ebcb9fb8@sentry.io/1509214',
@@ -90,7 +90,7 @@ if (process.env.NODE_ENV !== 'production') { // Включение Sentry тол
 
 
 Vue.config.errorHandler = function(err, vm, info) { // Обработчик ошибок Vue
-  if (process.env.NODE_ENV !== 'production') 
+  if (process.env.NODE_ENV === 'production') 
     Sentry.captureException(err, vm, info);
 
   console.error(`${err} \n${info}`);
