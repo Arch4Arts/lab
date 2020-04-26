@@ -225,7 +225,8 @@ iziToast.settings({
   close: false,
   icon: 'fal fa-info-circle',
   messageSize: '16',
-  theme: 'light'
+  theme: 'light',
+  position: 'bottomCenter'
 });
 
 export default {
@@ -318,143 +319,118 @@ export default {
     },
     // Сохранение игры
     async saveGame(isQuickSave){
-      try {
-        // Проверка на QuickSave
-        if (isQuickSave) { 
-          (this.$store.state.gameLang) ? name = 'Quick Save' : name = 'Быстрое сохранение'          
-        } else {
-          var name = this.saveNameInput // Копируем значение
-          this.saveNameInput = '' // И очищаем поле ввода
-          if (name === '') // Проверка введенно ли имя сохранения, если нет, назначаем стандартное
-            (this.$store.state.gameLang) ? name = 'New Save' : name = 'Новое сохранение'    
-        }
-
-        this.$store.state.saveName = name; // Имя
-        this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm"); // Время сохранения
-
-        this.$store.state.saveID = dayjs().format("x"); // миллисекунды с начала эпохи Unix
-        this.$store.state.saveGameVersion = this.$root.gameVersion; // Версия игры на момент сохранения
-
-        // Объединяем все данные в один заголовок
-        var saveHeader = `${this.$store.state.saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$store.state.saveGameVersion}`;
-        // Шифруем
-        await WebCrypto(saveHeader, JSON.stringify(this.$store.state))
-        // Оповещение
-        this.$store.state.gameLang 
-          ? iziToast.info({message: 'Game successfully saved', position: 'bottomCenter'})
-          : iziToast.info({message: 'Игра успешно сохранена', position: 'bottomCenter'})
-        // Добавляем новоё сохранение в отображаемый список
-        this.savesList.unshift({ 
-          saveName: this.$store.state.saveName, 
-          saveTime: this.$store.state.saveTime, 
-          saveID: this.$store.state.saveID, 
-          saveGameVersion: this.$store.state.saveGameVersion
-        })
-        this.savesList.sort(this.sortBy('saveID'));
-        this.updateNumberSavesIDB()
-        // Автоматическое закрытие панели сохранений, если включено
-        if (this.$store.state.autoCloseSavesDrawer) this.autoCloseDrawer()
+      // Проверка на QuickSave
+      if (isQuickSave) { 
+        (this.$store.state.gameLang) ? name = 'Quick Save' : name = 'Быстрое сохранение'          
+      } else {
+        var name = this.saveNameInput // Копируем значение
+        this.saveNameInput = '' // И очищаем поле ввода
+        if (name === '') // Проверка введенно ли имя сохранения, если нет, назначаем стандартное
+          (this.$store.state.gameLang) ? name = 'New Save' : name = 'Новое сохранение'    
       }
-      catch(error) {
-        this.$root.errNotify(error)
-      }
+
+      this.$store.state.saveName = name; // Имя
+      this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm"); // Время сохранения
+
+      this.$store.state.saveID = dayjs().format("x"); // миллисекунды с начала эпохи Unix
+      this.$store.state.saveGameVersion = this.$root.gameVersion; // Версия игры на момент сохранения
+
+      // Объединяем все данные в один заголовок
+      var saveHeader = `${this.$store.state.saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$store.state.saveGameVersion}`;
+      // Шифруем
+      await WebCrypto(saveHeader, JSON.stringify(this.$store.state))
+      // Оповещение
+      this.$store.state.gameLang 
+        ? iziToast.info({message: 'Game successfully saved'})
+        : iziToast.info({message: 'Игра успешно сохранена'})
+      // Добавляем новоё сохранение в отображаемый список
+      this.savesList.unshift({ 
+        saveName: this.$store.state.saveName, 
+        saveTime: this.$store.state.saveTime, 
+        saveID: this.$store.state.saveID, 
+        saveGameVersion: this.$store.state.saveGameVersion
+      })
+      this.savesList.sort(this.sortBy('saveID'));
+      this.updateNumberSavesIDB()
+      // Автоматическое закрытие панели сохранений, если включено
+      if (this.$store.state.autoCloseSavesDrawer) this.autoCloseDrawer()
     },
     // Перезапись сохранения
     async overwriteSave(saveName, saveTime, saveID, saveGameVersion){
-      try {
-        this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm"); // Обновляем время сохранения
-        this.$store.state.saveID = dayjs().format("x");// миллисекунды с начала эпохи Unix
-        
-        // Объединяем все данные в один заголовок
-        var saveHeader = `${saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$root.gameVersion}`;
-        await WebCrypto(saveHeader, JSON.stringify(this.$store.state)) // Добавем новый за место старого (удалённого)
-        // Оповещение
-        this.$store.state.gameLang 
-          ? iziToast.info({message: 'Saving successfully overwritten', position: 'bottomCenter'})
-          : iziToast.info({message: 'Сохранение успешно перезаписано', position: 'bottomCenter'})
-        // Ищем выбранное сохранение для перезаписи и обновляем его время и ID (чтобы не перерендоривать весь список)
-        this.savesList.find(function(item) {
-          if (item.saveID === saveID) {
-            item.saveTime = dayjs().format("DD.MM.YYYY - HH:mm");
-            item.saveID = store.state.saveID;
-          }
-        })
-        // Сортируем (чтобы новый элемент в списке вышел на первое место (по времени))
-        this.savesList.sort(this.sortBy('saveID'));
-        // Удаляем выбранное сохранение для перезаписи, если шифрование не сработает, сохранение не будет удалённо
-        localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVersion}`)
-        // Автоматическое закрытие панели сохранений, если включено
-        if (this.$store.state.autoCloseSavesDrawer) this.autoCloseDrawer()
-      }
-      catch(error) {
-        this.$root.errNotify(error)
-      }
+      this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm"); // Обновляем время сохранения
+      this.$store.state.saveID = dayjs().format("x");// миллисекунды с начала эпохи Unix
+      
+      // Объединяем все данные в один заголовок
+      var saveHeader = `${saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$root.gameVersion}`;
+      await WebCrypto(saveHeader, JSON.stringify(this.$store.state)) // Добавем новый за место старого (удалённого)
+      // Оповещение
+      this.$store.state.gameLang 
+        ? iziToast.info({message: 'Saving successfully overwritten'})
+        : iziToast.info({message: 'Сохранение успешно перезаписано'})
+      // Ищем выбранное сохранение для перезаписи и обновляем его время и ID (чтобы не перерендоривать весь список)
+      this.savesList.find(function(item) {
+        if (item.saveID === saveID) {
+          item.saveTime = dayjs().format("DD.MM.YYYY - HH:mm");
+          item.saveID = store.state.saveID;
+        }
+      })
+      // Сортируем (чтобы новый элемент в списке вышел на первое место (по времени))
+      this.savesList.sort(this.sortBy('saveID'));
+      // Удаляем выбранное сохранение для перезаписи, если шифрование не сработает, сохранение не будет удалённо
+      localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVersion}`)
+      // Автоматическое закрытие панели сохранений, если включено
+      if (this.$store.state.autoCloseSavesDrawer) this.autoCloseDrawer()
     },
     // Загрузка сохранения
     async loadSave(saveName, saveTime, saveID, saveGameVersion){
-      try {
-        // Заменяем store
-        await this.$store.replaceState(await WebCrypto(`${saveName},${saveTime},${saveID},${saveGameVersion}`));
-        // Перерисовываем компоненты плееров для применянения настроек звука
-        this.$store.state.reRender_mChatPlayersVolume += 1;
-        // Фиксируем новые переменные
-        this.$store.commit('updateStores');
-        // Обновляем темы
-        updateAllThemes()
-        // Очистка списка выбранных сохранеий (т.к они выбираются при нажатии кнопок: Перезаписи и Загрузки сохранения)
-        this.ListSelectedSaves = [];
-        // Автоматическое закрытие панели сохранений, если включено
-        if (this.$store.state.autoCloseSavesDrawer) this.autoCloseDrawer()
-        // Оповещение
-        this.$store.state.gameLang 
-          ? iziToast.info({message: 'Game loaded successfully', position: 'bottomCenter', backgroundColor: 'rgb(255, 254, 173)'})
-          : iziToast.info({message: 'Игра загружена успешно', position: 'bottomCenter', backgroundColor: 'rgb(255, 254, 173)'})
-      }
-      catch(error) {
-        this.$root.errNotify(error)
-      }
+      // Заменяем store
+      await this.$store.replaceState(await WebCrypto(`${saveName},${saveTime},${saveID},${saveGameVersion}`));
+      // Перерисовываем компоненты плееров для применянения настроек звука
+      this.$store.state.reRender_mChatPlayersVolume += 1;
+      // Фиксируем новые переменные
+      this.$store.commit('updateStores');
+      // Обновляем темы
+      updateAllThemes()
+      // Очистка списка выбранных сохранеий (т.к они выбираются при нажатии кнопок: Перезаписи и Загрузки сохранения)
+      this.ListSelectedSaves = [];
+      // Автоматическое закрытие панели сохранений, если включено
+      if (this.$store.state.autoCloseSavesDrawer) this.autoCloseDrawer()
+      // Оповещение
+      this.$store.state.gameLang 
+        ? iziToast.info({message: 'Game loaded successfully', backgroundColor: 'rgb(255, 254, 173)'})
+        : iziToast.info({message: 'Игра загружена успешно', backgroundColor: 'rgb(255, 254, 173)'})
     },
     // Удаление сохранения
     deleteSave(saveName, saveTime, saveID, saveGameVersion) {
-      try {
-        // Удаляем
-        localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVersion}`)
-        // Оповещенеие
-        this.$store.state.gameLang 
-          ? iziToast.info({message: 'Saving has been deleted!', position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
-          : iziToast.info({message: 'Сохранение было удалено!', position: 'bottomCenter', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
-        // Находим в отображаемом списке удалённое сохранение
-        let indexDeletedSave = this.savesList.findIndex(function(item) {
-          return (item.saveID === saveID)
-        })
-        // Удаляем из списка
-        this.savesList.splice(indexDeletedSave, 1);
-        // Стал ли список пустым?
-        // Обновляем кол-во сохранение в БД
-        this.updateNumberSavesIDB()
-      }
-      catch(error) {
-        this.$root.errNotify(error)
-      }
+      // Удаляем
+      localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVersion}`)
+      // Оповещенеие
+      this.$store.state.gameLang 
+        ? iziToast.info({message: 'Saving has been deleted!', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
+        : iziToast.info({message: 'Сохранение было удалено!', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
+      // Находим в отображаемом списке удалённое сохранение
+      let indexDeletedSave = this.savesList.findIndex(function(item) {
+        return (item.saveID === saveID)
+      })
+      // Удаляем из списка
+      this.savesList.splice(indexDeletedSave, 1);
+      // Стал ли список пустым?
+      // Обновляем кол-во сохранение в БД
+      this.updateNumberSavesIDB()
     },
     // Удаление всех сохранений
     async DeleteAllSaves(){
-      try {
-        // Очистка хранилища
-        await localforage.clear()
-        // Оповещение
-        this.$store.state.gameLang 
-          ? iziToast.warning({message: 'All saves have been deleted!', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
-          : iziToast.warning({message: 'Всё сохранения были удалены!', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
-        // Закрываем модальное окно
-        this.showModalDelSavesAll = false
-        // Обнуляем список сохранений (перерисовываем список)
-        this.savesList = []
-        this.updateNumberSavesIDB()
-      }
-      catch(error) {
-        this.$root.errNotify(error)
-      }
+      // Очистка хранилища
+      await localforage.clear()
+      // Оповещение
+      this.$store.state.gameLang 
+        ? iziToast.warning({message: 'All saves have been deleted!', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
+        : iziToast.warning({message: 'Всё сохранения были удалены!', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
+      // Закрываем модальное окно
+      this.showModalDelSavesAll = false
+      // Обнуляем список сохранений (перерисовываем список)
+      this.savesList = []
+      this.updateNumberSavesIDB()
     },
     // Подготовка данных к сохранению на диск пользователя
     async prepareDataSaveToDisk() {
@@ -502,8 +478,8 @@ export default {
       }
       else {
         this.$store.state.gameLang 
-          ? iziToast.info({message: 'There are no saves', position: 'bottomCenter'})
-          : iziToast.info({message: 'Сохранения отсутствуют', position: 'bottomCenter'})
+          ? iziToast.info({message: 'There are no saves'})
+          : iziToast.info({message: 'Сохранения отсутствуют'})
       }
     },
     // Сохранение на диск
