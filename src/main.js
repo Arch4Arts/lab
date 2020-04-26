@@ -19,7 +19,7 @@ import VuePlyr from 'vue-plyr'
 import 'plyr/dist/plyr.css'
 Vue.use(VuePlyr) // Видео/Аудио плеер
 
-import Chat from './components/Chat/index' // Мобильный чат
+import Chat from './components/mChat/index' // Мобильный чат
 Vue.use(Chat, {})
 
 import vueScrollBehavior from 'vue-scroll-behavior' // Сохранение положения прокрутки

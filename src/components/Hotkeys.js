@@ -83,7 +83,7 @@ export function bindHotkeys(){
         }
         // Открыть чат
         case keyShortcuts.mChatOpen: {
-          store.commit('mChat_Show')
+          store.commit('mChatShow')
           break;
         }
       }      

@@ -1,6 +1,6 @@
 const mChatData = {
     namespaced: false,
-    state: [ // Всё существующие контакты в игре (некоторые из них помещаются в mChat_CurrentContacts_MC)
+    state: [ // Всё существующие контакты в игре (некоторые из них помещаются в сurrentСontactList_MC)
           {
             mChatData_ContactName: 'Arch', // Отображаемое имя
             mChatData_ContactID: 'mc', // ID для messageHistory

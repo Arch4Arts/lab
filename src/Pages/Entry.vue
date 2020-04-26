@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import mChat from '../components/Chat/mChat.vue'
+import mChat from '../components/mChat/mChat.vue'
 import Prolog from './story/Prolog'
 
 export default {

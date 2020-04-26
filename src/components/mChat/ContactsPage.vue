@@ -17,7 +17,7 @@
             <v-list class="contacts-page__palette-menu">
               <v-list-item
                 class="contacts-page__palette-menu--hover"
-                v-for="(ThemesList, index) in $store.state.mChat.mChat_ThemesList"
+                v-for="(ThemesList, index) in $store.state.mChat.themesList"
                 :key="index"
                 @click="chatThemes(ThemesList.themeName)"
               >
@@ -88,7 +88,7 @@ export default {
   computed: {
     ContactsList: {
       get() {
-        var contacts = this.$store.state.mChat.mChat_CurrentContacts_MC // Контакты в телефоне персонажа
+        var contacts = this.$store.state.mChat.сurrentСontactList_MC // Контакты в телефоне персонажа
         var users = JSON.parse(JSON.stringify(this.$store.state.mChatData)); // История всех чатов
         var showContactsList = [] // обработанные контакты для отображения
         for (let i = 0; i < contacts.length; i++) { // Перебираем столько раз, сколько контактов в contacts
@@ -109,20 +109,20 @@ export default {
   },
   methods: {
     ClickOnContact(contactID, contactName, contactUnReadMsgCount){
-      this.$store.state.mChat.mChat_ContactClikedID = contactID
-      this.$store.state.mChat.mChat_ContactClikedName = contactName
+      this.$store.state.mChat.selectedContactID = contactID
+      this.$store.state.mChat.selectedContactName = contactName
       var contacts = JSON.parse(JSON.stringify(this.$store.state.mChatData)); // История всех чатов
         for (let contact of contacts) { // Перебираем для каждого контакта
           if (contact.mChatData_ContactID === contactID) { // Если это тот кто был выбран
             // Отниманием кол-во непричитанных сообщений у контакта из общего счётчика
-            this.$store.state.mChat.mChat_NewMessagesCount = this.$store.state.mChat.mChat_NewMessagesCount - contact.mChatData_unReadMsgCount
+            this.$store.state.mChat.newMessagesCount = this.$store.state.mChat.newMessagesCount - contact.mChatData_unReadMsgCount
           }
         }
-      this.$store.state.mChat.mChat_ContactsPageShow = !this.$store.state.mChat.mChat_ContactsPageShow
+      this.$store.state.mChat.contactsPageShow = !this.$store.state.mChat.contactsPageShow
       this.$store.commit('updateStores');
     },
     chatThemes(select){
-      this.$store.state.mChat.mChat_CurrentTheme_MC = select;
+      this.$store.state.mChat.currentSelectedTheme_MC = select;
       this.$store.commit('updateStores');
       updateAllThemes()
     }

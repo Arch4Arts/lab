@@ -8,7 +8,7 @@
     <v-spacer/>
     <!-- ЗАГОЛОВОК ЧАТА преобразует tailor в Tailor -->
     <v-toolbar-title class="bar__title"> 
-      {{ this.$store.state.mChat.mChat_ContactClikedName }} 
+      {{ this.$store.state.mChat.selectedContactName }} 
     </v-toolbar-title>
 
     <v-spacer/>
@@ -23,7 +23,7 @@
 export default {
   methods: {
     backToContactsPage(){
-      this.$store.state.mChat.mChat_ContactsPageShow = !this.$store.state.mChat.mChat_ContactsPageShow
+      this.$store.state.mChat.contactsPageShow = !this.$store.state.mChat.contactsPageShow
       this.$store.commit('updateStores');
     },
   }

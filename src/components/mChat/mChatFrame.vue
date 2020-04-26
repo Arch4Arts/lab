@@ -1,26 +1,26 @@
 <template>
   <!-- текстура смартфона -->
-  <div class="smartphone-texture" :class="{ opened: $store.state.mChat.mChat_Show, closed: !$store.state.mChat.mChat_Show }">
+  <div class="smartphone-texture" :class="{ opened: $store.state.mChat.show, closed: !$store.state.mChat.show }">
     <!-- Текстура поделена на 2 части основную и нижнюю -->
     <img src="../../assets/Samsung Galaxy S7 Black.png" class="smartphone-texture">
     <img src="../../assets/Samsung Galaxy S7 Black_bottom.png" class="smartphone-texture close-area" @click.prevent="closeChat()">
     <!-- Страница с контактами -->
-    <ContactsPage class="contacts-page" v-if="$store.state.mChat.mChat_ContactsPageShow"></ContactsPage>
+    <ContactsPage class="contacts-page" v-if="$store.state.mChat.contactsPageShow"></ContactsPage>
     <!-- Чат с конкретным контактом -->
-    <div v-if="!$store.state.mChat.mChat_ContactsPageShow" class="chat-window">
+    <div v-if="!$store.state.mChat.contactsPageShow" class="chat-window">
       <!-- Шапка -->
       <MessageListToolbar />
       <!-- Область прокрутки с сообщениями -->
       <MessageList
         :messages="messageList"
         :contacts="contacts"
-        :mChat_TypingIndicatorEnable="mChat_TypingIndicatorEnable"
+        :typingIndicatorEnable="typingIndicatorEnable"
         :alwaysScrollToBottom="alwaysScrollToBottom"
         :messageStyling="messageStyling"
         @scrollToTop="$emit('scrollToTop')"
       />
       <!-- Декоративная панель ввода -->
-      <MessageListInput v-if="$store.state.mChat.mChat_ShowInput" /> 
+      <MessageListInput v-if="$store.state.mChat.showDecorativeInputPanel" /> 
      </div>
   </div>
 </template>
@@ -44,7 +44,7 @@ export default {
       type: Array,
       required: true
     },
-    mChat_TypingIndicatorEnable: {
+    typingIndicatorEnable: {
       type: String,
       required: true
     },
@@ -64,11 +64,11 @@ export default {
   computed: {
     messageList() {
       // let messages = this.messageList
-      this.$store.state.mChat.mChat_ContactsPageShow // обновляет список сообщений при каждом открытии и закрытии списка пользователей
+      this.$store.state.mChat.contactsPageShow // обновляет список сообщений при каждом открытии и закрытии списка пользователей
       
       let messages;
       var users = this.$store.state.mChatData;
-      var selectedUser = this.$store.state.mChat.mChat_ContactClikedID
+      var selectedUser = this.$store.state.mChat.selectedContactID
       for (let user of users) { // Перебираем для каждого пользователя
         if (user.mChatData_ContactID === selectedUser) {
           user.mChatData_unReadMsgCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
@@ -81,7 +81,7 @@ export default {
     onSubmitSuggestion(suggestion){ // Импорт для userInput (Suggestions)
       // this.messageList = [...this.messageList, message]
       var users = this.$store.state.mChatData; // Не копируем массив, чтобы изменять оригинал
-      var selectedUser = this.$store.state.mChat.mChat_ContactClikedID
+      var selectedUser = this.$store.state.mChat.selectedContactID
       for (let user of users) { // Перебираем для каждого пользователя
         if (user.mChatData_ContactID === selectedUser) {
           // если отправляемый suggestion автономен, то нужно удалить его запись из истории, и добавить уже в виде ответа от ME
@@ -96,7 +96,7 @@ export default {
       return this.messageList.length > 0 ? this.messageList[this.messageList.length - 1].suggestions : []
     },
     closeChat() {
-      this.$store.state.mChat.mChat_Show = false
+      this.$store.state.mChat.show = false
       this.$store.commit('updateStores');
     },
   }

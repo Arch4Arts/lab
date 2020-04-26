@@ -74,7 +74,7 @@ export default {
         controls: ['play','progress','play-large','volume','pip','airplay','fullscreen'],
         loop: { active: true },
         muted: !this.$store.state.sound.gameGlobalSoundsEnable,
-        volume: this.$store.state.mChat.mChat_VideoPlyrVolume, // Значение по умолчанию, потом плеер берёт данные из plyr-video
+        volume: this.$store.state.mChat.plyrVideoVolume, // Значение по умолчанию, потом плеер берёт данные из plyr-video
         storage: { enabled: false, key: 'plyr-video' },
       }
     };
@@ -87,14 +87,14 @@ export default {
   },
   methods: {
     saveVolumeSettings(){
-      this.$store.state.mChat.mChat_VideoPlyrVolume = this.$refs.VideoMessagePlyr.player.volume
+      this.$store.state.mChat.plyrVideoVolume = this.$refs.VideoMessagePlyr.player.volume
       this.$store.commit('updateStores');
     },
     play(){
-      if (this.$store.state.mChat.mChat_autoPlayMsgVideoOnHover) this.$refs.VideoMessagePlyr.player.play()
+      if (this.$store.state.mChat.autoplayVideoMessageOnHover) this.$refs.VideoMessagePlyr.player.play()
     },
     pause(){
-      if (this.$store.state.mChat.mChat_autoPlayMsgVideoOnHover) this.$refs.VideoMessagePlyr.player.pause()
+      if (this.$store.state.mChat.autoplayVideoMessageOnHover) this.$refs.VideoMessagePlyr.player.pause()
     }
   },
 };

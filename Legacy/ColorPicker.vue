@@ -112,13 +112,13 @@ export default {
     },
     hide() {
       this.isVisible = false;
-      this.$store.state.mChat.mChat_Enable = true
+      this.$store.state.mChat.enable = true
       // this.$store.state.appHeaderEnable = true
       this.$store.commit('updateStores');
     },
     toggle() {
       this.isVisible = !this.isVisible;
-      this.$store.state.mChat.mChat_Enable = false
+      this.$store.state.mChat.enable = false
       // this.$store.state.appHeaderEnable = false
       this.$store.commit('updateStores');
     }

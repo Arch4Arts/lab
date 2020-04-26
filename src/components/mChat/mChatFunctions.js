@@ -2,11 +2,11 @@ import store from '../../stores/store'
 
 // Для suggestion ONLY нужно указать type: suggestion и data: undefined
 export function sendMessage(ChatID, author, type, data, suggestions) { 
-  store.state.mChat.mChat_NewMessagesCount = store.state.mChat.mChat_Show ? store.state.mChat.mChat_NewMessagesCount : store.state.mChat.mChat_NewMessagesCount + 1
+  store.state.mChat.newMessagesCount = store.state.mChat.show ? store.state.mChat.newMessagesCount : store.state.mChat.newMessagesCount + 1
 
   let uniqid = require('uniqid');
   // setTimeout можно заменить на sleep(ms)
-  if (store.state.mChat.mChat_TypingIndicatorEnable && type !== 'suggestion' && store.state.mChat.mChat_ContactsPageShow === false){
+  if (store.state.mChat.typingIndicatorEnable && type !== 'suggestion' && store.state.mChat.contactsPageShow === false){
     onMessageWasSent(ChatID, {id: uniqid(), author: author, type: 'typing', data: undefined, suggestions: undefined});
     (type === 'text' && data.text.length <= '8') 
     ? setTimeout(() => onMessageWasSent(ChatID, {id: uniqid(), author: author, type: type, data: data, suggestions: suggestions}), 500) 
@@ -33,12 +33,12 @@ export function onMessageWasSent(ChatID, message){ // Импорт для userIn
 
 export function addContactToChatList(newContact){
   let doubleDetect = false;
-  let contacts = store.state.mChat.mChat_CurrentContacts_MC
+  let contacts = store.state.mChat.сurrentСontactList_MC
   for (let contact of contacts) {
     if (contact === newContact) doubleDetect = true;
   }
   if (doubleDetect === false) {
-    store.state.mChat.mChat_CurrentContacts_MC.push(newContact);
+    store.state.mChat.сurrentСontactList_MC.push(newContact);
     store.commit('updateStores');
   }
 }

@@ -75,7 +75,7 @@ export default {
         loadSprite: false,
         controls: ['play','progress','current-time','volume'],
         muted: !this.$store.state.sound.gameGlobalSoundsEnable,
-        volume: this.$store.state.mChat.mChat_AudioPlyrVolume, // Значение по умолчанию, потом плеер берёт данные из plyr-audio
+        volume: this.$store.state.mChat.plyrAudioVolume, // Значение по умолчанию, потом плеер берёт данные из plyr-audio
         storage: { enabled: false, key: 'plyr-audio' }
       }
     };
@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     saveVolumeSettings(){
-      this.$store.state.mChat.mChat_AudioPlyrVolume = this.$refs.AudioMessagePlyr.player.volume
+      this.$store.state.mChat.plyrAudioVolume = this.$refs.AudioMessagePlyr.player.volume
       this.$store.commit('updateStores');
     },    
   }

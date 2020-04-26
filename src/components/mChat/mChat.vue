@@ -1,26 +1,24 @@
 <template>
-  <div>
-    <!-- ГОТОВЫЙ КОМПОНЕНТ С ИКОНКОЙ ЧАТА И САМИМ ЧАТОМ ДЛЯ ИМПОРТА В ДРУГИЕ МОДУЛИ -->
-    <mobile-chat
-      :alwaysScrollToBottom="alwaysScrollToBottom"
-      :messageStyling="messageStyling"
-      :onMessageWasSent="onMessageWasSent"
-      :newMessagesCount="this.$store.state.mChat_NewMessagesCount"
-      :contacts="contacts"
-      :mChat_TypingIndicatorEnable="mChat_TypingIndicatorEnable"
-      @onType="handleOnType"
-    />
-  </div>
+  <!-- ГОТОВЫЙ КОМПОНЕНТ С ИКОНКОЙ ЧАТА И САМИМ ЧАТОМ ДЛЯ ИМПОРТА В ДРУГИЕ МОДУЛИ -->
+  <mobile-chat
+    :alwaysScrollToBottom="alwaysScrollToBottom"
+    :messageStyling="messageStyling"
+    :onMessageWasSent="onMessageWasSent"
+    :newMessagesCount="this.$store.state.newMessagesCount"
+    :contacts="contacts"
+    :typingIndicatorEnable="typingIndicatorEnable"
+    @onType="handleOnType"
+  />
 </template>
 
 <script>
 
 export default {
-  name: 'mChatApp',
+  name: 'InstanceOfMCchat', // Экземпляр главного героя
   data() {
     return {
       contacts: this.$store.state.mChatData,
-      mChat_TypingIndicatorEnable: '',
+      typingIndicatorEnable: '',
       alwaysScrollToBottom: true,
       messageStyling: false, // Не работает в независимости от этого ключа
       userIsTyping: false
@@ -29,7 +27,7 @@ export default {
   methods: {
     sendMessage(text) {
       if (text.length > 0) {
-        this.$store.state.mChat.mChat_NewMessagesCount = this.mChat_Show ? this.$store.state.mChat.mChat_NewMessagesCount : this.$store.state.mChat.mChat_NewMessagesCount += 1
+        this.$store.state.mChat.newMessagesCount = this.show ? this.$store.state.mChat.newMessagesCount : this.$store.state.mChat.newMessagesCount += 1
         this.onMessageWasSent({
           author: 'support',
           type: 'text',
@@ -38,7 +36,7 @@ export default {
       }
     },
     handleTyping(text) {
-      this.mChat_TypingIndicatorEnable =
+      this.typingIndicatorEnable =
         text.length > 0
           ? this.contacts[this.contacts.length - 1].id
           : ''

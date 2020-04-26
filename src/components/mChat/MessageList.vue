@@ -41,7 +41,7 @@ export default {
       type: Array,
       required: true
     },
-    mChat_TypingIndicatorEnable: {
+    typingIndicatorEnable: {
       type: String,
       required: true
     },
@@ -58,7 +58,7 @@ export default {
     onSubmitSuggestion(suggestion){ // Импорт для userInput (Suggestions)
       // this.messageList = [...this.messageList, message]
       var users = this.$store.state.mChatData; // Не копируем массив, чтобы изменять оригинал
-      var selectedUser = this.$store.state.mChat.mChat_ContactClikedID
+      var selectedUser = this.$store.state.mChat.selectedContactID
       for (let user of users) { // Перебираем для каждого пользователя
         if (user.mChatData_ContactID === selectedUser) {
           // если отправляемый suggestion автономен, то нужно удалить его запись из истории, и добавить уже в виде ответа от ME

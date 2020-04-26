@@ -8,7 +8,7 @@
       }">
       <!-- Аватар отправителя -->
       <div 
-        v-if="message.type !== 'system' && message.type !== 'suggestion' && !$store.state.mChat.mChat_ShowAvatars" 
+        v-if="message.type !== 'system' && message.type !== 'suggestion' && !$store.state.mChat.showAvatars" 
         :title="authorName" class="avatar" 
         :style="{ backgroundImage: `url(${chatImageUrl})` }">
       </div>

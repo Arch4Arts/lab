@@ -1,4 +1,4 @@
-import Launcher from './Launcher.vue'
+import FloatingChatButton from './FloatingChatButton.vue'
 // import VTooltip from 'v-tooltip'
 
 const defaultComponentName = 'mobile-chat'
@@ -27,7 +27,7 @@ const Plugin = {
     /**
      * Sets custom component name (if provided)
      */
-    Vue.component(this.componentName, Launcher)
+    Vue.component(this.componentName, FloatingChatButton)
     // Vue.use(VTooltip)
   }
 }

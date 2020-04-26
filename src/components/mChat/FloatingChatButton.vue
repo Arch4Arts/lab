@@ -1,10 +1,10 @@
 <template>
   <div>
     <!-- Иконка открывающая чат -->
-    <div class="launcher hidden-sm-and-down" @click.prevent="$store.state.mChat.mChat_Show ? closeChat() : openChat()">
+    <div class="launcher hidden-sm-and-down" @click.prevent="$store.state.mChat.show ? closeChat() : openChat()">
       <!-- Элемент показывающий кол-во сообщений рядом с эконкой -->
-      <div v-if="$store.state.mChat.mChat_NewMessagesCount > 0 && !$store.state.mChat.mChat_Show" class="new-msg-count">
-        {{ $store.state.mChat.mChat_NewMessagesCount }}
+      <div v-if="$store.state.mChat.newMessagesCount > 0 && !$store.state.mChat.show" class="new-msg-count">
+        {{ $store.state.mChat.newMessagesCount }}
       </div>
       <v-btn text large fab icon color="#E0E0E0"><v-icon>fas fa-mobile-android-alt</v-icon></v-btn>
     </div>
@@ -12,7 +12,7 @@
       :messageList="messageList"
       :onUserInputSubmit="onMessageWasSent"
       :contacts="contacts"
-      :mChat_TypingIndicatorEnable="mChat_TypingIndicatorEnable"
+      :typingIndicatorEnable="typingIndicatorEnable"
       :alwaysScrollToBottom="alwaysScrollToBottom"
       :messageStyling="messageStyling"
       :disableUserListToggle="disableUserListToggle"
@@ -38,7 +38,7 @@ export default {
       type: Array,
       default: () => []
     },
-    mChat_TypingIndicatorEnable: {
+    typingIndicatorEnable: {
       type: String,
       default: () => ''
     },
@@ -57,11 +57,11 @@ export default {
   },
   methods: {
     openChat() {
-      this.$store.state.mChat.mChat_Show = true
+      this.$store.state.mChat.show = true
       this.$store.commit('updateStores');
     },
     closeChat() {
-      this.$store.state.mChat.mChat_Show = false
+      this.$store.state.mChat.show = false
       this.$store.commit('updateStores');
     },
   },

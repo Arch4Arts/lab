@@ -83,7 +83,7 @@
             <!-- Тумблер -->
             <v-list-item-action>
               <v-switch
-                v-model="$store.state.mChat.mChat_autoPlayMsgVideoOnHover"
+                v-model="$store.state.mChat.autoplayVideoMessageOnHover"
                 @click.stop="autoPlayMsgVideoOnHover()"
               ></v-switch>
             </v-list-item-action>
@@ -97,7 +97,7 @@
             <!-- Тумблер -->
             <v-list-item-action>
               <v-switch
-                v-model="$store.state.mChat.mChat_TypingIndicatorEnable"
+                v-model="$store.state.mChat.typingIndicatorEnable"
                 @click.stop="mChatTypingIndicatorEnable()"
               ></v-switch>
             </v-list-item-action>
@@ -111,7 +111,7 @@
             <!-- Тумблер -->
             <v-list-item-action>
               <v-switch
-                v-model="$store.state.mChat.mChat_ShowAvatars"
+                v-model="$store.state.mChat.showAvatars"
                 @click.stop="mChatHideAvatars()"
               ></v-switch>
             </v-list-item-action>
@@ -126,7 +126,7 @@
             <!-- Тумблер -->
             <v-list-item-action>
               <v-switch
-                v-model="$store.state.mChat.mChat_ShowInput"
+                v-model="$store.state.mChat.showDecorativeInputPanel"
                 @click.stop="mChatHideInput()"
               ></v-switch>
             </v-list-item-action>
@@ -156,16 +156,16 @@ export default {
       this.$store.state.autoCloseSavesDrawer =! this.$store.state.autoCloseSavesDrawer
     },
     autoPlayMsgVideoOnHover(){
-      this.$store.state.mChat.mChat_autoPlayMsgVideoOnHover =! this.$store.state.mChat.mChat_autoPlayMsgVideoOnHover
+      this.$store.state.mChat.autoplayVideoMessageOnHover =! this.$store.state.mChat.autoplayVideoMessageOnHover
     },
     mChatTypingIndicatorEnable(){
-      this.$store.state.mChat.mChat_TypingIndicatorEnable =! this.$store.state.mChat.mChat_TypingIndicatorEnable
+      this.$store.state.mChat.typingIndicatorEnable =! this.$store.state.mChat.typingIndicatorEnable
     },
     mChatHideAvatars(){
-      this.$store.state.mChat.mChat_ShowAvatars =! this.$store.state.mChat.mChat_ShowAvatars
+      this.$store.state.mChat.showAvatars =! this.$store.state.mChat.showAvatars
     },
     mChatHideInput(){
-      this.$store.state.mChat.mChat_ShowInput =! this.$store.state.mChat.mChat_ShowInput
+      this.$store.state.mChat.showDecorativeInputPanel =! this.$store.state.mChat.showDecorativeInputPanel
     },
   },
   computed: {

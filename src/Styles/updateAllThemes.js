@@ -2,11 +2,11 @@ import store from '../stores/store';
 
 export default function updateAllThemes(){
   // Оформление мобильного чата
-  if (store.state.mChat.mChat_ThemesList[0].themeName === store.state.mChat.mChat_CurrentTheme_MC)
+  if (store.state.mChat.themesList[0].themeName === store.state.mChat.currentSelectedTheme_MC)
     document.documentElement.setAttribute('mChatTheme', 'Minimalistic')
-  else if (store.state.mChat.mChat_ThemesList[1].themeName === store.state.mChat.mChat_CurrentTheme_MC)
+  else if (store.state.mChat.themesList[1].themeName === store.state.mChat.currentSelectedTheme_MC)
     document.documentElement.setAttribute('mChatTheme', 'Dark-Minimalistic')
-  else if (store.state.mChat.mChat_ThemesList[2].themeName === store.state.mChat.mChat_CurrentTheme_MC)
+  else if (store.state.mChat.themesList[2].themeName === store.state.mChat.currentSelectedTheme_MC)
     document.documentElement.setAttribute('mChatTheme', 'Scarlet')
   // Оформление игры
   if (store.state.gameThemesList[0].themeName === store.state.gameCurrentTheme)

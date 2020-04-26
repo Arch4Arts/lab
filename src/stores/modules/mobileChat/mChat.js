@@ -1,36 +1,36 @@
 const mChat = {
     namespaced: false,
     state: {
-        mChat_Enable: true, // Вкл/Выкл чата
-        mChat_NewMessagesCount: 0, // Счетчик новых сообщений
-        mChat_Show: false, // Статус отображения чата
-        mChat_ContactsPageShow: true, // Отображение списка контактов
+        enable: true, // Вкл/Выкл чата
+        newMessagesCount: 0, // Счетчик новых сообщений
+        show: false, // Статус отображения чата
+        contactsPageShow: true, // Отображение списка контактов
 
-        mChat_autoPlayMsgVideoOnHover: false, // Воспроизводить ли видео при наведении мышки
-        mChat_TypingIndicatorEnable: true, // Если true отображается имитация набора текста, если false, то ничего не отображаетсяm
-        mChat_ShowAvatars: true, // Скрытие аватарок в чате
-        mChat_ShowInput: true, // Скрытие декоративной панели ввода в чате
+        autoplayVideoMessageOnHover: false, // Воспроизводить ли видео при наведении мышки
+        typingIndicatorEnable: true, // Если true отображается имитация набора текста, если false, то ничего не отображаетсяm
+        showAvatars: true, // Скрытие аватарок в чате
+        showDecorativeInputPanel: true, // Скрытие декоративной панели ввода в чате
         
 
-        mChat_VideoPlyrVolume: 0.50, // Громкость видео плеера чата (По умолчанию выкл как и весь звук игры)
-        mChat_AudioPlyrVolume: 0.50, // Громкость видео плеера чата (По умолчанию вкл как и весь звук игры)
+        plyrVideoVolume: 0.50, // Громкость видео плеера чата (По умолчанию выкл как и весь звук игры)
+        plyrAudioVolume: 0.50, // Громкость видео плеера чата (По умолчанию вкл как и весь звук игры)
         
 
-        mChat_ContactClikedID: '',
-        mChat_ContactClikedName: '',
+        selectedContactID: '', // ID выбранного контакта (Который был выбран на странице контактов)
+        selectedContactName: '',  // Имя выбранного контакта (Который был выбран на странице контактов)
 
-        mChat_CurrentContacts_MC: ['support','tailor'], // Текущие контакты в телефоне
+        сurrentСontactList_MC: ['support','tailor'], // Текущие контакты в телефоне
 
-        mChat_CurrentTheme_MC: 'Minimalistic',
-        mChat_ThemesList: [
+        currentSelectedTheme_MC: 'Minimalistic',
+        themesList: [
         { themeName: 'Minimalistic' },
         { themeName: 'Dark minimalistic' },
         { themeName: 'Scarllet' }
         ],
      },
     mutations: {
-      mChat_Show(){
-        this.state.mChat.mChat_Show = !this.state.mChat.mChat_Show
+      mChatShow(){
+        this.state.mChat.show = !this.state.mChat.show
       }
      },
   }

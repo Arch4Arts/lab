@@ -53,7 +53,7 @@
 import MC from '../../components/Chars/CharStyles/MC'
 import Sister from '../../components/Chars/CharStyles/Sister'
 import mcSettings from '../../components/Chars/CharSettings/mcSettings'
-import mChatTestPage from '../../components/Chat/mChat_TestPage'
+import mChatTestPage from '../../components/mChat/TestPage'
 
 
 export default {

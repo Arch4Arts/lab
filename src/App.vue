@@ -31,23 +31,23 @@ export default {
       if (this.$store.state.isOpenSavesDrawer) this.$store.state.isOpenSavesDrawer = !this.$store.state.isOpenSavesDrawer
       // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
       if (this.$route.path != '/Diary') {
-        if (this.$store.state.mChat.mChat_Show) { // проверка открыт ли чат, если да то...
+        if (this.$store.state.mChat.show) { // проверка открыт ли чат, если да то...
           // Открыта ли страница контактов, true, то закрываем, если false, возвращаемся к странице контактов, т.к открыт чат с контактом
-          if (this.$store.state.mChat.mChat_ContactsPageShow) {
-            this.$store.state.mChat.mChat_Show = !this.$store.state.mChat.mChat_Show // закрываем окно чата
+          if (this.$store.state.mChat.contactsPageShow) {
+            this.$store.state.mChat.show = !this.$store.state.mChat.show // закрываем окно чата
             this.$store.commit('updateStores');
           }
           // Закрывает чат с контактом если он открыт
-          else this.$store.state.mChat.mChat_ContactsPageShow = !this.$store.state.mChat.mChat_ContactsPageShow
+          else this.$store.state.mChat.contactsPageShow = !this.$store.state.mChat.contactsPageShow
         }
       }
     },
     SwipeLeft(){
-      if (this.$store.state.mChat.mChat_Enable) { // Включён ли чат (Отключается при выборе палитры цвета диалогов)
+      if (this.$store.state.mChat.enable) { // Включён ли чат (Отключается при выборе палитры цвета диалогов)
         // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
         if (this.$route.path != '/Diary') {
           // открываем окно чата, если оно не было открыто ранее
-          if (!this.$store.state.mChat.mChat_Show) this.$store.state.mChat.mChat_Show = !this.$store.state.mChat.mChat_Show
+          if (!this.$store.state.mChat.show) this.$store.state.mChat.show = !this.$store.state.mChat.show
           this.$store.commit('updateStores');
         }
       }
