@@ -55,7 +55,7 @@
         </v-list-item-group>
       </v-list>
       <!-- Если нет сохранений -->
-      <div class="saves-list" v-show="numberSavesIDB == 0">
+      <div v-show="numberSavesIDB == 0" class="saves-list">
         <div v-if="$store.state.gameLang" class="text-center"><br>No saves<br><br></div>
         <div v-else class="text-center"><br>Сохранения отсутствуют<br><br></div>
       </div>
@@ -204,7 +204,7 @@ import iziToast from 'izitoast/dist/js/iziToast.min.js';
 
 import updateAllThemes from '../../styles/updateAllThemes';
 
-import eventBus from '../EventBus'
+import eventBus from '../initEventBus'
 
 import savesListComp from './SavesList'
 

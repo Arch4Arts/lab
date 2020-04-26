@@ -1,4 +1,5 @@
 import store from './../store'
+import { checkSoundsEnable } from '../../components/GameSound'
 
 const sound = {
   namespaced: false,
@@ -45,6 +46,7 @@ const sound = {
     // Вкл/Выкл звука
     gameGlobalSoundsEnable(){
       this.state.sound.gameGlobalSoundsEnable = !this.state.sound.gameGlobalSoundsEnable;
+      checkSoundsEnable() // Mute or unmute
     },
     achievementSoundEnable(){
       this.state.sound.achievementSoundEnable = !this.state.sound.achievementSoundEnable;

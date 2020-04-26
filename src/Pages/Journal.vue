@@ -49,10 +49,10 @@
 </template>
 
 <script>
-import MCPage from './DiaryPages/MC'
-import Characters from './DiaryPages/Characters'
-import Diary from './DiaryPages/Diary'
-import Achievements from './DiaryPages/Achievements'
+import MCPage from './journalPages/MC'
+import Characters from './journalPages/Characters'
+import Diary from './journalPages/Diary'
+import Achievements from './journalPages/Achievements'
 
 export default {
 	components: {

@@ -15,13 +15,13 @@ export default [
   { type: 'text', author: `mattmezza`, data: { text: `No story?` } },
   { type: 'system', data: { text: 'You have been transferred to another operator', meta: '04-07-2018 15:57' } },
   { type: 'text', author: `support`, data: { text: `You've got to have a story. You've got to have a story. You've got to have a story. You've got to have a story. You've got to have a story. You've got to have a story. ` } },
-  { type: 'emoji', author: `me`, data: { src: require('../../Media/img/smiling-face.png') } },
+  { type: 'emoji', author: `me`, data: { src: require('../../media/img/smiling-face.png') } },
   { type: 'text', author: `me`, data: { text: `Do you read me...`, meta: '✓✓ Read' } },
-  { type: 'image', author: `mattmezza`, data: { src: require('../../Media/img/2.gif'), meta: '✓✓ Read' } },
-  { type: 'image', author: `me`, data: { src: require('../../Media/img/1.jpg'), meta: '✓✓ Read' } },
+  { type: 'image', author: `mattmezza`, data: { src: require('../../media/img/2.gif'), meta: '✓✓ Read' } },
+  { type: 'image', author: `me`, data: { src: require('../../media/img/1.jpg'), meta: '✓✓ Read' } },
   { type: 'text', author: `me`, data: { text: `...or not?`, meta: '✓ Delivered' } },
-  { type: 'video', author: `support`, data: { src: require('../../Media/video/Carmelita.mp4'), img: '' , text: `Soo perveted!`, meta: '✓ Hentai' } },
-  { type: 'audio', author: `support`, data: { src: require('../../Media/audio/test.mp3'), type: 'audio/mp3' , text: `Soo perveted!`, meta: '✓ Hentai' } },
+  { type: 'video', author: `support`, data: { src: require('../../media/video/Carmelita.mp4'), img: '' , text: `Soo perveted!`, meta: '✓ Hentai' } },
+  { type: 'audio', author: `support`, data: { src: require('../../media/audio/test.mp3'), type: 'audio/mp3' , text: `Soo perveted!`, meta: '✓ Hentai' } },
   { type: 'system', data: { text: 'User changed security key', meta: '04-08-2018 15:57' } },
   { type: 'text', author: `tailor`, data: { text: `What about suggestions?` }, suggestions: ["Looks good!", "It's OK.", "Uhh.. Do I really have to say something?", "This suggestion is way too long for css purpose. Let's make it long... Longer, and more and more.. Never ending."] }
 ]

@@ -28,10 +28,10 @@
   <v-btn @click='sendMessage(selectedChatID, selectedContactID, "text", { text: "lorum!" })'>Support short text...</v-btn>
   <v-btn @click='sendMessage(selectedChatID, selectedContactID, "text", { text: "Lorum ipsum orom!" })'>Support text...</v-btn>
   <v-btn @click='sendMessage(selectedChatID, selectedContactID, "text", { text: "Ipsum lorom odno id narokomoron is naruch begin end" })'>Support long text...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "image", { src: require("../Media/img/2.gif") })'>Support image gif...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "video", { src: require("../Media/video/Carmelita.mp4") })'>Support video...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "audio", { src: require("../Media/audio/test.mp3") })'>Support audio..</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "emoji", { src: require("../Media/img/smiling-face.png") })'>Support emoji..</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "image", { src: require("../../media/img/2.gif") })'>Support image gif...</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "video", { src: require("../../media/video/Carmelita.mp4") })'>Support video...</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "audio", { src: require("../../media/audio/test.mp3") })'>Support audio..</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "emoji", { src: require("../../media/img/smiling-face.png") })'>Support emoji..</v-btn>
   <v-btn @click='sendMessage(selectedChatID, selectedContactID, "suggestion", undefined, ["no", "Yes"])'>Support suggetion...</v-btn>
   <br>
   <v-btn text @click="addContactToChatList('mc')">Добавить mc в контакты</v-btn>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { sendMessage, addContactToChatList } from './Chat/mChatFunctions.js'
+import { sendMessage, addContactToChatList } from './mChatFunctions.js'
 
 export default {
   data(){

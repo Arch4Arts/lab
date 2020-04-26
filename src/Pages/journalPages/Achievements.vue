@@ -5,17 +5,17 @@
 			<h1 v-if="$store.state.gameLang" class=" text-center">Achviemenent</h1>
 			<h1 v-else class=" text-center">Достижения</h1>
 			<div class="container"> 
-				<AchievementCard class="Achievement" :dataImage="require('../../Media/img/Achievement_imgs/asslick.jpg')">
+				<AchievementCard class="Achievement" :dataImage="require('../../media/img/Achievement_imgs/asslick.jpg')">
 						<div slot="header_h1">Lorem ipsum</div>
 						<div slot="content_h2">More lorem ipsum bacon ipsum.</div>
 						<div slot="content_p">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken.</div>
 				</AchievementCard>
-				<AchievementCard class="Achievement" :dataImage="require('../../Media/img/Achievement_imgs/asslick.jpg')">
+				<AchievementCard class="Achievement" :dataImage="require('../../media/img/Achievement_imgs/asslick.jpg')">
 						<div slot="header_h1">Lorem ipsum</div>
 						<div slot="content_h2">More lorem ipsum bacon ipsum.</div>
 						<div slot="content_p">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken.</div>
 				</AchievementCard>
-				<AchievementCard class="Achievement" :dataImage="require('../../Media/img/Achievement_imgs/asslick.jpg')">
+				<AchievementCard class="Achievement" :dataImage="require('../../media/img/Achievement_imgs/asslick.jpg')">
 						<div slot="header_h1">Lorem ipsum</div>
 						<div slot="content_h2">More lorem ipsum bacon ipsum.</div>
 						<div slot="content_p">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken.</div>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import AchievementCard from '../../components/AchievementCard'
+import AchievementCard from './AchievementsCard'
 
 export default {
 	components: {

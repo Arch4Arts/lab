@@ -3,6 +3,8 @@
 	<v-layout justify-center class="v-layout">
 		<v-flex md8 text-center class="Page">
 
+			<StartPageAge18WarningDialog />
+
 			<!-- ВЫБОР ЯЗЫКА -->
 			<section v-if="$store.state.gameLang">
 				<div><h1> Game language </h1></div>
@@ -30,7 +32,8 @@
 </template>
 
 <script>
-import AboutGame from '../components/AboutGame'
+import AboutGame from './AboutGame'
+import StartPageAge18WarningDialog from "./StartPageAge18WarningDialog";
 
 export default {
 	computed: {
@@ -46,7 +49,8 @@ export default {
 		}
 	},
 	components: {
-		AboutGame
+		AboutGame,
+		StartPageAge18WarningDialog
 	}
 }
 </script>

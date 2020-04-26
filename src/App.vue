@@ -1,27 +1,25 @@
 <template>  
   <v-app> 
   <v-layout v-touch="{ right: () => SwipeRight(), left: () => SwipeLeft(), down: () => SwipeBottom(), up: () => SwipeTop() }">
-    <v-content>
-    <!-- Pages -->
-    <FirstLaunchPageInfo v-if="$store.state.gameDisplayingStartPage" />
-    <!-- Components -->
-    <Age18WarningDialog />
+  <v-content>
+    <StartPage v-if="$store.state.gameDisplayingStartPage" />
+
     <Settings />
     <Saves />
     <navigation v-if="$store.state.appHeaderEnable" />
-      <router-view v-if="!$store.state.gameDisplayingStartPage">
-        <!-- Entry --> 
-      </router-view>
-    </v-content>
+
+    <router-view v-if="!$store.state.gameDisplayingStartPage">
+      <!-- Entry --> 
+    </router-view>
+  </v-content>
   </v-layout>  
   </v-app>
 </template>
 
 <script>
-import Age18WarningDialog from "./components/Age18WarningDialog";
 import Navigation from "./components/Navigation";
-import FirstLaunchPageInfo from "./Pages/FirstLaunchPageInfo";
-import Entry from "./Pages/Entry";
+import StartPage from "./pages/StartPage";
+import Entry from "./pages/Entry";
 
 export default {
   name: 'App',
@@ -64,14 +62,10 @@ export default {
       this.$store.state.radialMenuShow = false
       this.$store.commit('updateStores');
     },
-    testt(){
-      console.log('11111111')
-    }
   },
   components: {
-    Age18WarningDialog,
     Navigation,
-    FirstLaunchPageInfo,
+    StartPage,
     Entry,
     Settings: () => import('./components/Settings/Settings'), // Ленивая загрузка компонента (Dynamic Imports) для повышения производительности
     Saves: () => import('./components/Saves/Saves'),

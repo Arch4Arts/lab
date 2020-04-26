@@ -1,7 +1,7 @@
 import store from '../stores/store'
 import router from '../router'
 import hotkeys from 'hotkeys-js';
-import eventBus from './EventBus'
+import eventBus from './initEventBus'
 
 // Получение текущих клавиатурных сокращений
 function keyboardShortcuts(){

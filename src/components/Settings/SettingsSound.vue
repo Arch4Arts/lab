@@ -229,7 +229,6 @@ export default {
       // Вкл / выкл всех звуков в игре по нажатию на v-list-item
       changeGlobalSoundEnable(){
         this.$store.commit('gameGlobalSoundsEnable')
-        checkSoundsEnable() // Mute or unmute
       },
       // Вкл / Выкл звука по значку ноты
       changeSoundEnable(commitName) {

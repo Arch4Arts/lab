@@ -65,8 +65,7 @@
 </template>
 
 <script>
-import FirstLaunchPageInfo from '../Pages/FirstLaunchPageInfo'
-import AboutGame from '../components/AboutGame'
+import AboutGame from './AboutGame'
 
 export default {
 	data(){

@@ -1,14 +1,14 @@
 import store from '../stores/store'
 
 var soundsPath = [ 
-  { path: require('../Media/audio/Notifications/Diary write sound.mp3') },
-  { path: require('../Media/audio/Notifications/iOS Notification.mp3') },
-  { path: require('../Media/audio/Notifications/MIUI Notification.mp3') },
-  { path: require('../Media/audio/Notifications/Moan.mp3') },
-  { path: require('../Media/audio/Notifications/MotoX Notification.mp3') },
-  { path: require('../Media/audio/Notifications/Nice Notification.mp3') },
-  { path: require('../Media/audio/Notifications/S7 Notification.mp3') },
-  { path: require('../Media/audio/Notifications/Xperia Notification.mp3') }, 
+  { path: require('../media/audio/notifications/Diary write sound.mp3') },
+  { path: require('../media/audio/notifications/iOS Notification.mp3') },
+  { path: require('../media/audio/notifications/MIUI Notification.mp3') },
+  { path: require('../media/audio/notifications/Moan.mp3') },
+  { path: require('../media/audio/notifications/MotoX Notification.mp3') },
+  { path: require('../media/audio/notifications/Nice Notification.mp3') },
+  { path: require('../media/audio/notifications/S7 Notification.mp3') },
+  { path: require('../media/audio/notifications/Xperia Notification.mp3') }, 
 ]
 
 export function checkSoundsEnable(){
@@ -61,14 +61,14 @@ export function soundPlayLoop(soundName, volumeState = 0.5){
 //   },
 //   data: {
 //     soundsPath: [ // Пути ко всем звукам
-//       { path: require('../Media/audio/Notifications/Diary write sound.mp3') },
-//       { path: require('../Media/audio/Notifications/iOS Notification.mp3') },
-//       { path: require('../Media/audio/Notifications/MIUI Notification.mp3') },
-//       { path: require('../Media/audio/Notifications/Moan.mp3') },
-//       { path: require('../Media/audio/Notifications/MotoX Notification.mp3') },
-//       { path: require('../Media/audio/Notifications/Nice Notification.mp3') },
-//       { path: require('../Media/audio/Notifications/S7 Notification.mp3') },
-//       { path: require('../Media/audio/Notifications/Xperia Notification.mp3') }, 
+//       { path: require('../media/audio/notifications/Diary write sound.mp3') },
+//       { path: require('../media/audio/notifications/iOS Notification.mp3') },
+//       { path: require('../media/audio/notifications/MIUI Notification.mp3') },
+//       { path: require('../media/audio/notifications/Moan.mp3') },
+//       { path: require('../media/audio/notifications/MotoX Notification.mp3') },
+//       { path: require('../media/audio/notifications/Nice Notification.mp3') },
+//       { path: require('../media/audio/notifications/S7 Notification.mp3') },
+//       { path: require('../media/audio/notifications/Xperia Notification.mp3') }, 
 //     ]
 //   },
 //   methods: {
