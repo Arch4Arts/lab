@@ -1,14 +1,15 @@
 <template>
 <div class="text-msg-container">
   <div class="text-message">
-    <div> {{ data.text }} </div>
-    <p v-if="data.meta" class='text-message-meta'>{{ data.meta }}</p>
+    <div v-html="formatMessage"></div>
+    <div v-if="data.meta" class='text-message-meta'>{{ data.meta }}</div>
   </div>
   <div class="tail"></div>
 </div>
 </template>
 
 <script>
+import { markdown } from './drawdown'
 
 export default {
   props: {
@@ -18,17 +19,9 @@ export default {
     },
   },
   computed: {
-    messageText() {
-      return this.data.text
+    formatMessage() { // Применение форматирования к тексту, демо: https://markdown-it.github.io
+      return markdown(this.data.text)
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-
-// a.chatLink {
-//   color: inherit !important;
-// }
-
-</style>

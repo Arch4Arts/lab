@@ -89,28 +89,31 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
 };
 
 
-Vue.config.errorHandler = function(err, vm, info) { // Обработчик ошибок Vue
-  if (process.env.NODE_ENV === 'production') 
+if (process.env.NODE_ENV === 'production') {
+  Vue.config.errorHandler = function(err, vm, info) { // Обработчик ошибок Vue
     Sentry.captureException(err, vm, info);
 
-  console.error(`${err} \n${info}`);
-  errorMessage(
-    `Error: ${err.toString()} Info: ${info}`,
-    `Ошибка: ${err.toString()} Инфо: ${info}`
-  )
-};
+    console.error(`${err} \n${info}`);
+    errorMessage(
+      `Error: ${err.toString()} Info: ${info}`,
+      `Ошибка: ${err.toString()} Инфо: ${info}`
+    )
+  };  
+}
 
 // warnHandler - отключён по умолчанию в Production
 // renderError - отключён по умолчанию в Production
 // И т.д
 
-window.onerror = function(message, source, line, column, error) {
-  if (process.env.NODE_ENV === 'production') 
+if (process.env.NODE_ENV === 'production') {
+  window.onerror = function(message, source, line, column, error) {
     Sentry.captureException(message, source, line, column, error);
 
-  console.error(`${message}\n${source}\n${error}`);
-  errorMessage(
-    `Error: ${message.toString()} ${source} ${error}`,
-    `Ошибка: ${message.toString()} ${source} ${error}`
-  )
+    console.error(`${message}\n${source}\n${error}`);
+    errorMessage(
+      `Error: ${message.toString()} ${source} ${error}`,
+      `Ошибка: ${message.toString()} ${source} ${error}`
+    )
+  };
 }
+

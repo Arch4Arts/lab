@@ -1,5 +1,5 @@
 import store from './../store'
-import { checkSoundsEnable } from '../../components/GameSound'
+import { checkSoundsEnable } from '../../js/GameSound'
 
 const sound = {
   namespaced: false,

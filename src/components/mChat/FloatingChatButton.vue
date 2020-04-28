@@ -6,71 +6,32 @@
       <div v-if="$store.state.mChat.newMessagesCount > 0 && !$store.state.mChat.show" class="new-msg-count">
         {{ $store.state.mChat.newMessagesCount }}
       </div>
-      <v-btn text large fab icon color="#E0E0E0"><v-icon>fas fa-mobile-android-alt</v-icon></v-btn>
+      <v-btn text large fab icon><v-icon>fas fa-mobile-android-alt</v-icon></v-btn>
     </div>
-    <mChatFrame
-      :messageList="messageList"
-      :onUserInputSubmit="onMessageWasSent"
-      :contacts="contacts"
-      :typingIndicatorEnable="typingIndicatorEnable"
-      :alwaysScrollToBottom="alwaysScrollToBottom"
-      :messageStyling="messageStyling"
-      :disableUserListToggle="disableUserListToggle"
-      @scrollToTop="$emit('scrollToTop')"
-      @onType="$emit('onType')"
-    />
   </div>
 </template>
 <script>
-import mChatFrame from './mChatFrame.vue'
 
 export default {
-  props: {
-    contacts: {
-      type: Array,
-      required: true
-    },
-    onMessageWasSent: {
-      type: Function,
-      required: true
-    },
-    messageList: {
-      type: Array,
-      default: () => []
-    },
-    typingIndicatorEnable: {
-      type: String,
-      default: () => ''
-    },
-    alwaysScrollToBottom: {
-      type: Boolean,
-      default: () => false
-    },
-    messageStyling: {
-      type: Boolean,
-      default: () => false
-    },
-    disableUserListToggle: {
-      type: Boolean,
-      default: false
-    }
-  },
   methods: {
     openChat() {
-      this.$store.state.mChat.show = true
-      this.$store.commit('updateStores');
+      this.$store.commit('mChatShow');
     },
     closeChat() {
-      this.$store.state.mChat.show = false
-      this.$store.commit('updateStores');
+      this.$store.commit('mChatShow');
     },
-  },
-  components: {
-    mChatFrame
   }
 }
 </script>
+
 <style lang='scss' scoped>
+
+.v-btn {
+  background: transparent !important;
+  &:hover {
+    background: transparent !important;
+  }
+}
 
 .launcher {
   /* width: 60px;

@@ -26,6 +26,7 @@
 <br><br>
   <mChatTestPage />
 <br><br>
+  <v-btn @click="test()"></v-btn>
   <h1>Пролог</h1>
   <h2>Пролог</h2>
   <h3>Пролог</h3>
@@ -54,7 +55,6 @@ import MC from '../../components/Chars/CharStyles/MC'
 import Sister from '../../components/Chars/CharStyles/Sister'
 import mcSettings from '../../components/Chars/CharSettings/mcSettings'
 import mChatTestPage from '../../components/mChat/TestPage'
-
 
 export default {
   components: {

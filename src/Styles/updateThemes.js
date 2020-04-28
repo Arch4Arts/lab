@@ -1,6 +1,6 @@
 import store from '../stores/store';
 
-export default function updateAllThemes(){
+export default function updateThemes(){
   // Оформление мобильного чата
   if (store.state.mChat.themesList[0].themeName === store.state.mChat.currentSelectedTheme_MC)
     document.documentElement.setAttribute('mChatTheme', 'Minimalistic')

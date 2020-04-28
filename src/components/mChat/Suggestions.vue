@@ -1,29 +1,31 @@
 <template>
-    <div class="suggestions-row">
-        <button class="suggestions-element" v-for="(suggestion, idx) in suggestions" 
-         v-on:click="$emit('sendSuggestion', suggestion)" 
-         :key="idx">{{suggestion}}</button>
-    </div>
+	<div class="suggestions-row">
+		<button 
+			class="suggestions-element" 
+			v-for="(suggestion, id) in suggestions" 
+			:key="id"
+			@click="$emit('sendSuggestion', suggestion)" 
+		>
+			{{ suggestion }}
+		</button>
+	</div>
 </template>
 
 <script>
 export default {
-    data() {
-        return {
-        }
-    },
-    props: {
-        suggestions: {
-            type: Array,
-            default: () => []
-        },
-    }
+	props: {
+		suggestions: {
+			type: Array,
+			default: () => []
+		},
+	}
 }
 </script>
 
-<style>
+<style scoped>
+
 .suggestions-row {
-  text-align: center;
+	text-align: center;
   background: transparent;
 }
 
@@ -37,4 +39,5 @@ export default {
   background: var(--suggestions-element--background) !important;
   cursor: pointer;
 }
+
 </style>

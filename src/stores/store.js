@@ -34,8 +34,8 @@ const store = new Vuex.Store({
       { themeName: 'NordDark' },
       { themeName: 'CustomDark' }
     ],
-
-    gameHotkeysEnable: false, // Горячие клавиши в игре 
+    test: 0,
+    gameHotkeysEnable: true, // Горячие клавиши в игре 
     keyboardShortcutsVersion: '0',   
     settingsHotkeys: {
       settingsOpen: 'o',                    // Открыть журнала
@@ -58,6 +58,7 @@ const store = new Vuex.Store({
     
     reRender_mChatPlayersVolume: 0, // Используется для перерендера плееров в чате, изменяется в Saves.vue 
     reRender_ColorPickerCanvas: 0, // Для перерисовски окна с выбором цвета (исчезает при изменении размера)
+    reRender_mChat: 0, // Для обновления чата
 
     gameFirstLoad: true, // Проверка, первый ли запуск игры (Для определения языка) gameDisplayingStartPage
     gameDisplayingStartPage: true, // Для отображения StartPage
@@ -123,6 +124,9 @@ const store = new Vuex.Store({
       this.state.appHeaderEnable = !this.state.appHeaderEnable;
     },
 
+    autoCloseSavesDrawer(){
+      this.state.autoCloseSavesDrawer = !this.state.autoCloseSavesDrawer
+    },
     isOpenSettingsDrawer(){
       this.state.isOpenSettingsDrawer = !this.state.isOpenSettingsDrawer;
     },

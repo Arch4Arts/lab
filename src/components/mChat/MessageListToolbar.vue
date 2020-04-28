@@ -23,8 +23,7 @@
 export default {
   methods: {
     backToContactsPage(){
-      this.$store.state.mChat.contactsPageShow = !this.$store.state.mChat.contactsPageShow
-      this.$store.commit('updateStores');
+      this.$store.commit('mChatContactsPageShow');
     },
   }
 }
@@ -33,6 +32,10 @@ export default {
 <style lang="scss" scoped>
 
 .v-btn {
+  background: var(--message-list__v-btn--background) !important;
+}
+
+.v-btn:hover {
   background: var(--message-list__v-btn--background) !important;
 }
 

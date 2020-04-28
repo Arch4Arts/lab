@@ -1,10 +1,11 @@
 <template>
   <div class="chat-area">
     <!-- Стиливая сообщения -->
-    <div class="messages-container" :class="{
+    <div class="messages-container" :class="{        
         from_me: source.author === 'me',
-        from_them: source.author !== 'me' && source.type !== 'system',
-        system: source.type === 'system'  // Свой стиль
+        from_them: source.author !== 'me' && source.type !== 'system' && source.type !== 'suggestion',
+        suggestions: source.type === 'suggestion',
+        system: source.type === 'system',
       }">
       <!-- Аватар отправителя -->
       <div 
@@ -20,6 +21,11 @@
       <ImageMessage v-else-if="source.type === 'image'"  :data="source.data" />
       <VideoMessage v-else-if="source.type === 'video'" :data="source.data" />
       <AudioMessage v-else-if="source.type === 'audio'" :data="source.data" />
+      <!-- Варианты ответов -->
+      <Suggestions v-if="source.type === 'suggestion'" 
+        :suggestions="getSuggestions()" 
+        @sendSuggestion="_submitSuggestion"
+      />
     </div>
   </div>
 </template>
@@ -32,9 +38,8 @@ import SystemMessage from './message type/SystemMessage.vue'
 import ImageMessage from './message type/ImageMessage.vue'
 import VideoMessage from './message type/VideoMessage.vue'
 import AudioMessage from './message type/AudioMessage.vue'
-import defaultAvatar from './assets/user-default-avatar.svg'
-import Suggestions from './Suggestions'
 
+import Suggestions from './Suggestions'
 
 export default {
   components: {
@@ -45,26 +50,51 @@ export default {
     ImageMessage,
     VideoMessage,
     AudioMessage,
-    Suggestions,
+    Suggestions
   },
   props: {
     source: { 
       type: Object,
       required: true,
     },
+    mChatData: {
+      type: Array,
+      required: true,
+    },  
   },
   methods: {
+    onSubmitSuggestion(suggestion){ 
+      var chatData = this.mChatData; // присваиваем ссылку, чтобы изменять оригинал
+      var selectedUser = this.$store.state.mChat.selectedContactID // В какой чат отправлять
+      for (let chat of chatData) { // Перебираем для каждого пользователя
+        if (chat.contactID === selectedUser) {
+          // если отправляемый suggestion автономен(т.е с type = suggestion), то нужно удалить его запись из истории, и добавить уже в виде ответа от From_me
+          if (chat.messagesHistory[chat.messagesHistory.length - 1].type === 'suggestion') 
+            chat.messagesHistory.splice([chat.messagesHistory.length - 1], 1)
+          // В противном случае просто отправить ответ от From_me, т.к suggestion был привязан к From_them
+          chat.messagesHistory = [...chat.messagesHistory, suggestion]
+          this.$store.commit('updateStores');
+        }
+      }
+    },
+    _submitSuggestion(suggestion) {
+      let uniqid = require('uniqid');
+      this.onSubmitSuggestion({uid: uniqid(), type: 'text', author: 'me', data: { text: suggestion }})
+    },
+    getSuggestions(){
+      return this.source.data.suggestions
+    },
     profile(author) {
-      const profile = this.$store.state.mChatData.find(profile => profile.mChatData_ContactID === author)
+      const profile = this.mChatData.find(profile => profile.contactID === author)
 
       // A profile may not be found for system messages or messages by 'me'
-      return profile || {mChatData_AvatarImg: '', mChatData_ContactName: ''}
+      return profile || {avatarImg: '', contactName: ''}
     },
     chatImageUrl(author) {
-      return this.profile(author).mChatData_AvatarImg
+      return this.profile(author).avatarImg
     },
     authorName(author) {
-      return this.profile(author).mChatData_ContactName
+      return this.profile(author).contactName
     }
   }
 }
@@ -180,6 +210,10 @@ export default {
   justify-content: center;
 }
 
+.messages-container.suggestions{ // Системное сообщение - по центру
+  justify-content: center;
+}
+
 .messages-container { 
 	&.from_me { // Гробальный стиль для всех сообщений в правой колонке
 		justify-content: flex-end;
@@ -189,6 +223,9 @@ export default {
       @include bubble(20, var(--from_me_msg_bg));
       color: var(--from_me_msg_font) !important;
       max-width: 220px;
+      p {
+        margin-bottom: 0px !important;
+      }
 		}
 		.tail { // Стиль хвостика сообщения
 			@include tail(20, right, var(--from_me_tail_color))
@@ -205,6 +242,9 @@ export default {
       @include bubble(20, var(--from_them_msg_bg));
       color: var(--from_them_msg_font) !important;
       max-width: 220px;
+      p {
+        margin-bottom: 0px !important;
+      }
 		}
 		.tail { // Стиль хвостика сообщения
 			@include tail(20, left, var(--from_them_tail_color))

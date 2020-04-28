@@ -5,7 +5,13 @@
     <img src="../../assets/Samsung Galaxy S7 Black.png" class="smartphone-texture">
     <img src="../../assets/Samsung Galaxy S7 Black_bottom.png" class="smartphone-texture close-area" @click.prevent="closeChat()">
     <!-- Страница с контактами -->
-    <ContactsPage class="contacts-page" v-if="$store.state.mChat.contactsPageShow"></ContactsPage>
+    <ContactsPage 
+      class="contacts-page" 
+      v-if="$store.state.mChat.contactsPageShow"
+
+      :contactList="contactList"
+      :mChatData="mChatData"
+    />
     <!-- Чат с конкретным контактом -->
     <div v-if="!$store.state.mChat.contactsPageShow" class="chat-window">
       <!-- Шапка -->
@@ -13,11 +19,10 @@
       <!-- Область прокрутки с сообщениями -->
       <MessageList
         :messages="messageList"
-        :contacts="contacts"
-        :typingIndicatorEnable="typingIndicatorEnable"
+        :contactList="contactList"
+        :mChatData="mChatData"
         :alwaysScrollToBottom="alwaysScrollToBottom"
         :messageStyling="messageStyling"
-        @scrollToTop="$emit('scrollToTop')"
       />
       <!-- Декоративная панель ввода -->
       <MessageListInput v-if="$store.state.mChat.showDecorativeInputPanel" /> 
@@ -33,73 +38,67 @@ import MessageList from './MessageList.vue'
 import ContactsPage from './ContactsPage'
 
 export default {
-  components: {
-    MessageListToolbar,
-    MessageListInput,    
-    ContactsPage,
-    MessageList,
-  },
-  props: {
-    contacts: {
+  props: {    
+    mChatData: {
       type: Array,
-      required: true
-    },
-    typingIndicatorEnable: {
-      type: String,
-      required: true
-    },
-    alwaysScrollToBottom: {
-      type: Boolean,
+      required: true,
+    },    
+    contactList: {
+      type: Array,
       required: true
     },
     messageStyling: {
       type: Boolean,
       required: true
     },
-    disableUserListToggle: {
+    alwaysScrollToBottom: {
       type: Boolean,
-      default: false
-    }
+      required: true
+    },
   },
   computed: {
     messageList() {
-      // let messages = this.messageList
       this.$store.state.mChat.contactsPageShow // обновляет список сообщений при каждом открытии и закрытии списка пользователей
       
       let messages;
-      var users = this.$store.state.mChatData;
+      var chatData = this.mChatData;
       var selectedUser = this.$store.state.mChat.selectedContactID
-      for (let user of users) { // Перебираем для каждого пользователя
-        if (user.mChatData_ContactID === selectedUser) {
-          user.mChatData_unReadMsgCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
-          return messages = user.mChatData_MsgHistory
-        }
-      }
-    }
-  },
-  methods: {
-    onSubmitSuggestion(suggestion){ // Импорт для userInput (Suggestions)
-      // this.messageList = [...this.messageList, message]
-      var users = this.$store.state.mChatData; // Не копируем массив, чтобы изменять оригинал
-      var selectedUser = this.$store.state.mChat.selectedContactID
-      for (let user of users) { // Перебираем для каждого пользователя
-        if (user.mChatData_ContactID === selectedUser) {
-          // если отправляемый suggestion автономен, то нужно удалить его запись из истории, и добавить уже в виде ответа от ME
-          if (user.mChatData_MsgHistory[user.mChatData_MsgHistory.length - 1].type === 'suggestion') user.mChatData_MsgHistory.splice([user.mChatData_MsgHistory.length - 1], 1)
-          // В противном случае просто отправить ответ от ME, т.к suggestion был привязан к THEM
-          user.mChatData_MsgHistory = [...user.mChatData_MsgHistory, suggestion]
-          this.$store.commit('updateStores');
+      for (let i in chatData) { // Перебираем для каждого пользователя
+        if (chatData[i].contactID === selectedUser) {
+          chatData[i].unreadMessageCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
+          return messages = chatData[i].messagesHistory
         }
       }
     },
+  },
+  methods: {
+    // onSubmitSuggestion(suggestion){ // Импорт для userInput (Suggestions)
+    //   // this.messageList = [...this.messageList, message]
+    //   var users = this.$store.state.mChatData; // Не копируем массив, чтобы изменять оригинал
+    //   var selectedUser = this.$store.state.mChat.selectedContactID
+    //   for (let user of users) { // Перебираем для каждого пользователя
+    //     if (user.contactID === selectedUser) {
+    //       // если отправляемый suggestion автономен, то нужно удалить его запись из истории, и добавить уже в виде ответа от ME
+    //       if (user.messagesHistory[user.messagesHistory.length - 1].type === 'suggestion') user.messagesHistory.splice([user.messagesHistory.length - 1], 1)
+    //       // В противном случае просто отправить ответ от ME, т.к suggestion был привязан к THEM
+    //       user.messagesHistory = [...user.messagesHistory, suggestion]
+    //       this.$store.commit('updateStores');
+    //     }
+    //   }
+    // },
     getSuggestions(){
       return this.messageList.length > 0 ? this.messageList[this.messageList.length - 1].suggestions : []
     },
     closeChat() {
-      this.$store.state.mChat.show = false
-      this.$store.commit('updateStores');
+      this.$store.commit('mChatShow');
     },
-  }
+  },
+  components: {
+    MessageListToolbar,
+    MessageListInput,    
+    ContactsPage,
+    MessageList,
+  },
 }
 </script>
 <style scoped>

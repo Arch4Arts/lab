@@ -66,7 +66,7 @@
         </v-btn>
       </template>
       <!-- Список звуков / показывает текущий выбранный звук / воспроизводит звук при нажатии -->
-      <v-list>
+      <v-list class="v-menu--background">
         <v-list-item-group v-model="achievementSelectedSound">
         <v-list-item
           v-for="(sound, i) in $store.state.sound.soundsList"
@@ -123,7 +123,7 @@
         </v-btn>
       </template>
       <!-- Список звуков / показывает текущий выбранный звук / воспроизводит звук при нажатии -->
-      <v-list>
+      <v-list class="v-menu--background">
         <v-list-item-group v-model="diarySelectedSound">
         <v-list-item
           v-for="(sound, i) in $store.state.sound.soundsList"
@@ -180,7 +180,7 @@
         </v-btn>
       </template>
       <!-- Список звуков / показывает текущий выбранный звук / воспроизводит звук при нажатии -->
-      <v-list>
+      <v-list class="v-menu--background">
         <v-list-item-group v-model="smartphoneSelectedSound">
         <v-list-item
           v-for="(sound, i) in $store.state.sound.soundsList"
@@ -198,7 +198,7 @@
 </template>
 
 <script>
-import { checkSoundsEnable, soundPlay, soundPlayLoop } from '../../components/GameSound'
+import { checkSoundsEnable, soundPlay, soundPlayLoop } from '../../js/GameSound'
 
 export default {
   data(){
@@ -302,6 +302,10 @@ export default {
 
 <style lang="scss" scoped>
 
+.v-menu--background {
+  background: var(--settings-v-list-item--background) !important;
+}
+
 .v-list-item--padding { // Название не менять!
   padding: 0px !important;
 }
@@ -339,7 +343,7 @@ export default {
 }
 
 .sound-options-container__btn {
-  margin-right: 16px;
+  margin-right: 12px;
   background: transparent !important;
 }
 

@@ -1,7 +1,6 @@
 <template>
 <div>
   <v-list-item
-    :key="source.saveID"
     :value="`${source.saveName},${source.saveTime},${source.saveID},${source.saveGameVersion}`"
   >
   <!-- Информация о имени и времени -->
@@ -74,9 +73,6 @@ export default {
       type: Function,
       required: true
     },
-  },
-  mounted(){
-    console.log('savesList')
   }
 }
 </script>

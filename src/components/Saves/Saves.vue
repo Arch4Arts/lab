@@ -202,9 +202,9 @@ import store from '../../stores/store';
 
 import iziToast from 'izitoast/dist/js/iziToast.min.js';
 
-import updateAllThemes from '../../styles/updateAllThemes';
+import updateThemes from '../../styles/updateThemes';
 
-import eventBus from '../initEventBus'
+import eventBus from '../../js/initEventBus'
 
 import savesListComp from './SavesList'
 
@@ -270,6 +270,10 @@ export default {
     eventBus.$off('QuickLoad')
   },
   methods:{
+    reRender(){
+      this.$store.state.reRender_mChatPlayersVolume += 1;
+      this.$store.state.reRender_mChat += 1;
+    },
     // Сортировка по...
     sortBy(key) { // (убыванию) desc <, asc (возрастанию) >
       return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
@@ -374,6 +378,7 @@ export default {
       this.savesList.sort(this.sortBy('saveID'));
       // Удаляем выбранное сохранение для перезаписи, если шифрование не сработает, сохранение не будет удалённо
       localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVersion}`)
+      this.ListSelectedSaves = [];
       // Автоматическое закрытие панели сохранений, если включено
       if (this.$store.state.autoCloseSavesDrawer) this.autoCloseDrawer()
     },
@@ -381,12 +386,12 @@ export default {
     async loadSave(saveName, saveTime, saveID, saveGameVersion){
       // Заменяем store
       await this.$store.replaceState(await WebCrypto(`${saveName},${saveTime},${saveID},${saveGameVersion}`));
-      // Перерисовываем компоненты плееров для применянения настроек звука
-      this.$store.state.reRender_mChatPlayersVolume += 1;
+      // Перерисовываем компоненты
+      this.reRender()
       // Фиксируем новые переменные
       this.$store.commit('updateStores');
       // Обновляем темы
-      updateAllThemes()
+      updateThemes()
       // Очистка списка выбранных сохранеий (т.к они выбираются при нажатии кнопок: Перезаписи и Загрузки сохранения)
       this.ListSelectedSaves = [];
       // Автоматическое закрытие панели сохранений, если включено

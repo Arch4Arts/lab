@@ -34,8 +34,7 @@ export default {
         if (this.$store.state.mChat.show) { // проверка открыт ли чат, если да то...
           // Открыта ли страница контактов, true, то закрываем, если false, возвращаемся к странице контактов, т.к открыт чат с контактом
           if (this.$store.state.mChat.contactsPageShow) {
-            this.$store.state.mChat.show = !this.$store.state.mChat.show // закрываем окно чата
-            this.$store.commit('updateStores');
+            this.$store.commit('mChatShow'); // закрываем окно чата
           }
           // Закрывает чат с контактом если он открыт
           else this.$store.state.mChat.contactsPageShow = !this.$store.state.mChat.contactsPageShow
@@ -47,8 +46,7 @@ export default {
         // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
         if (this.$route.path != '/Diary') {
           // открываем окно чата, если оно не было открыто ранее
-          if (!this.$store.state.mChat.show) this.$store.state.mChat.show = !this.$store.state.mChat.show
-          this.$store.commit('updateStores');
+          if (!this.$store.state.mChat.show) this.$store.commit('mChatShow');
         }
       }
     },
@@ -134,10 +132,11 @@ a:hover {
 }
 
 @media (max-width: 450px) {
+
   .Page {
-    border-right: none;
-    border-left: none;
+  border: none !important;
   }  
+  
 }
 
 /* roboto-100 - cyrillic_latin */

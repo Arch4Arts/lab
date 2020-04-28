@@ -1,24 +1,25 @@
 <template>
-<div class="message-list" ref="scrollList" @scroll="handleScroll">
+<div>
   <!-- Зона прокрутки -->
   <virtual-list
+    class="message-list" 
+    ref="mChatMessageList"
+
     :size="65"
     :keeps="30"
 
     data-key="uid"
     :data-sources="messages"
     :data-component="itemComponent"
+    :extra-props="{ mChatData: mChatData }"
   />
-  <!-- Варианты ответов -->
-  <Suggestions :suggestions="getSuggestions()" v-on:sendSuggestion="_submitSuggestion"/>
 </div>
 </template>
 
 <script>
-import chatIcon from './assets/user-default-avatar.svg'
-
 import Message from './Message.vue'
-import Suggestions from './Suggestions.vue'
+
+import eventBus from '../../js/initEventBus'
 
 import VirtualList from 'vue-virtual-scroll-list'
 
@@ -28,23 +29,19 @@ export default {
       itemComponent: Message,
     }
   },
-  components: {
-    Message,
-    Suggestions,
-  },
   props: {
-    contacts: {
-      type: Array,
-      required: true
-    },
     messages: {
       type: Array,
       required: true
-    },
-    typingIndicatorEnable: {
-      type: String,
+    },    
+    contactList: {
+      type: Array,
       required: true
     },
+    mChatData: {
+      type: Array,
+      required: true,
+    },  
     alwaysScrollToBottom: {
       type: Boolean,
       required: true
@@ -54,64 +51,17 @@ export default {
       required: true
     }
   },
-  methods: {
-    onSubmitSuggestion(suggestion){ // Импорт для userInput (Suggestions)
-      // this.messageList = [...this.messageList, message]
-      var users = this.$store.state.mChatData; // Не копируем массив, чтобы изменять оригинал
-      var selectedUser = this.$store.state.mChat.selectedContactID
-      for (let user of users) { // Перебираем для каждого пользователя
-        if (user.mChatData_ContactID === selectedUser) {
-          // если отправляемый suggestion автономен, то нужно удалить его запись из истории, и добавить уже в виде ответа от ME
-          if (user.mChatData_MsgHistory[user.mChatData_MsgHistory.length - 1].type === 'suggestion') user.mChatData_MsgHistory.splice([user.mChatData_MsgHistory.length - 1], 1)
-          // В противном случае просто отправить ответ от ME, т.к suggestion был привязан к THEM
-          user.mChatData_MsgHistory = [...user.mChatData_MsgHistory, suggestion]
-          this.$store.commit('updateStores');
-        }
-      }
-    },
-    getSuggestions(){
-      return this.messages.length > 0 ? this.messages[this.messages.length - 1].suggestions : []
-    },
-    _submitSuggestion(suggestion) {
-      this.onSubmitSuggestion({author: 'me', type: 'text', data: { text: suggestion }})
-    },
-    _scrollDown () {
-      this.$refs.scrollList.scrollTop = this.$refs.scrollList.scrollHeight
-    },
-    handleScroll (e) {
-        if (e.target.scrollTop === 0) {
-            this.$emit('scrollToTop')
-        }
-    },
-    shouldScrollToBottom() {
-      return this.alwaysScrollToBottom || (this.$refs.scrollList.scrollTop > this.$refs.scrollList.scrollHeight - 600)
-    },
-    profile(author) {
-      const profile = this.contacts.find(profile => profile.mChatData_ContactID === author)
-
-      // A profile may not be found for system messages or messages by 'me'
-      return profile || {mChatData_AvatarImg: '', mChatData_ContactName: ''}
-    },
-    chatImageUrl(author) {
-      return this.profile(author).mChatData_AvatarImg
-    },
-    authorName(author) {
-      return this.profile(author).mChatData_ContactName
-    }
+  mounted(){
+    this.$refs.mChatMessageList.scrollToBottom()
+    eventBus.$on('mChatMessageWasSent', this.$refs.mChatMessageList.scrollToBottom);
   },
-  computed: {
-    defaultChatIcon() {
-      return chatIcon
-    }
+  beforeDestroy(){
+    eventBus.$off('mChatMessageWasSent')
   },
-  mounted () {
-    // console.log(this.messages)
-    this._scrollDown()
+  components: {
+    Message,
+    'virtual-list': VirtualList
   },
-  updated () {
-    if (this.shouldScrollToBottom())
-      this.$nextTick(this._scrollDown())
-  }
 }
 </script>
 
@@ -122,7 +72,7 @@ export default {
 }
 
 .message-list {
-  height: 100%;
+  max-height: 485px;
   overflow-y: auto;
   background-size: 100%;
   -ms-overflow-style: none;  /* IE 10+ */
@@ -133,10 +83,6 @@ export default {
   &::-webkit-scrollbar {
   display: none;  /* Safari and Chrome */  
   }
-}
-
-.v-list {
-  /* max-height: 485px; */
 }
 
 .bar {

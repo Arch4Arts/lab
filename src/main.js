@@ -19,9 +19,6 @@ import VuePlyr from 'vue-plyr'
 import 'plyr/dist/plyr.css'
 Vue.use(VuePlyr) // Видео/Аудио плеер
 
-import Chat from './components/mChat/index' // Мобильный чат
-Vue.use(Chat, {})
-
 import vueScrollBehavior from 'vue-scroll-behavior' // Сохранение положения прокрутки
 Vue.use(vueScrollBehavior, { router: router })
 
@@ -30,12 +27,12 @@ import 'izitoast/dist/css/iziToast.min.css';
 import iziToast from 'izitoast/dist/js/iziToast.min.js';
 Vue.use(VueIziToast);
 
-import updateAllThemes from './styles/updateAllThemes';
-import { checkSoundsEnable } from './components/GameSound'
-import { bindHotkeys, unbindHotkeys }from './components/Hotkeys'
+import updateThemes from './styles/updateThemes';
+import { checkSoundsEnable } from './js/GameSound'
+import { bindHotkeys, unbindHotkeys }from './js/Hotkeys'
 
-import { SentryPush } from './components/GlobalErrorsHandling';
-import './components/GlobalErrorsHandling'
+import { SentryPush } from './js/GlobalErrorsHandling';
+import './js/GlobalErrorsHandling'
 
 
 import { name as gameName } from  '../package.json';
@@ -61,7 +58,7 @@ new Vue({
       // // Является ли устройство сенсорным
       this.isTouchDevice = this.detectTouchDevice()
       // Обновляем оформление игры
-      updateAllThemes()
+      updateThemes()
       // Подключаем горячие клавиши (проверка внутри функции)
       bindHotkeys()
       // проверка состояния звука

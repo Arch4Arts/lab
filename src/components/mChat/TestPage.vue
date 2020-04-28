@@ -25,14 +25,14 @@
   <br>
   Chat NewMSGNumber: {{ $store.state.mChat.newMessagesCount }}
   <br><br>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "text", { text: "lorum!" })'>Support short text...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "text", { text: "Lorum ipsum orom!" })'>Support text...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "text", { text: "Ipsum lorom odno id narokomoron is naruch begin end" })'>Support long text...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "image", { src: require("../../media/img/2.gif") })'>Support image gif...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "video", { src: require("../../media/video/Carmelita.mp4") })'>Support video...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "audio", { src: require("../../media/audio/test.mp3") })'>Support audio..</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "emoji", { src: require("../../media/img/smiling-face.png") })'>Support emoji..</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "suggestion", undefined, ["no", "Yes"])'>Support suggetion...</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "text", { text: "lorum!" })'>short text...</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "text", { text: "Lorum **ipsum** orom!" })'>text...</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "text", { text: "Ipsum **_lorom odno_** id narokomoron is naruch begin end" })'>long text...</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "image", { src: require("../../media/img/2.gif") })'>image gif...</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "video", { src: require("../../media/video/Carmelita.mp4") })'>video...</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "audio", { src: require("../../media/audio/test.mp3") })'>audio..</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "emoji", { src: require("../../media/img/smiling-face.png") })'>emoji..</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "suggestion", { suggestions: ["no", "Yes"] })'>suggetions</v-btn>
   <br>
   <v-btn text @click="addContactToChatList('mc')">Добавить mc в контакты</v-btn>
   <br><br>
@@ -58,17 +58,17 @@ export default {
   computed: {
     ContactID() {
       let ContactsIDList = [];
-      var users = this.$store.state.mChatData;
+      var users = this.$store.state.mChatData.MC;
       for (let user of users) { // Перебираем для каждого пользователя
-        ContactsIDList.push(user.mChatData_ContactID)
+        ContactsIDList.push(user.contactID)
       }
       return ContactsIDList
     },
     ChatID() {
       let ContactsIDList = [];
-      var users = this.$store.state.mChatData;
+      var users = this.$store.state.mChatData.MC;
       for (let user of users) { // Перебираем для каждого пользователя
-        ContactsIDList.push(user.mChatData_ChatID)
+        ContactsIDList.push(user.chatID)
       }
       return ContactsIDList
     }

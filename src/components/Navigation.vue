@@ -49,9 +49,9 @@ export default {
 				},
 				{
 					icon: 'fas fa-book',
-					title: 'Diary',
-					title_ru: 'Дневник',
-					route: 'Diary'
+					title: 'Journal',
+					title_ru: 'Журнал',
+					route: 'Journal'
 				},
 				{
 					icon: 'fas fa-save',

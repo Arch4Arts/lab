@@ -153,19 +153,19 @@ export default {
       if (!isShow) this.$store.commit('updateStores')
     },
     autoCloseSavesDrawer(){
-      this.$store.state.autoCloseSavesDrawer =! this.$store.state.autoCloseSavesDrawer
+      this.$store.commit('autoCloseSavesDrawer')
     },
     autoPlayMsgVideoOnHover(){
-      this.$store.state.mChat.autoplayVideoMessageOnHover =! this.$store.state.mChat.autoplayVideoMessageOnHover
+      this.$store.commit('autoplayVideoMessageOnHover')
     },
     mChatTypingIndicatorEnable(){
-      this.$store.state.mChat.typingIndicatorEnable =! this.$store.state.mChat.typingIndicatorEnable
+      this.$store.commit('typingIndicatorEnable')
     },
     mChatHideAvatars(){
-      this.$store.state.mChat.showAvatars =! this.$store.state.mChat.showAvatars
+      this.$store.commit('mChatShowAvatars')
     },
     mChatHideInput(){
-      this.$store.state.mChat.showDecorativeInputPanel =! this.$store.state.mChat.showDecorativeInputPanel
+      this.$store.commit('showDecorativeInputPanel')
     },
   },
   computed: {
