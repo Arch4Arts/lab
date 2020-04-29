@@ -18,10 +18,6 @@ const mChat = {
         selectedChatID: '', // ID выбранного контакта (Который был выбран на странице контактов)
         selectedContactName: '',  // Имя выбранного контакта (Который был выбран на странице контактов)
 
-        newMessagesCount_MC: 0, // Счетчик новых сообщений
-        сurrentChatList_MC: ['mc_support','mc_tailor'], // Текущие контакты в телефоне
-
-        currentSelectedTheme_MC: 'Minimalistic',
         themesList: [
           { themeName: 'Minimalistic' },
           { themeName: 'Dark minimalistic' },

@@ -37,7 +37,7 @@ import ChatList from './ChatList'
 export default {
   props: {    
     mChatData: {
-      type: Array,
+      type: Object,
       required: true,
     },    
     chatList: {
@@ -49,14 +49,12 @@ export default {
     getMessageList() {
       this.$store.state.mChat.chatListShow // обновляет список сообщений при каждом открытии и закрытии списка пользователей
       
-      let messages;
       var chatData = this.mChatData;
       var selectedChat = this.$store.state.mChat.selectedChatID
-      console.log(selectedChat)
-      for (let i in chatData) { // Перебираем для каждого пользователя
-        if (chatData[i].chatID === selectedChat) {
-          chatData[i].unreadMessageCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
-          return messages = chatData[i].messagesHistory
+      for (let i in chatData.chatList) { // Перебираем для каждого пользователя
+        if (chatData.chatList[i].chatID === selectedChat) {
+          chatData.chatList[i].unreadMessageCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
+          return chatData.chatList[i].messagesHistory
         }
       }
     },

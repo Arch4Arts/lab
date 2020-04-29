@@ -33,9 +33,9 @@ export default {
     messages: {
       type: Array,
       required: true
-    },    
+    },
     mChatData: {
-      type: Array,
+      type: Object,
       required: true,
     }
   },
@@ -61,6 +61,7 @@ export default {
 
 .message-list {
   max-height: 485px;
+  flex: 2 0 auto;
   overflow-y: auto;
   background-size: 100%;
   -ms-overflow-style: none;  /* IE 10+ */

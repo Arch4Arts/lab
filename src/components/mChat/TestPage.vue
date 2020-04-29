@@ -2,10 +2,10 @@
   <section>
   <v-form>
     <v-autocomplete
-      v-model="selectedContactID"
-      :items="getContactIDList"
+      v-model="selectedCharID"
+      :items="getCharIDList"
       chips
-      label="contactID"
+      label="CharID"
       hide-details
       hide-no-data
       hide-selected
@@ -25,14 +25,14 @@
   <br>
   Chat NewMSGNumber: {{ $store.state.mChat.newMessagesCount }}
   <br><br>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "text", { text: "lorum!" })'>short text...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "text", { text: "Lorum **ipsum** orom!" })'>text...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "text", { text: "Ipsum **_lorom odno_** id narokomoron is naruch begin end" })'>long text...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "image", { src: require("../../media/img/2.gif") })'>image gif...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "video", { src: require("../../media/video/Carmelita.mp4") })'>video...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "audio", { src: require("../../media/audio/test.mp3") })'>audio..</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "emoji", { src: require("../../media/img/smiling-face.png") })'>emoji..</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedContactID, "suggestion", { suggestions: ["no", "Yes"] })'>suggetions</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "lorum!" })'>short text...</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "Lorum **ipsum** orom!" })'>text...</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "Ipsum **_lorom odno_** id narokomoron is naruch begin end" })'>long text...</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedCharID, "image", { src: require("../../media/img/2.gif") })'>image gif...</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedCharID, "video", { src: require("../../media/video/Carmelita.mp4") })'>video...</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedCharID, "audio", { src: require("../../media/audio/test.mp3") })'>audio..</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedCharID, "emoji", { src: require("../../media/img/smiling-face.png") })'>emoji..</v-btn>
+  <v-btn @click='sendMessage(selectedChatID, selectedCharID, "suggestion", { suggestions: ["no", "Yes"] })'>suggetions</v-btn>
   <br>
   <v-btn text @click="addContactToChatList('mc')">Добавить mc в контакты</v-btn>
   <br><br>
@@ -47,7 +47,7 @@ import { sendMessage, addContactToChatList } from './mChatFunctions.js'
 export default {
   data(){
     return {
-      selectedContactID: '',
+      selectedCharID: '',
       selectedChatID: '',
       uniqid: '',
 
@@ -56,17 +56,17 @@ export default {
     }
   },
   computed: {
-    getContactIDList() {
-      let ContactIDList = [];
-      var users = this.$store.state.mChatData.MC;
+    getCharIDList() {
+      let CharIDList = [];
+      var users = this.$store.state.mChatData.MC.charProfiles;
       for (let user of users) { // Перебираем для каждого пользователя
-        ContactIDList.push(user.contactID)
+        CharIDList.push(user.charID)
       }
-      return ContactIDList
+      return CharIDList
     },
     getChatIDList() {
       let ChatIDList = [];
-      var users = this.$store.state.mChatData.MC;
+      var users = this.$store.state.mChatData.MC.chatList;
       for (let user of users) { // Перебираем для каждого пользователя
         ChatIDList.push(user.chatID)
       }

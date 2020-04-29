@@ -4,7 +4,6 @@
   <mChatFrame
     :mChatData="mChatData"
     :chatList="getChatList"
-    @onType="$emit('onType')"
   />
 </div>
 
@@ -26,16 +25,10 @@ export default {
       return this.$store.state.mChatData.MC;
     },
     getChatList(){
-      return this.$store.state.mChat.сurrentChatList_MC;
+      return this.$store.state.mChatData.MC.сurrentChatList;
     },
     getUnreadMessagesCount(){
-      return this.$store.state.mChat.newMessagesCount_MC;
-    }
-  },
-  methods: {
-    handleOnType() {
-      this.$root.$emit('onType')
-      this.userIsTyping = true
+      return this.$store.state.mChatData.MC.newMessagesCount;
     }
   },
   components: {

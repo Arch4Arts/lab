@@ -41,6 +41,8 @@ import AudioMessage from './message type/AudioMessage.vue'
 
 import Suggestions from './Suggestions'
 
+import eventBus from '../../js/initEventBus'
+
 export default {
   components: {
     TextMessage,
@@ -58,35 +60,35 @@ export default {
       required: true,
     },
     mChatData: {
-      type: Array,
+      type: Object,
       required: true,
     },  
   },
   methods: {
-    onSubmitSuggestion(suggestion){ 
+    submitSuggestion(suggestion){ 
       var chatData = this.mChatData; // присваиваем ссылку, чтобы изменять оригинал
-      var selectedUser = this.$store.state.mChat.selectedChatID // В какой чат отправлять
-      for (let chat of chatData) { // Перебираем для каждого пользователя
-        if (chat.chatID === selectedUser) {
+      var selectedChatID = this.$store.state.mChat.selectedChatID // В какой чат отправлять
+      for (let chat of chatData.chatList) { // Перебираем для каждого пользователя
+        if (chat.chatID === selectedChatID) {
           // если отправляемый suggestion автономен(т.е с type = suggestion), то нужно удалить его запись из истории, и добавить уже в виде ответа от From_me
           if (chat.messagesHistory[chat.messagesHistory.length - 1].type === 'suggestion') 
             chat.messagesHistory.splice([chat.messagesHistory.length - 1], 1)
           // В противном случае просто отправить ответ от From_me, т.к suggestion был привязан к From_them
           chat.messagesHistory = [...chat.messagesHistory, suggestion]
           this.$store.commit('updateStores');
+          eventBus.$emit('mChatMessageWasSent')
         }
       }
     },
     _submitSuggestion(suggestion) {
       let uniqid = require('uniqid');
-      this.onSubmitSuggestion({uid: uniqid(), type: 'text', author: 'me', data: { text: suggestion }})
+      this.submitSuggestion({uid: uniqid(), type: 'text', author: 'me', data: { text: suggestion }})
     },
     getSuggestions(){
       return this.source.data.suggestions
     },
     profile(author) {
-      const profile = this.mChatData.find(profile => profile.contactID === author)
-
+      const profile = this.mChatData.charProfiles.find(profile => profile.charID === author)
       // A profile may not be found for system messages or messages by 'me'
       return profile || {avatar: '', contactName: ''}
     },
@@ -94,7 +96,10 @@ export default {
       return this.profile(author).avatar
     },
     authorName(author) {
-      return this.profile(author).contactName
+      if (this.profile(author).isAlias) {
+        return this.profile(author).aliasName
+      }
+      return this.profile(author).name
     }
   }
 }
@@ -126,7 +131,7 @@ export default {
 	background-color: $bg_msg_color;
 	background: $bg_msg_color;
 
-	text-align: center;
+	// text-align: center;
 	z-index: 3;
   
 	@if $proportional == true {
@@ -292,12 +297,11 @@ export default {
   min-width: 40px;
   min-height: 40px;
   border-radius: 50%;
-  align-self: center;
+  align-self: flex-end; // Важно
   margin-right: 12px;
 }
 
 @media (max-width: 450px) {
-
   .chat-area { // стиль окна чата
     width: 94%;
     margin-left: 8px;

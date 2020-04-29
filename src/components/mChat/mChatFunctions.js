@@ -20,12 +20,14 @@ export function sendMessage(ChatID, author, type, data) {
 
 export function onMessageWasSent(ChatID, message){ // Импорт для userInput (Suggestions)
   // messageList = [...messageList, message]
-  var users = store.state.mChatData.MC; // Не копируем массив, чтобы изменять оригинал
+  var users = store.state.mChatData.MC.chatList; // Не копируем массив, чтобы изменять оригинал
   for (let user of users) { // Перебираем для каждого пользователя
     if (user.chatID === ChatID) {
       user.unreadMessageCount += 1
       // Удаляем сообщение typing, если используется имитация набора
       if (user.messagesHistory[user.messagesHistory.length - 1].type === 'typing') user.messagesHistory.splice([user.messagesHistory.length - 1], 1)
+      // Удаляем предложенные варианты ответов, если таковые есть
+      if (user.messagesHistory[user.messagesHistory.length - 1].type === 'suggestion') user.messagesHistory.splice([user.messagesHistory.length - 1], 1)
       user.messagesHistory = [...user.messagesHistory, message]
 
       eventBus.$emit('mChatMessageWasSent');

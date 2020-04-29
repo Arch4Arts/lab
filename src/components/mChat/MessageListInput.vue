@@ -46,6 +46,7 @@ $elements-top: 58px;
   padding-left: var(--inputArea__text-input--padding-left) !important; // Смешение текста от левого края
   background: var(--inputArea__text-input--background) !important;
   color: var(--inputArea__text-input--color) !important;
+  cursor: text;
   &:empty:before {
     content: attr(placeholder);
     /* color: rgba(86, 88, 103, 0.3); */
