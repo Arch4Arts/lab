@@ -4,9 +4,9 @@ const mChatData = {
     MC: [
       {
         contactName: 'Arch', // Отображаемое имя
-        contactID: 'mc', // ID для messageHistory
+        contactID: 'mc', // Для Message.vue используется для сверки contact с полем author
         chatID: 'mc', // Уникальный ID чата, где контакт1 переписывается с контакт2, т.е mc_sister обозначает, что ГГ переписывается с сестрой, а если sister_mc, то сестра с ГГ
-        avatarImg: 'https://avatars3.githubusercontent.com/u/1915989?s=230&v=4', // Аватар
+        avatar: 'https://avatars3.githubusercontent.com/u/1915989?s=230&v=4', // Аватар
         unreadMessageCount: 0,
         messagesHistory: [
           { type: 'text', author: `mc`, data: { text: `You've got to have a story. You've got to have a story. You've got to have a story. You've got to have a story. You've got to have a story. You've got to have a story. ` } },
@@ -24,7 +24,7 @@ const mChatData = {
         contactName: 'Support',
         contactID: 'support',
         chatID: 'mc_support',
-        avatarImg: require('../../../media/img/avatar.jpg'),
+        avatar: require('../../../media/img/avatar.jpg'),
         unreadMessageCount: 0,
         messagesHistory: [
           { uid: '1k971ar09', type: 'text', author: `support`, data: { text: `You a **slut**?` } },
@@ -43,7 +43,7 @@ const mChatData = {
         contactName: 'Tailor',
         contactID: 'tailor',
         chatID: 'mc_tailor',
-        avatarImg: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+        avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
         unreadMessageCount: 0,
         messagesHistory: [
           { uid: '1k971ar09', type: 'text', author: `support`, data: { text: `You've got to have a story. You've got to have a story. You've got to have a story. You've got to have a story. You've got to have a story. You've got to have a story. ` } },
@@ -57,7 +57,7 @@ const mChatData = {
         contactName: 'Sophy',
         contactID: 'sophy',
         chatID: 'mc_sophy',
-        avatarImg: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+        avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
         unreadMessageCount: 0,
         messagesHistory: [
           { type: 'video', author: `support`, data: { src: require('../../../media/video/Carmelita.mp4'), img: '' , text: `Soo perveted!`, meta: '✓ Hentai' } },

@@ -3,7 +3,7 @@ const mChat = {
     state: {
         enable: true, // Вкл/Выкл чата
         show: false, // Статус отображения чата
-        contactsPageShow: true, // Отображение списка контактов
+        chatListShow: true, // Отображение списка контактов
 
         autoplayVideoMessageOnHover: false, // Воспроизводить ли видео при наведении мышки
         typingIndicatorEnable: true, // Если true отображается имитация набора текста, если false, то ничего не отображаетсяm
@@ -15,11 +15,11 @@ const mChat = {
         plyrAudioVolume: 0.50, // Громкость видео плеера чата (По умолчанию вкл как и весь звук игры)
         
 
-        selectedContactID: '', // ID выбранного контакта (Который был выбран на странице контактов)
+        selectedChatID: '', // ID выбранного контакта (Который был выбран на странице контактов)
         selectedContactName: '',  // Имя выбранного контакта (Который был выбран на странице контактов)
 
         newMessagesCount_MC: 0, // Счетчик новых сообщений
-        сurrentСontactList_MC: ['support','tailor'], // Текущие контакты в телефоне
+        сurrentChatList_MC: ['mc_support','mc_tailor'], // Текущие контакты в телефоне
 
         currentSelectedTheme_MC: 'Minimalistic',
         themesList: [
@@ -35,8 +35,8 @@ const mChat = {
       mChatShow(){
         this.state.mChat.show = !this.state.mChat.show
       },
-      mChatContactsPageShow(){
-        this.state.mChat.contactsPageShow = !this.state.mChat.contactsPageShow
+      mChatListShow(){
+        this.state.mChat.chatListShow = !this.state.mChat.chatListShow
       },
 
       autoplayVideoMessageOnHover(){

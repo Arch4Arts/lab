@@ -7,7 +7,7 @@ export function sendMessage(ChatID, author, type, data) {
 
   let uniqid = require('uniqid');
   // setTimeout можно заменить на sleep(ms)
-  if (store.state.mChat.typingIndicatorEnable && type !== 'suggestion' && store.state.mChat.contactsPageShow === false){
+  if (store.state.mChat.typingIndicatorEnable && type !== 'suggestion' && store.state.mChat.chatListShow === false){
     onMessageWasSent(ChatID, {uid: uniqid(), author: author, type: 'typing', data: undefined});
     (type === 'text' && data.text.length <= '8') 
     ? setTimeout(() => onMessageWasSent(ChatID, {uid: uniqid(), author: author, type: type, data: data}), 500) 
@@ -36,12 +36,12 @@ export function onMessageWasSent(ChatID, message){ // Импорт для userIn
 
 export function addContactToChatList(newContact){
   let doubleDetect = false;
-  let contacts = store.state.mChat.сurrentСontactList_MC
+  let contacts = store.state.mChat.сurrentChatList_MC
   for (let contact of contacts) {
     if (contact === newContact) doubleDetect = true;
   }
   if (doubleDetect === false) {
-    store.state.mChat.сurrentСontactList_MC.push(newContact);
+    store.state.mChat.сurrentChatList_MC.push(newContact);
     store.commit('updateStores');
   }
 }

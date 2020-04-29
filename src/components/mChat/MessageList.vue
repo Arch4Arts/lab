@@ -34,21 +34,9 @@ export default {
       type: Array,
       required: true
     },    
-    contactList: {
-      type: Array,
-      required: true
-    },
     mChatData: {
       type: Array,
       required: true,
-    },  
-    alwaysScrollToBottom: {
-      type: Boolean,
-      required: true
-    },
-    messageStyling: {
-      type: Boolean,
-      required: true
     }
   },
   mounted(){

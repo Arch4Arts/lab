@@ -33,11 +33,11 @@ export default {
       if (this.$route.path != '/Diary') {
         if (this.$store.state.mChat.show) { // проверка открыт ли чат, если да то...
           // Открыта ли страница контактов, true, то закрываем, если false, возвращаемся к странице контактов, т.к открыт чат с контактом
-          if (this.$store.state.mChat.contactsPageShow) {
+          if (this.$store.state.mChat.chatListShow) {
             this.$store.commit('mChatShow'); // закрываем окно чата
           }
           // Закрывает чат с контактом если он открыт
-          else this.$store.state.mChat.contactsPageShow = !this.$store.state.mChat.contactsPageShow
+          else this.$store.state.mChat.chatListShow = !this.$store.state.mChat.chatListShow
         }
       }
     },

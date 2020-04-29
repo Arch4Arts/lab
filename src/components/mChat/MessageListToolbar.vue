@@ -23,7 +23,7 @@
 export default {
   methods: {
     backToContactsPage(){
-      this.$store.commit('mChatContactsPageShow');
+      this.$store.commit('mChatListShow');
     },
   }
 }
@@ -41,6 +41,7 @@ export default {
 
 .bar {
   background-color: var(--message-list--bar--background-color) !important;
+  box-shadow: 0px -2px 4px black; // Маленькая тень
   z-index: 4;
 }
 
@@ -65,4 +66,5 @@ export default {
 .bar__ellipsis-btn {
   color: var(--message-list--bar__ellipsis-btn--color) !important;
 }
+
 </style>

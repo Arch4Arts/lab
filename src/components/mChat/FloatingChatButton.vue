@@ -3,8 +3,8 @@
     <!-- Иконка открывающая чат -->
     <div class="launcher hidden-sm-and-down" @click.prevent="$store.state.mChat.show ? closeChat() : openChat()">
       <!-- Элемент показывающий кол-во сообщений рядом с эконкой -->
-      <div v-if="$store.state.mChat.newMessagesCount > 0 && !$store.state.mChat.show" class="new-msg-count">
-        {{ $store.state.mChat.newMessagesCount }}
+      <div v-if="unreadMessagesCount > 0 && !$store.state.mChat.show" class="new-msg-count">
+        {{ unreadMessagesCount }}
       </div>
       <v-btn text large fab icon><v-icon>fas fa-mobile-android-alt</v-icon></v-btn>
     </div>
@@ -13,6 +13,12 @@
 <script>
 
 export default {
+  props: {
+    unreadMessagesCount: {
+      type: Number,
+      required: true,
+    }
+  },
   methods: {
     openChat() {
       this.$store.commit('mChatShow');

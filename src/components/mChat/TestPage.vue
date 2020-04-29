@@ -3,9 +3,9 @@
   <v-form>
     <v-autocomplete
       v-model="selectedContactID"
-      :items="ContactID"
+      :items="getContactIDList"
       chips
-      label="ContactID"
+      label="contactID"
       hide-details
       hide-no-data
       hide-selected
@@ -13,7 +13,7 @@
     <br>
     <v-autocomplete
       v-model="selectedChatID"
-      :items="ChatID"
+      :items="getChatIDList"
       chips
       label="ChatID"
       hide-details
@@ -56,21 +56,21 @@ export default {
     }
   },
   computed: {
-    ContactID() {
-      let ContactsIDList = [];
+    getContactIDList() {
+      let ContactIDList = [];
       var users = this.$store.state.mChatData.MC;
       for (let user of users) { // Перебираем для каждого пользователя
-        ContactsIDList.push(user.contactID)
+        ContactIDList.push(user.contactID)
       }
-      return ContactsIDList
+      return ContactIDList
     },
-    ChatID() {
-      let ContactsIDList = [];
+    getChatIDList() {
+      let ChatIDList = [];
       var users = this.$store.state.mChatData.MC;
       for (let user of users) { // Перебираем для каждого пользователя
-        ContactsIDList.push(user.chatID)
+        ChatIDList.push(user.chatID)
       }
-      return ContactsIDList
+      return ChatIDList
     }
   },
   methods: {

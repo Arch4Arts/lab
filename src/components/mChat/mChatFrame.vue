@@ -4,25 +4,22 @@
     <!-- Текстура поделена на 2 части основную и нижнюю -->
     <img src="../../assets/Samsung Galaxy S7 Black.png" class="smartphone-texture">
     <img src="../../assets/Samsung Galaxy S7 Black_bottom.png" class="smartphone-texture close-area" @click.prevent="closeChat()">
-    <!-- Страница с контактами -->
-    <ContactsPage 
-      class="contacts-page" 
-      v-if="$store.state.mChat.contactsPageShow"
+    <!-- Страница со списком чатов -->
+    <ChatList
+      class="chat-list" 
+      v-if="$store.state.mChat.chatListShow"
 
-      :contactList="contactList"
+      :chatList="chatList"
       :mChatData="mChatData"
     />
-    <!-- Чат с конкретным контактом -->
-    <div v-if="!$store.state.mChat.contactsPageShow" class="chat-window">
+    <!-- Конкретный чат -->
+    <div v-if="!$store.state.mChat.chatListShow" class="chat-window">
       <!-- Шапка -->
       <MessageListToolbar />
       <!-- Область прокрутки с сообщениями -->
       <MessageList
-        :messages="messageList"
-        :contactList="contactList"
+        :messages="getMessageList"
         :mChatData="mChatData"
-        :alwaysScrollToBottom="alwaysScrollToBottom"
-        :messageStyling="messageStyling"
       />
       <!-- Декоративная панель ввода -->
       <MessageListInput v-if="$store.state.mChat.showDecorativeInputPanel" /> 
@@ -35,7 +32,7 @@ import MessageListToolbar from './MessageListToolbar.vue'
 import MessageListInput from './MessageListInput.vue'
 import MessageList from './MessageList.vue'
 
-import ContactsPage from './ContactsPage'
+import ChatList from './ChatList'
 
 export default {
   props: {    
@@ -43,28 +40,21 @@ export default {
       type: Array,
       required: true,
     },    
-    contactList: {
+    chatList: {
       type: Array,
-      required: true
-    },
-    messageStyling: {
-      type: Boolean,
-      required: true
-    },
-    alwaysScrollToBottom: {
-      type: Boolean,
       required: true
     },
   },
   computed: {
-    messageList() {
-      this.$store.state.mChat.contactsPageShow // обновляет список сообщений при каждом открытии и закрытии списка пользователей
+    getMessageList() {
+      this.$store.state.mChat.chatListShow // обновляет список сообщений при каждом открытии и закрытии списка пользователей
       
       let messages;
       var chatData = this.mChatData;
-      var selectedUser = this.$store.state.mChat.selectedContactID
+      var selectedChat = this.$store.state.mChat.selectedChatID
+      console.log(selectedChat)
       for (let i in chatData) { // Перебираем для каждого пользователя
-        if (chatData[i].contactID === selectedUser) {
+        if (chatData[i].chatID === selectedChat) {
           chatData[i].unreadMessageCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
           return messages = chatData[i].messagesHistory
         }
@@ -72,23 +62,6 @@ export default {
     },
   },
   methods: {
-    // onSubmitSuggestion(suggestion){ // Импорт для userInput (Suggestions)
-    //   // this.messageList = [...this.messageList, message]
-    //   var users = this.$store.state.mChatData; // Не копируем массив, чтобы изменять оригинал
-    //   var selectedUser = this.$store.state.mChat.selectedContactID
-    //   for (let user of users) { // Перебираем для каждого пользователя
-    //     if (user.contactID === selectedUser) {
-    //       // если отправляемый suggestion автономен, то нужно удалить его запись из истории, и добавить уже в виде ответа от ME
-    //       if (user.messagesHistory[user.messagesHistory.length - 1].type === 'suggestion') user.messagesHistory.splice([user.messagesHistory.length - 1], 1)
-    //       // В противном случае просто отправить ответ от ME, т.к suggestion был привязан к THEM
-    //       user.messagesHistory = [...user.messagesHistory, suggestion]
-    //       this.$store.commit('updateStores');
-    //     }
-    //   }
-    // },
-    getSuggestions(){
-      return this.messageList.length > 0 ? this.messageList[this.messageList.length - 1].suggestions : []
-    },
     closeChat() {
       this.$store.commit('mChatShow');
     },
@@ -96,7 +69,7 @@ export default {
   components: {
     MessageListToolbar,
     MessageListInput,    
-    ContactsPage,
+    ChatList,
     MessageList,
   },
 }
@@ -122,7 +95,7 @@ export default {
   bottom: 90px;
 }
 
-.contacts-page {
+.chat-list {
   width: 340px;
   height: calc(100% - 120px);
   max-height: 598px;
@@ -159,7 +132,7 @@ export default {
 }
 
 @media (max-width: 450px) {
-  .contacts-page {
+  .chat-list {
     width: 100%;
     height: 100%;
     max-height: 100%;

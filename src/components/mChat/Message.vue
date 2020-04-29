@@ -10,7 +10,7 @@
       <!-- Аватар отправителя -->
       <div 
         v-if="source.type !== 'system' && source.type !== 'suggestion' && $store.state.mChat.showAvatars" 
-        :title="authorName(source.author)" class="avatar" 
+        :title="authorName(source.author)" class="avatar"
         :style="{ backgroundImage: `url(${chatImageUrl(source.author)})` }">
       </div>
       <!-- Различные типы сообщений -->
@@ -65,9 +65,9 @@ export default {
   methods: {
     onSubmitSuggestion(suggestion){ 
       var chatData = this.mChatData; // присваиваем ссылку, чтобы изменять оригинал
-      var selectedUser = this.$store.state.mChat.selectedContactID // В какой чат отправлять
+      var selectedUser = this.$store.state.mChat.selectedChatID // В какой чат отправлять
       for (let chat of chatData) { // Перебираем для каждого пользователя
-        if (chat.contactID === selectedUser) {
+        if (chat.chatID === selectedUser) {
           // если отправляемый suggestion автономен(т.е с type = suggestion), то нужно удалить его запись из истории, и добавить уже в виде ответа от From_me
           if (chat.messagesHistory[chat.messagesHistory.length - 1].type === 'suggestion') 
             chat.messagesHistory.splice([chat.messagesHistory.length - 1], 1)
@@ -88,10 +88,10 @@ export default {
       const profile = this.mChatData.find(profile => profile.contactID === author)
 
       // A profile may not be found for system messages or messages by 'me'
-      return profile || {avatarImg: '', contactName: ''}
+      return profile || {avatar: '', contactName: ''}
     },
     chatImageUrl(author) {
-      return this.profile(author).avatarImg
+      return this.profile(author).avatar
     },
     authorName(author) {
       return this.profile(author).contactName
