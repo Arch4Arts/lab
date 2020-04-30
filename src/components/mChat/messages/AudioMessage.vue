@@ -98,7 +98,7 @@ export default {
 <style lang="scss" scoped>
 
 .container {
-  overflow: hidden;
+  // overflow: hidden;
   padding: 0 !important;
 }
 

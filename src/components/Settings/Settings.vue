@@ -168,9 +168,6 @@ export default {
       this.$store.commit('showDecorativeInputPanel')
     },
   },
-  computed: {
-
-  },
   components: {
     SettingsAppearance,
     SettingsHotkeys,

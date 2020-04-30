@@ -5,13 +5,13 @@
       <v-icon size="18"> fas fa-arrow-left </v-icon>
     </v-btn>
 
-    <v-spacer/>
+    <v-spacer />
     <!-- ЗАГОЛОВОК ЧАТА преобразует tailor в Tailor -->
     <v-toolbar-title class="bar__title"> 
       {{ this.$store.state.mChat.selectedContactName }} 
     </v-toolbar-title>
-
-    <v-spacer/>
+    <v-spacer />
+    
     <!-- Декоративная кнопка -->
     <v-btn class="bar__phone-btn" icon>
       <v-icon size="18"> fas fa-phone </v-icon>

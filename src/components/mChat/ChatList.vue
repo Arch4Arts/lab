@@ -1,15 +1,17 @@
 <template>
 <v-card class="chat-list">
   <!-- шапка -->
-  <v-toolbar class="chat-list__bar" dark height="50" flat>
+  <v-toolbar class="chat-list__bar" dark dense flat>
     <!-- Декоративная кнопка -->
     <v-app-bar-nav-icon class="chat-list__bar__nav-btn"></v-app-bar-nav-icon>
-    <!-- <v-toolbar-title>Inbox</v-toolbar-title> -->
-    <v-spacer>
+
+    <!-- Название приложения -->
+    <v-spacer />
       <v-toolbar-title class="chat-list__bar__title"> 
         Libgram
       </v-toolbar-title>
-    </v-spacer>
+    <v-spacer />
+
     <!-- Меню выбора темы -->
     <v-menu open-on-hover offset-y class="chat-list__palette-menu">
       <template v-slot:activator="{ on }">
@@ -28,10 +30,6 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <!-- Декоративная кнопка -->
-    <v-btn class="chat-list__bar__search_btn" icon>
-      <v-icon size="20"> fas fa-search </v-icon>
-    </v-btn>
   </v-toolbar>
 
   <!-- Список контактов -->
@@ -84,7 +82,7 @@
 
 <script>
 import updateThemes from '../../styles/updateThemes';
-import { markdown } from './message type/drawdown'
+import { markdown } from './messages/drawdown'
 
 export default {
   props: {
@@ -171,13 +169,6 @@ export default {
     openSelectedChat(selectedChatID, selectedContactName, unreadMessageCount){
       this.$store.state.mChat.selectedChatID = selectedChatID // Для MessageList
       this.$store.state.mChat.selectedContactName = selectedContactName // Для MessageListToolbar
-      var chatData = JSON.parse(JSON.stringify(this.mChatData)); // История всех чатов
-      for (let chat of chatData.chatList) { // Перебираем для каждого чата
-        if (chat.chatID === selectedChatID) { // Если это тот кто был выбран
-          // Отниманием кол-во непричитанных сообщений у контакта из общего счётчика
-          this.$store.state.mChat.newMessagesCount -= chat.unreadMessageCount
-        }
-      }
       this.$store.commit('mChatListShow');
     },
     chatThemes(select){
@@ -199,7 +190,7 @@ export default {
   position: relative;
   background: var(--chat-list__bar--background) !important;
   box-shadow: 0px -2px 4px black; // Маленькая тень
-  z-index: 1;
+  z-index: 1;  
 }
 
 .chat-list__bar__title {

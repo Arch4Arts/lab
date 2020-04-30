@@ -2,8 +2,8 @@
   <!-- текстура смартфона -->
   <div class="smartphone-texture" :class="{ opened: $store.state.mChat.show, closed: !$store.state.mChat.show }">
     <!-- Текстура поделена на 2 части основную и нижнюю -->
-    <img src="../../assets/Samsung Galaxy S7 Black.png" class="smartphone-texture">
-    <img src="../../assets/Samsung Galaxy S7 Black_bottom.png" class="smartphone-texture close-area" @click.prevent="closeChat()">
+    <!-- <img src="../../assets/Samsung Galaxy S7 Black.png" class="smartphone-texture">
+    <img src="../../assets/Samsung Galaxy S7 Black_bottom.png" class="smartphone-texture close-area" @click.prevent="closeChat()"> -->
     <!-- Страница со списком чатов -->
     <ChatList
       class="chat-list" 
@@ -53,7 +53,8 @@ export default {
       var selectedChat = this.$store.state.mChat.selectedChatID
       for (let i in chatData.chatList) { // Перебираем для каждого пользователя
         if (chatData.chatList[i].chatID === selectedChat) {
-          chatData.chatList[i].unreadMessageCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
+          // Сбрасывает счётчик сообщений текущего выбранного чата, только если чат отображается
+          if (this.$store.state.mChat.show) chatData.chatList[i].unreadMessageCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
           return chatData.chatList[i].messagesHistory
         }
       }
@@ -81,6 +82,9 @@ export default {
   right: 25px;
   bottom: 0px;
   box-sizing: border-box;
+
+  border-radius: 20px;
+  overflow: hidden;
 }
 
 .smartphone-texture.close-area {

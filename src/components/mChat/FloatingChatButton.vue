@@ -3,10 +3,16 @@
     <!-- Иконка открывающая чат -->
     <div class="launcher hidden-sm-and-down" @click.prevent="$store.state.mChat.show ? closeChat() : openChat()">
       <!-- Элемент показывающий кол-во сообщений рядом с эконкой -->
-      <div v-if="unreadMessagesCount > 0 && !$store.state.mChat.show" class="new-msg-count">
+      <v-badge
+        :content="unreadMessagesCount"
+        :value="unreadMessagesCount"
+        overlap
+      >
+        <v-btn text large fab icon><v-icon>fas fa-mobile-android-alt</v-icon></v-btn>
+      </v-badge>
+      <!-- <div v-if="unreadMessagesCount > 0 && !$store.state.mChat.show" class="new-msg-count">
         {{ unreadMessagesCount }}
-      </div>
-      <v-btn text large fab icon><v-icon>fas fa-mobile-android-alt</v-icon></v-btn>
+      </div> -->
     </div>
   </div>
 </template>
@@ -22,6 +28,7 @@ export default {
   methods: {
     openChat() {
       this.$store.commit('mChatShow');
+      console.log(this.unreadMessagesCount)
     },
     closeChat() {
       this.$store.commit('mChatShow');
@@ -32,12 +39,21 @@ export default {
 
 <style lang='scss' scoped>
 
+* { // Перезисываем глобальный класс, для badge
+  --v-primary-base: var(--important-modal__header--background);
+}
+
+.v-badge__badge {
+  color: var(--h1--color) !important;
+}
+
 .v-btn {
   background: transparent !important;
   &:hover {
     background: transparent !important;
   }
 }
+
 
 .launcher {
   /* width: 60px;

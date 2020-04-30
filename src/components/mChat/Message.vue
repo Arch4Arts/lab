@@ -31,13 +31,13 @@
 </template>
 
 <script>
-import TextMessage from './message type/TextMessage'
-import EmojiMessage from './message type/EmojiMessage.vue'
-import TypingMessage from './message type/TypingMessage.vue'
-import SystemMessage from './message type/SystemMessage.vue'
-import ImageMessage from './message type/ImageMessage.vue'
-import VideoMessage from './message type/VideoMessage.vue'
-import AudioMessage from './message type/AudioMessage.vue'
+import TextMessage from './messages/TextMessage'
+import EmojiMessage from './messages/EmojiMessage.vue'
+import TypingMessage from './messages/TypingMessage.vue'
+import SystemMessage from './messages/SystemMessage.vue'
+import ImageMessage from './messages/ImageMessage.vue'
+import VideoMessage from './messages/VideoMessage.vue'
+import AudioMessage from './messages/AudioMessage.vue'
 
 import Suggestions from './Suggestions'
 

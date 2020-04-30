@@ -27,8 +27,16 @@ export default {
     getChatList(){
       return this.$store.state.mChatData.MC.сurrentChatList;
     },
-    getUnreadMessagesCount(){
-      return this.$store.state.mChatData.MC.newMessagesCount;
+    getUnreadMessagesCount() {
+      let totalUnreadMessages = 0;
+      for (let chatID of this.getChatList) { // Перебираем сurrentChatList
+        for (let i in this.mChatData.chatList) { // Перебираем все чаты
+          if (chatID === this.mChatData.chatList[i].chatID) {
+            totalUnreadMessages += this.mChatData.chatList[i].unreadMessageCount;
+          }
+        }
+      }
+      return totalUnreadMessages;
     }
   },
   components: {

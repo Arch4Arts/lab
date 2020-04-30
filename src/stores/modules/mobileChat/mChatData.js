@@ -4,12 +4,11 @@ const mChatData = {
   namespaced: false,
   state: {
     MC: {
-      newMessagesCount: 0, // Общий счётчик сообщений по всем чатам
       сurrentChatList: ['mc_erza','mc_erza&libido'], // Текущие чаты в телефоне
       currentSelectedTheme: 'Minimalistic', // Текущая тема оформления
       // Используются для отображения только в чате
       // charName изменяется в модуле chars.js
-      // AliasName - в случаях когда нужно назвать чат не по имени персонажа
+      // AliasName - в случаях когда нужно именовать чат и персонажа в нём, не по имено, но по псевдониму
       charProfiles: [
         {
           name: 'Libido', // Имя
@@ -64,7 +63,7 @@ const mChatData = {
             { uid: '1k971bswh', type: 'text', author: `libido`, data: { text: 'Ну по крайней мере он честен с собой, и мне нравится видеть как его член дрожит в этой _маленькой_ клетке' } },
             { uid: '1k971ar02', type: 'text', author: `erza`, data: { text: `Еще как, он ведь стал меньше за всё это время не так ли?` } },
           ]
-        }  
+        },  
       ]
     }
   },

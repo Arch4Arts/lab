@@ -3,17 +3,15 @@ import eventBus from '../../js/initEventBus'
 
 // Для suggestion ONLY нужно указать type: suggestion и data: undefined
 export function sendMessage(ChatID, author, type, data) { 
-  store.state.mChat.newMessagesCount = store.state.mChat.show ? store.state.mChat.newMessagesCount : store.state.mChat.newMessagesCount + 1
-
   let uniqid = require('uniqid');
-  // setTimeout можно заменить на sleep(ms)
-  if (store.state.mChat.typingIndicatorEnable && type !== 'suggestion' && store.state.mChat.chatListShow === false){
+  // Если иммитация включан, не suggestion, список чатов не отображается, чат отображается
+  if (store.state.mChat.typingIndicatorEnable && type !== 'suggestion' && store.state.mChat.chatListShow === false && store.state.mChat.show === true){
     onMessageWasSent(ChatID, {uid: uniqid(), author: author, type: 'typing', data: undefined});
     (type === 'text' && data.text.length <= '8') 
-    ? setTimeout(() => onMessageWasSent(ChatID, {uid: uniqid(), author: author, type: type, data: data}), 500) 
+    ? setTimeout(() => onMessageWasSent(ChatID, {uid: uniqid(), author: author, type: type, data: data}), 500)  // Короткое сообщение
     : (type === 'text' && data.text.length <= '20') 
-    ? setTimeout(() => onMessageWasSent(ChatID, {uid: uniqid(), author: author, type: type, data: data}), 1000)
-    : setTimeout(() => onMessageWasSent(ChatID, {uid: uniqid(), author: author, type: type, data: data}), 3000)
+    ? setTimeout(() => onMessageWasSent(ChatID, {uid: uniqid(), author: author, type: type, data: data}), 1000) // Сообщение средней длинны
+    : setTimeout(() => onMessageWasSent(ChatID, {uid: uniqid(), author: author, type: type, data: data}), 3000) // Длинное сообщение
   }
   else onMessageWasSent(ChatID, {uid: uniqid(), author: author, type: type, data: data})
 }

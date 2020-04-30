@@ -1,6 +1,5 @@
 // https://habr.com/ru/post/466587/?mobile=yes
 // Переключение темы: document.documentElement.setAttribute('mChatTheme', 'Minimalistic')
-
 html {
 	&[mChatTheme='Minimalistic'] {	
 		// Страница ср списком контактов

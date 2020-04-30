@@ -23,7 +23,6 @@
   </v-form>
  
   <br>
-  Chat NewMSGNumber: {{ $store.state.mChat.newMessagesCount }}
   <br><br>
   <v-btn @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "lorum!" })'>short text...</v-btn>
   <v-btn @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "Lorum **ipsum** orom!" })'>text...</v-btn>
