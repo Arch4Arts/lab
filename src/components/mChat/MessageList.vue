@@ -5,7 +5,6 @@
     class="message-list" 
     ref="mChatMessageList"
 
-    :size="65"
     :keeps="30"
 
     data-key="uid"

@@ -39,7 +39,6 @@
         <v-list-item-group v-model="ListSelectedSaves" multiple>
           <virtual-list
             class="saves-list"
-            :size="30"
             :keeps="20"
 
             data-key="saveID"
