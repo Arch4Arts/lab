@@ -2,7 +2,8 @@ import Vue from '../../node_modules/vue';
 import Vuetify from 'vuetify/lib';
 import { Touch } from 'vuetify/lib/directives';
 
-// import { NordLight, NordDark, CustomDark } from './themes'
+import '@fortawesome/fontawesome-free/css/all.css' // Не менять, в free скидывать файлы от Pro
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 Vue.use(Vuetify, {
   directives: {
@@ -15,10 +16,6 @@ export default new Vuetify({
         customProperties: true,
       },
       dark: true,
-    // themes: {
-    //   dark: NordDark, // Default
-    //   light: NordLight, // Default
-    // },
   },
   icons: {
     iconfont: 'fa' && 'md',

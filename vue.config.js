@@ -12,14 +12,10 @@ module.exports = {
     // Undefined - community версия, т.к в .env.production нет переменной VUE_APP_EDITION, но есть в .env.special
     (process.env.VUE_APP_EDITION === undefined && process.env.NODE_ENV !== 'development') ? // Production
       [
-      new BundleAnalyzerPlugin({ // Генерация файла отчёта
-          analyzerMode: 'static',
-          openAnalyzer: false,
-      }),
       new SentryCliPlugin({ // Обработчик ошибок
         release: packageJson.version, // извлечение версии игры из переменной
         include: `./dist/${packageJson.name} ${packageJson.version} community/js/`, // Загрузка js файлов на сервер
-        // filenameTransform: filename => '~/js/' + filename,
+        filenameTransform: filename => '~/js/' + filename,
         ignoreFile: '.sentrycliignore',
         ignore: ['node_modules', 'webpack.config.js'],
       }),
@@ -29,10 +25,6 @@ module.exports = {
       ]
     : (process.env.VUE_APP_EDITION === 'special') ? // Special
         [
-          new BundleAnalyzerPlugin({ // Генерация файла отчёта
-              analyzerMode: 'static',
-              openAnalyzer: false,
-          }),
           new SentryCliPlugin({ // Обработчик ошибок
             release: packageJson.version, // извлечение версии игры из переменной
             include: `./dist/${packageJson.name} ${packageJson.version} special/js/`, // Загрузка js файлов на сервер
@@ -60,7 +52,7 @@ module.exports = {
       .tap(options => {
         options.limit = -1
         return options
-      })
+      });
   },
 
   publicPath: './',

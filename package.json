@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "build-special": "vue-cli-service build --mode special"
+    "build": "vue-cli-service build --report",
+    "build-special": "vue-cli-service build --mode special --report"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.13.0",
@@ -27,7 +27,7 @@
     "vue-plyr": "^6.0.4",
     "vue-router": "^3.1.6",
     "vue-scroll-behavior": "^0.2.0",
-    "vue-virtual-scroll-list": "^2.1.5",
+    "vue-virtual-scroll-list": "^2.1.6",
     "vuetify": "^2.2.26",
     "vuex": "^3.3.0",
     "vuex-persistedstate": "^3.0.1"
@@ -42,6 +42,7 @@
     "sass-loader": "^8.0.2",
     "url-loader": "^4.1.0",
     "vue-cli-plugin-vuetify": "~2.0.5",
+    "vue-svg-loader": "^0.16.0",
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.4.3",
     "webpack": "^4.43.0",

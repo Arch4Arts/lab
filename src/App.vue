@@ -1,6 +1,6 @@
 <template>  
   <v-app> 
-  <v-layout v-touch="{ right: () => SwipeRight(), left: () => SwipeLeft(), down: () => SwipeBottom(), up: () => SwipeTop() }">
+  <v-layout v-touch="{ right: () => swipeRight(), left: () => swipeLeft(), down: () => swipeBottom(), up: () => swipeTop() }">
   <v-content>
     <StartPage v-if="$store.state.gameDisplayingStartPage" />
 
@@ -24,7 +24,7 @@ import Entry from "./pages/Entry";
 export default {
   name: 'App',
   methods: {
-    SwipeRight(){
+    swipeRight(){
       // Открытие/Закрытие панели настроек
       if (this.$store.state.isOpenSettingsDrawer) this.$store.state.isOpenSettingsDrawer = !this.$store.state.isOpenSettingsDrawer
       // Открытие/закрытие панели сохранений
@@ -41,7 +41,7 @@ export default {
         }
       }
     },
-    SwipeLeft(){
+    swipeLeft(){
       if (this.$store.state.mChat.enable) { // Включён ли чат (Отключается при выборе палитры цвета диалогов)
         // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
         if (this.$route.path != '/Diary') {
@@ -51,12 +51,12 @@ export default {
       }
     },
     // Тригеры для появления и исчезновения radialMenu
-    SwipeBottom(){
+    swipeBottom(){
       this.$store.state.radialMenuShow = true // Не менять, на телефоне прокрутка свайпами не соотвествует направлению прокрутки на компе
       this.$store.commit('updateStores');
     },
     // Тригеры для появления и исчезновения radialMenu
-    SwipeTop(){
+    swipeTop(){
       this.$store.state.radialMenuShow = false
       this.$store.commit('updateStores');
     },
