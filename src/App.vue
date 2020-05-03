@@ -72,6 +72,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import './styles/normalize.css';
 @import './styles/gameThemes.scss';
 @import './styles/mChatThemes.scss';
 

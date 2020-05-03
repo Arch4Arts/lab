@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.13.0",
+    "@mdi/svg": "^5.1.45",
     "@sentry/browser": "^5.15.5",
     "@sentry/cli": "^1.52.3",
     "@sentry/integrations": "^5.15.5",
@@ -38,7 +39,6 @@
     "@vue/cli-service": "^4.3.1",
     "css-loader": "^3.5.3",
     "file-loader": "^6.0.0",
-    "material-design-icons-iconfont": "^5.0.1",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "url-loader": "^4.1.0",

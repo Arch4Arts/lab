@@ -68,6 +68,10 @@ html {
 
 // Переопределяем глобальные стили Vuetify
 
+.slut {
+	fill: greenyellow !important;
+}
+
 .v-btn {
   background: var(--v-btn--background) !important;
 }

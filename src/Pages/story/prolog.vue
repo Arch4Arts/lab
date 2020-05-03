@@ -27,6 +27,9 @@
   <mChatTestPage />
 <br><br>
   <v-btn @click="test()"></v-btn>
+  <vue-draggable-resizable>
+  <p>You can drag me around and resize me as you wish.</p>
+</vue-draggable-resizable>
   <test :width="320" :height="700" />
   <!-- <test2 :height="700" /> -->
   
