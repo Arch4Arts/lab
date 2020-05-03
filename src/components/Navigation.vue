@@ -10,18 +10,32 @@
 						{{ this.$root.gameName + ' ' + this.$root.gameVersion }} 
 				</v-toolbar-title>
 			</router-link>
-			<v-spacer></v-spacer>
+			<v-spacer />
 			<!-- Кнопки -->
-			<v-toolbar-items v-if="$store.state.gameLang" class="hidden-sm-and-down">
-				<v-btn v-for="(item, i) in menuItems" :key="'btn_' + i"  :to="item.route" @click="openSettings(item.icon)" text>
-						<v-icon left v-html="item.icon"></v-icon>
-						{{ item.title }}
+			<v-toolbar-items class="hidden-sm-and-down">
+				<!-- FAQ -->
+				<v-btn shift text @click="() => routeChange('FAQ')">
+						<font-awesome-icon class="mr-2" :icon="['fas', 'question-circle']" />
+						<div v-if="$store.state.gameLang">FAQ</div>
+						<div v-else>FAQ</div>
 				</v-btn>
-			</v-toolbar-items>
-			<v-toolbar-items v-else class="hidden-sm-and-down">
-				<v-btn shift v-for="(item, i) in menuItems" :key="'btn_' + i" color="" :to="item.route" @click="openSettings(item.icon)" text>
-						<v-icon left v-html="item.icon"></v-icon>
-						{{ item.title_ru }}
+				<!-- Настройки -->
+				<v-btn shift text @click="() => this.$store.state.isOpenSettingsDrawer = true">
+						<font-awesome-icon class="mr-2" :icon="['fas', 'cog']" />
+						<div v-if="$store.state.gameLang">Settings</div>
+						<div v-else>Настройки</div>
+				</v-btn>
+				<!-- Журнал -->
+				<v-btn shift text @click="() => routeChange('Journal')">
+						<font-awesome-icon class="mr-2" :icon="['fas', 'book']" />
+						<div v-if="$store.state.gameLang">Journal</div>
+						<div v-else>Журнал</div>
+				</v-btn>
+				<!-- Сохранения -->
+				<v-btn shift text @click="() => this.$store.state.isOpenSavesDrawer = true">
+						<font-awesome-icon class="mr-2" :icon="['fas', 'save']" />
+						<div v-if="$store.state.gameLang">Saves</div>
+						<div v-else>Сохранения</div>
 				</v-btn>
 			</v-toolbar-items>
 		</v-app-bar>
@@ -32,39 +46,9 @@
 import NavigationFloatingButton from './NavigationFloatingButton'
 
 export default {
-	computed: {
-		menuItems(){
-			return [
-				{
-					icon: 'fas fa-question-circle',
-					title: 'FAQ',
-					title_ru: 'FAQ',
-					route: 'FAQ'
-				},
-				{
-					icon: 'fas fa-cog',
-					title: 'Settings',
-					title_ru: 'Настройки',
-					route: ''
-				},
-				{
-					icon: 'fas fa-book',
-					title: 'Journal',
-					title_ru: 'Журнал',
-					route: 'Journal'
-				},
-				{
-					icon: 'fas fa-save',
-					title: 'Saves',
-					title_ru: 'Сохранения',
-					route: ''
-				},]
-		}
-	},
 	methods: {
-		openSettings(icon){
-			if (icon === 'fas fa-cog') this.$store.state.isOpenSettingsDrawer = true
-			if (icon === 'fas fa-save') this.$store.state.isOpenSavesDrawer = true
+		routeChange(route){
+			this.$router.push(`/${route}`)
 		}
 	},
 	components: {

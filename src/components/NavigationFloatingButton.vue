@@ -14,62 +14,24 @@
       v-show="RadialMenuStatus"
     >
       <!-- Основная кнопка раскрытия списка -->
-      <v-btn
-        slot="activator"
-        class="radial-menu-btn"
-        dark
-        icon
-        hover
-        v-model="fab"
-        v-show="visible"
-      >
-        <v-icon x-large>fas fa-compass</v-icon>
+      <v-btn slot="activator" dark icon small hover v-model="fab" v-show="visible">
+        <font-awesome-icon :icon="['fas', 'compass']" class="main-btn" />
       </v-btn>
-
       <!-- Saves -->
-      <v-btn
-        fab
-        dark
-        small
-        class="radial-menu-btns"
-        @click="() => this.$store.state.isOpenSavesDrawer = true"
-      >
-        <v-icon>fas fa-save</v-icon>
+      <v-btn icon dark small class="btns" @click="() => this.$store.state.isOpenSavesDrawer = true">
+        <font-awesome-icon :icon="['fas', 'save']" />
       </v-btn>
-
-      <!-- Diary -->
-      <v-btn
-        fab
-        dark
-        small
-        class="radial-menu-btns"
-        to="/Diary"
-        @click="visible = false"
-      >
-        <v-icon>fas fa-book</v-icon>
+      <!-- Journal -->
+      <v-btn icon dark small class="btns" to="/Diary" @click="visible = false">
+        <font-awesome-icon :icon="['fas', 'book']" />
       </v-btn>
-
       <!-- Settings -->
-      <v-btn
-        fab
-        dark
-        small
-        class="radial-menu-btns"
-        @click="() => this.$store.state.isOpenSettingsDrawer = true"
-      >
-        <v-icon>fas fa-cog</v-icon>
+      <v-btn icon dark small class="btns" @click="() => this.$store.state.isOpenSettingsDrawer = true">
+        <font-awesome-icon :icon="['fas', 'cog']" />
       </v-btn>
-
       <!-- FAQ -->
-      <v-btn
-        fab
-        dark
-        small
-        class="radial-menu-btns"
-        to="/FAQ"
-        @click="visible = false"
-      >
-        <v-icon>fas fa-question-circle</v-icon>
+      <v-btn icon dark small class="btns" to="/FAQ" @click="visible = false">
+        <font-awesome-icon :icon="['fas', 'question-circle']" />
       </v-btn>  
     </v-speed-dial>
     </v-fab-transition>
@@ -79,13 +41,12 @@
       <v-btn
         v-if="visible != true"
         transition="scale-transition"
-        class="radial-menu-btn return-btn"
+        class="main-btn return-btn"
         dark
         icon
         v-show="RadialMenuStatus"
-        @click="() => { visible = true; this.$router.push('/')}"
-      >
-        <v-icon>fas fa-undo-alt</v-icon>
+        @click="() => { visible = true; this.$router.push('/')}">
+        <font-awesome-icon :icon="['fas', 'undo-alt']" />
     </v-btn>
     </v-fab-transition>
 </v-card>
@@ -118,14 +79,15 @@ export default {
 
 <style lang="scss" scoped>
 
-.radial-menu-btn {
-  background: var(--RadialMenu--radial-menu-btn--background) !important;
-  color: var(--RadialMenu--radial-menu-btn--color) !important;
+.main-btn {
+	background: var(--RadialMenu--main-btn--background) !important;
+	color: var(--RadialMenu--main-btn--color) !important;
+	font-size: 33px; // размер иконки
 }
 
-.radial-menu-btns {
-  background: var(--RadialMenu--radial-menu-btns--background) !important;
-  color: var(--RadialMenu--radial-menu-btns--color) !important;
+.btns {
+  background: var(--RadialMenu--btns--background) !important;
+  color: var(--RadialMenu--btns--color) !important;
 }
 
 .return-btn {

@@ -25,8 +25,8 @@
         <!-- КНОПКА: СОХРАНИТЬ + ПОДСКАЗКА -->
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
-            <v-btn class="save-name__btn saves-v-btns" v-on="on" @click="saveGame(false)" icon>
-              <v-icon color="rgb(126, 193, 255)"> fas fa-download </v-icon>
+            <v-btn class="save-name__btn" v-on="on" @click="saveGame(false)" icon>
+              <font-awesome-icon class="save-name__btn__color" :icon="['fas', 'download']" />
             </v-btn>
           </template>
             <span v-if="$store.state.gameLang">New save</span>
@@ -64,18 +64,18 @@
       <!-- Перезапуск игры -->
       <v-tooltip top>
         <template v-slot:activator="{ on }">
-          <v-btn class="restart-game-btn saves-v-btns" @click="showModalRestart = !showModalRestart" v-on="on" icon>
-            <v-icon color="rgb(255, 102, 102)"> fas fa-power-off </v-icon>
+          <v-btn class="restart-game-btn" @click="showModalRestart = !showModalRestart" v-on="on" icon>
+            <font-awesome-icon class="restart-game-btn__color" :icon="['fas', 'power-off']" />
           </v-btn>
         </template>
-          <span v-if="$store.state.gameLang">showModalRestart game</span>
+          <span v-if="$store.state.gameLang">Restart game</span>
           <span v-else >Перезапуск игры</span>
       </v-tooltip>
       <!-- Сохранение на диск -->
       <v-tooltip top>
         <template v-slot:activator="{ on }">
-          <v-btn class="save-all-btn" @click="prepareDataSaveToDisk()" v-on="on" icon>
-            <v-icon color="rgb(126, 193, 255)"> fas fa-hdd </v-icon>
+          <v-btn class="save-to-disk-btn" @click="prepareDataSaveToDisk()" v-on="on" icon>
+            <font-awesome-icon class="save-to-disk-btn__color" :icon="['fas', 'hdd']" />
           </v-btn>
         </template>
           <span v-if="$store.state.gameLang">Save to Disk</span>
@@ -84,9 +84,9 @@
       <!-- Загрузка с диска -->
       <v-tooltip top>
         <template v-slot:activator="{ on }">
-          <v-btn class="load-save-all-btn saves-v-btns" @click="chooseFiles()" v-on="on" icon>
+          <v-btn class="load-from-disk-btn" @click="chooseFiles()" v-on="on" icon>
             <input type="file" id="saveUpload" @change="loadFromDisk($event)" multiple hidden />
-            <v-icon color="rgb(255, 254, 173)"> far fa-hdd </v-icon>
+            <font-awesome-icon class="load-from-disk-btn__color" :icon="['far', 'hdd']" />
           </v-btn>
         </template>
           <span v-if="$store.state.gameLang">Load from Disk</span>
@@ -95,8 +95,8 @@
       <!-- Удаление всех сохранений -->
       <v-tooltip top>
         <template v-slot:activator="{ on }">
-          <v-btn class="delete-all-saves-btn saves-v-btns" @click="showModalDelSavesAll = !showModalDelSavesAll" :disabled="(numberSavesIDB == 0) ? true : false" v-on="on" icon>
-            <v-icon color="rgb(255, 102, 102)"> fas fa-trash-alt </v-icon>
+          <v-btn class="delete-all-saves-btn" @click="showModalDelSavesAll = !showModalDelSavesAll" :disabled="(numberSavesIDB == 0) ? true : false" v-on="on" icon>
+            <font-awesome-icon class="delete-all-saves-btn__color" :icon="['fas', 'trash-alt']" />
           </v-btn>
         </template>
           <span v-if="$store.state.gameLang">Delete all saves</span>
@@ -153,10 +153,10 @@
     <v-dialog v-model="showModalRestart" persistent dark width="230">
         <v-card class="text-center">
           <section v-if="$store.state.gameLang">
-          <v-card-title class="headline dark important-modal__header"> showModalRestart game </v-card-title>
+          <v-card-title class="headline dark important-modal__header"> Restart game </v-card-title>
             <v-card-text class="text--primary">
               <br> 
-              <b>When you showModalRestart the game, all current progress will be lost!</b>
+              <b>When you restart the game, all current progress will be lost!</b>
               <br><br>
               Are you sure you want to continue?
             </v-card-text>
@@ -619,7 +619,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 
 .v-navigation-drawer {
   background: var(--v-navigation-drawer--background) !important;
@@ -640,6 +640,9 @@ export default {
   margin-right: 16%;
   margin-left: 4px;
   background: transparent !important;
+  &__color {
+    color: rgb(126, 193, 255);
+  }
 }
 
 .v-list {
@@ -659,23 +662,35 @@ export default {
   border-bottom: var(--saves--saves-list--border-top);
 }
 
-.delete-all-saves-btn {
-  margin-right: 15px;
-  background: transparent !important;
-}
-
-.save-all-btn {
-  background: transparent !important;
-}
-
-.load-save-all-btn {
-  margin-right: 14px;
-  background: transparent !important;
-}
-
 .restart-game-btn {
   margin-right: 10px;
   background: transparent !important;
+  &__color  {
+    color: var(--saves--restart-game-btn--color);
+  }
+}
+
+.save-to-disk-btn {
+  background: transparent !important;
+  &__color  {
+    color: var(--saves--save-to-disk-btn--color);
+  }
+}
+
+.load-from-disk-btn {
+  margin-right: 14px;
+  background: transparent !important;
+  &__color  {
+    color: var(--saves--load-from-disk-btn--color);
+  }
+}
+
+.delete-all-saves-btn {
+  margin-right: 15px;
+  background: transparent !important;
+  &__color  {
+    color: var(--saves--delete-all-saves-btn--color);
+  }
 }
 
 

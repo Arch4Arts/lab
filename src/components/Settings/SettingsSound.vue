@@ -39,7 +39,7 @@
     <!-- Слайдер -->
     <v-slider
       class="sound-options-container__slider"
-      prepend-icon="fas fa-trophy-alt"
+      prepend-icon="$vuetify.icons.values.faTrophyAlt"
       thumb-label
       min="0"
       max="100"
@@ -61,8 +61,8 @@
       <template v-slot:activator="{ on }">
         <!-- Кнопка -->
         <v-btn @click="changeSoundEnable('achievementSoundEnable')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.sound.gameGlobalSoundsEnable">
-          <v-icon v-if="$store.state.sound.achievementSoundEnable" size="20"> fas fa-music-alt </v-icon>
-          <v-icon v-else size="20" color="red"> fas fa-music-alt-slash </v-icon>
+          <font-awesome-icon v-if="$store.state.sound.achievementSoundEnable" :icon="['fas', 'music-alt']" />
+          <font-awesome-icon v-else color="red" :icon="['fas', 'music-alt-slash']" />
         </v-btn>
       </template>
       <!-- Список звуков / показывает текущий выбранный звук / воспроизводит звук при нажатии -->
@@ -96,7 +96,7 @@
     <!-- Слайдер -->
     <v-slider
       class="sound-options-container__slider"
-      prepend-icon="fas fa-book"
+      prepend-icon="$vuetify.icons.values.faBook"
       thumb-label
       min="0"
       max="100"
@@ -118,8 +118,8 @@
       <template v-slot:activator="{ on }">
         <!-- Кнопка -->
         <v-btn @click="changeSoundEnable('diarySoundEnable')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.sound.gameGlobalSoundsEnable">
-          <v-icon v-if="$store.state.sound.diarySoundEnable" size="20"> fas fa-music-alt </v-icon>
-          <v-icon v-else size="20" color="red"> fas fa-music-alt-slash </v-icon>
+          <font-awesome-icon v-if="$store.state.sound.diarySoundEnable" :icon="['fas', 'music-alt']" />
+          <font-awesome-icon v-else color="red" :icon="['fas', 'music-alt-slash']" />
         </v-btn>
       </template>
       <!-- Список звуков / показывает текущий выбранный звук / воспроизводит звук при нажатии -->
@@ -153,7 +153,7 @@
     <!-- Слайдер -->
     <v-slider
       class="sound-options-container__slider"
-      prepend-icon="fas fa-mobile-alt"
+      prepend-icon="$vuetify.icons.values.faMobileAlt"
       thumb-label
       min="0"
       max="100"
@@ -175,8 +175,8 @@
       <template v-slot:activator="{ on }">
         <!-- Кнопка -->
         <v-btn @click="changeSoundEnable('smartphoneSoundEnable')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.sound.gameGlobalSoundsEnable">
-          <v-icon v-if="$store.state.sound.smartphoneSoundEnable" size="20"> fas fa-music-alt </v-icon>
-          <v-icon v-else size="20" color="red"> fas fa-music-alt-slash </v-icon>
+          <font-awesome-icon v-if="$store.state.sound.smartphoneSoundEnable" :icon="['fas', 'music-alt']" />
+          <font-awesome-icon v-else color="red" :icon="['fas', 'music-alt-slash']" />
         </v-btn>
       </template>
       <!-- Список звуков / показывает текущий выбранный звук / воспроизводит звук при нажатии -->

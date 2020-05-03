@@ -44,13 +44,22 @@ html {
 // Saves.vue
 	--saves--v-list--background: #2E3440;
 	--saves--saves-list--border-top: 2px solid #3B4252;
-	--saves--saves-list--border-bottom: 2px solid #3B4252;;
+	--saves--saves-list--border-bottom: 2px solid #3B4252;
+
+	--saves--restart-game-btn--color: rgb(255, 102, 102);
+	--saves--save-to-disk-btn--color: rgb(126, 193, 255);
+	--saves--load-from-disk-btn--color: rgb(255, 254, 173);
+	--saves--delete-all-saves-btn--color: rgb(255, 102, 102);
+
+	--savesList--overwrite-btn--color: rgb(126, 193, 255);
+	--savesList--load-btn--color: rgb(255, 254, 173);
+	--savesList--delete-btn--color: rgb(255, 102, 102);
 
 // RadialMenu.vue
-	--RadialMenu--radial-menu-btn--background: #88C0D0;
-	--RadialMenu--radial-menu-btn--color: #242933;
-	--RadialMenu--radial-menu-btns--background: #242933;
-	--RadialMenu--radial-menu-btns--color: #88C0D0;
+	--RadialMenu--main-btn--background: transparent;
+	--RadialMenu--main-btn--color: #88C0D0;
+	--RadialMenu--btns--background: transparent;
+	--RadialMenu--btns--color: #88C0D0;
 
 // FirstLaunchPageInfo
 	--FirstLaunchPageInfo--continue-button--background: #BF616A;
@@ -67,10 +76,6 @@ html {
 }
 
 // Переопределяем глобальные стили Vuetify
-
-.slut {
-	fill: greenyellow !important;
-}
 
 .v-btn {
   background: var(--v-btn--background) !important;
@@ -114,5 +119,12 @@ html {
 .v-tooltip__content {
   background: var(--v-tooltip--background) !important;
 }
+
+// Иконки fontAwesome (svg)
+
+.svg-inline--fa {
+	font-size: 24px; // размер иконки
+}	
+
 
 

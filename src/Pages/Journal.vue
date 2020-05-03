@@ -1,16 +1,16 @@
 <template>
 	<v-app>
 	<v-tabs v-if="$store.state.gameLang" centered dark id="diary-input">
-		<v-tab> <v-icon left>fas fa-user-crown</v-icon>Main Character </v-tab>
+		<v-tab><font-awesome-icon class="mr-2" :icon="['fas', 'user-crown']" />Main Character</v-tab>
 		<v-tab-item> <MC-page/> </v-tab-item>
 
-		<v-tab> <v-icon left>fas fa-users</v-icon> Characters</v-tab>
+		<v-tab><font-awesome-icon class="mr-2" :icon="['fas', 'users']" />Characters</v-tab>
 		<v-tab-item> <Characters/> </v-tab-item>
 
-		<v-tab> <v-icon left>fas fa-book-heart</v-icon> Diary</v-tab>
+		<v-tab><font-awesome-icon class="mr-2" :icon="['fas', 'book-heart']" />Diary</v-tab>
 		<v-tab-item> <Diary/> </v-tab-item>
 
-		<v-tab> <v-icon left>fas fa-trophy-alt</v-icon> Achievements</v-tab>
+		<v-tab><font-awesome-icon class="mr-2" :icon="['fas', 'trophy-alt']" />Achievements</v-tab>
 		<v-tab-item> <Achievements/> </v-tab-item>
 	</v-tabs>
 	
@@ -33,16 +33,16 @@
   </v-layout> -->
 
 	<v-tabs v-else centered dark id="diary-input">
-		<v-tab> <v-icon left>fas fa-user-crown</v-icon> Главный герой</v-tab>
+		<v-tab><font-awesome-icon class="mr-2" :icon="['fas', 'user-crown']" />Главный герой</v-tab>
 		<v-tab-item> <MC-page/> </v-tab-item>
 
-		<v-tab> <v-icon left>fas fa-users</v-icon> Персонажи</v-tab>
+		<v-tab><font-awesome-icon class="mr-2" :icon="['fas', 'users']" />Персонажи</v-tab>
 		<v-tab-item> <Characters/> </v-tab-item>
 
-		<v-tab> <v-icon left>fas fa-book-heart</v-icon> Дневник</v-tab>
+		<v-tab><font-awesome-icon class="mr-2" :icon="['fas', 'book-heart']" />Дневник</v-tab>
 		<v-tab-item>  <Diary/> </v-tab-item>
 
-		<v-tab> <v-icon left>fas fa-trophy-alt</v-icon> Достижения</v-tab>
+		<v-tab><font-awesome-icon class="mr-2" :icon="['fas', 'trophy-alt']" />Достижения</v-tab>
 		<v-tab-item> <Achievements/> </v-tab-item>
 	</v-tabs>
 	</v-app>

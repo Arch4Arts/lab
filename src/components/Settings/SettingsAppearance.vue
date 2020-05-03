@@ -17,13 +17,13 @@
       menu-props="auto"
       label="Font Selector"
       hide-details
-      prepend-icon="far fa-font"
+      prepend-icon="$vuetify.icons.values.faFont"
       single-line
     ></v-select>
     <br>
     <v-slider
       class="sound-settings-container__slider"
-      prepend-icon="far fa-text-size"
+      prepend-icon="$vuetify.icons.values.faTextSize"
       v-model="fontSize"
       thumb-label
       min="10"
@@ -50,33 +50,33 @@ export default {
 
   },
   computed: {
-      launguage() {
-        let result
-        (this.$store.state.gameLang) ? result = 1 : result = 0
-        return result;
+    launguage() {
+      let result
+      (this.$store.state.gameLang) ? result = 1 : result = 0
+      return result;
+    },
+    // Шрифт
+    fontFamily: {
+      get: function () {
+        return this.$store.state.gameFont;
       },
-      // Шрифт
-      fontFamily: {
-        get: function () {
-          return this.$store.state.gameFont;
-        },
-        set: function (selected) {
-          this.$store.state.gameFont = selected;
-          document.getElementById("StoryTextArea").style.fontFamily = selected;
-          this.$store.commit("updateStores");
-        }
-      },
-      // Размер шрифта
-      fontSize: {
-        get: function () {
-          return extractNumbers(this.$store.state.gameFontSize)[0];
-        },
-        set: function (selected) {
-          this.$store.state.gameFontSize = `${selected}pt`;
-          document.getElementById("StoryTextArea").style.fontSize = `${selected}pt`;
-          this.$store.commit("updateStores");
-        } 
+      set: function (selected) {
+        this.$store.state.gameFont = selected;
+        document.getElementById("StoryTextArea").style.fontFamily = selected;
+        this.$store.commit("updateStores");
       }
+    },
+    // Размер шрифта
+    fontSize: {
+      get: function () {
+        return extractNumbers(this.$store.state.gameFontSize)[0];
+      },
+      set: function (selected) {
+        this.$store.state.gameFontSize = `${selected}pt`;
+        document.getElementById("StoryTextArea").style.fontSize = `${selected}pt`;
+        this.$store.commit("updateStores");
+      } 
+    }
   },
 }
 </script>

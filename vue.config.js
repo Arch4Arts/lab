@@ -44,15 +44,27 @@ module.exports = {
           // }),
         ]
   },
-  chainWebpack: config => {
-    config.module
-      .rule('images')
-      .use('url-loader')
-      .loader('url-loader')
-      .tap(options => {
-        options.limit = -1
-        return options
-      });
+  // chainWebpack: config => {
+  //   config.module
+  //     .rule('images')
+  //     .use('url-loader')
+  //     .loader('url-loader')
+  //     .tap(options => {
+  //       options.limit = -1
+  //       return options
+  //     });
+  // },
+  chainWebpack: (config) => {
+    const svgRule = config.module.rule('svg');
+ 
+    svgRule.uses.clear();
+ 
+    svgRule
+      .use('babel-loader')
+      .loader('babel-loader')
+      .end()
+      .use('vue-svg-loader')
+      .loader('vue-svg-loader');
   },
 
   publicPath: './',
