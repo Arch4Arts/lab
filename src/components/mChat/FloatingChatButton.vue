@@ -8,7 +8,7 @@
         :value="unreadMessagesCount"
         overlap
       >
-        <v-btn text large fab icon><v-icon>fas fa-mobile-android-alt</v-icon></v-btn>
+        <v-btn text large fab icon><font-awesome-icon class="mChat-btn" :icon="['fas', 'mobile-alt']" /></v-btn>
       </v-badge>
       <!-- <div v-if="unreadMessagesCount > 0 && !$store.state.mChat.show" class="new-msg-count">
         {{ unreadMessagesCount }}
@@ -41,6 +41,10 @@ export default {
 
 * { // Перезисываем глобальный класс, для badge
   --v-primary-base: var(--important-modal__header--background);
+}
+
+.mChat-btn {
+  font-size: 28px;
 }
 
 .v-badge__badge {

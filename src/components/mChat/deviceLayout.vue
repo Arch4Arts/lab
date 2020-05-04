@@ -377,6 +377,7 @@ export default {
   props: {
     width: {
       type: [Number, String],
+      default: 300,
     },
     height: {
       type: [Number, String],

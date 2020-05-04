@@ -24,10 +24,6 @@ import 'izitoast/dist/css/iziToast.min.css';
 import iziToast from 'izitoast/dist/js/iziToast.min.js';
 Vue.use(VueIziToast);
 
-import VueDraggableResizable from 'vue-draggable-resizable'
-import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
-Vue.component('vue-draggable-resizable', VueDraggableResizable)
-
 import updateThemes from './styles/updateThemes';
 import { checkSoundsEnable } from './js/GameSound'
 import { bindHotkeys, unbindHotkeys }from './js/Hotkeys'

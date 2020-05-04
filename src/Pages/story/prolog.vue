@@ -26,13 +26,7 @@
 <br><br>
   <mChatTestPage />
 <br><br>
-  <v-btn @click="test()"></v-btn>
-  <vue-draggable-resizable>
-  <p>You can drag me around and resize me as you wish.</p>
-</vue-draggable-resizable>
-  <test :width="320" :height="700" />
-  <!-- <test2 :height="700" /> -->
-  
+  <test />
   <h1>Пролог</h1>
   <h2>Пролог</h2>
   <h3>Пролог</h3>
@@ -61,8 +55,8 @@ import mc from '../../components/Chars/CharStyles/mc'
 import sister from '../../components/Chars/CharStyles/sister'
 import mcSettings from '../../components/Chars/CharSettings/mcSettings'
 import mChatTestPage from '../../components/mChat/TestPage'
-import test from './test.vue'
-import test2 from '../../assets/Samsung Galaxy S8 Arctic Silver.svg'
+
+import test from '../../components/mChat/draggableResizableLayout.vue'
 
 export default {
   components: {
@@ -70,8 +64,7 @@ export default {
     sister,
     mcSettings,
     mChatTestPage,
-    test,
-    test2
+    test
   },
   methods: {
 
