@@ -26,7 +26,7 @@
 <br><br>
   <mChatTestPage />
 <br><br>
-  <test />
+  <!-- <test /> -->
   <h1>Пролог</h1>
   <h2>Пролог</h2>
   <h3>Пролог</h3>

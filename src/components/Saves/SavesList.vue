@@ -17,7 +17,7 @@
           <v-btn v-on="on" icon
             class="overwrite-btn"
             @click="overwriteSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion)">
-            <font-awesome-icon class="overwrite-btn__color" :icon="['fas', 'download']" /> 
+            <a-icon class="overwrite-btn__color" :icon="['fas', 'download']" /> 
           </v-btn>
         </template>
           <span v-if="$store.state.gameLang">Overwrite</span>
@@ -29,7 +29,7 @@
           <v-btn v-on="on" icon
             class="load-btn"
             @click="loadSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion)"> 
-            <font-awesome-icon class="load-btn__color" :icon="['fas', 'upload']" />
+            <a-icon class="load-btn__color" :icon="['fas', 'upload']" />
           </v-btn>
         </template>
           <span v-if="$store.state.gameLang">Load</span>
@@ -41,7 +41,7 @@
           <v-btn v-on="on" icon
             class="delete-btn"
             @click="deleteSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion)"> 
-            <font-awesome-icon class="delete-btn__color" :icon="['fas', 'trash']" />
+            <a-icon class="delete-btn__color" :icon="['fas', 'trash']" />
           </v-btn>
         </template>
           <span v-if="$store.state.gameLang">Delete</span>

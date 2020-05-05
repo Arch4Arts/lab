@@ -87,20 +87,21 @@ export default {
   z-index: 2;
 }
 
-.active {
-  position: fixed;
-}
+// .active {
+//   position: fixed;
+// }
 
 .vdr {
   border: none;
+  position: fixed;
 }
 
 .handle {
   height: 91%;
   width: 3%;
   position: absolute;
-  background-color: transparent !important;
-  border-width: 0px !important;
+  // background-color: transparent !important;
+  // border-width: 0px !important;
   // background-color: red;
 }
 .handle-ml {

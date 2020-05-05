@@ -26,7 +26,7 @@
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
             <v-btn class="save-name__btn" v-on="on" @click="saveGame(false)" icon>
-              <font-awesome-icon class="save-name__btn__color" :icon="['fas', 'download']" />
+              <a-icon class="save-name__btn__color" :icon="['fas', 'download']" />
             </v-btn>
           </template>
             <span v-if="$store.state.gameLang">New save</span>
@@ -65,7 +65,7 @@
       <v-tooltip top>
         <template v-slot:activator="{ on }">
           <v-btn class="restart-game-btn" @click="showModalRestart = !showModalRestart" v-on="on" icon>
-            <font-awesome-icon class="restart-game-btn__color" :icon="['fas', 'power-off']" />
+            <a-icon class="restart-game-btn__color" :icon="['fas', 'power-off']" />
           </v-btn>
         </template>
           <span v-if="$store.state.gameLang">Restart game</span>
@@ -75,7 +75,7 @@
       <v-tooltip top>
         <template v-slot:activator="{ on }">
           <v-btn class="save-to-disk-btn" @click="prepareDataSaveToDisk()" v-on="on" icon>
-            <font-awesome-icon class="save-to-disk-btn__color" :icon="['fas', 'hdd']" />
+            <a-icon class="save-to-disk-btn__color" :icon="['fas', 'hdd']" />
           </v-btn>
         </template>
           <span v-if="$store.state.gameLang">Save to Disk</span>
@@ -86,7 +86,7 @@
         <template v-slot:activator="{ on }">
           <v-btn class="load-from-disk-btn" @click="chooseFiles()" v-on="on" icon>
             <input type="file" id="saveUpload" @change="loadFromDisk($event)" multiple hidden />
-            <font-awesome-icon class="load-from-disk-btn__color" :icon="['far', 'hdd']" />
+            <a-icon class="load-from-disk-btn__color" :icon="['far', 'hdd']" />
           </v-btn>
         </template>
           <span v-if="$store.state.gameLang">Load from Disk</span>
@@ -96,7 +96,7 @@
       <v-tooltip top>
         <template v-slot:activator="{ on }">
           <v-btn class="delete-all-saves-btn" @click="showModalDelSavesAll = !showModalDelSavesAll" :disabled="(numberSavesIDB == 0) ? true : false" v-on="on" icon>
-            <font-awesome-icon class="delete-all-saves-btn__color" :icon="['fas', 'trash-alt']" />
+            <a-icon class="delete-all-saves-btn__color" :icon="['fas', 'trash-alt']" />
           </v-btn>
         </template>
           <span v-if="$store.state.gameLang">Delete all saves</span>

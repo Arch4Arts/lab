@@ -16,7 +16,8 @@ Vue.use(Vuetify, {
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+// a-icon 
+Vue.component('a-icon', FontAwesomeIcon)
 import { 
   faQuestionCircle, // FAQ
   faCog,            // Настройки
@@ -51,12 +52,29 @@ import {
   faTextSize, // Размер шрифта
 
   faKeyboard, // Раскладка клавиатуры
+
+  faPalette,  // Выбор темы в чате
+  faArrowLeft,// Стрелка влево
+  faPhone,    // Иконка телефонной трубки
+
+  faMicrophone, // Микрофон
+
+  faPhotoVideo, // Для чата (иконка в списке чатов (содержимое сообщения))
   
 } from '../../source_files/pro-solid-svg-icons'   // fas
 import { faHdd as faHdd2 } from '../../source_files/pro-regular-svg-icons' // far
+
+import { 
+  
+  faBars,     // Меню (список чатов)
+  faPlus,       // Плюс
+  faSmile,      // Смайлик
+  faPaperclip   // Значок скрепки
+
+} from '../../source_files/pro-regular-svg-icons' // far
 // import { fal } from '../../source_files/pro-light-svg-icons'   // fal
 
-library.add(
+library.add({
   faQuestionCircle, // FAQ
   faCog,            // Настройки
   faBook,           // Журнал
@@ -91,7 +109,19 @@ library.add(
   faTextSize, // Размер шрифта
 
   faKeyboard, // Раскладка клавиатуры
-)
+
+  faBars,     // Меню (список чатов)
+  faPalette,  // Выбор темы в чате
+  faArrowLeft,// Стрелка влево
+  faPhone,    // Иконка телефонной трубки
+
+  faPlus,       // Плюс
+  faSmile,      // Смайлик
+  faMicrophone, // Микрофон
+  faPaperclip,   // Значок скрепки
+
+  faPhotoVideo, // Для чата (иконка в списке чатов (содержимое сообщения))
+})
 
 export default new Vuetify({
   theme: {

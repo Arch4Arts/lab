@@ -59,8 +59,9 @@ export default {
 }
 
 .message-list {
-  max-height: 485px;
+  // max-height: 485px;
   flex: 2 0 auto;
+  // position: absolute;
   overflow-y: auto;
   background-size: 100%;
   -ms-overflow-style: none;  /* IE 10+ */
@@ -71,33 +72,6 @@ export default {
   &::-webkit-scrollbar {
   display: none;  /* Safari and Chrome */  
   }
-}
-
-.bar {
-  background-color: var(--message-list--bar--background-color) !important;
-  z-index: 4;
-}
-
-.bar__title {
-  color:  var(--message-list--bar__title--color) !important;
-  font-weight: var(--message-list--bar__title--font-weight) !important;  
-}
-
-.bar__back-btn {
-  color: var(--message-list--bar__back-btn--color) !important;
-}
-
-.bar__phone-btn {
-  color: var(--message-list--bar__phone-btn--color) !important;
-}
-
-.bar__video-btn {
-  color: var(--message-list--bar__video-btn--color) !important;
-  background-color: transparent !important;
-}
-
-.bar__ellipsis-btn {
-  color: var(--message-list--bar__ellipsis-btn--color) !important;
 }
 
 @media (max-width: 450px) {

@@ -1,16 +1,16 @@
 <template>
 	<v-app>
 	<v-tabs v-if="$store.state.gameLang" centered dark id="diary-input">
-		<v-tab><font-awesome-icon class="mr-2" :icon="['fas', 'user-crown']" />Main Character</v-tab>
+		<v-tab><a-icon class="mr-2" :icon="['fas', 'user-crown']" />Main Character</v-tab>
 		<v-tab-item> <MC-page/> </v-tab-item>
 
-		<v-tab><font-awesome-icon class="mr-2" :icon="['fas', 'users']" />Characters</v-tab>
+		<v-tab><a-icon class="mr-2" :icon="['fas', 'users']" />Characters</v-tab>
 		<v-tab-item> <Characters/> </v-tab-item>
 
-		<v-tab><font-awesome-icon class="mr-2" :icon="['fas', 'book-heart']" />Diary</v-tab>
+		<v-tab><a-icon class="mr-2" :icon="['fas', 'book-heart']" />Diary</v-tab>
 		<v-tab-item> <Diary/> </v-tab-item>
 
-		<v-tab><font-awesome-icon class="mr-2" :icon="['fas', 'trophy-alt']" />Achievements</v-tab>
+		<v-tab><a-icon class="mr-2" :icon="['fas', 'trophy-alt']" />Achievements</v-tab>
 		<v-tab-item> <Achievements/> </v-tab-item>
 	</v-tabs>
 	
@@ -33,16 +33,16 @@
   </v-layout> -->
 
 	<v-tabs v-else centered dark id="diary-input">
-		<v-tab><font-awesome-icon class="mr-2" :icon="['fas', 'user-crown']" />Главный герой</v-tab>
+		<v-tab><a-icon class="mr-2" :icon="['fas', 'user-crown']" />Главный герой</v-tab>
 		<v-tab-item> <MC-page/> </v-tab-item>
 
-		<v-tab><font-awesome-icon class="mr-2" :icon="['fas', 'users']" />Персонажи</v-tab>
+		<v-tab><a-icon class="mr-2" :icon="['fas', 'users']" />Персонажи</v-tab>
 		<v-tab-item> <Characters/> </v-tab-item>
 
-		<v-tab><font-awesome-icon class="mr-2" :icon="['fas', 'book-heart']" />Дневник</v-tab>
+		<v-tab><a-icon class="mr-2" :icon="['fas', 'book-heart']" />Дневник</v-tab>
 		<v-tab-item>  <Diary/> </v-tab-item>
 
-		<v-tab><font-awesome-icon class="mr-2" :icon="['fas', 'trophy-alt']" />Достижения</v-tab>
+		<v-tab><a-icon class="mr-2" :icon="['fas', 'trophy-alt']" />Достижения</v-tab>
 		<v-tab-item> <Achievements/> </v-tab-item>
 	</v-tabs>
 	</v-app>

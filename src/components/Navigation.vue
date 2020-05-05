@@ -15,25 +15,25 @@
 			<v-toolbar-items class="hidden-sm-and-down">
 				<!-- FAQ -->
 				<v-btn shift text @click="() => routeChange('FAQ')">
-						<font-awesome-icon class="mr-2" :icon="['fas', 'question-circle']" />
+						<a-icon class="mr-2" :icon="['fas', 'question-circle']" />
 						<div v-if="$store.state.gameLang">FAQ</div>
 						<div v-else>FAQ</div>
 				</v-btn>
 				<!-- Настройки -->
 				<v-btn shift text @click="() => this.$store.state.isOpenSettingsDrawer = true">
-						<font-awesome-icon class="mr-2" :icon="['fas', 'cog']" />
+						<a-icon class="mr-2" :icon="['fas', 'cog']" />
 						<div v-if="$store.state.gameLang">Settings</div>
 						<div v-else>Настройки</div>
 				</v-btn>
 				<!-- Журнал -->
 				<v-btn shift text @click="() => routeChange('Journal')">
-						<font-awesome-icon class="mr-2" :icon="['fas', 'book']" />
+						<a-icon class="mr-2" :icon="['fas', 'book']" />
 						<div v-if="$store.state.gameLang">Journal</div>
 						<div v-else>Журнал</div>
 				</v-btn>
 				<!-- Сохранения -->
 				<v-btn shift text @click="() => this.$store.state.isOpenSavesDrawer = true">
-						<font-awesome-icon class="mr-2" :icon="['fas', 'save']" />
+						<a-icon class="mr-2" :icon="['fas', 'save']" />
 						<div v-if="$store.state.gameLang">Saves</div>
 						<div v-else>Сохранения</div>
 				</v-btn>

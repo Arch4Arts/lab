@@ -1,8 +1,8 @@
 <template>
-  <v-toolbar class="bar" dark flat dense>
+  <v-toolbar class="bar" dark flat dense :style="{ width: `${width - (width / 100 * 6.24)}px`}">
     <!-- Кнопка возвращения к списку контактов -->
     <v-btn class="bar__back-btn" icon @click="backToContactsPage()">
-      <v-icon size="18"> fas fa-arrow-left </v-icon>
+      <a-icon class="bar__back-btn__icon" :icon="['fas', 'arrow-left']" />
     </v-btn>
 
     <v-spacer />
@@ -14,13 +14,16 @@
     
     <!-- Декоративная кнопка -->
     <v-btn class="bar__phone-btn" icon>
-      <v-icon size="18"> fas fa-phone </v-icon>
+      <a-icon class="bar__phone-btn__icon" :icon="['fas', 'phone']" />
     </v-btn>
   </v-toolbar>
 </template>
 
 <script>
 export default {
+  props: {
+    width: [Number, String]
+  },
   methods: {
     backToContactsPage(){
       this.$store.commit('mChatListShow');
@@ -40,6 +43,8 @@ export default {
 }
 
 .bar {
+  position: fixed;
+  width: 100%;
   background-color: var(--message-list--bar--background-color) !important;
   box-shadow: 0px -2px 4px black; // Маленькая тень
   z-index: 4;
@@ -52,10 +57,16 @@ export default {
 
 .bar__back-btn {
   color: var(--message-list--bar__back-btn--color) !important;
+  &__icon {
+    font-size: 20px;
+  }
 }
 
 .bar__phone-btn {
   color: var(--message-list--bar__phone-btn--color) !important;
+  &__icon {
+    font-size: 20px;
+  }
 }
 
 .bar__video-btn {

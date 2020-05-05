@@ -1,9 +1,11 @@
 <template>
-<v-card class="chat-list">
+<v-card class="chat-list" :style="{ width: `${width - (width / 100 * 6.24)}px`, height: `${height - (height / 100 * 11.32)}px` }">
   <!-- шапка -->
   <v-toolbar class="chat-list__bar" dark dense flat>
     <!-- Декоративная кнопка -->
-    <v-app-bar-nav-icon class="chat-list__bar__nav-btn"></v-app-bar-nav-icon>
+    <v-btn class="chat-list__bar__nav-btn" icon>
+      <a-icon class="chat-list__bar__nav-btn__icon" :icon="['far', 'bars']" />
+    </v-btn>
 
     <!-- Название приложения -->
     <v-spacer />
@@ -16,7 +18,7 @@
     <v-menu open-on-hover offset-y class="chat-list__palette-menu">
       <template v-slot:activator="{ on }">
         <v-btn class="chat-list__bar__palette-btn" icon v-on="on">
-          <v-icon size="20"> fas fa-palette </v-icon>
+          <a-icon class="chat-list__bar__palette-btn__icon" :icon="['fas', 'palette']" />
         </v-btn>
       </template>
       <v-list class="chat-list__palette-menu">
@@ -32,6 +34,7 @@
     </v-menu>
   </v-toolbar>
 
+  <div class="before-chat-list__bar" />
   <!-- Список контактов -->
   <v-list two-line class="chat-list__vlist">
     <template v-for="chat in getChatList">
@@ -41,19 +44,19 @@
         :key="chat.chatID"
         @click="openSelectedChat(chat.chatID, chat.name, chat.unreadMessageCount)">
         <!-- Аватар -->
-        <v-list-item-avatar size="52">
-          <img :class="{ contacts_page__vlist__avatar_badge: chat.unreadMessageCount > 0 }" :src="chat.avatar">
+        <v-list-item-avatar class="chat-list__vlist--chat__avatar" :class="{ 'chat-list__vlist--chat__avatar__badge': chat.unreadMessageCount > 0 }">
+          <img :src="chat.avatar">
         </v-list-item-avatar>
 
         <!-- Основной блок с информацией -->
         <v-list-item-content>
           <!-- Имя контакта -->
-          <v-list-item-title class="chat-list__vlist--contact-title">
+          <v-list-item-title class="chat-list__vlist--chat__title">
             {{ chat.name }}
           </v-list-item-title>
           <!-- Текст последнего сообщения -->
           <v-list-item-subtitle v-if="chat.messagesHistory.type === 'text' || chat.messagesHistory.type === 'system'" 
-            class="chat-list__vlist--contact-subtitle"
+            class="chat-list__vlist--chat__subtitle"
             v-html="chat.messagesHistory.data.text"
           > 
           </v-list-item-subtitle>
@@ -63,13 +66,13 @@
           </v-list-item-subtitle>
           <!-- Иконка фото/видео контента в сообщении -->
           <v-list-item-subtitle v-else class=""> 
-            <v-icon class="chat-list__vlist--contact-subtitle-icon">fas fa-photo-video</v-icon>
+            <a-icon class="chat-list__vlist--chat__subtitle-icon" :icon="['fas', 'photo-video']"></a-icon>
           </v-list-item-subtitle>
         </v-list-item-content>
 
         <!-- Кол-во непрочитанных сообщений -->
         <v-list-item-action class="text-no-wrap">
-          <div v-if="chat.unreadMessageCount > 0" class="chat-list__vlist--contact-badge">
+          <div v-if="chat.unreadMessageCount > 0" class="chat-list__vlist--chat__badge">
             {{ chat.unreadMessageCount }}
           </div>
         </v-list-item-action>
@@ -86,6 +89,8 @@ import { markdown } from './messages/drawdown'
 
 export default {
   props: {
+    width: [Number, String],
+    height: [Number, String],
     chatList: {
       type: Array,
       required: true,
@@ -186,18 +191,31 @@ export default {
   background: var(--chat-list--background) !important;
 }
 
-.chat-list__bar {
-  position: relative;
+.before-chat-list__bar {
+  height: 7.5%;
+}
+
+.chat-list__bar  {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // position: relative;
+  position: fixed;
   background: var(--chat-list__bar--background) !important;
+  height: 7.5% !important;
+  width: calc(100% - 6.24%);
   box-shadow: 0px -2px 4px black; // Маленькая тень
   z-index: 1;  
 }
 
 .chat-list__bar__title {
-  color: var(--chat-list__vlist--contact-title--color) !important;
+  font-size: 1.2em;
+  color: var(--chat-list__vlist--chat__title--color) !important;
 }
 
 .chat-list__bar__nav-btn.v-btn {
+  width: calc(var(--mChatWidth) / 100 * 13) !important;
+  height: calc(var(--mChatHeigth) / 100 * 6) !important;
   color: var(--chat-list__bar__nav-btn--color) !important;
   background: var(--chat-list__v-btn--background) !important;
   &:hover {
@@ -205,7 +223,13 @@ export default {
   }
 }
 
+.chat-list__bar__nav-btn__icon {
+  font-size: calc(var(--mChatFontSize) / 100 * 100) !important;
+}
+
 .chat-list__bar__palette-btn.v-btn  {
+  width: calc(var(--mChatWidth) / 100 * 13) !important;
+  height: calc(var(--mChatHeigth) / 100 * 6) !important;
   color: var(--chat-list__bar__palette-btn--color) !important;
   background: var(--chat-list__v-btn--background) !important;
   &:hover {
@@ -213,12 +237,8 @@ export default {
   }
 }
 
-.chat-list__bar__search_btn.v-btn  {
-  color: var(--chat-list__bar__search_btn--color) !important;
-  background: var(--chat-list__v-btn--background) !important;
-  &:hover {
-    background: var(--chat-list__v-btn--background) !important;
-  }
+.chat-list__bar__palette-btn__icon {
+  font-size: calc(var(--mChatFontSize) / 100 * 100) !important;
 }
 
 .chat-list__vlist {
@@ -227,47 +247,61 @@ export default {
 }
 
 .chat-list__vlist-item {
-  background: var(--chat-list__vlist-item--background) !important;   
-  padding: 0px 12px 0px 8px !important;  
+  background: var(--chat-list__vlist-item--background) !important;
+  height: calc(var(--mChatHeigth) / 100 * 12.7) !important;
+  padding: 0px 3.3% 0px 2.5% !important;  
 }
 
-.chat-list__vlist--contact-title {
-  color: var(--chat-list__vlist--contact-title--color) !important;
-  font-weight: var(--chat-list__vlist--contact-title--font-weight) !important;
+.chat-list__vlist--chat__avatar {
+  width: calc(var(--mChatWidth) / 100 * 15.3) !important;
+  height: calc(var(--mChatWidth) / 100 * 15.3) !important;
+  margin-top: 5.4% !important;
+  margin-right: 5.4% !important;
+  margin-bottom: 5.4% !important;
+  margin-left: 0px !important;
 }
 
-.chat-list__vlist--contact-subtitle {
-  color: var(--chat-list__vlist--contact-subtitle--color) !important;
+.chat-list__vlist--chat__avatar__badge {
+  // width: 54px !important;
+  // border: var(--chat-list__vlist--chat__avatar__badge--border) !important;
+  // box-shadow: var(--chat-list__vlist--chat__avatar__badge--box-shadow) !important;
+}
+
+.chat-list__vlist--chat__title {
+  font-size: 0.850em !important;
+  font-weight: var(--chat-list__vlist--chat__title--font-weight) !important;  
+  color: var(--chat-list__vlist--chat__title--color) !important;
+}
+
+.chat-list__vlist--chat__subtitle {
+  font-size: 0.750em !important;
+  margin-bottom: 3%;
+  color: var(--chat-list__vlist--chat__subtitle--color) !important;
   p {
+    margin-bottom: 0px !important;
     white-space: nowrap !important;
     text-overflow: ellipsis !important;
     overflow: hidden !important;
   }
 }
 
-.chat-list__vlist--contact-subtitle-icon {
-  color: var(--chat-list__vlist--contact-subtitle-icon--color) !important;
+.chat-list__vlist--chat__subtitle-icon {
+  font-size: 1.5em !important;
+  margin-bottom: 2.7%;
+  color: var(--chat-list__vlist--chat__subtitle-icon--color) !important;
 }
 
-.chat-list__vlist--contact-badge {
+.chat-list__vlist--chat__badge {
   align-items: center;
   display: inline-flex;
   justify-content: center;
-  color: var(--chat-list__vlist--contact-badge--color) !important;
-  background-color: var(--chat-list__vlist--contact-badge--background) !important;
-  font-size: var(--chat-list__vlist--contact-badge--font-size) !important;
-  font-weight: var(--chat-list__vlist--contact-badge--font-weight) !important;
-  border-radius: var(--chat-list__vlist--contact-badge--border-radius) !important;
-  width: var(--chat-list__vlist--contact-badge--width) !important;
-  height: var(--chat-list__vlist--contact-badge--height) !important;
-}
-
-
-
-.contacts_page__vlist__avatar_badge {
-  width: 54px;
-  border: var(--contacts_page__vlist__avatar_badge--border) !important;
-  box-shadow: var(--contacts_page__vlist__avatar_badge--box-shadow) !important;
+  color: var(--chat-list__vlist--chat__badge--color) !important;
+  background-color: var(--chat-list__vlist--chat__badge--background) !important;
+  font-size: var(--chat-list__vlist--chat__badge--font-size) !important;
+  font-weight: var(--chat-list__vlist--chat__badge--font-weight) !important;
+  border-radius: var(--chat-list__vlist--chat__badge--border-radius) !important;
+  width: var(--chat-list__vlist--chat__badge--width) !important;
+  height: var(--chat-list__vlist--chat__badge--height) !important;
 }
 
 .chat-list__palette-menu--hover:hover {
@@ -279,6 +313,7 @@ export default {
 }
 
 .chat-list__palette-menu-font {
+  font-size: calc(var(--mChatFontSize) / 100 * 80) !important;
   color: var(--chat-list__palette-menu-font--color) !important;
 }
 

@@ -33,7 +33,7 @@
   <v-btn @click='sendMessage(selectedChatID, selectedCharID, "emoji", { src: require("../../media/img/smiling-face.png") })'>emoji..</v-btn>
   <v-btn @click='sendMessage(selectedChatID, selectedCharID, "suggestion", { suggestions: ["no", "Yes"] })'>suggetions</v-btn>
   <br>
-  <v-btn text @click="addContactToChatList('mc')">Добавить mc в контакты</v-btn>
+  <v-btn text @click="addContactToChatList('mc_erza')">Добавить mc в контакты</v-btn>
   <br><br>
   <v-btn @click="genUID()">Gen UID</v-btn>
   {{ uniqid }}  

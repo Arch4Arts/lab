@@ -22,8 +22,8 @@
         <v-expansion-panel>
           <v-expansion-panel-header>
             <div class="header">
-              <font-awesome-icon v-if="$store.state.sound.gameGlobalSoundsEnable" class="header__icon" :icon="['fas', 'volume']" />
-              <font-awesome-icon v-else color="red" class="header__icon" :icon="['fas', 'volume-mute']" />
+              <a-icon v-if="$store.state.sound.gameGlobalSoundsEnable" class="header__icon" :icon="['fas', 'volume']" />
+              <a-icon v-else color="red" class="header__icon" :icon="['fas', 'volume-mute']" />
             </div> 
             Звук
           </v-expansion-panel-header>
@@ -35,7 +35,7 @@
         <v-expansion-panel >
           <v-expansion-panel-header>
             <div class="header">
-              <font-awesome-icon class="header__icon" :icon="['fas', 'eye']" />
+              <a-icon class="header__icon" :icon="['fas', 'eye']" />
             </div>
             Внешний вид
           </v-expansion-panel-header>
@@ -47,7 +47,7 @@
         <v-expansion-panel >
           <v-expansion-panel-header>
             <div class="header">
-              <font-awesome-icon class="header__icon" :icon="['fas', 'keyboard']" />
+              <a-icon class="header__icon" :icon="['fas', 'keyboard']" />
             </div>
             Горячие клавиши
           </v-expansion-panel-header>

@@ -4,7 +4,7 @@ const mChatData = {
   namespaced: false,
   state: {
     MC: {
-      сurrentChatList: ['mc_erza','mc_erza&libido'], // Текущие чаты в телефоне
+      сurrentChatList: ['mc_erza','mc_erza&libido','mc_erza&libido1','mc_erza&libido2','mc_erza&libido3','mc_erza&libido4','mc_erza&libido5','mc_erza&libido6'], // Текущие чаты в телефоне
       currentSelectedTheme: 'Minimalistic', // Текущая тема оформления
       // Используются для отображения только в чате
       // charName изменяется в модуле chars.js
@@ -64,6 +64,78 @@ const mChatData = {
             { uid: '1k971ar02', type: 'text', author: `erza`, data: { text: `Еще как, он ведь стал меньше за всё это время не так ли?` } },
           ]
         },  
+        {
+          chatID: 'mc_erza&libido1',
+          isGroupChat: true,
+          groupChatName: 'Тайные желания', // Используется только если isGroupChat
+          groupChatAvatar: require('../../../media/img/testGroupChatAvatar.png'),
+          unreadMessageCount: 3,
+          messagesHistory: [
+            { uid: '1k971ar09', type: 'text', author: `erza`, data: { text: `Всё таки ты такая **_шлюшка_**` } },
+            { uid: '1k971bswh', type: 'text', author: `libido`, data: { text: 'Ну по крайней мере он честен с собой, и мне нравится видеть как его член дрожит в этой _маленькой_ клетке' } },
+            { uid: '1k971ar02', type: 'text', author: `erza`, data: { text: `Еще как, он ведь стал меньше за всё это время не так ли?` } },
+          ]
+        }, 
+        {
+          chatID: 'mc_erza&libido2',
+          isGroupChat: true,
+          groupChatName: 'Тайные желания', // Используется только если isGroupChat
+          groupChatAvatar: require('../../../media/img/testGroupChatAvatar.png'),
+          unreadMessageCount: 3,
+          messagesHistory: [
+            { uid: '1k971ar09', type: 'text', author: `erza`, data: { text: `Всё таки ты такая **_шлюшка_**` } },
+            { uid: '1k971bswh', type: 'text', author: `libido`, data: { text: 'Ну по крайней мере он честен с собой, и мне нравится видеть как его член дрожит в этой _маленькой_ клетке' } },
+            { uid: '1k971ar02', type: 'text', author: `erza`, data: { text: `Еще как, он ведь стал меньше за всё это время не так ли?` } },
+          ]
+        }, 
+        {
+          chatID: 'mc_erza&libido3',
+          isGroupChat: true,
+          groupChatName: 'Тайные желания', // Используется только если isGroupChat
+          groupChatAvatar: require('../../../media/img/testGroupChatAvatar.png'),
+          unreadMessageCount: 3,
+          messagesHistory: [
+            { uid: '1k971ar09', type: 'text', author: `erza`, data: { text: `Всё таки ты такая **_шлюшка_**` } },
+            { uid: '1k971bswh', type: 'text', author: `libido`, data: { text: 'Ну по крайней мере он честен с собой, и мне нравится видеть как его член дрожит в этой _маленькой_ клетке' } },
+            { uid: '1k971ar02', type: 'text', author: `erza`, data: { text: `Еще как, он ведь стал меньше за всё это время не так ли?` } },
+          ]
+        }, 
+        {
+          chatID: 'mc_erza&libido4',
+          isGroupChat: true,
+          groupChatName: 'Тайные желания', // Используется только если isGroupChat
+          groupChatAvatar: require('../../../media/img/testGroupChatAvatar.png'),
+          unreadMessageCount: 3,
+          messagesHistory: [
+            { uid: '1k971ar09', type: 'text', author: `erza`, data: { text: `Всё таки ты такая **_шлюшка_**` } },
+            { uid: '1k971bswh', type: 'text', author: `libido`, data: { text: 'Ну по крайней мере он честен с собой, и мне нравится видеть как его член дрожит в этой _маленькой_ клетке' } },
+            { uid: '1k971ar02', type: 'text', author: `erza`, data: { text: `Еще как, он ведь стал меньше за всё это время не так ли?` } },
+          ]
+        }, 
+        {
+          chatID: 'mc_erza&libido5',
+          isGroupChat: true,
+          groupChatName: 'Тайные желания', // Используется только если isGroupChat
+          groupChatAvatar: require('../../../media/img/testGroupChatAvatar.png'),
+          unreadMessageCount: 3,
+          messagesHistory: [
+            { uid: '1k971ar09', type: 'text', author: `erza`, data: { text: `Всё таки ты такая **_шлюшка_**` } },
+            { uid: '1k971bswh', type: 'text', author: `libido`, data: { text: 'Ну по крайней мере он честен с собой, и мне нравится видеть как его член дрожит в этой _маленькой_ клетке' } },
+            { uid: '1k971ar02', type: 'text', author: `erza`, data: { text: `Еще как, он ведь стал меньше за всё это время не так ли?` } },
+          ]
+        }, 
+        {
+          chatID: 'mc_erza&libido6',
+          isGroupChat: true,
+          groupChatName: 'Тайные желания', // Используется только если isGroupChat
+          groupChatAvatar: require('../../../media/img/testGroupChatAvatar.png'),
+          unreadMessageCount: 3,
+          messagesHistory: [
+            { uid: '1k971ar09', type: 'text', author: `erza`, data: { text: `Всё таки ты такая **_шлюшка_**` } },
+            { uid: '1k971bswh', type: 'text', author: `libido`, data: { text: 'Ну по крайней мере он честен с собой, и мне нравится видеть как его член дрожит в этой _маленькой_ клетке' } },
+            { uid: '1k971ar02', type: 'text', author: `erza`, data: { text: `Еще как, он ведь стал меньше за всё это время не так ли?` } },
+          ]
+        }, 
       ]
     }
   },

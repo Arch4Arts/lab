@@ -61,8 +61,8 @@
       <template v-slot:activator="{ on }">
         <!-- Кнопка -->
         <v-btn @click="changeSoundEnable('achievementSoundEnable')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.sound.gameGlobalSoundsEnable">
-          <font-awesome-icon v-if="$store.state.sound.achievementSoundEnable" :icon="['fas', 'music-alt']" />
-          <font-awesome-icon v-else color="red" :icon="['fas', 'music-alt-slash']" />
+          <a-icon v-if="$store.state.sound.achievementSoundEnable" :icon="['fas', 'music-alt']" />
+          <a-icon v-else color="red" :icon="['fas', 'music-alt-slash']" />
         </v-btn>
       </template>
       <!-- Список звуков / показывает текущий выбранный звук / воспроизводит звук при нажатии -->
@@ -118,8 +118,8 @@
       <template v-slot:activator="{ on }">
         <!-- Кнопка -->
         <v-btn @click="changeSoundEnable('diarySoundEnable')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.sound.gameGlobalSoundsEnable">
-          <font-awesome-icon v-if="$store.state.sound.diarySoundEnable" :icon="['fas', 'music-alt']" />
-          <font-awesome-icon v-else color="red" :icon="['fas', 'music-alt-slash']" />
+          <a-icon v-if="$store.state.sound.diarySoundEnable" :icon="['fas', 'music-alt']" />
+          <a-icon v-else color="red" :icon="['fas', 'music-alt-slash']" />
         </v-btn>
       </template>
       <!-- Список звуков / показывает текущий выбранный звук / воспроизводит звук при нажатии -->
@@ -175,8 +175,8 @@
       <template v-slot:activator="{ on }">
         <!-- Кнопка -->
         <v-btn @click="changeSoundEnable('smartphoneSoundEnable')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.sound.gameGlobalSoundsEnable">
-          <font-awesome-icon v-if="$store.state.sound.smartphoneSoundEnable" :icon="['fas', 'music-alt']" />
-          <font-awesome-icon v-else color="red" :icon="['fas', 'music-alt-slash']" />
+          <a-icon v-if="$store.state.sound.smartphoneSoundEnable" :icon="['fas', 'music-alt']" />
+          <a-icon v-else color="red" :icon="['fas', 'music-alt-slash']" />
         </v-btn>
       </template>
       <!-- Список звуков / показывает текущий выбранный звук / воспроизводит звук при нажатии -->

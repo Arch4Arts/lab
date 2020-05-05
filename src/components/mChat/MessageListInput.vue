@@ -5,18 +5,28 @@
     class="text-input"
   ></div>
   <div class="buttons-container">
-      <v-icon class="plus-icon">far fa-plus</v-icon>
-      <v-icon class="send-icon">send</v-icon>
+      <div class="plus">
+        <a-icon class="plus__icon" :icon="['far', 'plus']" />
+      </div>
+      <v-icon class="send-icon">{{ svgPath }}</v-icon>
+      <a-icon class="smile-icon" :icon="['far', 'smile']" />
+      <a-icon class="microphone-icon" :icon="['fas', 'microphone']" />
+      <!-- <v-icon class="plus-icon">far fa-plus</v-icon>
+      <v-icon class="send-icon">{{ svgPath }}</v-icon>
       <v-icon class="smile-icon">far fa-smile</v-icon>
-      <v-icon class="microphone-icon">fas fa-microphone</v-icon>
+      <v-icon class="microphone-icon">fas fa-microphone</v-icon> -->
       <!-- <v-icon class="paperclip-icon">far fa-paperclip</v-icon> -->
   </div>
 </div>  
 </template>
 
 <script>
-export default {
+import { mdiSend } from '@mdi/js'
 
+export default {
+  data: () => ({
+    svgPath: mdiSend 
+  }),
 }
 </script>
 
@@ -30,10 +40,14 @@ $elements-top: 58px;
   padding-left: 8px;
   padding-bottom: 5px;
   position: relative;
-  bottom: 0;
+  // position: absolute;
+  // position: fixed;
+  // bottom: 41px;
+  width: 100%;
   display: flex;
   background: var(--inputArea--background) !important;
   box-shadow: 0px 2px 4px black; // Маленькая тень
+  z-index: 4;
 }
 
 .text-input { // Поле ввода
@@ -76,7 +90,7 @@ $elements-top: 58px;
     color: var(--inputArea-paperclip-icon--color) !important;
     background: var(--inputArea-paperclip-icon--background) !important;
   }
-  .plus-icon {
+  .plus {
     position: absolute;
     cursor: pointer;
     left: var(--inputArea-plus-icon--left) !important;
@@ -86,6 +100,12 @@ $elements-top: 58px;
     border-radius: var(--inputArea-plus-icon--border-radius) !important;
     color: var(--inputArea-plus-icon--color) !important;
     background: var(--inputArea-plus-icon--background) !important;
+    &__icon {
+      position: absolute;
+      left: 6px;
+      bottom: 3px;
+      font-size: 24px;
+    }
   }
   .send-icon {
     position: absolute;
