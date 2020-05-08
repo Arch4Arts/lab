@@ -1,5 +1,7 @@
 <template>
-  <div class="message-system" >{{ data.text }}<p v-if="data.meta" class='message-meta message-system-meta'>{{ data.meta }}</p>
+  <div class="message-system">
+    {{ data.text }}
+    <p v-if="data.meta" class='message-meta system'>{{ data.meta }}</p>
   </div>
 </template>
 

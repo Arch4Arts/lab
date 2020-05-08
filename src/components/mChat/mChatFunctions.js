@@ -28,8 +28,8 @@ export function onMessageWasSent(ChatID, message){ // Импорт для userIn
       if (user.messagesHistory[user.messagesHistory.length - 1].type === 'suggestion') user.messagesHistory.splice([user.messagesHistory.length - 1], 1)
       user.messagesHistory = [...user.messagesHistory, message]
 
-      eventBus.$emit('mChatMessageWasSent');
       store.commit('updateStores');
+      eventBus.$emit('mChatMessageWasSent');
     }
   }
 }

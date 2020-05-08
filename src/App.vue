@@ -6,6 +6,7 @@
 
     <Settings />
     <Saves />
+    <mc-chat />
     <navigation v-if="$store.state.appHeaderEnable" />
 
     <router-view v-if="!$store.state.gameDisplayingStartPage">
@@ -17,6 +18,7 @@
 </template>
 
 <script>
+import mcChat from './components/mChat/mcChat.vue'
 import Navigation from "./components/Navigation";
 import StartPage from "./pages/StartPage";
 import Entry from "./pages/Entry";
@@ -65,6 +67,7 @@ export default {
     Navigation,
     StartPage,
     Entry,
+    'mc-chat': mcChat,
     Settings: () => import('./components/Settings/Settings'), // Ленивая загрузка компонента (Dynamic Imports) для повышения производительности
     Saves: () => import('./components/Saves/Saves'),
   },
@@ -539,134 +542,6 @@ a:hover {
   src: local('Merriweather Black Italic'), local('Merriweather-BlackItalic'),
        url('./assets/fonts/Merriweather/merriweather-v21-cyrillic_latin-900italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
        url('./assets/fonts/Merriweather/merriweather-v21-cyrillic_latin-900italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-}
-
-@font-face {
-	font-family: 'HelveticaNeueCyr';
-	src: local('HelveticaNeueCyr-Medium'),
-		url('./assets/fonts/HelveticaNeue/HelveticaNeueCyr-Medium.woff') format('woff');
-	font-weight: 500;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'HelveticaNeueCyr';
-	src: local('HelveticaNeueCyr-Heavy'),
-		url('./assets/fonts/HelveticaNeue/HelveticaNeueCyr-Heavy.woff') format('woff');
-	font-weight: 900;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'HelveticaNeueCyr';
-	src: local('HelveticaNeueCyr-HeavyItalic'),
-		url('./assets/fonts/HelveticaNeue/HelveticaNeueCyr-HeavyItalic.woff') format('woff');
-	font-weight: 900;
-	font-style: italic;
-}
-
-@font-face {
-	font-family: 'HelveticaNeueCyr';
-	src: local('HelveticaNeueCyr-Black'),
-		url('./assets/fonts/HelveticaNeue/HelveticaNeueCyr-Black.woff') format('woff');
-	font-weight: 900;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'HelveticaNeueCyr';
-	src: local('HelveticaNeueCyr-UltraLightItalic'),
-		url('./assets/fonts/HelveticaNeue/HelveticaNeueCyr-UltraLightItalic.woff') format('woff');
-	font-weight: 200;
-	font-style: italic;
-}
-
-@font-face {
-	font-family: 'HelveticaNeueCyr';
-	src: local('HelveticaNeueCyr-BlackItalic'),
-		url('./assets/fonts/HelveticaNeue/HelveticaNeueCyr-BlackItalic.woff') format('woff');
-	font-weight: 900;
-	font-style: italic;
-}
-
-@font-face {
-	font-family: 'HelveticaNeueCyr';
-	src: local('HelveticaNeueCyr-ThinItalic'),
-		url('./assets/fonts/HelveticaNeue/HelveticaNeueCyr-ThinItalic.woff') format('woff');
-	font-weight: 100;
-	font-style: italic;
-}
-
-@font-face {
-	font-family: 'HelveticaNeueCyr';
-	src: local('HelveticaNeueCyr-MediumItalic'),
-		url('./assets/fonts/HelveticaNeue/HelveticaNeueCyr-MediumItalic.woff') format('woff');
-	font-weight: 500;
-	font-style: italic;
-}
-
-@font-face {
-	font-family: 'HelveticaNeueCyr';
-	src: local('HelveticaNeueCyr-LightItalic'),
-		url('./assets/fonts/HelveticaNeue/HelveticaNeueCyr-LightItalic.woff') format('woff');
-	font-weight: 300;
-	font-style: italic;
-}
-
-@font-face {
-	font-family: 'HelveticaNeueCyr';
-	src: local('HelveticaNeueCyr-UltraLight'),
-		url('./assets/fonts/HelveticaNeue/HelveticaNeueCyr-UltraLight.woff') format('woff');
-	font-weight: 200;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'HelveticaNeueCyr';
-	src: local('HelveticaNeueCyr-BoldItalic'),
-		url('./assets/fonts/HelveticaNeue/HelveticaNeueCyr-BoldItalic.woff') format('woff');
-	font-weight: bold;
-	font-style: italic;
-}
-
-@font-face {
-	font-family: 'HelveticaNeueCyr';
-	src: local('HelveticaNeueCyr-Italic'),
-		url('./assets/fonts/HelveticaNeue/HelveticaNeueCyr-Italic.woff') format('woff');
-	font-weight: 500;
-	font-style: italic;
-}
-
-@font-face {
-	font-family: 'HelveticaNeueCyr';
-	src: local('HelveticaNeueCyr-Roman'),
-		url('./assets/fonts/HelveticaNeue/HelveticaNeueCyr-Roman.woff') format('woff');
-	font-weight: normal;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'HelveticaNeueCyr';
-	src: local('HelveticaNeueCyr-Bold'),
-		url('./assets/fonts/HelveticaNeue/HelveticaNeueCyr-Bold.woff') format('woff');
-	font-weight: bold;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'HelveticaNeueCyr';
-	src: local('HelveticaNeueCyr-Light'),
-		url('./assets/fonts/HelveticaNeue/HelveticaNeueCyr-Light.woff') format('woff');
-	font-weight: 300;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'HelveticaNeueCyr';
-	src: local('HelveticaNeueCyr-Thin'),
-		url('./assets/fonts/HelveticaNeue/HelveticaNeueCyr-Thin.woff') format('woff');
-	font-weight: 100;
-	font-style: normal;
 }
 
 @font-face {

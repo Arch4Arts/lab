@@ -30,14 +30,15 @@ export default {
 }
 
 .suggestions-element {
-  margin: 3px;
-  padding: 5px 10px 5px 10px;
+	cursor: pointer;
+  margin: 1%;
+  padding: 1.4% 3%;
   border: var(--suggestions-element--border) !important;
-  border-radius: 15px;
-  font-size: 14px;
+	border-radius: calc(var(--mChatWidth) / 100 * 6);
+	
+  font-size: 0.850em;
   color: var(--suggestions-element--color) !important;
   background: var(--suggestions-element--background) !important;
-  cursor: pointer;
 }
 
 </style>

@@ -1,4 +1,3 @@
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const SentryCliPlugin = require('@sentry/webpack-plugin');
 var packageJson = require('D:/Dev/lab/package.json');
 const webpack = require('webpack')

@@ -1,134 +1,153 @@
 <template>
-<div class="inputArea">
-  <div
-    :placeholder="($store.state.gameLang) ? 'Write a message...': 'Введите текст...'"
-    class="text-input"
-  ></div>
-  <div class="buttons-container">
-      <div class="plus">
-        <a-icon class="plus__icon" :icon="['far', 'plus']" />
-      </div>
-      <v-icon class="send-icon">{{ svgPath }}</v-icon>
-      <a-icon class="smile-icon" :icon="['far', 'smile']" />
-      <a-icon class="microphone-icon" :icon="['fas', 'microphone']" />
-      <!-- <v-icon class="plus-icon">far fa-plus</v-icon>
-      <v-icon class="send-icon">{{ svgPath }}</v-icon>
-      <v-icon class="smile-icon">far fa-smile</v-icon>
-      <v-icon class="microphone-icon">fas fa-microphone</v-icon> -->
-      <!-- <v-icon class="paperclip-icon">far fa-paperclip</v-icon> -->
+<div>
+  <div class="input-area" :style="{ width: `${width}px`, height: `${height}px`}">
+    <div
+      :placeholder="($store.state.gameLang) ? 'Message': 'Сообщение'"
+      class="text-input" />
+    <div class="buttons-container">
+        <div class="plus-icon">
+          <a-icon class="plus-icon__icon" :icon="['far', 'plus']" />
+        </div>
+        <my-icon class="send-icon" :path="send" />
+        <a-icon class="smile-icon" :icon="['far', 'smile']" />
+        <my-icon class="paperclip-icon" :path="paperclip" />
+        <!-- <a-icon class="microphone-icon" :icon="['far', 'paperclip']" /> -->
+    </div>
   </div>
-</div>  
+  <!-- Пространство под панелью ввода (чтобы туда не залазил MessageList) -->
+  <div v-if="$store.state.mChat.showDecorativeInputPanel" :style="{ height: `${height}px` }" />    
+</div>
+
 </template>
 
 <script>
-import { mdiSend } from '@mdi/js'
+import myIcon from '../myIcon.vue'
+import { mdiSend, mdiPaperclip } from '@mdi/js'
 
 export default {
   data: () => ({
-    svgPath: mdiSend 
+    send: mdiSend,
+    paperclip: mdiPaperclip
   }),
+  props: {
+    width: [Number, String],
+    height: [Number, String],
+  },
+  components: {
+    myIcon
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 
-$elements-top: 58px;
-
-.inputArea { // Зона размещения поля ввода и кнопок
-  min-height: $elements-top;
-  padding-right: 8px;
-  padding-left: 8px;
-  padding-bottom: 5px;
-  position: relative;
-  // position: absolute;
-  // position: fixed;
-  // bottom: 41px;
-  width: 100%;
+.input-area { // Зона размещения поля ввода и кнопок
   display: flex;
-  background: var(--inputArea--background) !important;
-  box-shadow: 0px 2px 4px black; // Маленькая тень
+  position: fixed;
+  align-items: center;
+  // bottom: 5.5%;
+  width: 100%;
+  // height: 8%;
+
+  // padding-right: 2%;
+  padding-left: 2%;
+  // padding-bottom: 1%;
+
+  background: var(--input-area--background) !important;
+  box-shadow: 0px 1px 4px black; // Маленькая тень
   z-index: 4;
 }
 
 .text-input { // Поле ввода
   position: absolute;
-  top: 4px;
-  width: var(--inputArea__text-input--width) !important;
-  height: var(--inputArea__text-input--height) !important;
-  border-radius: var(--inputArea__text-input--border-radius) !important;
-  padding: 15px; // позиционирование текста по середине
-  padding-left: var(--inputArea__text-input--padding-left) !important; // Смешение текста от левого края
-  background: var(--inputArea__text-input--background) !important;
-  color: var(--inputArea__text-input--color) !important;
+  display: flex;
+  align-items: center;
+
+  
+  width: 75%;
+  height: 85%;
+  padding-left: 15%;
+  
+  border-radius: 18px;
+  font-size: 0.850em;
+  
+  background: var(--input-area__text-input--background) !important;
+  color: var(--input-area__text-input--color) !important;
   cursor: text;
   &:empty:before {
+    border-left: var(--input-area__text-input__blink-caret); /* The typwriter cursor */
+    animation: blink-caret 1s step-end infinite;
     content: attr(placeholder);
-    /* color: rgba(86, 88, 103, 0.3); */
-    filter: contrast(15%);
     outline: none;
   }
 }
 
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: var(--input-area__text-input__blink-caret--color) }
+}
+
 .buttons-container { // Контейнер для кнопок
-  background: transparent !important;
   display: flex;
   position: absolute;
-  top: $elements-top;
+  align-items: center;
+  
+  width: 70%;
+  height: 100%;
+
+  background: transparent !important;
+  .plus-icon {
+    position: absolute;
+    cursor: pointer;
+    left: var(--input-area-plus-icon--left) !important;
+    width: var(--input-area-plus-icon--width) !important;
+    height: var(--input-area-plus-icon--height) !important;
+    border-radius: var(--input-area-plus-icon--border-radius) !important;
+    color: var(--input-area-plus-icon--color) !important;
+    background: var(--input-area-plus-icon--background) !important;
+    &__icon {
+      position: absolute;
+      // width: 100%;
+      left: 18%;
+      height: 100%;
+      // bottom: calc(var(--mChatWidth) / 100 * 0.6);
+      font-size: 1.275em;
+    }
+  }
   .smile-icon { // Кнопка со смайликом
     position: absolute;
     cursor: pointer;
-    left: var(--inputArea-smile-icon--left) !important;
-    bottom: var(--inputArea-smile-icon--bottom) !important;
-    color: var(--inputArea-smile-icon--color) !important;
-    background: var(--inputArea-smile-icon--background) !important;
+    font-size: var(--input-area-smile-icon--font-size) !important;
+    left: var(--input-area-smile-icon--left) !important;
+    color: var(--input-area-smile-icon--color) !important;
+    background: var(--input-area-smile-icon--background) !important;
   }
   .paperclip-icon {
     position: absolute;
     cursor: pointer;
-    left: var(--inputArea-paperclip-icon--left) !important;
-    bottom: var(--inputArea-paperclip-icon--bottom) !important;
-    color: var(--inputArea-paperclip-icon--color) !important;
-    background: var(--inputArea-paperclip-icon--background) !important;
-  }
-  .plus {
-    position: absolute;
-    cursor: pointer;
-    left: var(--inputArea-plus-icon--left) !important;
-    bottom: var(--inputArea-plus-icon--bottom) !important;
-    width: var(--inputArea-plus-icon--width) !important;
-    height: var(--inputArea-plus-icon--height) !important;
-    border-radius: var(--inputArea-plus-icon--border-radius) !important;
-    color: var(--inputArea-plus-icon--color) !important;
-    background: var(--inputArea-plus-icon--background) !important;
-    &__icon {
-      position: absolute;
-      left: 6px;
-      bottom: 3px;
-      font-size: 24px;
+    left: var(--input-area-paperclip-icon--left) !important;
+    &#myIcon {
+      width: var(--input-area-paperclip-icon--width);
     }
+    fill: var(--input-area-paperclip-icon--fill) !important;
+    background: var(--input-area-paperclip-icon--background) !important;
   }
   .send-icon {
     position: absolute;
     cursor: pointer;
-    left: var(--inputArea-send-icon--left) !important;
-    bottom: var(--inputArea-send-icon--bottom) !important;
-    width: var(--inputArea-send-icon--width) !important;
-    color: var(--inputArea-send-icon--color) !important;
-  }
-  .microphone-icon {
-    position: absolute;
-    cursor: pointer;
-    left: var(--inputArea-microphone-icon--left) !important;
-    bottom: var(--inputArea-microphone-icon--bottom) !important;
-    width: var(--inputArea-microphone-icon--width) !important;
-    color: var(--inputArea-microphone-icon--color) !important;
+    left: var(--input-area-send-icon--left) !important;
+    &#myIcon {
+      width: var(--input-area-send-icon--width) !important;
+    }
+    fill: var(--input-area-send-icon--fill) !important;
   }
 }
 
-@media (max-width: 450px) {
-
-  .inputArea {
+@import '~vuetify/src/styles/styles.sass';
+@media #{map-get($display-breakpoints, 'xs-only')} {
+  .input-area {
     width: 100%;
+    bottom: 0%;
   }
 }
 

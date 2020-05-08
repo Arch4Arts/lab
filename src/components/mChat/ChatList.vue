@@ -1,7 +1,7 @@
 <template>
-<v-card class="chat-list" :style="{ width: `${width - (width / 100 * 6.24)}px`, height: `${height - (height / 100 * 11.32)}px` }">
+<v-card class="chat-list" :style="{ width: `${width}px`, height: `${height}px` }">
   <!-- шапка -->
-  <v-toolbar class="chat-list__bar" dark dense flat>
+  <v-toolbar class="chat-list__bar" dark dense flat :height="`${calcHeightToolbar}px`">
     <!-- Декоративная кнопка -->
     <v-btn class="chat-list__bar__nav-btn" icon>
       <a-icon class="chat-list__bar__nav-btn__icon" :icon="['far', 'bars']" />
@@ -33,8 +33,8 @@
       </v-list>
     </v-menu>
   </v-toolbar>
-
-  <div class="before-chat-list__bar" />
+  <!-- Пространство под шапкой (чтобы туда не уходил список чатов) -->
+  <div :style="{ height: `${calcHeightToolbar}px` }" />
   <!-- Список контактов -->
   <v-list two-line class="chat-list__vlist">
     <template v-for="chat in getChatList">
@@ -42,17 +42,19 @@
       <v-list-item
         class="chat-list__vlist-item chat-list__palette-menu--hover"
         :key="chat.chatID"
-        @click="openSelectedChat(chat.chatID, chat.name, chat.unreadMessageCount)">
+        @click="openSelectedChat(chat.chatID, chat.chatName, chat.groupChatName, chat.chatAvatar, chat.groupChatAvatar, chat.isGroupChat)">
         <!-- Аватар -->
         <v-list-item-avatar class="chat-list__vlist--chat__avatar" :class="{ 'chat-list__vlist--chat__avatar__badge': chat.unreadMessageCount > 0 }">
-          <img :src="chat.avatar">
+          <img v-if="chat.isGroupChat" :src="chat.groupChatAvatar">
+          <img v-else :src="chat.chatAvatar">
         </v-list-item-avatar>
 
         <!-- Основной блок с информацией -->
         <v-list-item-content>
           <!-- Имя контакта -->
           <v-list-item-title class="chat-list__vlist--chat__title">
-            {{ chat.name }}
+            <div v-if="chat.isGroupChat">{{ chat.groupChatName }}</div>
+            <div v-else>{{ chat.chatName }}</div>
           </v-list-item-title>
           <!-- Текст последнего сообщения -->
           <v-list-item-subtitle v-if="chat.messagesHistory.type === 'text' || chat.messagesHistory.type === 'system'" 
@@ -61,8 +63,8 @@
           > 
           </v-list-item-subtitle>
           <!-- Смайлик -->
-          <v-list-item-subtitle v-else-if="chat.messagesHistory.type === 'emoji'" class="ml-2"> 
-            <img width="28" :src="chat.messagesHistory.data.src" />
+          <v-list-item-subtitle v-else-if="chat.messagesHistory.type === 'emoji'"> 
+            <img class="chat-list__vlist--chat__subtitle-emoji-preview" :src="chat.messagesHistory.data.src" />
           </v-list-item-subtitle>
           <!-- Иконка фото/видео контента в сообщении -->
           <v-list-item-subtitle v-else class=""> 
@@ -91,6 +93,7 @@ export default {
   props: {
     width: [Number, String],
     height: [Number, String],
+    calcHeightToolbar: [Number, String],
     chatList: {
       type: Array,
       required: true,
@@ -121,28 +124,18 @@ export default {
           }
         }
       }
-      return this.getChatListData(chatListData)
+      return this.setChatInfo(chatListData) // Определение параметров аватара и имени
     },
   },
   methods: {
     // Процесс определения имени, аватара чата
-    getChatListData(chatListData){
+    setChatInfo(chatListData){
       let chatData = JSON.parse(JSON.stringify(this.mChatData)); // Данные чатов
-      let processedChatListData = [];
       // Процесс определения имени, аватара чата
       for (let i in chatListData) {
-        // Если это групповой чат, определяем данные с самого чата
-        if (chatListData[i].isGroupChat) {
-          processedChatListData.push({
-            chatID: chatListData[i].chatID,
-            name: chatListData[i].groupChatName,
-            avatar: chatListData[i].groupChatAvatar,
-            unreadMessageCount: chatListData[i].unreadMessageCount,
-            messagesHistory: chatListData[i].messagesHistory
-          })
-        }
-        // Если нет, определяем данные из charProfiles
-        else {
+        // Если это не групповой чат, присваиваем имя и аватарку из charProfiles
+        // Если групповой чат, то имя и аватар там уже заданы
+        if (!chatListData[i].isGroupChat) {
           let str = chatListData[i].chatID;
           // Извлекаем sister из mc_sister
           let getCharID = str.slice(str.indexOf('_') + 1, str.length)
@@ -151,29 +144,32 @@ export default {
             if (getCharID == chatData.charProfiles[key].charID) {
               // Если используется псевдоним
               if (chatData.charProfiles[key].isAlias) {
-                chatListData[i].charName = chatData.charProfiles[key].aliasName;
-                chatListData[i].charAvatar = chatData.charProfiles[key].avatar;    
+                chatListData[i].chatName = chatData.charProfiles[key].aliasName;
+                chatListData[i].chatAvatar = chatData.charProfiles[key].avatar;    
               }
               else {
-                chatListData[i].charName = chatData.charProfiles[key].name;
-                chatListData[i].charAvatar = chatData.charProfiles[key].avatar;                
+                chatListData[i].chatName = chatData.charProfiles[key].name;
+                chatListData[i].chatAvatar = chatData.charProfiles[key].avatar;                
               }
             }
           }
-          processedChatListData.push({
-            chatID: chatListData[i].chatID,
-            name: chatListData[i].charName,
-            avatar: chatListData[i].charAvatar,
-            unreadMessageCount: chatListData[i].unreadMessageCount,
-            messagesHistory: chatListData[i].messagesHistory
-          })
         }
       }
-      return processedChatListData
+      return chatListData
     },
-    openSelectedChat(selectedChatID, selectedContactName, unreadMessageCount){
+    openSelectedChat(selectedChatID, selectedChatName, selectedGroupChatName, selectedChatAvatar, selectedGroupChatAvatar, selectedChatIsGroup){
       this.$store.state.mChat.selectedChatID = selectedChatID // Для MessageList
-      this.$store.state.mChat.selectedContactName = selectedContactName // Для MessageListToolbar
+      // Если групповой чат
+      if (selectedChatIsGroup) { // Для MessageListToolbar
+        this.$store.state.mChat.selectedChatName = selectedGroupChatName
+        this.$store.state.mChat.selectedChatAvatar = selectedGroupChatAvatar
+      }
+      // Если не групповой чат
+      else { // Для MessageListToolbar
+        this.$store.state.mChat.selectedChatName = selectedChatName
+        this.$store.state.mChat.selectedChatAvatar = selectedChatAvatar 
+      }
+      this.$store.state.mChat.selectedChatIsGroup = selectedChatIsGroup
       this.$store.commit('mChatListShow');
     },
     chatThemes(select){
@@ -191,20 +187,17 @@ export default {
   background: var(--chat-list--background) !important;
 }
 
-.before-chat-list__bar {
-  height: 7.5%;
-}
-
 .chat-list__bar  {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // position: relative;
+
   position: fixed;
-  background: var(--chat-list__bar--background) !important;
-  height: 7.5% !important;
+  height: 6%;
   width: calc(100% - 6.24%);
-  box-shadow: 0px -2px 4px black; // Маленькая тень
+
+  background: var(--chat-list__bar--background) !important;
+  box-shadow: 0px -1px 4px black; // Маленькая тень
   z-index: 1;  
 }
 
@@ -214,8 +207,8 @@ export default {
 }
 
 .chat-list__bar__nav-btn.v-btn {
-  width: calc(var(--mChatWidth) / 100 * 13) !important;
-  height: calc(var(--mChatHeigth) / 100 * 6) !important;
+  width: var(--vbtn--size) !important;
+  height: var(--vbtn--size) !important;
   color: var(--chat-list__bar__nav-btn--color) !important;
   background: var(--chat-list__v-btn--background) !important;
   &:hover {
@@ -224,12 +217,12 @@ export default {
 }
 
 .chat-list__bar__nav-btn__icon {
-  font-size: calc(var(--mChatFontSize) / 100 * 100) !important;
+  font-size: var(--vbtn-icon--fontSize) !important;
 }
 
 .chat-list__bar__palette-btn.v-btn  {
-  width: calc(var(--mChatWidth) / 100 * 13) !important;
-  height: calc(var(--mChatHeigth) / 100 * 6) !important;
+  width: var(--vbtn--size) !important;
+  height: var(--vbtn--size) !important;
   color: var(--chat-list__bar__palette-btn--color) !important;
   background: var(--chat-list__v-btn--background) !important;
   &:hover {
@@ -238,7 +231,7 @@ export default {
 }
 
 .chat-list__bar__palette-btn__icon {
-  font-size: calc(var(--mChatFontSize) / 100 * 100) !important;
+  font-size: var(--vbtn-icon--fontSize) !important;
 }
 
 .chat-list__vlist {
@@ -248,33 +241,39 @@ export default {
 
 .chat-list__vlist-item {
   background: var(--chat-list__vlist-item--background) !important;
-  height: calc(var(--mChatHeigth) / 100 * 12.7) !important;
+  height: calc(var(--mChatHeight) / 100 * 12.7) !important;
   padding: 0px 3.3% 0px 2.5% !important;  
 }
 
 .chat-list__vlist--chat__avatar {
-  width: calc(var(--mChatWidth) / 100 * 15.3) !important;
-  height: calc(var(--mChatWidth) / 100 * 15.3) !important;
+  width: calc(var(--mChatWidth) / 100 * 17) !important;
+  height: calc(var(--mChatWidth) / 100 * 17) !important;
   margin-top: 5.4% !important;
   margin-right: 5.4% !important;
   margin-bottom: 5.4% !important;
   margin-left: 0px !important;
 }
 
-.chat-list__vlist--chat__avatar__badge {
-  // width: 54px !important;
-  // border: var(--chat-list__vlist--chat__avatar__badge--border) !important;
-  // box-shadow: var(--chat-list__vlist--chat__avatar__badge--box-shadow) !important;
-}
+// .chat-list__vlist--chat__avatar__badge {
+//   width: 54px !important;
+//   border: var(--chat-list__vlist--chat__avatar__badge--border) !important;
+//   box-shadow: var(--chat-list__vlist--chat__avatar__badge--box-shadow) !important;
+// }
 
 .chat-list__vlist--chat__title {
-  font-size: 0.850em !important;
+  font-size: 0.9em !important;
   font-weight: var(--chat-list__vlist--chat__title--font-weight) !important;  
   color: var(--chat-list__vlist--chat__title--color) !important;
+  div {
+    margin-bottom: 0px !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+  }
 }
 
 .chat-list__vlist--chat__subtitle {
-  font-size: 0.750em !important;
+  font-size: 0.8em !important;
   margin-bottom: 3%;
   color: var(--chat-list__vlist--chat__subtitle--color) !important;
   p {
@@ -286,9 +285,13 @@ export default {
 }
 
 .chat-list__vlist--chat__subtitle-icon {
-  font-size: 1.5em !important;
+  font-size: 1.7em !important;
   margin-bottom: 2.7%;
   color: var(--chat-list__vlist--chat__subtitle-icon--color) !important;
+}
+
+.chat-list__vlist--chat__subtitle-emoji-preview {
+  width: 2em;
 }
 
 .chat-list__vlist--chat__badge {
@@ -313,8 +316,15 @@ export default {
 }
 
 .chat-list__palette-menu-font {
-  font-size: calc(var(--mChatFontSize) / 100 * 80) !important;
+  font-size: 1em !important;
   color: var(--chat-list__palette-menu-font--color) !important;
+}
+
+@import '~vuetify/src/styles/styles.sass';
+@media #{map-get($display-breakpoints, 'xs-only')} {
+  .chat-list__bar  {
+    width: 100%;
+  }
 }
 
 </style>

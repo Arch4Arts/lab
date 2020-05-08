@@ -57,8 +57,6 @@ import {
   faArrowLeft,// Стрелка влево
   faPhone,    // Иконка телефонной трубки
 
-  faMicrophone, // Микрофон
-
   faPhotoVideo, // Для чата (иконка в списке чатов (содержимое сообщения))
   
 } from '../../source_files/pro-solid-svg-icons'   // fas
@@ -69,7 +67,6 @@ import {
   faBars,     // Меню (список чатов)
   faPlus,       // Плюс
   faSmile,      // Смайлик
-  faPaperclip   // Значок скрепки
 
 } from '../../source_files/pro-regular-svg-icons' // far
 // import { fal } from '../../source_files/pro-light-svg-icons'   // fal
@@ -117,8 +114,6 @@ library.add({
 
   faPlus,       // Плюс
   faSmile,      // Смайлик
-  faMicrophone, // Микрофон
-  faPaperclip,   // Значок скрепки
 
   faPhotoVideo, // Для чата (иконка в списке чатов (содержимое сообщения))
 })

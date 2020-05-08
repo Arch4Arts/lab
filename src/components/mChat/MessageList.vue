@@ -2,7 +2,8 @@
 <div>
   <!-- Зона прокрутки -->
   <virtual-list
-    class="message-list" 
+    class="virtual-list"
+    :style="{ width: `${width}px`, height: `${height}px` }"
     ref="mChatMessageList"
 
     :keeps="30"
@@ -36,7 +37,9 @@ export default {
     mChatData: {
       type: Object,
       required: true,
-    }
+    },
+    width: [Number, String],
+    height: [Number, String]
   },
   mounted(){
     this.$refs.mChatMessageList.scrollToBottom()
@@ -54,33 +57,22 @@ export default {
 
 <style lang="scss" scoped>
 
-.v-btn {
-  background: var(--message-list__v-btn--background) !important;
-}
-
-.message-list {
-  // max-height: 485px;
-  flex: 2 0 auto;
-  // position: absolute;
+.virtual-list {
+  padding-top: 3%;
+  padding-left: 1.5%;
+  padding-right: 1.5%;
+  padding-bottom: 1%;
+  // height: var(--mChatHeight);
+  // min-height: var(--mChatHeight);
   overflow-y: auto;
-  background-size: 100%;
-  -ms-overflow-style: none;  /* IE 10+ */
-  scrollbar-width: none;  /* Firefox */
+  background: var(--virtual-list--background) !important;
+}
 
-  background: var(--message-list--background) !important;
-
-  &::-webkit-scrollbar {
-  display: none;  /* Safari and Chrome */  
+@import '~vuetify/src/styles/styles.sass';
+@media #{map-get($display-breakpoints, 'xs-only')} {
+  .virtual-list {
+    padding-top: 3%;
   }
 }
 
-@media (max-width: 450px) {
-
-  .message-list {
-    width: 100%;
-  }
-  .v-list {
-    max-height: calc(100% - 60px);
-  }
-}
 </style>

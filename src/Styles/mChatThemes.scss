@@ -1,6 +1,8 @@
 // https://habr.com/ru/post/466587/?mobile=yes
 // Переключение темы: document.documentElement.setAttribute('mChatTheme', 'Minimalistic')
 html {
+  --vbtn--size: calc(var(--mChatWidth) / 100 * 13);
+	--vbtn-icon--fontSize: calc(var(--mChatFontSize) / 100 * 110);
 	&[mChatTheme='Minimalistic'] {	
 		// Страница ср списком контактов
 		--chat-list--background: #fff;
@@ -23,7 +25,7 @@ html {
 		--chat-list__palette-menu-font--color: #4c4c4c;
 		--chat-list__vlist--chat__badge--color: #37addf;
 		--chat-list__vlist--chat__badge--background: #e8e8e8;
-		--chat-list__vlist--chat__badge--font-size: 0.750em;
+		--chat-list__vlist--chat__badge--font-size: 0.775em;
 		--chat-list__vlist--chat__badge--font-weight: 700;
 		--chat-list__vlist--chat__badge--border-radius: 4px;
 		--chat-list__vlist--chat__badge--width: calc(var(--mChatWidth) / 100 * 7.7);
@@ -37,13 +39,13 @@ html {
 		--message-list--bar__phone-btn--color: #37addf;
 		--message-list--bar__video-btn--color: #37addf;
 		--message-list--bar__ellipsis-btn--color: #37addf;
-		--message-list--background: #fff;
-		--from_me_msg_font: #fff;
-		--from_me_msg_bg: #00bfe4;
-		--from_me_tail_color: #00bfe4;
-		--from_them_msg_font: black;
-		--from_them_msg_bg: #eee;
-		--from_them_tail_color: #eee;
+		--virtual-list--background: #fff;
+		--text-message__from_me--color: #fff;
+		--text-message__from_me--background: #00bfe4;
+		--text-message__from_me__tail--color: #00bfe4;
+		--text-message__from_them--color: black;
+		--text-message__from_them--background: #eee;
+		--text-message__from_them__tail--color: #eee;
 		--message-system--background: #dedede;
 		--message-system--color: black;
 		--message-meta--color: black;
@@ -53,42 +55,34 @@ html {
 		--typing-indicator__span--background: #9E9EA1;
 		// --plyr--audio--color: black;
 		// Панель ввода
-		--inputArea--background: #fff;
-		--inputArea__text-input--width: 250px;
-		--inputArea__text-input--height: 50px;
-		--inputArea__text-input--border-radius: 17px;
-		--inputArea__text-input--padding-left: 50px;
-		--inputArea__text-input--background: #edf0f7;
-		--inputArea__text-input--color: #9c9d9d;
+		--input-area--background: #fff;
+		--input-area__text-input--background: #edf0f7;
+		--input-area__text-input--color: #9c9d9d;
+		--input-area__text-input__blink-caret: .15em solid #37addf;
+		--input-area__text-input__blink-caret--color: #37addf;
 		// Элементы панели ввода
-		--inputArea-smile-icon--left: 217px;
-		--inputArea-smile-icon--bottom: 18px;
-		--inputArea-smile-icon--color: #9c9d9d;
-		--inputArea-smile-icon--background: none;
-		--inputArea-paperclip-icon--left: 217px;
-		--inputArea-paperclip-icon--bottom: 18px;
-		--inputArea-paperclip-icon--color: #37addf;
-		--inputArea-paperclip-icon--background: none;
-		--inputArea-plus-icon--left: 10px;
-		--inputArea-plus-icon--bottom: 15px;
-		--inputArea-plus-icon--width: 30px;
-		--inputArea-plus-icon--height: 30px;
-		--inputArea-plus-icon--border-radius: 8px;
-		--inputArea-plus-icon--color: #37addf;
-		--inputArea-plus-icon--background: #d9dade;
-		--inputArea-send-icon--left: 295px;
-		--inputArea-send-icon--bottom: 18px;
-		--inputArea-send-icon--width: 24px;
-		--inputArea-send-icon--color: #37addf;
-		--inputArea-microphone-icon--left: 262px;
-		--inputArea-microphone-icon--bottom: 18px;
-		--inputArea-microphone-icon--width: 18px;
-		--inputArea-microphone-icon--color: #37addf;
+		--input-area-smile-icon--font-size: 1.275em;
+		--input-area-smile-icon--left: 93%;
+		--input-area-smile-icon--color: #9c9d9d;
+		--input-area-smile-icon--background: none;
+		--input-area-paperclip-icon--left: 110%;
+		--input-area-paperclip-icon--width: 11%;
+		--input-area-paperclip-icon--fill: #37addf;
+		--input-area-paperclip-icon--background: none;
+		--input-area-plus-icon--left: calc(var(--mChatWidth) / 100 * 2.5);
+		--input-area-plus-icon--width: calc(var(--mChatFontSize) / 100 * 150);
+		--input-area-plus-icon--height: calc(var(--mChatFontSize) / 100 * 150);
+		--input-area-plus-icon--border-radius: 40%;
+		--input-area-plus-icon--color: #37addf;
+		--input-area-plus-icon--background: #d9dade;
+		--input-area-send-icon--left: 125%;
+		--input-area-send-icon--width: 11%;
+		--input-area-send-icon--fill: #37addf;
 	};
 	&[mChatTheme='Dark-Minimalistic'] {
 		// Страница ср списком контактов
 		--chat-list--background: #242933;
-		--chat-list__bar--background: transparent;
+		--chat-list__bar--background: #242933;
 		--chat-list__vlist--background: transparent;
 		--chat-list__vlist-item--background: #2E3440;
 		--chat-list__palette-menu--hover--background: #3B4252;
@@ -106,7 +100,7 @@ html {
 		--chat-list__palette-menu-font--color: #ECEFF4;
 		--chat-list__vlist--chat__badge--color: #88c0d0;
 		--chat-list__vlist--chat__badge--background: #434C5E;
-		--chat-list__vlist--chat__badge--font-size: 14px;
+		--chat-list__vlist--chat__badge--font-size: 0.775em;
 		--chat-list__vlist--chat__badge--font-weight: 700;
 		--chat-list__vlist--chat__badge--border-radius: 4px;
 		--chat-list__vlist--chat__badge--width: calc(var(--mChatWidth) / 100 * 7.7);
@@ -120,16 +114,16 @@ html {
 		--message-list--bar__phone-btn--color: #fff;
 		--message-list--bar__video-btn--color: #fff;
 		--message-list--bar__ellipsis-btn--color: #fff;
-		--message-list--background: #242933;
-		--from_me_msg_font: #ECEFF4;
-		--from_me_msg_bg: #5E81AC;
-		--from_me_tail_color: #5E81AC;
-		--from_them_msg_font: #ECEFF4;
-		--from_them_msg_bg: #3B4252;
-		--from_them_tail_color: #3B4252;
+		--virtual-list--background: #242933;
+		--text-message__from_me--color: #ECEFF4;
+		--text-message__from_me--background: #5E81AC;
+		--text-message__from_me__tail--color: #5E81AC;
+		--text-message__from_them--color: #ECEFF4;
+		--text-message__from_them--background: #3B4252;
+		--text-message__from_them__tail--color: #3B4252;
 		--message-system--background: #3B4252;
 		--message-system--color: #ECEFF4;
-		--message-system-meta--color: #ECEFF4;
+		--message-meta__system--color: #ECEFF4;
 		--message-meta--color: #ECEFF4;
 		--suggestions-element--border: 1px solid #81A1C1;
 		--suggestions-element--color: #81A1C1;
@@ -137,49 +131,43 @@ html {
 		--typing-indicator__span--background: #9E9EA1;
 		--plyr--audio--color: #fff;
 		// Панель ввода
-		--inputArea--background: #242933;
-		--inputArea__text-input--width: 250px;
-		--inputArea__text-input--height: 50px;
-		--inputArea__text-input--border-radius: 17px;
-		--inputArea__text-input--padding-left: 50px;
-		--inputArea__text-input--background: #2E3440;
-		--inputArea__text-input--color: #9c9d9d;
+		--input-area--background: #242933;
+		--input-area__text-input--background: #2E3440;
+		--input-area__text-input--color: #9c9d9d;
+		--input-area__text-input__blink-caret: .15em solid #88C0D0;
+		--input-area__text-input__blink-caret--color: #88C0D0;
 		// Элементы панели ввода
-		--inputArea-smile-icon--left: 217px;
-		--inputArea-smile-icon--bottom: 18px;
-		--inputArea-smile-icon--color: #9c9d9d;
-		--inputArea-smile-icon--background: none;
-		--inputArea-paperclip-icon--left: 217px;
-		--inputArea-paperclip-icon--bottom: 18px;
-		--inputArea-paperclip-icon--color: #88C0D0;
-		--inputArea-paperclip-icon--background: none;
-		--inputArea-plus-icon--left: 10px;
-		--inputArea-plus-icon--bottom: 15px;
-		--inputArea-plus-icon--width: 30px;
-		--inputArea-plus-icon--height: 30px;
-		--inputArea-plus-icon--border-radius: 8px;
-		--inputArea-plus-icon--color: #88C0D0;
-		--inputArea-plus-icon--background: #3B4252;
-		--inputArea-send-icon--left: 295px;
-		--inputArea-send-icon--bottom: 18px;
-		--inputArea-send-icon--width: 24px;
-		--inputArea-send-icon--color: #88C0D0;
-		--inputArea-microphone-icon--left: 262px;
-		--inputArea-microphone-icon--bottom: 18px;
-		--inputArea-microphone-icon--width: 18px;
-		--inputArea-microphone-icon--color: #88C0D0;
+		--input-area-smile-icon--font-size: 1.275em;
+		--input-area-smile-icon--left: 93%;
+		--input-area-smile-icon--color: #9c9d9d;
+		--input-area-smile-icon--background: none;
+		--input-area-paperclip-icon--left: 110%;
+		--input-area-paperclip-icon--width: 11%;
+		--input-area-paperclip-icon--fill: #88C0D0;
+		--input-area-paperclip-icon--background: none;
+		--input-area-plus-icon--left: calc(var(--mChatWidth) / 100 * 2.5);
+		--input-area-plus-icon--width: calc(var(--mChatFontSize) / 100 * 150);
+		--input-area-plus-icon--height: calc(var(--mChatFontSize) / 100 * 150);
+		--input-area-plus-icon--border-radius: 40%;
+		--input-area-plus-icon--color: #88C0D0;
+		--input-area-plus-icon--background: #3B4252;
+		--input-area-send-icon--left: 125%;
+		--input-area-send-icon--width: 11%;
+		--input-area-send-icon--fill: #88C0D0;
 	}
 };
 
 .plyr--audio .plyr__controls {
-  background: transparent !important;
-  color: var(--plyr--audio--color);
+	background: transparent !important;
+	padding: 0px 0px 0px 0px !important;
+	color: var(--plyr--audio--color);
 }
 
+// Мащтабирование svg иконок
 .plyr__controls__item.plyr__control {
 	color: var(--plyr--audio--color);
-}
-
-.plyr__controls__item.plyr__time--current.plyr__time {
-	color: var(--plyr--audio--color);
+	svg {
+		height: var(--mChatFontSize) !important;
+		width: var(--mChatFontSize) !important;
+	}
 }

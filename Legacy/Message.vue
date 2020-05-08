@@ -151,7 +151,7 @@ export default {
   flex-direction: column;
 }
 
-.text-msg-container { // Для позиционирования хвостика
+.bubble-container { // Для позиционирования хвостика
 	// width: 100%;
 	display: flex;
 	position: relative;
@@ -187,12 +187,12 @@ export default {
 		// margin-left: 25%;
 		// max-width: 200px;
 		.text-message { // Локальный стиль сообщения
-      @include bubble(20, var(--from_me_msg_bg));
-      color: var(--from_me_msg_font) !important;
+      @include bubble(20, var(--text-message__from_me--background));
+      color: var(--text-message__from_me--color) !important;
       max-width: 220px;
 		}
 		.tail { // Стиль хвостика сообщения
-			@include tail(20, right, var(--from_me_tail_color))
+			@include tail(20, right, var(--text-message__from_me__tail--color))
 		}		
 	}	
 }
@@ -203,12 +203,12 @@ export default {
 		// margin-right: 25%;
 		// max-width: 200px;
 		.text-message { // Локальный стиль сообщения
-      @include bubble(20, var(--from_them_msg_bg));
-      color: var(--from_them_msg_font) !important;
+      @include bubble(20, var(--text-message__from_them--background));
+      color: var(--text-message__from_them--color) !important;
       max-width: 220px;
 		}
 		.tail { // Стиль хвостика сообщения
-			@include tail(20, left, var(--from_them_tail_color))
+			@include tail(20, left, var(--text-message__from_them__tail--color))
     }
 	}
 }
@@ -242,7 +242,7 @@ export default {
   opacity: .6;
   text-align: center;
   .message-system-meta {
-    color: var(--message-system-meta--color) !important;
+    color: var(--message-meta__system--color) !important;
   }
 }
 

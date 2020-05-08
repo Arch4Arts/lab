@@ -7,18 +7,15 @@
                 <Prolog/>
             </section>
         </v-flex>
-        <mc-chat /> <!-- ЧАТ ДОЛЖЕН БЫТЬ ПОСЛЕДНИЙ ЧТОБЫ ОН ПЕРЕКРЫВАЛ ВСЁ ЭЛЕМЕНТЫ -->
     </v-layout>
     </v-app>
 </template>
 
 <script>
-import mcChat from '../components/mChat/mcChat.vue'
 import Prolog from './story/Prolog'
 
 export default {
     components: {
-        'mc-chat': mcChat,
         Prolog,
     },
     data(){

@@ -28,7 +28,6 @@ export default {
   methods: {
     openChat() {
       this.$store.commit('mChatShow');
-      console.log(this.unreadMessagesCount)
     },
     closeChat() {
       this.$store.commit('mChatShow');
@@ -58,15 +57,14 @@ export default {
   }
 }
 
-
 .launcher {
   /* width: 60px;
   height: 60px;
   background-position: center;
   background-repeat: no-repeat; */
   position: fixed;
-  right: 25px;
-  bottom: 25px;
+  right: 2%;
+  bottom: 2%;
   /* border-radius: 50%;
   box-shadow: none; */
   transition: box-shadow 0.2s ease-in-out;
@@ -90,6 +88,7 @@ export default {
     /* Чтобы красный кружок не перекрывался выделением кнопки */
     z-index: 1;
   }
+  z-index: 1;
 }
 
 </style>

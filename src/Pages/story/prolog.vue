@@ -26,7 +26,6 @@
 <br><br>
   <mChatTestPage />
 <br><br>
-  <!-- <test /> -->
   <h1>Пролог</h1>
   <h2>Пролог</h2>
   <h3>Пролог</h3>
@@ -56,15 +55,12 @@ import sister from '../../components/Chars/CharStyles/sister'
 import mcSettings from '../../components/Chars/CharSettings/mcSettings'
 import mChatTestPage from '../../components/mChat/TestPage'
 
-import test from '../../components/mChat/draggableResizableLayout.vue'
-
 export default {
   components: {
     mc,
     sister,
     mcSettings,
     mChatTestPage,
-    test
   },
   methods: {
 

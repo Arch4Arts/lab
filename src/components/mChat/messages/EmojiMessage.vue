@@ -1,5 +1,9 @@
 <template>
-  <img class="emoji-img-size" :src="data.src" />
+<div>
+  <div class="message-title" style="margin-bottom: 6%" v-if="$store.state.mChat.selectedChatIsGroup">{{ author }}</div>
+  <img class="emoji-message" :src="data.src" />  
+</div>
+
 </template>
 
 <script>
@@ -8,15 +12,8 @@ export default {
     data: {
       type: Object,
       required: true
-    }
+    },
+    author: [String],
   }
 }
 </script>
-
-<style scoped>
-
-.emoji-img-size {
-  max-height: 50px;
-}
-
-</style>

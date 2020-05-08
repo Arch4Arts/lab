@@ -14,23 +14,23 @@
       v-show="RadialMenuStatus"
     >
       <!-- Основная кнопка раскрытия списка -->
-      <v-btn slot="activator" dark icon small hover v-model="fab" v-show="visible">
+      <v-btn slot="activator" dark icon hover v-model="fab" v-show="visible">
         <a-icon :icon="['fas', 'compass']" class="main-btn" />
       </v-btn>
       <!-- Saves -->
-      <v-btn icon dark small class="btns" @click="() => this.$store.state.isOpenSavesDrawer = true">
+      <v-btn icon dark class="btns" @click="() => this.$store.state.isOpenSavesDrawer = true">
         <a-icon :icon="['fas', 'save']" />
       </v-btn>
       <!-- Journal -->
-      <v-btn icon dark small class="btns" to="/Diary" @click="visible = false">
+      <v-btn icon dark class="btns" to="/Diary" @click="visible = false">
         <a-icon :icon="['fas', 'book']" />
       </v-btn>
       <!-- Settings -->
-      <v-btn icon dark small class="btns" @click="() => this.$store.state.isOpenSettingsDrawer = true">
+      <v-btn icon dark class="btns" @click="() => this.$store.state.isOpenSettingsDrawer = true">
         <a-icon :icon="['fas', 'cog']" />
       </v-btn>
       <!-- FAQ -->
-      <v-btn icon dark small class="btns" to="/FAQ" @click="visible = false">
+      <v-btn icon dark class="btns" to="/FAQ" @click="visible = false">
         <a-icon :icon="['fas', 'question-circle']" />
       </v-btn>  
     </v-speed-dial>
@@ -47,7 +47,7 @@
         v-show="RadialMenuStatus"
         @click="() => { visible = true; this.$router.push('/')}">
         <a-icon :icon="['fas', 'undo-alt']" />
-    </v-btn>
+      </v-btn>
     </v-fab-transition>
 </v-card>
 </template>

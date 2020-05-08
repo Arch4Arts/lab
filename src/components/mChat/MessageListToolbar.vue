@@ -1,5 +1,6 @@
 <template>
-  <v-toolbar class="bar" dark flat dense :style="{ width: `${width - (width / 100 * 6.24)}px`}">
+<div>
+  <v-toolbar class="bar" dark flat dense :style="{ height: `${height}px` }">
     <!-- Кнопка возвращения к списку контактов -->
     <v-btn class="bar__back-btn" icon @click="backToContactsPage()">
       <a-icon class="bar__back-btn__icon" :icon="['fas', 'arrow-left']" />
@@ -8,7 +9,8 @@
     <v-spacer />
     <!-- ЗАГОЛОВОК ЧАТА преобразует tailor в Tailor -->
     <v-toolbar-title class="bar__title"> 
-      {{ this.$store.state.mChat.selectedContactName }} 
+      <img class="bar__title__avatar" :src="$store.state.mChat.selectedChatAvatar"> 
+      <div> {{ this.$store.state.mChat.selectedChatName }} </div> 
     </v-toolbar-title>
     <v-spacer />
     
@@ -17,12 +19,16 @@
       <a-icon class="bar__phone-btn__icon" :icon="['fas', 'phone']" />
     </v-btn>
   </v-toolbar>
+  <!-- Пространство под шапкой (чтобы туда не залазил MessageList) -->
+  <div :style="{ height: `${height}px` }" />
+</div>
 </template>
 
 <script>
 export default {
   props: {
-    width: [Number, String]
+    width: [Number, String],
+    height: [Number, String],
   },
   methods: {
     backToContactsPage(){
@@ -43,39 +49,67 @@ export default {
 }
 
 .bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   position: fixed;
-  width: 100%;
+  width: calc(100% - 6.24%);
+  // height: 6%;
+
   background-color: var(--message-list--bar--background-color) !important;
-  box-shadow: 0px -2px 4px black; // Маленькая тень
+  box-shadow: 0px -1px 4px black; // Маленькая тень
   z-index: 4;
 }
 
 .bar__title {
-  color:  var(--message-list--bar__title--color) !important;
+  display: flex;
+  width: 100%;
+  align-items: center;
+
+  color:  var(--message-list--bar__title--color) !important;  
+  font-size: 1.2em;
   font-weight: var(--message-list--bar__title--font-weight) !important;  
+  &__avatar {
+    width: 1.7em;
+    height: 1.7em;
+
+    margin-left: 2%;
+    margin-right: 2%;
+
+    border-radius: 50%;
+  }
+  div {
+    margin-bottom: 0px !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
+  }
 }
 
 .bar__back-btn {
+  width: var(--vbtn--size) !important;
+  height: var(--vbtn--size) !important;
   color: var(--message-list--bar__back-btn--color) !important;
   &__icon {
-    font-size: 20px;
+    font-size: var(--vbtn-icon--fontSize) !important;
   }
 }
 
 .bar__phone-btn {
+  width: var(--vbtn--size) !important;
+  height: var(--vbtn--size) !important;
   color: var(--message-list--bar__phone-btn--color) !important;
   &__icon {
-    font-size: 20px;
+    font-size: var(--vbtn-icon--fontSize) !important;
   }
 }
 
-.bar__video-btn {
-  color: var(--message-list--bar__video-btn--color) !important;
-  background-color: transparent !important;
-}
-
-.bar__ellipsis-btn {
-  color: var(--message-list--bar__ellipsis-btn--color) !important;
+@import '~vuetify/src/styles/styles.sass';
+@media #{map-get($display-breakpoints, 'xs-only')} {
+  .bar {
+    width: 100%;
+  }
 }
 
 </style>

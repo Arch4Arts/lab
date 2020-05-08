@@ -4,7 +4,7 @@
     :w="width" 
     :h="height" 
 
-    :x="x"
+    :x="getCurrentPosition()"
     :y="y"
     :z="3"
     :key="reRenderSizeScreen"
@@ -14,40 +14,46 @@
 
     @dragging="onDrag" 
     @dragstop="savePosition"
+    :draggable="!$vuetify.breakpoint.xsOnly"
+
     @resizing="onResize"
     @resizestop="saveSizes"
+    :resizable="!$vuetify.breakpoint.xsOnly"
+
     v-show="$store.state.mChat.show">
     <div>
       <!-- текстура смартфона -->
-      <div class="smartphone">
-        <p style="position: absolute; left: -100px; bottom:300px">width: {{width}}</p>
-        <p style="position: absolute; left: -120px; bottom:280px">calcHeight: {{calcHeight}}</p>
-        <device-layout class="test" id="svgDevice" :width="width" />
-        <div class="smartphone-screen">
-          <!-- Страница со списком чатов -->
-          <ChatList
-            class="chat-list" 
-            :width="width"
-            :height="height"
-            v-if="$store.state.mChat.chatListShow"
+      <p class="hidden-sm-and-down" style="position: absolute; left: -100px; bottom:300px">width: {{width}}</p>
+      <p class="hidden-sm-and-down" style="position: absolute; left: -120px; bottom:280px">calcHeight: {{height - (height / 100 * 11.32)}}</p>
+      <smartphone-mockup class="smartphone" id="smartphone-mockup" :width="width" />
+      <div class="smartphone-screen">
+        <!-- Страница со списком чатов -->
+        <ChatList
+          v-if="$store.state.mChat.chatListShow"
+          class="chat-list" 
 
-            :chatList="chatList"
+          :width="calcWidth"
+          :height="calcHeight"
+          :calcHeightToolbar="calcChatList_ToolbarHeight"
+
+          :chatList="chatList"
+          :mChatData="mChatData"
+        />
+        <!-- Отображаемый чат -->
+        <div v-if="!$store.state.mChat.chatListShow" class="message-list">
+          <!-- Шапка -->
+          <MessageListToolbar :width="calcWidth" :height="calcMessageList_ToolbarHeight" />
+          <!-- Область прокрутки с сообщениями -->
+          <MessageList
+            :messages="getMessageList"
             :mChatData="mChatData"
+            :width="calcWidth"
+            :height="calcMessageList_Height"
           />
-          <!-- Конкретный чат -->
-          <div v-if="!$store.state.mChat.chatListShow" class="chat-window">
-            <!-- Шапка -->
-            <MessageListToolbar :width="width" />
-            <!-- Область прокрутки с сообщениями -->
-            <MessageList
-              :messages="getMessageList"
-              :mChatData="mChatData"
-            />
-            <!-- Декоративная панель ввода -->
-            <MessageListInput v-if="$store.state.mChat.showDecorativeInputPanel" /> 
-          </div>
+          <!-- Декоративная панель ввода -->
+          <MessageListInput v-if="$store.state.mChat.showDecorativeInputPanel" :width="calcWidth" :height="calcMessageList_InputHeight" /> 
         </div>
-      </div> 
+      </div>
     </div>
   </vue-draggable-resizable>
 </template>
@@ -62,16 +68,17 @@ import ChatList from './ChatList'
 import VueDraggableResizable from 'vue-draggable-resizable'
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 
-import deviceLayout from './deviceLayout.vue'
+import smartphoneMockup from './smartphoneMockup.vue'
 
 export default {
   data() {
     return {
-      width: this.$store.state.mChat.width,
-      height: this.$store.state.mChat.height,
-      calcHeight: 0,
-      x: this.$store.state.mChat.posX,
-      y: this.$store.state.mChat.posY,
+      width: (!this.$vuetify.breakpoint.xsOnly) ? this.$store.state.mChat.width : window.innerWidth,
+      height: (!this.$vuetify.breakpoint.xsOnly) ? this.$store.state.mChat.height : window.innerHeight,
+      // Не используется
+      x: undefined,
+      // Либо
+      y: (!this.$vuetify.breakpoint.xsOnly) ? this.$store.state.mChat.posY : 0,
       reRenderSizeScreen: 0
     }
   },
@@ -99,10 +106,81 @@ export default {
         }
       }
     },
+    calcWidth() {
+      // Если не мобильное представление
+      if (!this.$vuetify.breakpoint.xsOnly) {
+        this.changeCSSVars(this.width - (this.width / 100 * 6.24));
+        return this.width- (this.width / 100 * 6.24)
+      }
+      else {
+        this.changeCSSVars(window.innerWidth);
+        window.innerWidth
+      }
+    },
+    calcHeight() {
+      // Если не мобильное представление
+      if (!this.$vuetify.breakpoint.xsOnly) {
+        this.changeCSSVars(undefined, this.height- (this.height / 100 * 11.32));
+        return this.height- (this.height / 100 * 11.32)
+      }
+      else {
+        this.changeCSSVars(undefined, window.innerHeight);
+        return window.innerHeight
+      } 
+    },
+    calcChatList_ToolbarHeight() {
+      // Если мобильное представление
+      if (this.$vuetify.breakpoint.xsOnly) {
+        return this.height / 100 * 8
+      }
+      else {
+        return this.height / 100 * 6
+      }
+    },
+    calcMessageList_ToolbarHeight() {
+      // Если мобильное представление
+      if (this.$vuetify.breakpoint.xsOnly) {
+        return this.height / 100 * 8
+      }
+      else {
+        return this.height / 100 * 6
+      }
+    },
+    calcMessageList_Height() {
+      // Если не мобильное представление
+      if (!this.$vuetify.breakpoint.xsOnly && this.$store.state.mChat.showDecorativeInputPanel) {
+        return (this.height - (this.height / 100 * 11.32)) - (this.height / 100 * (6 + 8))
+      }
+      else if (!this.$vuetify.breakpoint.xsOnly) {
+        return (this.height - (this.height / 100 * 11.32)) - (this.height / 100 * (6))
+      }
+      else if (this.$vuetify.breakpoint.xsOnly && this.$store.state.mChat.showDecorativeInputPanel) {
+        return this.height - (this.height / 100 * (8 + 8.5))
+      }
+      else if (this.$vuetify.breakpoint.xsOnly) {
+        return this.height - (this.height / 100 * (8))
+      }
+    },
+    calcMessageList_InputHeight() {
+      // Если мобильное представление
+      if (this.$vuetify.breakpoint.xsOnly) {
+        return this.height / 100 * 8.5
+      }
+      else {
+        return this.height / 100 * 8
+      }
+    },
   },
   methods: {
-    closeChat() {
-      this.$store.commit('mChatShow');
+    changeCSSVars(width, height){
+      let test = document.querySelector('html');
+      if (width != undefined) {
+        test.style.setProperty("--mChatWidth", `${width}px`);
+        test.style.setProperty("--mChatFontSize", `${width / 18}px`);
+      }
+      if (height != undefined) {
+        test.style.setProperty("--mChatHeight", `${height}px`);
+      }
     },
     onDrag(x, y) {
       this.x = x
@@ -117,27 +195,22 @@ export default {
       this.x = x
       this.y = y
       this.width = width
-      this.height = this.getDeviceSize().height
-      let test = document.querySelector('html');
-      test.style.setProperty("--mChatWidth", `${width - (width / 100 * 6.24)}px`);
-      this.calcHeight = this.height - (this.height / 100 * 11.32)
-      test.style.setProperty("--mChatHeigth", `${this.height - (this.height / 100 * 11.32)}px`);
-      test.style.setProperty("--mChatFontSize", `${width / 18}px`);
+      this.height = this.getSmartphoneSize().height
+      this.changeCSSVars(width - (width / 100 * 6.24), this.height - (this.height / 100 * 11.32));
     },
     saveSizes(x, y, width, height) {
       // Обновляем положение боковых обработчиков (левого и правого), чтобы они одаптировались под новую высоту
       // Свойства w и h реактивны только после того, как компонент перестанет изменяться (после отработки onResize)
-      let size = this.getDeviceSize();
+      let size = this.getSmartphoneSize();
       this.height = size.height
 
       this.$store.state.mChat.width = width
-      console.log(height)
       this.$store.state.mChat.height = size.height
       this.$store.commit('updateStores');
       this.reRenderSizeScreen += 1;
     },
-    getDeviceSize(){
-      let element = document.getElementById('svgDevice');
+    getSmartphoneSize(){
+      let element = document.getElementById('smartphone-mockup');
       let elementInfo = element.getBoundingClientRect();
       let device = {
         width: elementInfo.width,
@@ -145,6 +218,18 @@ export default {
       }
       return device
     },
+    getCurrentPosition(){
+      // Если не мобильное представление
+      if (!this.$vuetify.breakpoint.xsOnly) {
+        // Если позиция не задана, присваиваем по ширине окна (выравнивание по правому краю)
+        if (this.$store.state.mChat.posX === undefined) 
+          return window.innerWidth - this.width;
+        else // Если задана, возвращаем значение
+          return this.$store.state.mChat.posX;
+      }
+      // Если мобильное, устанавливаем в начало кординат (выравнивание по левому краю)
+      else return 0;
+    }
   },
   components: {
     MessageListToolbar,
@@ -153,7 +238,7 @@ export default {
     MessageList,
 
     'vue-draggable-resizable': VueDraggableResizable,
-    deviceLayout,
+    smartphoneMockup,
   },
 }
 </script>
@@ -162,146 +247,114 @@ export default {
 
 html {
   --mChatWidth: 340px;
-  --mChatHeigth: 740px;
+  --mChatHeight: 740px;
   --mChatFontSize: 19px;
 }
 
 .vdr {
-  // border: none;
-  position: fixed;
+  border: none; // Убираем сетку с марширующими муравьями
+  position: fixed; // Смартфон перемещается вместе с пользователем (при прокрутке)
 }
 
-.handle {
-  height: 70%;
+.handle { // Активаторы изменения размера
+  height: 90%;
   width: 3%;
   position: absolute;
+  // Видимость активаторов
   background-color: transparent !important;
   border-width: 0px !important;
   // background-color: red !important;
 }
-.handle-ml {
-  top: 0;
+.handle-ml { // Левый активатор
+  top: 5%;
   left: 0;
 }
-.handle-mr {
-  top: 0;
+.handle-mr { // Правый активатор
+  top: 5%;
   right: 0;
 }
 
 .smartphone {
   transition: 0.3s ease-in-out;
-  // width: 370px;
-  // position: fixed;
-  // right: 25px;
-  // bottom: 0px;
-  // box-sizing: border-box;
-
-  // border-radius: 20px;
-  // overflow: hidden;
 }
 
 .smartphone-screen {
-  width: var(--mChatWidth) !important;
-  height: var(--mChatHeigth) !important;
-  font-size: var(--mChatFontSize) !important;
-}
-
-.smartphone.close-area {
-  cursor: pointer;
-}
-
-.smartphone.closed {
-  opacity: 0;
-  visibility: hidden;
-  // bottom: 90px;
+  width: var(--mChatWidth);
+  height: var(--mChatHeight);
+  font-size: var(--mChatFontSize);
 }
 
 .chat-list {
-  // width: 340px;
-  // height: calc(100% - 120px);
-  // max-height: 598px;
   position: absolute;
-  // right: 39px;
-  // bottom: 70px;
-  left: 3.12%;
-  right: 3.12%;
-  top: 5.6%;
-  bottom: 5.72%;
-  // margin: 15% 2% 10% 2%;
-  // box-sizing: border-box;
-  // border-radius: 20px !important;
-  border-radius: calc(var(--mChatWidth) / 100 * 6) !important;
-  overflow-y: auto;
-}
 
-.chat-window {
-  // width: 340px;
-  // height: calc(100% - 120px);
-  // max-height: 598px;
-  position: absolute;
-  // right: 39px;
-  // bottom: 70px;
   left: 3.12%;
   right: 3.12%;
   top: 5.6%;
   bottom: 5.72%;
-  // box-sizing: border-box;
-  // border-radius: 20px !important;
+
   border-radius: calc(var(--mChatWidth) / 100 * 6) !important;
-  // Для border-radius НЕ УДАЛЯТЬ
+  // Для border-radius
+  mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
   -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
-  /* box-shadow: 0px 7px 40px 2px rgba(148, 149, 150, 0.1); */
-  /* background: white; */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  // transition: 0.3s ease-in-out;
-  /* border-radius: 20px; */
-  font-family: 'Helvetica Neue', sans-serif;
-  font-size: 11pt;
+  
+  overflow-y: auto;
+}
+
+.message-list {
+  position: absolute;
+
+  left: 3.12%;
+  right: 3.12%;
+  top: 5.6%;
+  bottom: 5.72%;
+
+  border-radius: calc(var(--mChatWidth) / 100 * 6) !important;
+  // Для border-radius
+  mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
+  -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
+
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: space-between;
 
   overflow-y: auto;
 }
 
-.chat-window.closed {
-  opacity: 0;
-  visibility: hidden;
-  // bottom: 90px;
-}
 @import '~vuetify/src/styles/styles.sass';
-
 @media #{map-get($display-breakpoints, 'xs-only')} {
-    .test {
+
+  .smartphone {
     visibility: hidden;
   } 
-}
-
-@media (max-width: 450px) {
-
 
   .chat-list {
+    position: absolute;
+
     width: 100%;
     height: 100%;
-    max-height: 100%;
-    right: 0px;
-    bottom: 0px;
+    // max-height: 100%;
+
+    top: 0px;
+    left: 0px;
+
+    border-radius: 0px !important;
+
+    overflow-y: auto;
   }
 
-  .chat-window {
+  .message-list {
+    position: absolute;
+
     width: 100%;
     height: 100%;
-    max-height: 100%;
-    right: 0px;
-    bottom: 0px;
-    border-radius: 0px;
-  }
+    top: 0px;
+    left: 0px;
 
-  .chat-window {
-    transition: 0.1s ease-in-out;
+    border-radius: 0px !important;
+
+    overflow-y: auto;
   }
   
-  .chat-window.closed {
-    bottom: 0px;
-  }
 }
+
 </style>
