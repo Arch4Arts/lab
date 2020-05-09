@@ -1,6 +1,14 @@
 <template>
 <div>
-  <v-toolbar class="bar" dark flat dense :style="{ height: `${height}px` }">
+  <v-app-bar 
+    class="bar" 
+    dark 
+    flat 
+    dense 
+    :hide-on-scroll="!$store.state.mChat.showBarPanelPermanent" 
+    elevate-on-scroll 
+    scroll-target="#scrolling-techniques-4" 
+    :style="{ height: `${height}px` }">
     <!-- Кнопка возвращения к списку контактов -->
     <v-btn class="bar__back-btn" icon @click="backToContactsPage()">
       <a-icon class="bar__back-btn__icon" :icon="['fas', 'arrow-left']" />
@@ -18,16 +26,15 @@
     <v-btn class="bar__phone-btn" icon>
       <a-icon class="bar__phone-btn__icon" :icon="['fas', 'phone']" />
     </v-btn>
-  </v-toolbar>
+  </v-app-bar>
   <!-- Пространство под шапкой (чтобы туда не залазил MessageList) -->
-  <div :style="{ height: `${height}px` }" />
+  <!-- <div :style="{ height: `${height}px` }" /> -->
 </div>
 </template>
 
 <script>
 export default {
   props: {
-    width: [Number, String],
     height: [Number, String],
   },
   methods: {
@@ -54,7 +61,8 @@ export default {
   justify-content: center;
 
   position: fixed;
-  width: calc(100% - 6.24%);
+  padding: 0px 3%;
+  width: 100%;
   // height: 6%;
 
   background-color: var(--message-list--bar--background-color) !important;
@@ -80,7 +88,6 @@ export default {
     border-radius: 50%;
   }
   div {
-    margin-bottom: 0px !important;
     white-space: nowrap !important;
     text-overflow: ellipsis !important;
     overflow: hidden !important;
@@ -109,6 +116,7 @@ export default {
 @media #{map-get($display-breakpoints, 'xs-only')} {
   .bar {
     width: 100%;
+    padding: 0px 0px;
   }
 }
 

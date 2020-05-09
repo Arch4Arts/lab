@@ -7,7 +7,7 @@
     :x="getCurrentPosition()"
     :y="y"
     :z="3"
-    :key="reRenderSizeScreen"
+    :key="$store.state.mChat.reRender_mChat"
     
     :handles="['ml','mr']" 
     drag-cancel=".smartphone-screen"
@@ -42,13 +42,14 @@
         <!-- Отображаемый чат -->
         <div v-if="!$store.state.mChat.chatListShow" class="message-list">
           <!-- Шапка -->
-          <MessageListToolbar :width="calcWidth" :height="calcMessageList_ToolbarHeight" />
+          <MessageListToolbar :height="calcMessageList_ToolbarHeight" />
           <!-- Область прокрутки с сообщениями -->
           <MessageList
             :messages="getMessageList"
             :mChatData="mChatData"
             :width="calcWidth"
             :height="calcMessageList_Height"
+            :ToolbarHeight="calcMessageList_ToolbarHeight"
           />
           <!-- Декоративная панель ввода -->
           <MessageListInput v-if="$store.state.mChat.showDecorativeInputPanel" :width="calcWidth" :height="calcMessageList_InputHeight" /> 
@@ -149,16 +150,16 @@ export default {
     calcMessageList_Height() {
       // Если не мобильное представление
       if (!this.$vuetify.breakpoint.xsOnly && this.$store.state.mChat.showDecorativeInputPanel) {
-        return (this.height - (this.height / 100 * 11.32)) - (this.height / 100 * (6 + 8))
+        return (this.height - (this.height / 100 * 11.32)) - (this.height / 100 * (8))
       }
       else if (!this.$vuetify.breakpoint.xsOnly) {
-        return (this.height - (this.height / 100 * 11.32)) - (this.height / 100 * (6))
+        return this.height - (this.height / 100 * 11.32)
       }
       else if (this.$vuetify.breakpoint.xsOnly && this.$store.state.mChat.showDecorativeInputPanel) {
-        return this.height - (this.height / 100 * (8 + 8.5))
+        return this.height - (this.height / 100 * (8.5))
       }
       else if (this.$vuetify.breakpoint.xsOnly) {
-        return this.height - (this.height / 100 * (8))
+        return this.height
       }
     },
     calcMessageList_InputHeight() {
@@ -207,7 +208,7 @@ export default {
       this.$store.state.mChat.width = width
       this.$store.state.mChat.height = size.height
       this.$store.commit('updateStores');
-      this.reRenderSizeScreen += 1;
+      this.$store.state.mChat.reRender_mChat += 1;
     },
     getSmartphoneSize(){
       let element = document.getElementById('smartphone-mockup');

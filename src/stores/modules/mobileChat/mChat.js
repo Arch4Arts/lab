@@ -8,6 +8,7 @@ const mChat = {
         autoplayVideoMessageOnHover: false, // Воспроизводить ли видео при наведении мышки
         typingIndicatorEnable: true, // Если true отображается имитация набора текста, если false, то ничего не отображаетсяm
         showAvatars: true, // Скрытие аватарок в чате
+        showBarPanelPermanent: true, // Если false, панель будет скрываться при скролинге вниз, и показываться при скролинге вверх
         showDecorativeInputPanel: true, // Скрытие декоративной панели ввода в чате
         
         posX: undefined,   // Позиция чата по горизонтали
@@ -49,6 +50,9 @@ const mChat = {
       },
       mChatShowAvatars(){
         this.state.mChat.showAvatars = !this.state.mChat.showAvatars
+      },
+      showBarPanelPermanent(){
+        this.state.mChat.showBarPanelPermanent = !this.state.mChat.showBarPanelPermanent
       },
       showDecorativeInputPanel(){
         this.state.mChat.showDecorativeInputPanel = !this.state.mChat.showDecorativeInputPanel

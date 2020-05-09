@@ -17,7 +17,6 @@
   <!-- Пространство под панелью ввода (чтобы туда не залазил MessageList) -->
   <div v-if="$store.state.mChat.showDecorativeInputPanel" :style="{ height: `${height}px` }" />    
 </div>
-
 </template>
 
 <script>

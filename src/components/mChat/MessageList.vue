@@ -1,9 +1,11 @@
 <template>
 <div>
   <!-- Зона прокрутки -->
+  <!-- id НЕ МЕНЯТЬ! -->
   <virtual-list
     class="virtual-list"
-    :style="{ width: `${width}px`, height: `${height}px` }"
+    :style="{ width: `${width}px`, height: `${height}px`, 'padding-top': `${ToolbarHeight + 10}px` }"
+    id="scrolling-techniques-4"
     ref="mChatMessageList"
 
     :keeps="30"
@@ -39,7 +41,8 @@ export default {
       required: true,
     },
     width: [Number, String],
-    height: [Number, String]
+    height: [Number, String],
+    ToolbarHeight: [Number, String],
   },
   mounted(){
     this.$refs.mChatMessageList.scrollToBottom()

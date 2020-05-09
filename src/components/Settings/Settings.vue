@@ -92,6 +92,7 @@
               ></v-switch>
             </v-list-item-action>
           </v-list-item>
+          <v-divider />
           <!-- Имитация набора сообщения -->
           <v-list-item class="v-list-item">
             <v-list-item-content @click="mChatTypingIndicatorEnable()">
@@ -106,6 +107,7 @@
               ></v-switch>
             </v-list-item-action>
           </v-list-item>
+          <v-divider />
           <!-- Отключение показа аватарок в чате -->
           <v-list-item class="v-list-item">
             <v-list-item-content @click="mChatHideAvatars()">
@@ -117,6 +119,21 @@
               <v-switch
                 v-model="$store.state.mChat.showAvatars"
                 @click.stop="mChatHideAvatars()"
+              ></v-switch>
+            </v-list-item-action>
+          </v-list-item>
+          <v-divider />
+          <!-- Отключение наборного элемента в чате -->
+          <v-list-item class="v-list-item">
+            <v-list-item-content @click="mChatHideBarOnScrolling()">
+              <v-list-item-title>Заголовок чата</v-list-item-title>
+              <v-list-item-subtitle>Не скрывать верхнюю панель при прокрутке чата</v-list-item-subtitle>
+            </v-list-item-content>
+            <!-- Тумблер -->
+            <v-list-item-action>
+              <v-switch
+                v-model="$store.state.mChat.showBarPanelPermanent"
+                @click.stop="mChatHideBarOnScrolling()"
               ></v-switch>
             </v-list-item-action>
           </v-list-item>
@@ -167,6 +184,10 @@ export default {
     },
     mChatHideAvatars(){
       this.$store.commit('mChatShowAvatars')
+    },
+    mChatHideBarOnScrolling(){
+      this.$store.state.mChat.reRender_mChat += 1;
+      this.$store.commit('showBarPanelPermanent')
     },
     mChatHideInput(){
       this.$store.commit('showDecorativeInputPanel')
