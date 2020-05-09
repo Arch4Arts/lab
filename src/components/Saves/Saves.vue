@@ -203,7 +203,7 @@ import iziToast from 'izitoast/dist/js/iziToast.min.js';
 
 import updateThemes from '../../styles/updateThemes';
 
-import eventBus from '../../js/initEventBus'
+import eventBus from '../../js/eventBus'
 
 import savesListComp from './SavesList'
 

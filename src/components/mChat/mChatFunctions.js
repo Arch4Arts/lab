@@ -1,5 +1,5 @@
 import store from '../../stores/store'
-import eventBus from '../../js/initEventBus'
+import eventBus from '../../js/eventBus'
 
 // Для suggestion ONLY нужно указать type: suggestion и data: undefined
 export function sendMessage(ChatID, author, type, data) { 

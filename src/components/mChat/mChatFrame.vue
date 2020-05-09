@@ -7,7 +7,7 @@
     :x="getCurrentPosition()"
     :y="y"
     :z="3"
-    :key="$store.state.mChat.reRender_mChat"
+    :key="reRender"
     
     :handles="['ml','mr']" 
     drag-cancel=".smartphone-screen"
@@ -60,16 +60,17 @@
 </template>
 
 <script>
+import ChatList from './ChatList'
+
 import MessageListToolbar from './MessageListToolbar.vue'
 import MessageListInput from './MessageListInput.vue'
 import MessageList from './MessageList.vue'
 
-import ChatList from './ChatList'
-
+import smartphoneMockup from './smartphoneMockup.vue'
 import VueDraggableResizable from 'vue-draggable-resizable'
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 
-import smartphoneMockup from './smartphoneMockup.vue'
+import eventBus from '../../js/eventBus.js'
 
 export default {
   data() {
@@ -80,7 +81,7 @@ export default {
       x: undefined,
       // Либо
       y: (!this.$vuetify.breakpoint.xsOnly) ? this.$store.state.mChat.posY : 0,
-      reRenderSizeScreen: 0
+      reRender: 0
     }
   },
   props: {    
@@ -103,6 +104,7 @@ export default {
         if (chatData.chatList[i].chatID === selectedChat) {
           // Сбрасывает счётчик сообщений текущего выбранного чата, только если чат отображается
           if (this.$store.state.mChat.show) chatData.chatList[i].unreadMessageCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
+          eventBus.$emit('mChatScrollToBottom');
           return chatData.chatList[i].messagesHistory
         }
       }
@@ -208,7 +210,7 @@ export default {
       this.$store.state.mChat.width = width
       this.$store.state.mChat.height = size.height
       this.$store.commit('updateStores');
-      this.$store.state.mChat.reRender_mChat += 1;
+      this.reRender += 1;
     },
     getSmartphoneSize(){
       let element = document.getElementById('smartphone-mockup');
@@ -230,7 +232,16 @@ export default {
       }
       // Если мобильное, устанавливаем в начало кординат (выравнивание по левому краю)
       else return 0;
+    },
+    reRenderFun(){
+      this.reRender += 1;
     }
+  },
+  mounted(){
+    eventBus.$on('reRender_mChat', this.reRenderFun);
+  },
+  beforeDestroy(){
+    eventBus.$off('reRender_mChat')
   },
   components: {
     MessageListToolbar,

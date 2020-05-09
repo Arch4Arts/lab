@@ -21,7 +21,7 @@
 <script>
 import Message from './Message.vue'
 
-import eventBus from '../../js/initEventBus'
+import eventBus from '../../js/eventBus'
 
 import VirtualList from 'vue-virtual-scroll-list'
 
@@ -46,9 +46,11 @@ export default {
   },
   mounted(){
     this.$refs.mChatMessageList.scrollToBottom()
+    eventBus.$on('mChatScrollToBottom', this.$refs.mChatMessageList.scrollToBottom);
     eventBus.$on('mChatMessageWasSent', this.$refs.mChatMessageList.scrollToBottom);
   },
   beforeDestroy(){
+    eventBus.$off('mChatScrollToBottom')
     eventBus.$off('mChatMessageWasSent')
   },
   components: {

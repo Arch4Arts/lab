@@ -42,7 +42,7 @@ import AudioMessage from './messages/AudioMessage.vue'
 
 import Suggestions from './Suggestions'
 
-import eventBus from '../../js/initEventBus'
+import eventBus from '../../js/eventBus'
 
 export default {
   components: {

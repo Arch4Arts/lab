@@ -26,6 +26,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     gameLang: true, // true: en / false: ru
+    lang: ru,
     gameFont: 'Roboto',
     gameFontSize: '14pt',
     gameCurrentTheme: 'NordDark',
@@ -58,7 +59,6 @@ const store = new Vuex.Store({
     
     reRender_mChatPlayersVolume: 0, // Используется для перерендера плееров в чате, изменяется в Saves.vue 
     reRender_ColorPickerCanvas: 0, // Для перерисовски окна с выбором цвета (исчезает при изменении размера)
-    reRender_mChat: 0, // Для обновления чата
 
     gameFirstLoad: true, // Проверка, первый ли запуск игры (Для определения языка) gameDisplayingStartPage
     gameDisplayingStartPage: true, // Для отображения StartPage

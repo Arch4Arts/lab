@@ -5,6 +5,13 @@ const webpack = require('webpack')
 module.exports = {
   configureWebpack: config => {
     config.output.filename = 'js/[name].js';
+    config.module
+      .rule('i18n')
+      .resourceQuery(/blockType=i18n/)
+      .type('javascript/auto')
+      .use('i18n')
+      .loader('@kazupon/vue-i18n-loader')
+      .end()
   },
   configureWebpack: {
     plugins: 
@@ -65,6 +72,14 @@ module.exports = {
       .use('vue-svg-loader')
       .loader('vue-svg-loader');
   },
+  pluginOptions: {
+    i18n: {
+      locale: 'en',
+      fallbackLocale: 'en',
+      localeDir: 'locales',
+      enableInSFC: true
+    }
+  },
 
   publicPath: './',
   // Undefined - community версия, т.к в .env.production нет переменной VUE_APP_EDITION, но есть в .env.special
@@ -72,7 +87,9 @@ module.exports = {
     `./dist/${packageJson.name} ${packageJson.version} community` 
   : 
     `./dist/${packageJson.name} ${packageJson.version} special`,
-  assetsDir: 'assets', // Каталог для хранения сгенерированных статических ресурсов (js, css, img, fonts).
+  // Каталог для хранения сгенерированных статических ресурсов (js, css, img, fonts).
+  assetsDir: 'assets',
   filenameHashing: false,
-  productionSourceMap: false, // чтобы ошибки в консоле указавали точно местоположение в js
+  // чтобы ошибки в консоле указавали точно местоположение в js
+  productionSourceMap: false,
 }

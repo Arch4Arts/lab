@@ -163,6 +163,8 @@ import SettingsAppearance from './SettingsAppearance'
 import SettingsHotkeys from './SettingsHotkeys'
 import SettingsSound from './SettingsSound'
 
+import eventBus from '../../js/eventBus'
+
 export default {
   data(){
     return {
@@ -186,7 +188,7 @@ export default {
       this.$store.commit('mChatShowAvatars')
     },
     mChatHideBarOnScrolling(){
-      this.$store.state.mChat.reRender_mChat += 1;
+      eventBus.$emit('reRender_mChat')
       this.$store.commit('showBarPanelPermanent')
     },
     mChatHideInput(){

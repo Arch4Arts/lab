@@ -6,6 +6,8 @@ import store from './stores/store'
 
 import vuetify from './styles/vuetify'
 
+import i18n from './i18n'
+
 import favicon from './assets/favicon.png'; // Для экспорта иконки в run build
 
 import 'viewerjs/dist/viewer.css'
@@ -41,7 +43,7 @@ new Vue({
   router,
   store,
   vuetify,
-  
+  i18n,
   data: {
     gameName: gameName,
     gameVersion: gameVersion,
