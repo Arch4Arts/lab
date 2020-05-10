@@ -1,8 +1,19 @@
+<i18n>
+	{
+		"en": {
+			"placeholder": "Message"
+		},
+		"ru": {
+			"placeholder": "Сообщение"
+		}
+	}
+</i18n>
+
 <template>
 <div>
   <div class="input-area" :style="{ width: `${width}px`, height: `${height}px`}">
     <div
-      :placeholder="($store.state.gameLang) ? 'Message': 'Сообщение'"
+      :placeholder="$t('placeholder')"
       class="text-input" />
     <div class="buttons-container">
         <div class="plus-icon">

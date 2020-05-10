@@ -3,7 +3,7 @@
     <v-layout class="v-layout" justify-center>
         <v-flex md8 class="Page">
             <section id="StoryTextArea">
-                <h1>Home</h1>
+                <h1>Entry</h1>
                 <Prolog/>
             </section>
         </v-flex>

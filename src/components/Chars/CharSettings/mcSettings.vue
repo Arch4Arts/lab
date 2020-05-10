@@ -1,11 +1,5 @@
 <template>
-<!-- ENGLISH -->
-<section v-if="$store.state.gameLang">
-
-</section>
-
-<!-- RUSSIAN -->
-<section :id="parentBlockNameID" v-else>
+<section :id="parentBlockNameID">
   <!-- Панель -->
   <v-expansion-panels id="layout" >
 

@@ -1,17 +1,67 @@
-<template>
-  <!-- ENGLISH -->
-  <section v-if="$store.state.gameLang">
+<i18n>
+	{
+		"en": {
+      "main-toggle-title": "Hotkeys",
+      "settings": {
+        "title": "Settings",
+        "1": "Open settings",
+        "2": "Switch the sound state in the game"
+      },
+      "journal": {
+        "title": "Journal",
+        "1": "Open the journal",
+        "2": "Open the character tab",
+        "3": "Open the diary tab",
+        "4": "Open the achievements tab"
+      },
+      "saves": {
+        "title": "Saves",
+        "1": "Open saves",
+        "2": "Quick save",
+        "3": "Quick Load"
+      },
+      "mChat": {
+        "title": "Chat",
+        "1": "Open chat"
+      }
+		},
+		"ru": {
+      "main-toggle-title": "Горячие клавиши",
+      "settings": {
+        "title": "Настройки",
+        "1": "Открыть настройки",
+        "2": "Переключить состояние звука в игре"
+      },
+      "journal": {
+        "title": "Журнал",
+        "1": "Открыть журнал",
+        "2": "Открыть вкладку с персонажами",
+        "3": "Открыть вкладку с дневником",
+        "4": "Открыть вкладку с достижениями"
+      },
+      "saves": {
+        "title": "Сохранения",
+        "1": "Открыть сохранения",
+        "2": "Быстрое сохранение",
+        "3": "Быстрая загрузка"
+      },
+      "mChat": {
+        "title": "Чат",
+        "1": "Открыть чат"
+      }
+		}
+	}
+</i18n>
 
-  </section>
-  <!-- RUSSIAN -->
-  <section v-else>
+<template>
+<section>
   <!-- Вкл/Выкл горячих клавиш -->
   <v-list :disabled="this.$root.isTouchDevice" subheader two-line flat>
     <v-list-item-group multiple>
       <v-list-item class="v-list-item">
         <!-- Надпись -->
         <v-list-item-content @click="gameHotkeysEnable" class="v-list-item__content">
-          <v-list-item-title>Горячие клавиши</v-list-item-title>
+          <v-list-item-title>{{ $t('main-toggle-title') }}</v-list-item-title>
         </v-list-item-content>
         <!-- Тумблер -->
         <v-list-item-action class="v-list-item__action">
@@ -25,7 +75,7 @@
   </v-list>
   <!-- Настройки -->
   <v-card v-model="settings" class="hotkey-section" :disabled="!$store.state.gameHotkeysEnable" elevation="0">
-    <p :class="($store.state.gameHotkeysEnable) ? 'hotkey-section__name' : 'hotkey-section__name disabled'">Настройки</p>
+    <p :class="($store.state.gameHotkeysEnable) ? 'hotkey-section__name' : 'hotkey-section__name disabled'">{{ $t('settings.title') }}</p>
     <div 
       class="hotkey-section-option"
       :class="{'disabled': !$store.state.gameHotkeysEnable, highlight:settings.key == selected.key}"
@@ -33,7 +83,7 @@
       @click="hotkeySelected('settings', settings.key)"
     >
       <div class="hotkey-section-option__desc">
-        {{settings.description_ru}}
+        {{settings.description}}
       </div>
       <div class="hotkey-section-option__key" :class="{highlight:settings.key == selected.key}">
         <!-- Преобразуем первуб букву в заглавную -->
@@ -43,7 +93,7 @@
   </v-card>
   <!-- Журнал -->
   <v-card v-model="journal" class="hotkey-section" :disabled="!$store.state.gameHotkeysEnable" elevation="0">
-    <p :class="($store.state.gameHotkeysEnable) ? 'hotkey-section__name' : 'hotkey-section__name disabled'">Журнал</p>
+    <p :class="($store.state.gameHotkeysEnable) ? 'hotkey-section__name' : 'hotkey-section__name disabled'">{{ $t('journal.title') }}</p>
     <div 
       class="hotkey-section-option"
       :class="{'disabled': !$store.state.gameHotkeysEnable, highlight:journal.key == selected.key}"
@@ -51,7 +101,7 @@
       @click="hotkeySelected('journal', journal.key)"
     >
       <div class="hotkey-section-option__desc">
-        {{journal.description_ru}}
+        {{journal.description}}
       </div>
       <div class="hotkey-section-option__key" :class="{highlight:journal.key == selected.key}">
         <!-- Преобразуем первуб букву в заглавную -->
@@ -61,7 +111,7 @@
   </v-card>
   <!-- Сохранения -->
   <v-card v-model="saves" class="hotkey-section" :disabled="!$store.state.gameHotkeysEnable" elevation="0">
-    <p :class="($store.state.gameHotkeysEnable) ? 'hotkey-section__name' : 'hotkey-section__name disabled'">Сохранения</p>
+    <p :class="($store.state.gameHotkeysEnable) ? 'hotkey-section__name' : 'hotkey-section__name disabled'">{{ $t('saves.title') }}</p>
     <div 
       class="hotkey-section-option"
       :class="{'disabled': !$store.state.gameHotkeysEnable, highlight:saves.key == selected.key}"
@@ -69,7 +119,7 @@
       @click="hotkeySelected('saves', saves.key)"
     >
       <div class="hotkey-section-option__desc">
-        {{saves.description_ru}}
+        {{saves.description}}
       </div>
       <div class="hotkey-section-option__key" :class="{highlight:saves.key == selected.key}">
         <!-- Преобразуем первуб букву в заглавную -->
@@ -79,7 +129,7 @@
   </v-card>
   <!-- Чат -->
   <v-card v-model="mChat" class="hotkey-section" :disabled="!$store.state.gameHotkeysEnable" elevation="0">
-    <p :class="($store.state.gameHotkeysEnable) ? 'hotkey-section__name' : 'hotkey-section__name disabled'">Чат</p>
+    <p :class="($store.state.gameHotkeysEnable) ? 'hotkey-section__name' : 'hotkey-section__name disabled'">{{ $t('mChat.title') }}</p>
     <div 
       class="hotkey-section-option"
       :class="{'disabled': !$store.state.gameHotkeysEnable, highlight:mChat.key == selected.key}"
@@ -87,7 +137,7 @@
       @click="hotkeySelected('mChat', mChat.key)"
     >
       <div class="hotkey-section-option__desc">
-        {{mChat.description_ru}}
+        {{mChat.description}}
       </div>
       <div class="hotkey-section-option__key" :class="{highlight:mChat.key == selected.key}">
         <!-- Преобразуем первуб букву в заглавную -->
@@ -95,7 +145,7 @@
       </div>
     </div>
   </v-card>
-  </section>
+</section>
 </template>
 
 <script>
@@ -107,68 +157,58 @@ export default {
     return {
     settingsHotkeys: [
       { // Открыть журнал
-        description: 'Open settings',
-        description_ru: 'Открыть настройки',
+        description: this.$t('settings.1'),
         hotkey: '',
         key: 'settingsOpen'
       },
       { // Открыть вкладку с персонажами 
-        description: 'Switch the sound state in the game',
-        description_ru: 'Переключить состояние звука в игре',
+        description:this.$t('settings.2'),
         hotkey: '',
         key: 'settingsToggleGlobalSoundEnable'
       },
     ],
     journalHotkeys: [
       { // Открыть журнал
-        description: 'Open the journal',
-        description_ru: 'Открыть журнал',
+        description: this.$t('journal.1'),
         hotkey: '',
         key: 'journalOpen'
       },
       { // Открыть вкладку с персонажами 
-        description: 'Open the character tab',
-        description_ru: 'Открыть вкладку с персонажами',
+        description: this.$t('journal.2'),
         hotkey: '',
         key: 'journalTabCharacters'
       },
       { // Открыть вкладку с дневником
-        description: 'Open the diary tab',
-        description_ru: 'Открыть вкладку с дневником',
+        description: this.$t('journal.3'),
         hotkey: '',
         key: 'journalTabDiary'
       },
       { // Открыть вкладку с достижениями
-        description: 'Open the achievements tab',
-        description_ru: 'Открыть вкладку с достижениями',
+        description: this.$t('journal.4'),
         hotkey: '',
         key: 'journalTabAchievements'
       },
     ],
     savesHotkeys: [
       { // Открыть журнал
-        description: '',
-        description_ru: 'Открыть сохранения',
+        description: this.$t('saves.1'),
         hotkey: '',
         key: 'savesOpen'
       },
       { // Открыть вкладку с персонажами 
-        description: 'Quick save',
-        description_ru: 'Быстрое сохранение',
+        description: this.$t('saves.2'),
         hotkey: '',
         key: 'savesQuickSave'
       },
       { // Открыть вкладку с дневником
-        description: 'Quick Load',
-        description_ru: 'Быстрая загрузка',
+        description: this.$t('saves.3'),
         hotkey: '',
         key: 'savesQuickLoad'
       },
     ],
     mChatHotkeys: [
       { // Открыть журнал
-        description: 'Open chat',
-        description_ru: 'Открыть чат',
+        description: this.$t('mChat.1'),
         hotkey: '',
         key: 'mChatOpen'
       },

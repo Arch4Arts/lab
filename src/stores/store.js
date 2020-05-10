@@ -25,8 +25,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    gameLang: true, // true: en / false: ru
-    lang: ru,
+    gameLang: 'ru',
     gameFont: 'Roboto',
     gameFontSize: '14pt',
     gameCurrentTheme: 'NordDark',
@@ -35,7 +34,6 @@ const store = new Vuex.Store({
       { themeName: 'NordDark' },
       { themeName: 'CustomDark' }
     ],
-    test: 0,
     gameHotkeysEnable: true, // Горячие клавиши в игре 
     keyboardShortcutsVersion: '0',   
     settingsHotkeys: {
@@ -135,8 +133,8 @@ const store = new Vuex.Store({
     },
 
     // Смена языка
-    langChange(){
-      this.state.gameLang = !this.state.gameLang;
+    langChange(state, lang){
+      this.state.gameLang = lang;
     },
 
     gameHotkeysEnable(){

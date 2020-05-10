@@ -47,6 +47,7 @@
           <MessageList
             :messages="getMessageList"
             :mChatData="mChatData"
+            
             :width="calcWidth"
             :height="calcMessageList_Height"
             :ToolbarHeight="calcMessageList_ToolbarHeight"
@@ -150,7 +151,7 @@ export default {
       }
     },
     calcMessageList_Height() {
-      // Если не мобильное представление
+      //  Если не мобильное представление
       if (!this.$vuetify.breakpoint.xsOnly && this.$store.state.mChat.showDecorativeInputPanel) {
         return (this.height - (this.height / 100 * 11.32)) - (this.height / 100 * (8))
       }

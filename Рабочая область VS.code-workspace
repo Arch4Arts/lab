@@ -8,6 +8,7 @@
 		"i18n-ally.localesPaths": [
 			"src/locales",
 			"src/components/mChat/messages"
-		]
+		],
+		"i18n-ally.sourceLanguage": "en"
 	}
 }

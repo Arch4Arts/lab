@@ -1,17 +1,29 @@
-<template>
-<!-- ENGLISH -->
-<section v-if="$store.state.gameLang">
+<i18n>
+	{
+		"en": {
+      "main-toggle-title": "Sound",
+      "achievement-desc": "The volume of the alerts when you get achievements",
+      "journal-desc": "The volume of journal notifications",
+      "mobile-desc": "The volume of mobile alerts"
+		},
+		"ru": {
+      "main-toggle-title": "Звук",
+      "achievement-desc": "Громкость оповещения о получении достижений",
+      "journal-desc": "Громкость оповещений журнала",
+      "mobile-desc": "Громкость мобильных оповещений"
+		}
+	}
+</i18n>
 
-</section>
-<!-- RUSSIAN -->
-<section v-else>
+<template>
+<div>
   <!-- Вкл / Выкл звука глобально -->
   <v-list subheader two-line flat>
     <v-list-item-group multiple>
       <v-list-item class="v-list-item--padding">
         <!-- Надпись -->
         <v-list-item-content @click="changeGlobalSoundEnable()" class="v-list-item__content">
-          <v-list-item-title>Звук</v-list-item-title>
+          <v-list-item-title>{{ $t('main-toggle-title') }}</v-list-item-title>
         </v-list-item-content>
         <!-- Тумблер -->
         <v-list-item-action class="v-list-item__action">
@@ -34,7 +46,7 @@
       :
       'sound-options-container__slider__name disabled'"
     >
-      Громкость оповещения о получении достижений
+      {{ $t('achievement-desc') }}
     </p>
     <!-- Слайдер -->
     <v-slider
@@ -91,7 +103,7 @@
       :
       'sound-options-container__slider__name disabled'"
     >
-    Громкость оповещений дневника
+      {{ $t('journal-desc') }}
     </p>
     <!-- Слайдер -->
     <v-slider
@@ -148,7 +160,7 @@
       :
       'sound-options-container__slider__name disabled'"
     >
-      Громкость мобильных оповещений
+      {{ $t('mobile-desc') }}
     </p>
     <!-- Слайдер -->
     <v-slider
@@ -194,7 +206,7 @@
       </v-list>
     </v-menu>
   </div>
-</section>
+</div>
 </template>
 
 <script>
@@ -306,7 +318,7 @@ export default {
   background: var(--settings-v-list-item--background) !important;
 }
 
-.v-list-item--padding { // Название не менять!
+.v-list-item--padding { // ! Название не менять!
   padding: 0px !important;
 }
 

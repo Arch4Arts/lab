@@ -1,3 +1,19 @@
+<i18n>
+	{
+		"en": {
+			"FAQ": "FAQ",
+			"settings": "Settings",
+			"journal": "Journal",
+			"saves": "Saves"
+		},
+		"ru": {
+			"FAQ": "FAQ",
+			"settings": "Настройки",
+			"journal": "Журнал",
+			"saves": "Сохранения"
+		}
+	}
+</i18n>
 <template>
 	<div>  
 		<!-- Плавающая кпнока для мобильной навигации -->
@@ -16,30 +32,26 @@
 				<!-- FAQ -->
 				<v-btn shift text @click="() => routeChange('FAQ')">
 						<a-icon class="mr-2" :icon="['fas', 'question-circle']" />
-						<div v-if="$store.state.gameLang">FAQ</div>
-						<div v-else>FAQ</div>
+						<div>{{ $t('FAQ') }}</div>
 				</v-btn>
 				<!-- Настройки -->
 				<v-btn shift text @click="() => this.$store.state.isOpenSettingsDrawer = true">
 						<a-icon class="mr-2" :icon="['fas', 'cog']" />
-						<div v-if="$store.state.gameLang">Settings</div>
-						<div v-else>Настройки</div>
+						<div>{{ $t('settings') }}</div>
 				</v-btn>
 				<!-- Журнал -->
 				<v-btn shift text @click="() => routeChange('Journal')">
 						<a-icon class="mr-2" :icon="['fas', 'book']" />
-						<div v-if="$store.state.gameLang">Journal</div>
-						<div v-else>Журнал</div>
+						<div>{{ $t('journal') }}</div>
 				</v-btn>
 				<!-- Сохранения -->
 				<v-btn shift text @click="() => this.$store.state.isOpenSavesDrawer = true">
 						<a-icon class="mr-2" :icon="['fas', 'save']" />
-						<div v-if="$store.state.gameLang">Saves</div>
-						<div v-else>Сохранения</div>
+						<div>{{ $t('saves') }}</div>
 				</v-btn>
 			</v-toolbar-items>
 		</v-app-bar>
-	</div>    
+	</div>
 </template>
 
 <script>
@@ -63,4 +75,4 @@ export default {
 	background: var(--v-app-bar--background) !important;
 }
 
-</style>>
+</style>

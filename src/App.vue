@@ -54,7 +54,7 @@ export default {
     },
     // Тригеры для появления и исчезновения radialMenu
     swipeBottom(){
-      this.$store.state.radialMenuShow = true // Не менять, на телефоне прокрутка свайпами не соотвествует направлению прокрутки на компе
+      this.$store.state.radialMenuShow = true // ! Не менять, на телефоне прокрутка свайпами не соотвествует направлению прокрутки на компе
       this.$store.commit('updateStores');
     },
     // Тригеры для появления и исчезновения radialMenu

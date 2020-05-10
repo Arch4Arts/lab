@@ -1,39 +1,51 @@
-<template>
-  <!-- ENGLISH -->
-  <section v-if="$store.state.gameLang">
+<i18n>
+	{
+		"en": {
+			"langChange-title": "Game language",
+			"langChange-btn-title-ru": "Russian",
+			"langChange-btn-title-en": "English"
+		},
+		"ru": {
+			"langChange-title": "Язык игры",
+			"langChange-btn-title-ru": "Русский",
+			"langChange-btn-title-en": "Английский"
+		}
+	}
+</i18n>
 
-  </section>
-  <!-- RUSSIAN -->
-  <section v-else>
-    <div class="text-center">
-      <v-btn-toggle v-model="launguage" rounded>
-        <v-btn text width="130">Русский</v-btn>
-        <v-btn text @click="$store.commit('langChange')">Английский</v-btn>
-      </v-btn-toggle>
-    </div>
-    <v-select
-      v-model="fontFamily"
-      :items="fontListRu"
-      menu-props="auto"
-      label="Font Selector"
-      hide-details
-      prepend-icon="$vuetify.icons.values.faFont"
-      single-line
-    ></v-select>
-    <br>
-    <v-slider
-      class="sound-settings-container__slider"
-      prepend-icon="$vuetify.icons.values.faTextSize"
-      v-model="fontSize"
-      thumb-label
-      min="10"
-      max="24"
-    ></v-slider>
-    <v-btn @click="Dark()">Dark</v-btn>
-    <v-btn @click="NordDark()">NordDark</v-btn>
-    <v-btn @click="NordLight()">NordLight</v-btn>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-  </section>
+<template>
+<div>
+  <!-- Выбор языка -->
+  <div class="text-center">
+    <div>{{ $t('langChange-title') }}</div>
+    <v-btn-toggle class="v-btn-toggle" v-model="getCurrentLanguage" rounded>
+      <v-btn text @click="changeLanguage('ru')" width="130">{{ $t('langChange-btn-title-ru') }}</v-btn>
+      <v-btn text @click="changeLanguage('en')">{{ $t('langChange-btn-title-en') }}</v-btn>
+    </v-btn-toggle>		
+  </div>
+  <v-select
+    v-model="fontFamily"
+    :items="fontListRu"
+    menu-props="auto"
+    label="Font Selector"
+    hide-details
+    prepend-icon="$vuetify.icons.values.faFont"
+    single-line
+  ></v-select>
+  <br>
+  <v-slider
+    class="sound-settings-container__slider"
+    prepend-icon="$vuetify.icons.values.faTextSize"
+    v-model="fontSize"
+    thumb-label
+    min="10"
+    max="24"
+  ></v-slider>
+  <v-btn @click="Dark()">Dark</v-btn>
+  <v-btn @click="NordDark()">NordDark</v-btn>
+  <v-btn @click="NordLight()">NordLight</v-btn>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+</div>
 </template>
 
 <script>
@@ -47,14 +59,18 @@ export default {
     }
   },
   methods: {
-
+		changeLanguage(lang){
+			this.$store.commit('langChange', lang)
+			this.$root.$i18n.locale = lang
+		},
   },
   computed: {
-    launguage() {
-      let result
-      (this.$store.state.gameLang) ? result = 1 : result = 0
-      return result;
-    },
+    // Для кнопки смены языка, чтобы было выделение на текущем выбранном языке
+		getCurrentLanguage() { 
+			let result;
+			this.$store.state.gameLang == 'ru' ? result = 0 : result = 1;
+			return result;
+		},
     // Шрифт
     fontFamily: {
       get: function () {

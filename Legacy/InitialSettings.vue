@@ -3,248 +3,134 @@
 <v-layout v-if="$store.state.initialSettings" class="v-layout" justify-center>
     <v-expansion-panel dark>
     <v-flex md8 text-center class="Page">
+      
+      <section>
+      <hr>
+      <h1> Настройки игры </h1>
+      <hr>
+      <br>
 
-        <!-- ENGLISH -->
+      <v-expansion-panel-content >
+      <template v-slot:header>
+      <div><h3> Звуки уведомлений </h3></div>
+      </template>
 
-        <section v-if="$store.state.gameLang">
+      <v-card class="bg_panels">
+      <v-card-text class="font-color">
+      В данной игре используются звуковые оповещения при определённых событиях, вы можете отключить звук полностью, или только выбранные, а отрегулировать громкость
+      <br>
 
-        <hr>
-        <h1> Game settings </h1>
-        <hr>
-        <br>
+      <v-btn outline dark @click="$root.achievementSoundEnable()"> <v-icon left>fas fa-play</v-icon> Получение достижения </v-btn>
+      
+      <v-switch v-model="$store.state.sound.achievementSoundEnable" @click.stop="Switch('achievementSoundEnable')" dark :label="($store.state.sound.achievementSoundEnable) ? 'ON' : 'OFF' "></v-switch>
+      <v-slider v-model="$store.state.sound.achievementVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.sound.achievementSoundEnable" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
+      
+      <v-btn outline dark @click="$root.diarySoundEnable()"> <v-icon left>fas fa-play</v-icon> Новая запись в дневнике </v-btn>
+      
+      <v-switch v-model="$store.state.sound.diarySoundEnable" @click.stop="Switch('diarySoundEnable')" dark :label="($store.state.sound.diarySoundEnable) ? 'ON' : 'OFF' "></v-switch>
+      <v-slider v-model="$store.state.sound.diaryVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.sound.diarySoundEnable" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
+      
+      <v-btn outline dark @click="$root.smartphoneSoundEnable()"> <v-icon left>fas fa-play</v-icon> Новое сообщение в телефоне </v-btn>
 
-        <v-expansion-panel-content >
-        <template v-slot:header>
-        <div><h3> Notification sounds </h3></div>
-        </template>
+      <v-switch v-model="$store.state.sound.smartphoneSoundEnable" @click.stop="Switch('smartphoneSoundEnable')" dark :label="($store.state.sound.smartphoneSoundEnable) ? 'ON' : 'OFF' "></v-switch>
+      <v-slider v-model="$store.state.sound.smartphoneVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.sound.smartphoneSoundEnable" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
+      
+      </v-card-text>
+      </v-card>
+      </v-expansion-panel-content>
 
-        <v-card class="bg_panels">
-        <v-card-text class="font-color">
-        This game uses sound alerts for certain events, you can turn off the sound completely, or only selected ones, and adjust the volume
-        <br>
+      <v-expansion-panel-content >
+      <template v-slot:header>
+      <div><h3>Персонализация персонажей</h3></div>
+      </template>
 
-        <v-btn outline dark @click="$root.achievementSoundEnable()"> <v-icon left>fas fa-play</v-icon> Getting achievement </v-btn>
-        
-        <v-switch v-model="$store.state.sound.achievementSoundEnable" @click.stop="Switch('achievementSoundEnable')" dark :label="($store.state.sound.achievementSoundEnable) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.sound.achievementVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.sound.achievementSoundEnable" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
-        
-        <v-btn outline dark @click="$root.diarySoundEnable()"> <v-icon left>fas fa-play</v-icon> A new entry in the diary </v-btn>
-        
-        <v-switch v-model="$store.state.sound.diarySoundEnable" @click.stop="Switch('diarySoundEnable')" dark :label="($store.state.sound.diarySoundEnable) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.sound.diaryVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.sound.diarySoundEnable" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
-        
-        <v-btn outline dark @click="$root.smartphoneSoundEnable()"> <v-icon left>fas fa-play</v-icon> A new message in the phone </v-btn>
+      <v-card class="bg_panels">
+      <v-card-text class="font-color">
+      В этом разделе вы можете персонализировать персонажей, изменив имя, и цвет реплики.
 
-        <v-switch v-model="$store.state.sound.smartphoneSoundEnable" @click.stop="Switch('smartphoneSoundEnable')" dark :label="($store.state.sound.smartphoneSoundEnable) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.sound.smartphoneVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.sound.smartphoneSoundEnable" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
-        
-        </v-card-text>
-        </v-card>
-        </v-expansion-panel-content>
+      Если введённое имя не склоняется должным образом, тогда просклоняйте имя персонажа вручную, отметив соотвествующий пункт.
+      <p/>
+      <v-expansion-panel class="bg_panels">
+      <v-expansion-panel-content  v-for="(character, i) in characters_ru" :key="i" hide-actions>
+      <!-- АВАТАР В ШАПКЕ -->
+      <template v-slot:header>
+        <v-layout align-center row spacer>
+          <v-flex xs4 sm2 md1>
+            <v-avatar size="36px" >
+              <img v-if="character.avatar" :src="character.avatar" alt="Avatar">
+              <v-icon v-else :color="character.color" v-text="character.icon"></v-icon>
+            </v-avatar>
+          </v-flex>
+      <!-- ИМЯ В ШАПКЕ -->
+          <v-flex sm5 md3 hidden-xs-only>
+            <strong v-html="character.name"></strong>
+            <span v-if="character.total" class="grey--text">
+              &nbsp;({{ character.total }})
+            </span>
+          </v-flex>
+      <!-- КТО ЭТО? В ШАПКЕ -->
+          <v-flex text-no-wrap xs5 sm3>
+            <strong v-html="character.title"></strong>
+          </v-flex>
+      <!-- ЦИТАТА В ШАПКЕ -->
+          <v-flex v-if="character.quote" class="grey--text" ellipsis hidden-sm-and-down>
+            &mdash;
+            {{ character.quote }}
+          </v-flex>
+        </v-layout>
 
-        <v-expansion-panel-content >
-        <template v-slot:header>
-        <div><h3>Personalization of characters</h3></div>
-        </template>
+      </template>
 
-        <v-card class="bg_panels">
-        <v-card-text class="font-color">
-         In this section, you can personalize characters, changing the name, and color of the replica.
-        <p/>
-        <v-expansion-panel class="bg_panels">
-        <v-expansion-panel-content  v-for="(character, i) in characters" :key="i" hide-actions>
-        <!-- EN АВАТАР В ШАПКЕ  --> 
-        <template v-slot:header>
-          <v-layout align-center row spacer>
-            <v-flex xs4 sm2 md1>
-              <v-avatar size="36px" >
-                <img v-if="character.avatar" :src="character.avatar" alt="Avatar">
-                <v-icon v-else :color="character.color" v-text="character.icon"></v-icon>
-              </v-avatar>
-            </v-flex>
-        <!-- EN ИМЯ В ШАПКЕ -->
-            <v-flex sm5 md3 hidden-xs-only>
-              <strong v-html="character.name"></strong>
-              <span v-if="character.total" class="grey--text">
-                &nbsp;({{ character.total }})
-              </span>
-            </v-flex>
-        <!-- EN КТО ЭТО? В ШАПКЕ -->
-            <v-flex text-no-wrap xs5 sm3>
-              <strong v-html="character.title"></strong>
-            </v-flex>
-        <!-- EN ЦИТАТА В ШАПКЕ -->
-            <v-flex v-if="character.quote" class="grey--text" ellipsis hidden-sm-and-down>
-              &mdash;
-              {{ character.quote }}
-            </v-flex>
+      <v-card class="bg_panels">
+      <v-divider></v-divider>
+          <v-card-text>
+          <v-layout align-start row>
+          <!-- ЦИТАТА В БЛОКЕ -->
+          <v-flex xs12 md6>
+          <p v-if="character.Declination == 'mc'" :style="{'color': $store.state.mcColor}"> {{ character.quote }} </p>
+          <p v-if="character.Declination == 'sister'" :style="{'color': $store.state.sisterColor}"> {{ character.quote }} </p>
+          </v-flex>
+          <!-- ВЫБОР ЦВЕТА ЦИТАТЫ (РЕПЛИК) -->
+          <v-flex d-flex lg1 md1 sm1 xs1>
+              <color-picker :change="character.changeColor" :extColor="character.color"></color-picker>
+          </v-flex>
           </v-layout>
+          <!-- ЗАПОЛНЕНИЕ ИМЕНИ -->
+          <v-form ref="form" v-model="validation" lazy-validation>
+              <v-flex sm5 md5>
+              <v-text-field v-if="character.Declination == 'mc'" v-model="mcDeclination" :rules="nameRules_ru" label="Имя" required></v-text-field>
+              <v-text-field v-if="character.Declination == 'sister'" v-model="sisterDeclination" :rules="nameRules_ru" label="Имя" required></v-text-field>  <!-- ИМЯ -->
+              <br/>  
+              <!-- КАК БЫЛО ПРОСКЛОНЕНО -->
 
-        </template>
+              <blockquote class="blockquote">Вот сидит на стуле <b> {{ character.Im }}. </b>
+              <br>Кто б мы были без <b> {{ character.Rod }}? </b>
+              <br>Подарите что-нибудь <b> {{ character.Dat }}! </b>
+              <br><b> {{character.Vin }} </b> нужно поздравить.
+              <br><b> {{ character.Tvor }} </b> все гордятся.
+              <br/>Не забывайте о <b>{{ character.Pred }}</b>
+              </blockquote>
 
-        <v-card class="bg_panels">
-        <v-divider></v-divider>
-            <v-card-text>
-            <v-layout align-start row>
-            <!-- EN ЦИТАТА В БЛОКЕ -->
-            <v-flex xs12 md6>
-            <p v-if="character.Declination == 'mc'" :style="{'color': $store.state.mcColor}"> {{ character.quote }} </p>
-            <p v-if="character.Declination == 'sister'" :style="{'color': $store.state.sisterColor}"> {{ character.quote }} </p>
-            </v-flex>
-            <!-- EN ВЫБОР ЦВЕТА ЦИТАТЫ (РЕПЛИК) -->
-            <v-flex d-flex lg1 md1 sm1 xs1>
-                <color-picker :change="character.changeColor" :extColor="character.color"></color-picker>
-            </v-flex>
-            </v-layout>
-            <!-- EN ЗАПОЛНЕНИЕ ИМЕНИ -->
-            <v-form ref="form" v-model="validation" lazy-validation>
-                <v-flex sm5 md5>
-                <v-text-field v-if="character.Declination == 'mc'" v-model="mc" :rules="nameRules" label="Name" required></v-text-field>
-                <v-text-field v-if="character.Declination == 'sister'" v-model="sister" :rules="nameRules" label="Name" required></v-text-field>  <!-- ИМЯ -->
-                </v-flex>
-            </v-form>
+              <v-checkbox v-model="character.manualDeclination" :label="'Просклонять вручную'"></v-checkbox>
+              <!-- ПРОСКЛОНЯТЬ ВРУЧНУЮ -->
+              <v-text-field v-model="character.Rod" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Родительный (кого, чего?)" required></v-text-field>
+              <v-text-field v-model="character.Dat" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Дательный (кому, чему?	)" required></v-text-field>
+              <v-text-field v-model="character.Vin" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Винительный (кого, что?)" required></v-text-field>
+              <v-text-field v-model="character.Tvor" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Творительный (кем, чем?)" required></v-text-field>
+              <v-text-field v-model="character.Pred" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Предложный (о ком, о чём?)" required></v-text-field>
+              </v-flex>
+          </v-form>
 
-            </v-card-text>
-        </v-card>
-        </v-expansion-panel-content>
-        </v-expansion-panel>
-        </v-card-text>
-        </v-card>  
-        </v-expansion-panel-content>
-        <br>
-        <v-btn color="bright_btn" @click="startGame('en')">Start game</v-btn>
-
-        </section>
-
-        <!-- RUSSIAN -->
-
-        <section v-else>
-        <hr>
-        <h1> Настройки игры </h1>
-        <hr>
-        <br>
-
-        <v-expansion-panel-content >
-        <template v-slot:header>
-        <div><h3> Звуки уведомлений </h3></div>
-        </template>
-
-        <v-card class="bg_panels">
-        <v-card-text class="font-color">
-        В данной игре используются звуковые оповещения при определённых событиях, вы можете отключить звук полностью, или только выбранные, а отрегулировать громкость
-        <br>
-
-        <v-btn outline dark @click="$root.achievementSoundEnable()"> <v-icon left>fas fa-play</v-icon> Получение достижения </v-btn>
-        
-        <v-switch v-model="$store.state.sound.achievementSoundEnable" @click.stop="Switch('achievementSoundEnable')" dark :label="($store.state.sound.achievementSoundEnable) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.sound.achievementVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.sound.achievementSoundEnable" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
-        
-        <v-btn outline dark @click="$root.diarySoundEnable()"> <v-icon left>fas fa-play</v-icon> Новая запись в дневнике </v-btn>
-        
-        <v-switch v-model="$store.state.sound.diarySoundEnable" @click.stop="Switch('diarySoundEnable')" dark :label="($store.state.sound.diarySoundEnable) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.sound.diaryVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.sound.diarySoundEnable" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
-        
-        <v-btn outline dark @click="$root.smartphoneSoundEnable()"> <v-icon left>fas fa-play</v-icon> Новое сообщение в телефоне </v-btn>
-
-        <v-switch v-model="$store.state.sound.smartphoneSoundEnable" @click.stop="Switch('smartphoneSoundEnable')" dark :label="($store.state.sound.smartphoneSoundEnable) ? 'ON' : 'OFF' "></v-switch>
-        <v-slider v-model="$store.state.sound.smartphoneVolume" min="0.0" max="1" step="0.1" :disabled="!$store.state.sound.smartphoneSoundEnable" dark tick-size="3" ticks="always" append-icon="fas fa-volume-up" prepend-icon="fas fa-volume-down"></v-slider>
-        
-        </v-card-text>
-        </v-card>
-        </v-expansion-panel-content>
-
-        <v-expansion-panel-content >
-        <template v-slot:header>
-        <div><h3>Персонализация персонажей</h3></div>
-        </template>
-
-        <v-card class="bg_panels">
-        <v-card-text class="font-color">
-        В этом разделе вы можете персонализировать персонажей, изменив имя, и цвет реплики.
-
-        Если введённое имя не склоняется должным образом, тогда просклоняйте имя персонажа вручную, отметив соотвествующий пункт.
-        <p/>
-        <v-expansion-panel class="bg_panels">
-        <v-expansion-panel-content  v-for="(character, i) in characters_ru" :key="i" hide-actions>
-        <!-- АВАТАР В ШАПКЕ -->
-        <template v-slot:header>
-          <v-layout align-center row spacer>
-            <v-flex xs4 sm2 md1>
-              <v-avatar size="36px" >
-                <img v-if="character.avatar" :src="character.avatar" alt="Avatar">
-                <v-icon v-else :color="character.color" v-text="character.icon"></v-icon>
-              </v-avatar>
-            </v-flex>
-        <!-- ИМЯ В ШАПКЕ -->
-            <v-flex sm5 md3 hidden-xs-only>
-              <strong v-html="character.name"></strong>
-              <span v-if="character.total" class="grey--text">
-                &nbsp;({{ character.total }})
-              </span>
-            </v-flex>
-        <!-- КТО ЭТО? В ШАПКЕ -->
-            <v-flex text-no-wrap xs5 sm3>
-              <strong v-html="character.title"></strong>
-            </v-flex>
-        <!-- ЦИТАТА В ШАПКЕ -->
-            <v-flex v-if="character.quote" class="grey--text" ellipsis hidden-sm-and-down>
-              &mdash;
-              {{ character.quote }}
-            </v-flex>
-          </v-layout>
-
-        </template>
-
-        <v-card class="bg_panels">
-        <v-divider></v-divider>
-            <v-card-text>
-            <v-layout align-start row>
-            <!-- ЦИТАТА В БЛОКЕ -->
-            <v-flex xs12 md6>
-            <p v-if="character.Declination == 'mc'" :style="{'color': $store.state.mcColor}"> {{ character.quote }} </p>
-            <p v-if="character.Declination == 'sister'" :style="{'color': $store.state.sisterColor}"> {{ character.quote }} </p>
-            </v-flex>
-            <!-- ВЫБОР ЦВЕТА ЦИТАТЫ (РЕПЛИК) -->
-            <v-flex d-flex lg1 md1 sm1 xs1>
-                <color-picker :change="character.changeColor" :extColor="character.color"></color-picker>
-            </v-flex>
-            </v-layout>
-            <!-- ЗАПОЛНЕНИЕ ИМЕНИ -->
-            <v-form ref="form" v-model="validation" lazy-validation>
-                <v-flex sm5 md5>
-                <v-text-field v-if="character.Declination == 'mc'" v-model="mcDeclination" :rules="nameRules_ru" label="Имя" required></v-text-field>
-                <v-text-field v-if="character.Declination == 'sister'" v-model="sisterDeclination" :rules="nameRules_ru" label="Имя" required></v-text-field>  <!-- ИМЯ -->
-                <br/>  
-                <!-- КАК БЫЛО ПРОСКЛОНЕНО -->
-
-			          <blockquote class="blockquote">Вот сидит на стуле <b> {{ character.Im }}. </b>
-			          <br>Кто б мы были без <b> {{ character.Rod }}? </b>
-			          <br>Подарите что-нибудь <b> {{ character.Dat }}! </b>
-			          <br><b> {{character.Vin }} </b> нужно поздравить.
-			          <br><b> {{ character.Tvor }} </b> все гордятся.
-                <br/>Не забывайте о <b>{{ character.Pred }}</b>
-                </blockquote>
-
-                <v-checkbox v-model="character.manualDeclination" :label="'Просклонять вручную'"></v-checkbox>
-                <!-- ПРОСКЛОНЯТЬ ВРУЧНУЮ -->
-                <v-text-field v-model="character.Rod" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Родительный (кого, чего?)" required></v-text-field>
-                <v-text-field v-model="character.Dat" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Дательный (кому, чему?	)" required></v-text-field>
-                <v-text-field v-model="character.Vin" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Винительный (кого, что?)" required></v-text-field>
-                <v-text-field v-model="character.Tvor" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Творительный (кем, чем?)" required></v-text-field>
-                <v-text-field v-model="character.Pred" :disabled="!character.manualDeclination" :rules="nameRules_ru" label="Предложный (о ком, о чём?)" required></v-text-field>
-                </v-flex>
-            </v-form>
-
-            </v-card-text>
-        </v-card>
-        </v-expansion-panel-content>
-        </v-expansion-panel>
-        </v-card-text>
-        </v-card>  
-        </v-expansion-panel-content>
-        <br>
-        <v-btn color="bright_btn" @click="startGame('ru')">Начать игру</v-btn>
-        </section>
+          </v-card-text>
+      </v-card>
+      </v-expansion-panel-content>
+      </v-expansion-panel>
+      </v-card-text>
+      </v-card>  
+      </v-expansion-panel-content>
+      <br>
+      <v-btn color="bright_btn" @click="startGame('ru')">Начать игру</v-btn>
+      </section>
 
     </v-flex>
     </v-expansion-panel>

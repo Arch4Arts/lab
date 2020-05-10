@@ -1,67 +1,59 @@
+<i18n>
+	{
+		"en": {
+			"v-card-title": "You must be 18 or older to access this game",
+			"v-card-text": {
+        "1": "<br>This game contains <b>explicit scenes of a sexual nature</b>, with a great bias in <b>femdom</b>!",
+        "2": "<br>By clicking on the «<b>Continue</b>» button, you confirm that you are at least 18 years old."
+      },
+			"v-btn-enter": "Continue",
+			"v-btn-leave": "Cancel"
+		},
+		"ru": {
+			"v-card-title": "Вы должны быть старше 18 лет для доступа к этой игре",
+			"v-card-text": {
+        "1": "<br>Данная игра содержит <b>откровенные сцены сексуального характера</b>, с большим уклоном в <b>женское доминирование</b>!",
+        "2": "<br>Нажимая на кнопку «<b>Продолжить</b>», вы подтверждаете, что вам как минимум 18 лет."
+      },
+			"v-btn-enter": "Продолжить",
+			"v-btn-leave": "Отменить"
+		}
+	}
+</i18n>
+
 <template>
-  <div class="text-center">
-    <!-- v-model это активатор - ЕГО НЕ ТРОГАТЬ -->
-    <v-dialog v-model="$store.state.gameAgeWarningDialog" persistent dark width="420">
-      <v-card class="text-center">
-        <!-- ENGLISH -->
-        <section v-if="$store.state.gameLang">
-          
-          <v-card-title class="headline dark important-modal__header"> You must be 18 or older to access this game </v-card-title>
-            <v-card-text class="text--primary">
-                <br>
-                This game contains <b>explicit scenes of a sexual nature</b>, with a great bias in <b>femdom</b>!
-                <br><br>
-                By clicking on the "<b>Continue</b>" button, you confirm that you are at least 18 years old.
-            </v-card-text>
+<div class="text-center">
+  <v-dialog v-model="$store.state.gameAgeWarningDialog" persistent dark width="420">
+    <v-card class="text-center">
+      <v-card-title class="headline dark important-modal__header">{{ $t('v-card-title') }}</v-card-title>
+        <v-card-text class="text--primary">
+          <div v-html="$t('v-card-text.1')"></div>
+          <div v-html="$t('v-card-text.2')"></div>
+        </v-card-text>
 
-          <v-card-actions>
-            <v-layout align-center justify-space-around column>
-              <v-flex>
-                <v-btn class="important-modal__button" dark @click="$store.commit('gameAgeWarningDialog')">Enter</v-btn>
-              </v-flex>
-              <v-flex class="leave-btn">
-                <v-btn text @click="Leave()">Cancel</v-btn>
-              </v-flex>
-            </v-layout>
-          </v-card-actions>
-
-        </section>
-        <!-- RUSSIAN -->
-        <section v-else>
-
-          <v-card-title class="headline dark important-modal__header"> Вы должны быть старше 18 лет для доступа к этой игре </v-card-title>
-            <v-card-text class="text--primary">
-                <br>
-                Данная игра содержит <b>откровенные сцены сексуального характера</b>, с большим уклоном в <b>женское доминирование</b>!
-                <br><br>
-                Нажимая на кнопку «<b>Продолжить</b>», вы подтверждаете, что вам как минимум 18 лет.
-            </v-card-text>
-
-          <v-card-actions>
-            <v-layout align-center justify-space-around column>
-              <v-flex>
-                <v-btn class="important-modal__button" dark @click="$store.commit('gameAgeWarningDialog')">Продолжить</v-btn>
-              </v-flex>
-              <v-flex class="leave-btn">
-                <v-btn text @click="Leave()">Отменить</v-btn>
-              </v-flex>
-            </v-layout>
-          </v-card-actions>
-
-        </section>
-      </v-card>
-    </v-dialog>
-  </div>
+      <v-card-actions>
+        <v-layout align-center justify-space-around column>
+          <v-flex>
+            <v-btn class="important-modal__button" dark @click="$store.commit('gameAgeWarningDialog')">{{ $t('v-btn-enter') }}</v-btn>
+          </v-flex>
+          <v-flex class="leave-btn">
+            <v-btn text @click="Leave()">{{ $t('v-btn-leave') }}</v-btn>
+          </v-flex>
+        </v-layout>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+</div>
 </template>
 
 <script>
-  export default {
-    methods: {
-      Leave(){
-        location.href = "http://google.com"
-      },
-    }
+export default {
+  methods: {
+    Leave(){
+      location.href = "https://google.com"
+    },
   }
+}
 </script>
 
 <style scoped>

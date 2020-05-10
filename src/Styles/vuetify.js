@@ -12,7 +12,7 @@ Vue.use(Vuetify, {
 // https://github.com/starcoma/pro-solid-svg-icons
 // https://github.com/starcoma/pro-regular-svg-icons
 
-// !! https://github.com/minddocdev/npm-packages/tree/master/%40fortawesome !!
+// https://github.com/minddocdev/npm-packages/tree/master/%40fortawesome
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'

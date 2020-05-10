@@ -1,3 +1,78 @@
+<i18n>
+	{
+		"en": {
+      "default-save-name": "New save",
+      "default-quick-save-name": "Quick Save",
+      "tooltip__save": "New save",      
+      "no-saves": "No saves",
+      "tooltip__restart": "Restart game",
+      "tooltip__save-to-disk": "Save to Disk",
+      "tooltip__load-from-disk": "Load from Disk",
+      "tooltip__delete-all-saves": "Delete all saves",
+      "number-of-saves": "Number of saves: ",
+      "tooltip__number-saves": "A large number of saves can cause performance degradation",
+  
+      "dialog__delete-all-saves": {
+        "title": "Delete all saves",
+        "content": {
+          "1": "This operation will delete all current saves!",
+          "2": "Are you sure you want to continue?"
+        },
+        "btn": {
+          "yes": "Yes",
+          "no": "No"
+        }
+      },
+      "dialog__restart-game": {
+        "title": "Restart game",
+        "content": {
+          "1": "When you restart the game, all current progress will be lost!",
+          "2": "Are you sure you want to continue?"
+        },
+        "btn": {
+          "yes": "Yes",
+          "no": "No"
+        }
+      }
+		},
+		"ru": {
+      "default-save-name": "Новое сохранение",
+      "default-quick-save-name": "Быстрое сохранение",
+      "tooltip__save": "Новое сохранение",      
+      "no-saves": "Сохранения отсутствуют",
+      "tooltip__restart": "Перезапуск игры",
+      "tooltip__save-to-disk": "Сохранить на диск",
+      "tooltip__load-from-disk": "Загрузить с диска",
+      "tooltip__delete-all-saves": "Удаление всех сохранений",
+      "number-of-saves": "Кол-во сохранений: ",
+      "tooltip__number-saves": "Большое количество сохранений могут вызвать падение производительности",
+
+      "dialog__delete-all-saves": {
+        "title": "Удаление всех сохранений",
+        "content": {
+          "1": "Данная операция удалит все текущие сохранения!",
+          "2": "Вы уверены, что хотите продолжить?"
+        },
+        "btn": {
+          "yes": "Да",
+          "no": "Нет"
+        }
+      },
+      "dialog__restart-game": {
+        "title": "Перезапуск игры",
+        "content": {
+          "1": "При перезапуске игры, будeт потерян весь текущий прогресс!",
+          "2": "Вы уверены, что хотите продолжить?"
+        },
+        "btn": {
+          "yes": "Да",
+          "no": "Нет"
+        }
+      }
+		}
+	}
+</i18n>
+
 <template>
   <v-navigation-drawer
     v-model="$store.state.isOpenSavesDrawer"
@@ -18,7 +93,7 @@
           class="save-name__input"
           color="grey lighten-2"
           :autofocus="(this.$root.isTouchDevice) ? false : true"
-          :placeholder="($store.state.gameLang) ? defaultSaveName : defaultSaveName_ru"
+          :placeholder="$t('default-save-name')"
           @keyup.enter="saveGame()"
           v-model="saveNameInput"
         ></v-text-field>
@@ -29,8 +104,7 @@
               <a-icon class="save-name__btn__color" :icon="['fas', 'download']" />
             </v-btn>
           </template>
-            <span v-if="$store.state.gameLang">New save</span>
-            <span v-else>Новое сохранение</span>
+            <span>{{ $t('default-save-name') }}</span>
         </v-tooltip>
       </v-flex>
 
@@ -55,10 +129,10 @@
       </v-list>
       <!-- Если нет сохранений -->
       <div v-show="numberSavesIDB == 0" class="saves-list">
-        <div v-if="$store.state.gameLang" class="text-center"><br>No saves<br><br></div>
-        <div v-else class="text-center"><br>Сохранения отсутствуют<br><br></div>
+        <div class="text-center"><br>{{ $t('no-saves') }}<br><br></div>
       </div>
     </v-card>
+
     <!-- СОХР НА ДИСК / ЗАГР С ДИСКА / ПЕРЕЗАПУСК / УДАЛЕНИЕ ВСЕХ СОХРАНЕНИЙ -->
     <div class="text-right">
       <!-- Перезапуск игры -->
@@ -68,8 +142,7 @@
             <a-icon class="restart-game-btn__color" :icon="['fas', 'power-off']" />
           </v-btn>
         </template>
-          <span v-if="$store.state.gameLang">Restart game</span>
-          <span v-else >Перезапуск игры</span>
+          <span>{{ $t('tooltip__restart') }}</span>
       </v-tooltip>
       <!-- Сохранение на диск -->
       <v-tooltip top>
@@ -78,8 +151,7 @@
             <a-icon class="save-to-disk-btn__color" :icon="['fas', 'hdd']" />
           </v-btn>
         </template>
-          <span v-if="$store.state.gameLang">Save to Disk</span>
-          <span v-else >Сохранить на диск</span>
+          <span>{{ $t('tooltip__save-to-disk') }}</span>
       </v-tooltip>
       <!-- Загрузка с диска -->
       <v-tooltip top>
@@ -89,8 +161,7 @@
             <a-icon class="load-from-disk-btn__color" :icon="['far', 'hdd']" />
           </v-btn>
         </template>
-          <span v-if="$store.state.gameLang">Load from Disk</span>
-          <span v-else >Загрузить с диска</span>
+          <span>{{ $t('tooltip__load-from-disk') }}</span>
       </v-tooltip>
       <!-- Удаление всех сохранений -->
       <v-tooltip top>
@@ -99,89 +170,53 @@
             <a-icon class="delete-all-saves-btn__color" :icon="['fas', 'trash-alt']" />
           </v-btn>
         </template>
-          <span v-if="$store.state.gameLang">Delete all saves</span>
-          <span v-else >Удаление всех сохранений</span>
+          <span>{{ $t('tooltip__delete-all-saves') }}</span>
       </v-tooltip>
       <br>
+
       <!-- Счётчик кол-ва сохранений -->
       <v-tooltip top>
         <template v-slot:activator="{ on }">
-          <div v-if="$store.state.gameLang" class="text-center" v-on="on">Number of saves: {{numberSavesIDB}}</div>
-          <div v-else class="text-center" v-on="on">Кол-во сохранений: {{numberSavesIDB}}</div>
+          <div class="text-center" v-on="on">{{ $t('number-of-saves') }} {{ numberSavesIDB }}</div>
         </template>
-          <span v-if="$store.state.gameLang">A large number of saves can cause performance degradation.</span>
-          <span v-else>Большое количество сохранений могут вызвать падение производительности.</span>
+          <span>{{ $t('tooltip__number-saves') }}</span>
       </v-tooltip>
     </div>
 
     <!-- ДИАЛОГ ПОДТВЕРЖДЕНИЯ УДАЛЕНИЯ ВСЕХ СОХРАНЕНИЙ -->
     <v-dialog v-model="showModalDelSavesAll" persistent dark width="230">
-        <v-card class="text-center">
-          <section v-if="$store.state.gameLang">
-          <v-card-title class="headline dark important-modal__header"> Delete all saves </v-card-title>
-            <v-card-text class="text--primary"> 
-              <br>
-              <b>This operation will delete all current saves!</b>
-              <br><br>
-              Are you sure you want to continue?
-            </v-card-text>
-          </section>
-          <section v-else>
-          <v-card-title class="headline dark important-modal__header"> Удаление всех сохранений </v-card-title>
-            <v-card-text class="text--primary"> 
-              <br>
-              <b>Данная операция удалит все текущие сохранения!</b>
-              <br><br>
-              Вы уверены, что хотите продолжить?
-            </v-card-text>
-          </section>
-          <v-card-actions>
-            <v-layout align-center justify-center>
-                <section v-if="$store.state.gameLang">
-                  <v-btn dark text @click="DeleteAllSaves()"> Yes </v-btn>
-                  <v-btn dark text @click="showModalDelSavesAll = !showModalDelSavesAll"> No </v-btn>
-                </section>
-                <section v-else>
-                  <v-btn dark text @click="DeleteAllSaves()"> Да </v-btn>
-                  <v-btn dark text @click="showModalDelSavesAll = !showModalDelSavesAll"> Нет </v-btn>
-                </section>
-            </v-layout>
-          </v-card-actions>
+      <v-card class="text-center">
+        <v-card-title class="headline dark important-modal__header">{{ $t('dialog__delete-all-saves.title') }}</v-card-title>
+        <v-card-text class="text--primary"> 
+          <br>
+          <b>{{ $t('dialog__delete-all-saves.content.1') }}</b>
+          <br><br>
+          {{ $t('dialog__delete-all-saves.content.2') }}
+        </v-card-text>
+        <v-card-actions>
+          <v-layout align-center justify-center>
+            <v-btn dark text @click="DeleteAllSaves()">{{ $t('dialog__delete-all-saves.btn.yes') }}</v-btn>
+            <v-btn dark text @click="showModalDelSavesAll = !showModalDelSavesAll">{{ $t('dialog__delete-all-saves.btn.no') }}</v-btn>
+          </v-layout>
+        </v-card-actions>
       </v-card>
     </v-dialog>
     <!-- ОКНО С ПОДТВЕРЖДЕНИЕМ ПЕРЕЗАПУСКА ИГРЫ-->
     <v-dialog v-model="showModalRestart" persistent dark width="230">
-        <v-card class="text-center">
-          <section v-if="$store.state.gameLang">
-          <v-card-title class="headline dark important-modal__header"> Restart game </v-card-title>
-            <v-card-text class="text--primary">
-              <br> 
-              <b>When you restart the game, all current progress will be lost!</b>
-              <br><br>
-              Are you sure you want to continue?
-            </v-card-text>
-          </section>
-          <section v-else>
-          <v-card-title class="headline dark important-modal__header"> Перезапуск игры </v-card-title>
-            <v-card-text class="text--primary"> 
-              <br>
-              <b>При перезапуске игры, будeт потерян весь текущий прогресс!</b>
-              <br><br>
-              Вы уверены, что хотите продолжить?
-            </v-card-text>
-          </section>
-          <v-card-actions>
-            <v-layout align-center justify-center>
-                <section v-if="$store.state.gameLang">
-                  <v-btn dark text @click="restartGame()"> Yes </v-btn>
-                  <v-btn dark text @click="showModalRestart = !showModalRestart"> No </v-btn>
-                </section>
-                <section v-else>
-                  <v-btn dark text @click="restartGame()"> Да </v-btn>
-                  <v-btn dark text @click="showModalRestart = !showModalRestart"> Нет </v-btn>
-                </section>
-            </v-layout>
-          </v-card-actions>
+      <v-card class="text-center">
+        <v-card-title class="headline dark important-modal__header">{{ $t('dialog__restart-game.title') }}</v-card-title>
+        <v-card-text class="text--primary"> 
+          <br>
+          <b>{{ $t('dialog__restart-game.content.1') }}</b>
+          <br><br>
+          {{ $t('dialog__restart-game.content.2') }}
+        </v-card-text>
+        <v-card-actions>
+          <v-layout align-center justify-center>
+            <v-btn dark text @click="restartGame()">{{ $t('dialog__restart-game.btn.yes') }}</v-btn>
+            <v-btn dark text @click="showModalRestart = !showModalRestart">{{ $t('dialog__restart-game.btn.no') }}</v-btn>
+          </v-layout>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </v-navigation-drawer>
@@ -205,7 +240,7 @@ import updateThemes from '../../styles/updateThemes';
 
 import eventBus from '../../js/eventBus'
 
-import savesListComp from './SavesList'
+import savesListComponent from './SavesList'
 
 import VirtualList from 'vue-virtual-scroll-list'
 
@@ -215,12 +250,14 @@ localforage.config({
     storeName: 'saves'
 });
 
+// идентификатор infoCircle нигде не используется, но импорт нужен для загрузки самого svg файла
+import infoCircle from '../../assets/info-circle.svg'
 iziToast.settings({
   progressBar: false,
   displayMode: 2,
   closeOnClick: true,
   close: false,
-  icon: 'fal fa-info-circle',
+  iconUrl: 'assets/img/info-circle.svg',
   messageSize: '16',
   theme: 'light',
   position: 'bottomCenter'
@@ -228,7 +265,7 @@ iziToast.settings({
 
 export default {
   data: () => ({
-    component: savesListComp,
+    component: savesListComponent,
 
     showModalRestart: false, // Для показа модального окна, меняется при нажатия на кнопку и появляется диалог
     showModalDelSavesAll: false, // Для показа модального окна, меняется при нажатия на кнопку и появляется диалог
@@ -239,8 +276,6 @@ export default {
     ListSelectedSaves: [],
 
     saveNameInput: '', // Поле ввода сохранения
-    defaultSaveName: 'New save', // Placeholder поля ввода
-    defaultSaveName_ru: 'Новое сохранение',
 
     savesList: [], // Рабочий список отсортированных сохранений 
     savesHeaderIDB: [], // Список сохранений, для сортировки
@@ -271,10 +306,9 @@ export default {
   methods:{
     reRender(){
       this.$store.state.reRender_mChatPlayersVolume += 1;
-      this.$store.state.reRender_mChat += 1;
     },
     // Сортировка по...
-    sortBy(key) { // (убыванию) desc <, asc (возрастанию) >
+    sortBy(key) { // (убыванию) < desc, asc > (возрастанию)
       return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
     },
     // Обновляет кол-во сохранений, при новом сохранении, или удалении и т.д.
@@ -320,12 +354,12 @@ export default {
     async saveGame(isQuickSave){
       // Проверка на QuickSave
       if (isQuickSave) { 
-        (this.$store.state.gameLang) ? name = 'Quick Save' : name = 'Быстрое сохранение'          
+        name = this.$t('default-quick-save-name');  
       } else {
         var name = this.saveNameInput // Копируем значение
         this.saveNameInput = '' // И очищаем поле ввода
         if (name === '') // Проверка введенно ли имя сохранения, если нет, назначаем стандартное
-          (this.$store.state.gameLang) ? name = 'New Save' : name = 'Новое сохранение'    
+          name = this.$t('default-save-name');
       }
 
       this.$store.state.saveName = name; // Имя
@@ -339,9 +373,9 @@ export default {
       // Шифруем
       await WebCrypto(saveHeader, JSON.stringify(this.$store.state))
       // Оповещение
-      this.$store.state.gameLang 
-        ? iziToast.info({message: 'Game successfully saved'})
-        : iziToast.info({message: 'Игра успешно сохранена'})
+      this.$store.state.gameLang == 'ru'
+        ? iziToast.info({message: 'Игра успешно сохранена'})
+        : iziToast.info({message: 'Game successfully saved'});
       // Добавляем новоё сохранение в отображаемый список
       this.savesList.unshift({ 
         saveName: this.$store.state.saveName, 
@@ -363,9 +397,9 @@ export default {
       var saveHeader = `${saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$root.gameVersion}`;
       await WebCrypto(saveHeader, JSON.stringify(this.$store.state)) // Добавем новый за место старого (удалённого)
       // Оповещение
-      this.$store.state.gameLang 
-        ? iziToast.info({message: 'Saving successfully overwritten'})
-        : iziToast.info({message: 'Сохранение успешно перезаписано'})
+      this.$store.state.gameLang == 'ru'
+        ? iziToast.info({message: 'Сохранение успешно перезаписано'})
+        : iziToast.info({message: 'Saving successfully overwritten'});
       // Ищем выбранное сохранение для перезаписи и обновляем его время и ID (чтобы не перерендоривать весь список)
       this.savesList.find(function(item) {
         if (item.saveID === saveID) {
@@ -377,7 +411,8 @@ export default {
       this.savesList.sort(this.sortBy('saveID'));
       // Удаляем выбранное сохранение для перезаписи, если шифрование не сработает, сохранение не будет удалённо
       localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVersion}`)
-      this.ListSelectedSaves = [];
+      // сбрасываем выделения списка сохранений
+      setTimeout(() => this.ListSelectedSaves = [], 100)
       // Автоматическое закрытие панели сохранений, если включено
       if (this.$store.state.autoCloseSavesDrawer) this.autoCloseDrawer()
     },
@@ -391,23 +426,23 @@ export default {
       this.$store.commit('updateStores');
       // Обновляем темы
       updateThemes()
-      // Очистка списка выбранных сохранеий (т.к они выбираются при нажатии кнопок: Перезаписи и Загрузки сохранения)
-      this.ListSelectedSaves = [];
       // Автоматическое закрытие панели сохранений, если включено
       if (this.$store.state.autoCloseSavesDrawer) this.autoCloseDrawer()
       // Оповещение
-      this.$store.state.gameLang 
-        ? iziToast.info({message: 'Game loaded successfully', backgroundColor: 'rgb(255, 254, 173)'})
-        : iziToast.info({message: 'Игра загружена успешно', backgroundColor: 'rgb(255, 254, 173)'})
+      this.$store.state.gameLang == 'ru'
+        ? iziToast.info({message: 'Игра загружена успешно', backgroundColor: 'rgb(255, 254, 173)'})
+        : iziToast.info({message: 'Game loaded successfully', backgroundColor: 'rgb(255, 254, 173)'});
+      // сбрасываем выделения списка сохранений
+      setTimeout(() => this.ListSelectedSaves = [], 100)
     },
     // Удаление сохранения
     deleteSave(saveName, saveTime, saveID, saveGameVersion) {
       // Удаляем
       localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVersion}`)
       // Оповещенеие
-      this.$store.state.gameLang 
-        ? iziToast.info({message: 'Saving has been deleted!', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
-        : iziToast.info({message: 'Сохранение было удалено!', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
+      this.$store.state.gameLang == 'ru'
+        ? iziToast.info({message: 'Сохранение было удалено!', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
+        : iziToast.info({message: 'Saving has been deleted!', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'});
       // Находим в отображаемом списке удалённое сохранение
       let indexDeletedSave = this.savesList.findIndex(function(item) {
         return (item.saveID === saveID)
@@ -417,15 +452,17 @@ export default {
       // Стал ли список пустым?
       // Обновляем кол-во сохранение в БД
       this.updateNumberSavesIDB()
+      // сбрасываем выделения списка сохранений
+      setTimeout(() => this.ListSelectedSaves = [], 100)
     },
     // Удаление всех сохранений
     async DeleteAllSaves(){
       // Очистка хранилища
       await localforage.clear()
       // Оповещение
-      this.$store.state.gameLang 
-        ? iziToast.warning({message: 'All saves have been deleted!', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
-        : iziToast.warning({message: 'Всё сохранения были удалены!', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
+      this.$store.state.gameLang == 'ru'
+        ? iziToast.warning({message: 'Всё сохранения были удалены!', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
+        : iziToast.warning({message: 'All saves have been deleted!', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'});
       // Закрываем модальное окно
       this.showModalDelSavesAll = false
       // Обнуляем список сохранений (перерисовываем список)
@@ -450,7 +487,7 @@ export default {
           else
             saveFile = `${saveFile}((${this.ListSelectedSaves[i]},cipherData${cipherData}iv${iv}))`
         }
-        if (this.$store.state.gameLang)
+        if (this.$store.state.gameLang == 'ru')
           this.saveToDisk(`${this.$root.gameName}.${(i == 1 ? 'save' : 'saves')}`, saveFile)
         else
           this.saveToDisk(`${this.$root.gameName}.${(i == 1 ? 'save' : 'saves')}`, saveFile)
@@ -471,40 +508,44 @@ export default {
           else
             saveFile = `${saveFile}((${allSavesKey[i]},cipherData${cipherData}iv${iv}))`
         }
-        if (this.$store.state.gameLang)
+        if (this.$store.state.gameLang == 'ru')
           this.saveToDisk(`${this.$root.gameName}.saves`, saveFile)
         else
           this.saveToDisk(`${this.$root.gameName}.saves`, saveFile)
       }
       else {
-        this.$store.state.gameLang 
-          ? iziToast.info({message: 'There are no saves'})
-          : iziToast.info({message: 'Сохранения отсутствуют'})
+        if (this.$store.state.gameLang == 'ru')
+          iziToast.info({message: 'Сохранения отсутствуют'});
+        else
+          iziToast.info({message: 'There are no saves'});
       }
     },
     // Сохранение на диск
     saveToDisk(filename, data, mime, bom) {
-        var blobData = (typeof bom !== 'undefined') ? [bom, data] : [data]
-        var blob = new Blob(blobData, {type: mime || 'application/octet-stream'});
-        if (typeof window.navigator.msSaveBlob !== 'undefined') {
-            window.navigator.msSaveBlob(blob, filename);
+      // сбрасываем выделения списка сохранений
+      setTimeout(() => this.ListSelectedSaves = [], 100)
+
+      var blobData = (typeof bom !== 'undefined') ? [bom, data] : [data]
+      var blob = new Blob(blobData, {type: mime || 'application/octet-stream'});
+      if (typeof window.navigator.msSaveBlob !== 'undefined') {
+        window.navigator.msSaveBlob(blob, filename);
+      }
+      else {
+        var blobURL = (window.URL && window.URL.createObjectURL) ? window.URL.createObjectURL(blob) : window.webkitURL.createObjectURL(blob);
+        var tempLink = document.createElement('a');
+        tempLink.style.display = 'none';
+        tempLink.href = blobURL;
+        tempLink.setAttribute('download', filename);
+        if (typeof tempLink.download === 'undefined') {
+          tempLink.setAttribute('target', '_blank');
         }
-        else {
-            var blobURL = (window.URL && window.URL.createObjectURL) ? window.URL.createObjectURL(blob) : window.webkitURL.createObjectURL(blob);
-            var tempLink = document.createElement('a');
-            tempLink.style.display = 'none';
-            tempLink.href = blobURL;
-            tempLink.setAttribute('download', filename);
-            if (typeof tempLink.download === 'undefined') {
-                tempLink.setAttribute('target', '_blank');
-            }
-            document.body.appendChild(tempLink);
-            tempLink.click();
-            setTimeout(function() {
-                document.body.removeChild(tempLink);
-                window.URL.revokeObjectURL(blobURL);
-            }, 0)
-        }
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        setTimeout(function() {
+          document.body.removeChild(tempLink);
+          window.URL.revokeObjectURL(blobURL);
+        }, 0)
+      }
     },
     // Для выбора файлов на загрузку
     chooseFiles() {
@@ -583,9 +624,9 @@ export default {
               })
             }
           } else {
-          this.$store.state.gameLang 
-            ? iziToast.warning({message: 'This file does not contain any save data', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
-            : iziToast.warning({message: 'В данном файле не содержится данные сохранения', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
+            this.$store.state.gameLang == 'ru'
+              ? iziToast.warning({message: 'В данном файле не содержится данные сохранения', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
+              : iziToast.warning({message: 'This file does not contain any save data', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'});
           }
         }).then(() => {
             // Сортируем
@@ -613,7 +654,7 @@ export default {
     },
   },
   components: {
-    savesListComp,
+    savesListComponent,
     'virtual-list': VirtualList
   },
 }

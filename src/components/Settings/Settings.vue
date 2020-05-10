@@ -1,3 +1,78 @@
+<i18n>
+	{
+		"en": {
+			"panel-title__sound": "Sound",
+			"panel-title__appearance": "Appearance",
+      "panel-title__hotkeys": "Hotkeys",
+      "list-item__saves": {
+        "title": "Saves panel",
+        "1": {
+          "title": "Automatically hide",
+          "subtitle": "Automatically hide the panel after saving, overwriting, or loading operations"
+        }
+      },
+			"list-item__mChat": {
+        "title": "Chat settings",
+        "1": {
+          "title": "Automatic playback",
+          "subtitle": "Automatic video playback on mouse hovering"
+        },
+        "2": {
+          "title": "Simulating a message set",
+          "subtitle": "Animation of a set of messages by a chat participant"
+        },
+        "3": {
+          "title": "Avatar",
+          "subtitle": "Disables the display of the chat participant's avatar"
+        },
+        "4": {
+          "title": "The title of the chat",
+          "subtitle": "Don't hide the top panel when scrolling the chat"
+        },
+        "5": {
+          "title": "Typeset element",
+          "subtitle": "The lower decorative dial element of the chat"
+        }
+      }
+		},
+		"ru": {
+			"panel-title__sound": "Звук",
+			"panel-title__appearance": "Внешний вид",
+      "panel-title__hotkeys": "Горячие клавиши",
+      "list-item__saves": {
+        "title": "Панель сохранений",
+        "1": {
+          "title": "Автоматически скрывать",
+          "subtitle": "Автоматически скрывать панель, после операции сохранения, перезаписи, загрузки"
+        }
+      },
+			"list-item__mChat": {
+        "title": "Настройки чата",
+        "1": {
+          "title": "Автоматическое воспроизведение",
+          "subtitle": "Автоматическое воспроизведение видео при наведении мыши"
+        },
+        "2": {
+          "title": "Имитация набора сообщения",
+          "subtitle": "Анимация набора сообщений участником чата"
+        },
+        "3": {
+          "title": "Аватар",
+          "subtitle": "Отключает отображение аватарки у участника чата"
+        },
+        "4": {
+          "title": "Заголовок чата",
+          "subtitle": "Не скрывать верхнюю панель при прокрутке чата"
+        },
+        "5": {
+          "title": "Наборный элемент",
+          "subtitle": "Нижний декоративный наборный элемент чата"
+        }
+      }
+		}
+	}
+</i18n>
+
 <template>
   <v-navigation-drawer
     v-model="$store.state.isOpenSettingsDrawer"
@@ -10,13 +85,7 @@
     width="700"
     class="v-navigation-drawer"
   >
-    <!-- ENGLISH -->
-    <section v-if="$store.state.gameLang">
-
-    </section>
-
-    <!-- RUSSIAN -->
-    <section class="settings" v-else>
+    <section class="settings">
       <v-expansion-panels accordion>
         <!-- Звук -->
         <v-expansion-panel>
@@ -25,7 +94,7 @@
               <a-icon v-if="$store.state.sound.gameGlobalSoundsEnable" class="header__icon" :icon="['fas', 'volume']" />
               <a-icon v-else color="red" class="header__icon" :icon="['fas', 'volume-mute']" />
             </div> 
-            Звук
+            {{ $t('panel-title__sound') }}
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <settings-sound />
@@ -37,7 +106,7 @@
             <div class="header">
               <a-icon class="header__icon" :icon="['fas', 'eye']" />
             </div>
-            Внешний вид
+            {{ $t('panel-title__appearance') }}
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <settings-appearance />
@@ -49,22 +118,24 @@
             <div class="header">
               <a-icon class="header__icon" :icon="['fas', 'keyboard']" />
             </div>
-            Горячие клавиши
+            {{ $t('panel-title__hotkeys') }}
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <settings-hotkeys id="hotkeys" />
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
+
       <!-- Настройки различных параметров (ползунки) -->
       <v-list subheader two-line flat>
-        <v-subheader class="v-list-item__header">Панель сохранений</v-subheader>
+
+        <v-subheader class="v-list-item__header">{{ $t('list-item__saves.title') }}</v-subheader>
         <!-- Панель сохранений -->
         <v-list-item-group multiple>
           <v-list-item class="v-list-item">
             <v-list-item-content @click="autoCloseSavesDrawer()">
-              <v-list-item-title>Автоматически скрывать</v-list-item-title>
-              <v-list-item-subtitle>Автоматически скрывать панель, после операции сохранения, перезаписи, загрузки</v-list-item-subtitle>
+              <v-list-item-title>{{ $t('list-item__saves.1.title') }}</v-list-item-title>
+              <v-list-item-subtitle>{{ $t('list-item__saves.1.subtitle') }}</v-list-item-subtitle>
             </v-list-item-content>
             <!-- Тумблер -->
             <v-list-item-action>
@@ -75,14 +146,15 @@
             </v-list-item-action>
           </v-list-item>
         </v-list-item-group>
-        <v-subheader class="v-list-item__header">Настройки чата</v-subheader>
+
+        <v-subheader class="v-list-item__header">{{ $t('list-item__mChat.title') }}</v-subheader>
         <!-- Настройки чата -->
         <v-list-item-group multiple>
           <!-- Автоматическое воспроизведение видео -->
           <v-list-item class="v-list-item">
             <v-list-item-content @click="autoPlayMsgVideoOnHover()">
-              <v-list-item-title>Автоматическое воспроизведение</v-list-item-title>
-              <v-list-item-subtitle>Автоматическое воспроизведение видео при наведении мыши</v-list-item-subtitle>
+              <v-list-item-title>{{ $t('list-item__mChat.1.title') }}</v-list-item-title>
+              <v-list-item-subtitle>{{ $t('list-item__mChat.1.subtitle') }}</v-list-item-subtitle>
             </v-list-item-content>
             <!-- Тумблер -->
             <v-list-item-action>
@@ -96,8 +168,8 @@
           <!-- Имитация набора сообщения -->
           <v-list-item class="v-list-item">
             <v-list-item-content @click="mChatTypingIndicatorEnable()">
-              <v-list-item-title>Имитация набора сообщения</v-list-item-title>
-              <v-list-item-subtitle>Анимация набора сообщений участником чата</v-list-item-subtitle>
+              <v-list-item-title>{{ $t('list-item__mChat.2.title') }}</v-list-item-title>
+              <v-list-item-subtitle>{{ $t('list-item__mChat.2.subtitle') }}</v-list-item-subtitle>
             </v-list-item-content>
             <!-- Тумблер -->
             <v-list-item-action>
@@ -111,8 +183,8 @@
           <!-- Отключение показа аватарок в чате -->
           <v-list-item class="v-list-item">
             <v-list-item-content @click="mChatHideAvatars()">
-              <v-list-item-title>Аватар</v-list-item-title>
-              <v-list-item-subtitle>Отключает отображение аватарки у участника чата</v-list-item-subtitle>
+              <v-list-item-title>{{ $t('list-item__mChat.3.title') }}</v-list-item-title>
+              <v-list-item-subtitle>{{ $t('list-item__mChat.3.subtitle') }}</v-list-item-subtitle>
             </v-list-item-content>
             <!-- Тумблер -->
             <v-list-item-action>
@@ -126,8 +198,8 @@
           <!-- Отключение наборного элемента в чате -->
           <v-list-item class="v-list-item">
             <v-list-item-content @click="mChatHideBarOnScrolling()">
-              <v-list-item-title>Заголовок чата</v-list-item-title>
-              <v-list-item-subtitle>Не скрывать верхнюю панель при прокрутке чата</v-list-item-subtitle>
+              <v-list-item-title>{{ $t('list-item__mChat.4.title') }}</v-list-item-title>
+              <v-list-item-subtitle>{{ $t('list-item__mChat.4.subtitle') }}</v-list-item-subtitle>
             </v-list-item-content>
             <!-- Тумблер -->
             <v-list-item-action>
@@ -141,8 +213,8 @@
           <!-- Отключение наборного элемента в чате -->
           <v-list-item class="v-list-item">
             <v-list-item-content @click="mChatHideInput()">
-              <v-list-item-title>Наборный элемент</v-list-item-title>
-              <v-list-item-subtitle>Нижний декоративный наборный элемент чата</v-list-item-subtitle>
+              <v-list-item-title>{{ $t('list-item__mChat.5.title') }}</v-list-item-title>
+              <v-list-item-subtitle>{{ $t('list-item__mChat.5.subtitle') }}</v-list-item-subtitle>
             </v-list-item-content>
             <!-- Тумблер -->
             <v-list-item-action>
@@ -166,11 +238,6 @@ import SettingsSound from './SettingsSound'
 import eventBus from '../../js/eventBus'
 
 export default {
-  data(){
-    return {
-
-    }
-  },
   methods: {
     drawerShowState(isShow){ // Записывает изменения стейта из v-model
       if (!isShow) this.$store.commit('updateStores')

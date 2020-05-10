@@ -1,3 +1,18 @@
+<i18n>
+	{
+		"en": {
+      "tooltip__overwrite": "Overwrite",
+      "tooltip__load": "Load",
+      "tooltip__delete": "Delete"
+		},
+		"ru": {
+      "tooltip__overwrite": "Перезаписать",
+      "tooltip__load": "Загрузить",
+      "tooltip__delete": "Удалить"
+		}
+	}
+</i18n>
+
 <template>
 <div>
   <v-list-item
@@ -20,8 +35,7 @@
             <a-icon class="overwrite-btn__color" :icon="['fas', 'download']" /> 
           </v-btn>
         </template>
-          <span v-if="$store.state.gameLang">Overwrite</span>
-          <span v-else>Перезаписать</span>
+          <span>{{ $t('tooltip__overwrite') }}</span>
       </v-tooltip>
       <!-- Загрузить -->
       <v-tooltip bottom>
@@ -32,8 +46,7 @@
             <a-icon class="load-btn__color" :icon="['fas', 'upload']" />
           </v-btn>
         </template>
-          <span v-if="$store.state.gameLang">Load</span>
-          <span v-else>Загрузить</span>
+          <span>{{ $t('tooltip__load') }}</span>
       </v-tooltip>
       <!-- Удалить -->
       <v-tooltip bottom>
@@ -44,8 +57,7 @@
             <a-icon class="delete-btn__color" :icon="['fas', 'trash']" />
           </v-btn>
         </template>
-          <span v-if="$store.state.gameLang">Delete</span>
-          <span v-else>Удалить</span>
+          <span>{{ $t('tooltip__delete') }}</span>
       </v-tooltip>
     </v-list-item-action>
   </v-list-item>    

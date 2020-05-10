@@ -1,64 +1,56 @@
+<i18n>
+	{
+		"en": {
+			"about-game": "General information",
+			"faq": "Frequently asked question"
+		},
+		"ru": {
+			"about-game": "Общая информация",
+			"faq": "Часто задаваемые вопросы"
+		}
+	}
+</i18n>
+
 <template>
 	<v-app>
 	<v-layout class="v-layout" justify-center>
 	<v-flex md8 class="Page" style="padding: 2% 0px 2% 0px">
-
+	
 	<v-expansion-panels accordion dark>
+		<!-- Об игре -->
 		<v-expansion-panel>
-		<v-expansion-panel-header>
-			<!-- Заголовок: Об игре -->
-			<div v-if="$store.state.gameLang">General information</div>
-			<div v-else>Общая информация</div>
-		</v-expansion-panel-header>
-	  <!-- Содержимое: Об игре -->
-		<v-expansion-panel-content>
-			<v-flex text-center class="Page">
-				<AboutGame />
-			</v-flex>
-		</v-expansion-panel-content>
+			<v-expansion-panel-header>
+				<!-- Заголовок: Об игре -->
+				<div>{{ $t('about-game') }}</div>
+			</v-expansion-panel-header>
+			<!-- Содержимое: Об игре -->
+			<v-expansion-panel-content>
+				<v-flex text-center class="Page">
+					<AboutGame />
+				</v-flex>
+			</v-expansion-panel-content>
 		</v-expansion-panel>
 		<!-- FAQ -->
-		<v-expansion-panel v-if="$store.state.gameLang">
+		<v-expansion-panel>
 				<v-expansion-panel-header>
-					<div> Frequently asked question </div>
+					<div>{{ $t('faq') }}</div>
 				</v-expansion-panel-header>
 			<v-expansion-panel-content>
 				<v-expansion-panels popout>
-				<v-expansion-panel
-					v-for="(FAQ, i) in FAQ_en"
-					:key="i">
-					<v-expansion-panel-header>
-						<div>{{ FAQ.header }}</div>
-					</v-expansion-panel-header>
-					<v-expansion-panel-content>
-						{{ FAQ.content }}
-					</v-expansion-panel-content>
-				</v-expansion-panel>
-				</v-expansion-panels>
-			</v-expansion-panel-content>
-		</v-expansion-panel>
-
-		<v-expansion-panel v-else>
-			<v-expansion-panel-header>
-				<div> Часто задаваемые вопросы </div>
-			</v-expansion-panel-header>
-			<v-expansion-panel-content>
-				<v-expansion-panels popout>
-				<v-expansion-panel
-					v-for="(FAQ, i) in FAQ_ru"
-					:key="i">
-					<v-expansion-panel-header >
-						<div>{{ FAQ.header }}</div>
-					</v-expansion-panel-header>
-					<v-expansion-panel-content>
-						{{ FAQ.content }}
-					</v-expansion-panel-content>
-				</v-expansion-panel>
+					<v-expansion-panel
+						v-for="(FAQ, i) in FAQ"
+						:key="i">
+						<v-expansion-panel-header>
+							<div>{{ FAQ.header }}</div>
+						</v-expansion-panel-header>
+						<v-expansion-panel-content>
+							{{ FAQ.content }}
+						</v-expansion-panel-content>
+					</v-expansion-panel>
 				</v-expansion-panels>
 			</v-expansion-panel-content>
 		</v-expansion-panel>
 	</v-expansion-panels>
-
 	</v-flex>
 	</v-layout>
 	</v-app>
@@ -71,16 +63,6 @@ export default {
 	data(){
 		return {
 			FAQ: [
-				{
-				header: 'Test question',
-				content: 'test'
-				},
-				{
-				header: 'Test question 2',
-				content: 'test'
-				},
-			],
-			FAQ_ru: [
 				{
 				header: 'Test question',
 				content: 'test'

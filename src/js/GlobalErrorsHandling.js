@@ -9,12 +9,14 @@ import iziToast from 'izitoast/dist/js/iziToast.min.js';
 Vue.use(VueIziToast);
 
 
-function errorMessage(msg, msg_ru){
+// идентификатор exclamationTriangle нигде не используется, но импорт нужен для загрузки самого svg файла
+import exclamationTriangle from '../assets/exclamation-triangle.svg'
+function errorMessage(msg_ru, msg){
   iziToast.info({
-    message: (store.state.gameLang) ? msg : msg_ru,
+    message: store.state.gameLang === 'ru' ? msg_ru : msg,
     position: 'bottomCenter', 
     backgroundColor: 'rgb(255, 102, 102)', 
-    icon: 'fas fa-exclamation-triangle', 
+    iconUrl: 'assets/img/exclamation-triangle.svg', 
     close: true, 
     closeOnClick: false, 
     drag: false, 
@@ -39,19 +41,7 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
       .then(result => {
         console.log(`Sentry fetch status: ${result.status}\nmsg: ${result.statusText}\nOK: ${result.ok}`)
         if (result.status === 400) { // 400 значит работает
-          if (event.exception && store.state.gameLang) {
-            Sentry.showReportDialog({ 
-              eventId: event.event_id,
-              lang: 'en',
-              title: 'It looks like the game crashed',
-              subtitle: 'The game developer has been notified.',
-              subtitle2: 'If you’d like to help, tell what happened below.',
-              user: {
-                name: `ID: ${uniqid()}`,
-                email: 'Player@example.com'
-              },
-            });
-          } else {
+          if (event.exception && store.state.gameLang == 'ru') {
             Sentry.showReportDialog({ 
               eventId: event.event_id,
               lang: 'ru',
@@ -69,18 +59,30 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
                 email: 'Player@example.ru'
               },
             });
+          } else {
+            Sentry.showReportDialog({ 
+              eventId: event.event_id,
+              lang: 'en',
+              title: 'It looks like the game crashed',
+              subtitle: 'The game developer has been notified.',
+              subtitle2: 'If you’d like to help, tell what happened below.',
+              user: {
+                name: `ID: ${uniqid()}`,
+                email: 'Player@example.com'
+              },
+            });
           }
         } else {
           errorMessage(
-            `Sentry failed to send error report: status: ${result.status}\nmsg: ${result.statusText}\nOK: ${result.ok}. Add your site to the ad blocker exception list.`,
-            `Sentry не удалось отправить отчёт об ошибке: status: ${result.status}\nmsg: ${result.statusText}\nOK: ${result.ok}. Добавьте сайт в список исключений блокировщика рекламы.`
+            `Sentry не удалось отправить отчёт об ошибке: status: ${result.status}\nmsg: ${result.statusText}\nOK: ${result.ok}. Добавьте сайт в список исключений блокировщика рекламы.`,
+            `Sentry failed to send error report: status: ${result.status}\nmsg: ${result.statusText}\nOK: ${result.ok}. Add your site to the ad blocker exception list.`
           )
         }
       })
       .catch(result => {
         errorMessage(
-          `Sentry failed to send error report: ${result}. Add your site to the ad blocker exception list.`,
-          `Sentry не удалось отправить отчёт об ошибке: ${result}. Добавьте сайт в список исключений блокировщика рекламы.`
+          `Sentry не удалось отправить отчёт об ошибке: ${result}. Добавьте сайт в список исключений блокировщика рекламы.`,
+          `Sentry failed to send error report: ${result}. Add your site to the ad blocker exception list.`
         )
       })
       return event;
@@ -95,14 +97,14 @@ if (process.env.NODE_ENV === 'production') {
 
     console.error(`${err} \n${info}`);
     errorMessage(
-      `Error: ${err.toString()} Info: ${info}`,
-      `Ошибка: ${err.toString()} Инфо: ${info}`
+      `Ошибка: ${err.toString()} Инфо: ${info}`,
+      `Error: ${err.toString()} Info: ${info}`
     )
   };  
 }
 
-// warnHandler - отключён по умолчанию в Production
-// renderError - отключён по умолчанию в Production
+// warnHandler - отключён по умолчанию в production
+// renderError - отключён по умолчанию в production
 // И т.д
 
 if (process.env.NODE_ENV === 'production') {
@@ -111,8 +113,8 @@ if (process.env.NODE_ENV === 'production') {
 
     console.error(`${message}\n${source}\n${error}`);
     errorMessage(
-      `Error: ${message.toString()} ${source} ${error}`,
-      `Ошибка: ${message.toString()} ${source} ${error}`
+      `Ошибка: ${message.toString()} ${source} ${error}`,
+      `Error: ${message.toString()} ${source} ${error}`
     )
   };
 }
