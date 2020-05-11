@@ -7,19 +7,11 @@ import mChatData from './modules/mobileChat/mChatData'
 import sound from './modules/sound'
 import chars from './modules/chars'
 
-var packageJson = require('../../package.json');
-
-// var CryptoJS = require("crypto-js");
-
 var AES = require("crypto-js/aes");
 var utf8 = require('crypto-js/enc-utf8')
 var PBKDF2 = require('crypto-js/pbkdf2')
 
-// const persistPlugin = store => {
-//   store.subscribe((mutations, state) => {
-//     localforage.setItem('vuex', state)
-//   })
-// }
+var deepExtend = require('deep-extend');
 
 Vue.use(Vuex)
 
@@ -32,7 +24,7 @@ const store = new Vuex.Store({
     gameThemesList: [
       { themeName: 'NordLight' },
       { themeName: 'NordDark' },
-      { themeName: 'CustomDark' }
+      { themeName: 'CustomDark' },
     ],
     gameHotkeysEnable: true, // Горячие клавиши в игре 
     keyboardShortcutsVersion: '0',   
@@ -92,19 +84,11 @@ const store = new Vuex.Store({
       } catch (error) {}
   
       return undefined;
+    },
+    // Функция слияния значений по умолчанию, и пользовательским store.
+    arrayMerger(store, saved){
+      return deepExtend(store, saved)
     }
-    // setState(key, state, storage) {
-    //   return ls.set(key, {state})
-    // },
-    // getState(key, storage, value) {
-    //   try {
-    //     return (value = ls.get(key)) && typeof value !== 'undefined'
-    //       ? value.state
-    //       : undefined;
-    //   } catch (err) {}
-  
-    //   return undefined;
-    // }
   })],
   mutations:{
     updateStores() { // Используется только для закрепления изменений во всех Store's
@@ -155,9 +139,3 @@ function keyGen(saveName){ // Генерация уникального ключ
 }
 
 export default store
-// Копия начального состояния игры
-const initialStateCopy = JSON.parse(JSON.stringify(store.state))
-// функция вызова сброса игры
-export function resetState() {
-  store.replaceState(JSON.parse(JSON.stringify(initialStateCopy)))
-}

@@ -231,7 +231,7 @@ import WebCrypto from './SavesWebCrypto'; // Модуль для шифрова�
 
 import localforage from 'localforage';
 
-import { resetState }  from '../../stores/store';
+// import { resetState }  from '../../stores/store';
 import store from '../../stores/store';
 
 import iziToast from 'izitoast/dist/js/iziToast.min.js';
@@ -641,7 +641,7 @@ export default {
     },
     // Перезапуск игры
     async restartGame(){
-      await resetState()
+      // await resetState()
       await localStorage.removeItem(`vuex`);
       await location.reload()
     },
