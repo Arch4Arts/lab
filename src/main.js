@@ -75,7 +75,7 @@ new Vue({
         let lang = window.navigator ? (window.navigator.language || window.navigator.systemLanguage || window.navigator.userLanguage) : "ru";
         lang = lang.substr(0, 2).toLowerCase();
         store.commit('gameFirstLoad');
-        if ( lang == 'ru' ) store.commit('langChange');
+        lang == 'ru' ? store.commit('langChange', 'ru') : store.commit('langChange', 'en');
       }
     },
     errNotify(error){

@@ -4,14 +4,18 @@ const webpack = require('webpack')
 
 module.exports = {
   configureWebpack: config => {
-    config.output.filename = 'js/[name].js';
+    // config.output.filename = 'js/[name].js';
+  },
+  chainWebpack: config => {
     config.module
-      .rule('i18n')
-      .resourceQuery(/blockType=i18n/)
-      .type('javascript/auto')
-      .use('i18n')
-      .loader('@kazupon/vue-i18n-loader')
+      .rule('i18n-loader')
+      .test(/.\.yaml$/)
+      .use('json')
+        .loader('json-loader')
       .end()
+      .use('yaml')
+        .loader('yaml-loader')
+      .end();
   },
   configureWebpack: {
     plugins: 

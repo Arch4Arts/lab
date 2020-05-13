@@ -6,6 +6,7 @@
     <h1>Пролог</h1>
     <h2>Пролог</h2>
     <h3>Пролог</h3>
+    {{ $t('message') }}
     <!-- <img src="assets/img/info-circle.svg" height="65" width="68"> -->
     <!-- <img src="@/assets/info-circle.svg" height="65" width="68"> -->
     <h4>Пролог</h4>

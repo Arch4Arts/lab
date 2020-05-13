@@ -24,9 +24,9 @@
 
 			<!-- ВЫБОР ЯЗЫКА -->
 			<div><h1>{{ $t('langChange-title') }}</h1></div>
-			<v-btn-toggle class="v-btn-toggle" v-model="getCurrentLanguage" rounded>
-				<v-btn text @click="changeLanguage('ru')" width="130">{{ $t('langChange-btn-title-ru') }}</v-btn>
-				<v-btn text @click="changeLanguage('en')">{{ $t('langChange-btn-title-en') }}</v-btn>
+			<v-btn-toggle v-model="getCurrentLanguage" rounded>
+				<v-btn @click="changeLanguage('ru')">{{ $t('langChange-btn-title-ru') }}</v-btn>
+				<v-btn @click="changeLanguage('en')">{{ $t('langChange-btn-title-en') }}</v-btn>
 			</v-btn-toggle>			
 			<!-- Об игре -->
 			<AboutGame />
@@ -67,10 +67,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.v-btn-toggle {
-	background: transparent !important;
-}
 
 .continue-button {
 	background: var(--FirstLaunchPageInfo--continue-button--background) !important;
