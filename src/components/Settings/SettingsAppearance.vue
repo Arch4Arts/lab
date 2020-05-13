@@ -18,9 +18,9 @@
   <!-- Выбор языка -->
   <div class="text-center">
     <div>{{ $t('langChange-title') }}</div>
-    <v-btn-toggle class="v-btn-toggle" v-model="getCurrentLanguage" rounded>
-      <v-btn text @click="changeLanguage('ru')" width="130">{{ $t('langChange-btn-title-ru') }}</v-btn>
-      <v-btn text @click="changeLanguage('en')">{{ $t('langChange-btn-title-en') }}</v-btn>
+    <v-btn-toggle v-model="getCurrentLanguage" rounded>
+      <v-btn class="toggle-btn" @click="changeLanguage('ru')">{{ $t('langChange-btn-title-ru') }}</v-btn>
+      <v-btn class="toggle-btn" @click="changeLanguage('en')">{{ $t('langChange-btn-title-en') }}</v-btn>
     </v-btn-toggle>		
   </div>
   <v-select
@@ -98,6 +98,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.toggle-btn {
+	width: 9rem;
+}
 
 .v-list-item-action--padding {
   margin-right: 24px;
