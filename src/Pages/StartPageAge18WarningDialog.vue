@@ -31,15 +31,9 @@
           <div v-html="$t('v-card-text.2')"></div>
         </v-card-text>
 
-      <v-card-actions>
-        <v-layout align-center justify-space-around column>
-          <v-flex>
-            <v-btn class="important-modal__button" dark @click="$store.commit('gameAgeWarningDialog')">{{ $t('v-btn-enter') }}</v-btn>
-          </v-flex>
-          <v-flex class="leave-btn">
-            <v-btn text @click="Leave()">{{ $t('v-btn-leave') }}</v-btn>
-          </v-flex>
-        </v-layout>
+      <v-card-actions class="buttons-container">
+        <v-btn class="important-modal__button" dark @click="$store.commit('gameAgeWarningDialog')">{{ $t('v-btn-enter') }}</v-btn>
+        <v-btn class="leave-btn" text @click="Leave()">{{ $t('v-btn-leave') }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -61,6 +55,13 @@ export default {
 h1 {
   text-align: left;
   font-size: 1.5em
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .leave-btn {
