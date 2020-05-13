@@ -177,13 +177,13 @@ export default {
   },
   methods: {
     changeCSSVars(width, height){
-      let test = document.querySelector('html');
+      let element = document.querySelector('html');
       if (width != undefined) {
-        test.style.setProperty("--mChatWidth", `${width}px`);
-        test.style.setProperty("--mChatFontSize", `${width / 18}px`);
+        element.style.setProperty("--mChatWidth", `${width}px`);
+        element.style.setProperty("--mChatFontSize", `${width / 18}px`);
       }
       if (height != undefined) {
-        test.style.setProperty("--mChatHeight", `${height}px`);
+        element.style.setProperty("--mChatHeight", `${height}px`);
       }
     },
     onDrag(x, y) {

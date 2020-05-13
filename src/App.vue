@@ -63,6 +63,23 @@ export default {
       this.$store.commit('updateStores');
     },
   },
+  methods: {
+    updateCSSVars(){
+      let element = document.querySelector('html');
+      element.style.setProperty("--AppWidth", `${window.innerWidth}px`);
+      element.style.setProperty("--AppFontSize", `${window.innerWidth / 18}px`);
+      element.style.setProperty("--AppHeight", `${window.innerHeight}px`);
+      console.log('111')
+    }
+  },
+  created() {
+    // Для адаптивности
+    this.updateCSSVars()
+    window.addEventListener("resize", this.updateCSSVars);
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.updateCSSVars);
+  },
   components: {
     Navigation,
     StartPage,
