@@ -296,12 +296,12 @@ export default {
   },
   mounted(){
     // Подписываемся на события
-    eventBus.$on('QuickSave', this.isQuickSave)
-    eventBus.$on('QuickLoad', this.isQuickLoad)
+    eventBus.on('QuickSave', this.isQuickSave)
+    eventBus.on('QuickLoad', this.isQuickLoad)
   },
   beforeDestroy(){
-    eventBus.$off('QuickSave')
-    eventBus.$off('QuickLoad')
+    eventBus.off('QuickSave')
+    eventBus.off('QuickLoad')
   },
   methods:{
     reRender(){

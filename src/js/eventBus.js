@@ -1,6 +1,6 @@
-import Vue from 'vue';
+import mitt from 'mitt'
 
 // Создаём глобальную шину событий
-const eventBus = new Vue();
+const eventBus = mitt();
 
 export default eventBus;

@@ -73,12 +73,12 @@ export function bindHotkeys(){
         }
         // Быстрое сохранение
         case keyShortcuts.savesQuickSave: {
-          eventBus.$emit('QuickSave');
+          eventBus.emit('QuickSave');
           break;
         }
         // Быстрая загрузка 
         case keyShortcuts.savesQuickLoad: {
-          eventBus.$emit('QuickLoad');
+          eventBus.emit('QuickLoad');
           break;
         }
         // Открыть чат

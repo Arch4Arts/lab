@@ -29,7 +29,7 @@ export function onMessageWasSent(ChatID, message){ // Импорт для userIn
       user.messagesHistory = [...user.messagesHistory, message]
 
       store.commit('updateStores');
-      eventBus.$emit('mChatMessageWasSent');
+      eventBus.emit('mChatMessageWasSent');
     }
   }
 }

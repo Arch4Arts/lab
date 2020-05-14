@@ -46,12 +46,12 @@ export default {
   },
   mounted(){
     this.$refs.mChatMessageList.scrollToBottom()
-    eventBus.$on('mChatScrollToBottom', this.$refs.mChatMessageList.scrollToBottom);
-    eventBus.$on('mChatMessageWasSent', this.$refs.mChatMessageList.scrollToBottom);
+    eventBus.on('mChatScrollToBottom', this.$refs.mChatMessageList.scrollToBottom);
+    eventBus.on('mChatMessageWasSent', this.$refs.mChatMessageList.scrollToBottom);
   },
   beforeDestroy(){
-    eventBus.$off('mChatScrollToBottom')
-    eventBus.$off('mChatMessageWasSent')
+    eventBus.off('mChatScrollToBottom')
+    eventBus.off('mChatMessageWasSent')
   },
   components: {
     Message,

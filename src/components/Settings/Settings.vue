@@ -255,7 +255,7 @@ export default {
       this.$store.commit('mChatShowAvatars')
     },
     mChatHideBarOnScrolling(){
-      eventBus.$emit('reRender_mChat')
+      eventBus.emit('reRender_mChat')
       this.$store.commit('showBarPanelPermanent')
     },
     mChatHideInput(){

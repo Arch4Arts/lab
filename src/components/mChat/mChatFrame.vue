@@ -105,7 +105,7 @@ export default {
         if (chatData.chatList[i].chatID === selectedChat) {
           // Сбрасывает счётчик сообщений текущего выбранного чата, только если чат отображается
           if (this.$store.state.mChat.show) chatData.chatList[i].unreadMessageCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
-          eventBus.$emit('mChatScrollToBottom');
+          eventBus.emit('mChatScrollToBottom');
           return chatData.chatList[i].messagesHistory
         }
       }
@@ -239,10 +239,10 @@ export default {
     }
   },
   mounted(){
-    eventBus.$on('reRender_mChat', this.reRenderFun);
+    eventBus.on('reRender_mChat', this.reRenderFun);
   },
   beforeDestroy(){
-    eventBus.$off('reRender_mChat')
+    eventBus.off('reRender_mChat')
   },
   components: {
     MessageListToolbar,

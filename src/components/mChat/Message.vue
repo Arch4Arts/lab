@@ -77,7 +77,7 @@ export default {
           // В противном случае просто отправить ответ от From_me, т.к suggestion был привязан к From_them
           chat.messagesHistory = [...chat.messagesHistory, suggestion]
           this.$store.commit('updateStores');
-          eventBus.$emit('mChatMessageWasSent')
+          eventBus.emit('mChatMessageWasSent')
         }
       }
     },
