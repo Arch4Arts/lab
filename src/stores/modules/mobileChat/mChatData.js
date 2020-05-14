@@ -42,6 +42,7 @@ const mChatData = {
           isGroupChat: false,
           groupChatName: undefined, // Используется только если isGroupChat
           groupChatAvatar: undefined,
+          disabled: false,
           unreadMessageCount: 0,
           messagesHistory: [
             { uid: '1k971ar09', type: 'text', author: `erza`, data: { text: `You a **slut**?` } },
@@ -63,6 +64,7 @@ const mChatData = {
           isGroupChat: true,
           groupChatName: 'Тайные желания', // Используется только если isGroupChat
           groupChatAvatar: require('../../../media/img/testGroupChatAvatar.png'),
+          disabled: false,
           unreadMessageCount: 3,
           messagesHistory: [
             { uid: '1k971ar09', type: 'text', author: `erza`, data: { text: `Всё таки ты такая **_шлюшка_**` } },

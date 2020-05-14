@@ -40,8 +40,10 @@
     <template v-for="chat in getChatList">
       <!-- Контакт -->
       <v-list-item
-        class="chat-list__vlist-item chat-list__palette-menu--hover"
+        class="chat-list__vlist-item"
         :key="chat.chatID"
+        :disabled="chat.disabled"
+        :class="{ 'chat-list__vlist-item__disabled': chat.disabled }"
         @click="openSelectedChat(chat.chatID, chat.chatName, chat.groupChatName, chat.chatAvatar, chat.groupChatAvatar, chat.isGroupChat)">
         <!-- Аватар -->
         <v-list-item-avatar class="chat-list__vlist--chat__avatar" :class="{ 'chat-list__vlist--chat__avatar__badge': chat.unreadMessageCount > 0 }">
@@ -243,6 +245,12 @@ export default {
   background: var(--chat-list__vlist-item--background) !important;
   height: calc(var(--mChatHeight) / 100 * 12.7) !important;
   padding: 0px 3.3% 0px 2.5% !important;  
+  &:hover {
+    background: var(--chat-list__palette-menu--hover--background) !important;
+  }
+  &__disabled {
+    opacity: .7;
+  }
 }
 
 .chat-list__vlist--chat__avatar {
