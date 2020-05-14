@@ -22,9 +22,9 @@
 
     v-show="$store.state.mChat.show">
     <div>
+      <!-- <p class="hidden-sm-and-down" style="position: absolute; left: -100px; bottom:300px">width: {{width}}</p>
+      <p class="hidden-sm-and-down" style="position: absolute; left: -120px; bottom:280px">calcHeight: {{height - (height / 100 * 11.32)}}</p> -->
       <!-- текстура смартфона -->
-      <p class="hidden-sm-and-down" style="position: absolute; left: -100px; bottom:300px">width: {{width}}</p>
-      <p class="hidden-sm-and-down" style="position: absolute; left: -120px; bottom:280px">calcHeight: {{height - (height / 100 * 11.32)}}</p>
       <smartphone-mockup class="smartphone" id="smartphone-mockup" :width="width" />
       <div class="smartphone-screen">
         <!-- Страница со списком чатов -->
@@ -67,7 +67,7 @@ import MessageListToolbar from './MessageListToolbar.vue'
 import MessageListInput from './MessageListInput.vue'
 import MessageList from './MessageList.vue'
 
-import smartphoneMockup from './smartphoneMockup.vue'
+import smartphoneMockup from './assets/smartphoneMockup.vue'
 import VueDraggableResizable from 'vue-draggable-resizable'
 import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
 
@@ -76,12 +76,10 @@ import eventBus from '../../js/eventBus.js'
 export default {
   data() {
     return {
-      width: (!this.$vuetify.breakpoint.xsOnly) ? this.$store.state.mChat.width : window.innerWidth,
-      height: (!this.$vuetify.breakpoint.xsOnly) ? this.$store.state.mChat.height : window.innerHeight,
-      // Не используется
-      x: undefined,
-      // Либо
-      y: (!this.$vuetify.breakpoint.xsOnly) ? this.$store.state.mChat.posY : 0,
+      width: (this.$vuetify.breakpoint.xsOnly) ? window.innerWidth : this.$store.state.mChat.width,
+      height: (this.$vuetify.breakpoint.xsOnly) ? window.innerHeight : this.$store.state.mChat.height,
+      y: (this.$vuetify.breakpoint.xsOnly) ? 0 : this.$store.state.mChat.posY,
+
       reRender: 0
     }
   },
@@ -111,25 +109,27 @@ export default {
       }
     },
     calcWidth() {
-      // Если не мобильное представление
-      if (!this.$vuetify.breakpoint.xsOnly) {
-        this.changeCSSVars(this.width - (this.width / 100 * 6.24));
-        return this.width- (this.width / 100 * 6.24)
-      }
-      else {
+      // Если мобильное представление
+      if (this.$vuetify.breakpoint.xsOnly) {
         this.changeCSSVars(window.innerWidth);
         window.innerWidth
       }
+      // Desktop
+      else {
+        this.changeCSSVars(this.width - (this.width / 100 * 6.24));
+        return this.width- (this.width / 100 * 6.24)        
+      }
     },
     calcHeight() {
-      // Если не мобильное представление
+      // Если мобильное представление
       if (!this.$vuetify.breakpoint.xsOnly) {
-        this.changeCSSVars(undefined, this.height- (this.height / 100 * 11.32));
-        return this.height- (this.height / 100 * 11.32)
-      }
-      else {
         this.changeCSSVars(undefined, window.innerHeight);
         return window.innerHeight
+      }
+      // Desktop
+      else {
+        this.changeCSSVars(undefined, this.height- (this.height / 100 * 11.32));
+        return this.height- (this.height / 100 * 11.32)
       } 
     },
     calcChatList_ToolbarHeight() {
@@ -137,6 +137,7 @@ export default {
       if (this.$vuetify.breakpoint.xsOnly) {
         return this.height / 100 * 8
       }
+      // Desktop
       else {
         return this.height / 100 * 6
       }
@@ -146,23 +147,25 @@ export default {
       if (this.$vuetify.breakpoint.xsOnly) {
         return this.height / 100 * 8
       }
+      // Desktop
       else {
         return this.height / 100 * 6
       }
     },
     calcMessageList_Height() {
-      //  Если не мобильное представление
-      if (!this.$vuetify.breakpoint.xsOnly && this.$store.state.mChat.showDecorativeInputPanel) {
-        return (this.height - (this.height / 100 * 11.32)) - (this.height / 100 * (8))
-      }
-      else if (!this.$vuetify.breakpoint.xsOnly) {
-        return this.height - (this.height / 100 * 11.32)
-      }
-      else if (this.$vuetify.breakpoint.xsOnly && this.$store.state.mChat.showDecorativeInputPanel) {
+      //  Если мобильное представление
+      if (this.$vuetify.breakpoint.xsOnly && this.$store.state.mChat.showDecorativeInputPanel) {
         return this.height - (this.height / 100 * (8.5))
       }
       else if (this.$vuetify.breakpoint.xsOnly) {
         return this.height
+      }
+      // Desktop
+      else if (this.$store.state.mChat.showDecorativeInputPanel) {
+        return (this.height - (this.height / 100 * 11.32)) - (this.height / 100 * (8))
+      }
+      else {
+        return this.height - (this.height / 100 * 11.32)
       }
     },
     calcMessageList_InputHeight() {
@@ -170,6 +173,7 @@ export default {
       if (this.$vuetify.breakpoint.xsOnly) {
         return this.height / 100 * 8.5
       }
+      // Desktop
       else {
         return this.height / 100 * 8
       }
@@ -213,7 +217,7 @@ export default {
       this.$store.commit('updateStores');
       this.reRender += 1;
     },
-    getSmartphoneSize(){
+    getSmartphoneSize(){ // Получение размеров smartphoneMockup
       let element = document.getElementById('smartphone-mockup');
       let elementInfo = element.getBoundingClientRect();
       let device = {
@@ -222,24 +226,23 @@ export default {
       }
       return device
     },
-    getCurrentPosition(){
-      // Если не мобильное представление
-      if (!this.$vuetify.breakpoint.xsOnly) {
-        // Если позиция не задана, присваиваем по ширине окна (выравнивание по правому краю)
+    getCurrentPosition(){ // Определение начальной позиции чата
+      // Если мобильное представление, устанавливаем в начало координат (выравнивание по левому краю)
+      if (this.$vuetify.breakpoint.xsOnly) return 0;
+      // Если позиция не задана, присваиваем по ширине окна (выравнивание по правому краю)
+      else { 
         if (this.$store.state.mChat.posX === undefined) 
           return window.innerWidth - this.width;
         else // Если задана, возвращаем значение
           return this.$store.state.mChat.posX;
       }
-      // Если мобильное, устанавливаем в начало кординат (выравнивание по левому краю)
-      else return 0;
     },
-    reRenderFun(){
+    reRenderChat(){ // Для полной перерисовки чата
       this.reRender += 1;
     }
   },
   mounted(){
-    eventBus.on('reRender_mChat', this.reRenderFun);
+    eventBus.on('reRender_mChat', this.reRenderChat);
   },
   beforeDestroy(){
     eventBus.off('reRender_mChat')

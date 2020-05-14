@@ -204,7 +204,7 @@ export default {
 }
 
 .chat-list__bar__title {
-  font-size: 1.2em;
+  font-size: var(--vbtn-icon--fontSize) !important;
   color: var(--chat-list__vlist--chat__title--color) !important;
 }
 

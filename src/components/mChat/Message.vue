@@ -40,7 +40,7 @@ import ImageMessage from './messages/ImageMessage.vue'
 import VideoMessage from './messages/VideoMessage.vue'
 import AudioMessage from './messages/AudioMessage.vue'
 
-import Suggestions from './Suggestions'
+import Suggestions from './messages/Suggestions'
 
 import eventBus from '../../js/eventBus'
 

@@ -1,5 +1,4 @@
 const SentryCliPlugin = require('@sentry/webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin')
 var packageJson = require('D:/Dev/lab/package.json');
 const webpack = require('webpack')
 
@@ -18,10 +17,11 @@ module.exports = {
         .loader('yaml-loader')
       .end();
 
+      // Исключает комментарии из chunk-vendors.js
       config.optimization.minimizer('terser').tap((args) => {
         args[0].terserOptions.output = {
           ...args[0].terserOptions.output,
-          comments: false  // exclude все комментарии из вывода (в том числе и из chunk-vendors.js)
+          comments: false
         }
         return args
       })
