@@ -1,4 +1,4 @@
-import Vue from '../../node_modules/vue';
+import Vue from 'vue'
 import Vuetify from 'vuetify/lib';
 import { Touch } from 'vuetify/lib/directives';
 
@@ -16,8 +16,8 @@ Vue.use(Vuetify, {
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// a-icon 
 Vue.component('a-icon', FontAwesomeIcon)
+
 import { 
   faQuestionCircle, // FAQ
   faCog,            // Настройки

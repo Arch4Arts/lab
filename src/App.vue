@@ -61,9 +61,7 @@ export default {
     swipeTop(){
       this.$store.state.radialMenuShow = false
       this.$store.commit('updateStores');
-    },
-  },
-  methods: {
+    },    
     updateCSSVars(){
       let element = document.querySelector('html');
       element.style.setProperty("--AppWidth", `${window.innerWidth}px`);
