@@ -122,7 +122,7 @@ export default {
     },
     calcHeight() {
       // Если мобильное представление
-      if (!this.$vuetify.breakpoint.xsOnly) {
+      if (this.$vuetify.breakpoint.xsOnly) {
         this.changeCSSVars(undefined, window.innerHeight);
         return window.innerHeight
       }

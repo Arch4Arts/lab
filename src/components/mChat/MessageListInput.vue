@@ -19,9 +19,9 @@
         <div class="plus-icon">
           <a-icon class="plus-icon__icon" :icon="['far', 'plus']" />
         </div>
-        <my-icon class="send-icon" :path="send" />
+        <mdi class="send-icon" :path="send" />
         <a-icon class="smile-icon" :icon="['far', 'smile']" />
-        <my-icon class="paperclip-icon" :path="paperclip" />
+        <mdi class="paperclip-icon" :path="paperclip" />
         <!-- <a-icon class="microphone-icon" :icon="['far', 'paperclip']" /> -->
     </div>
   </div>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import myIcon from '../myIcon.vue'
+import mdi from './assets/mdi.vue'
 import { mdiSend, mdiPaperclip } from '@mdi/js'
 
 export default {
@@ -44,7 +44,7 @@ export default {
     height: [Number, String],
   },
   components: {
-    myIcon
+    mdi
   }
 }
 </script>
@@ -136,7 +136,7 @@ export default {
     position: absolute;
     cursor: pointer;
     left: var(--input-area-paperclip-icon--left) !important;
-    &#myIcon {
+    &#mdi {
       width: var(--input-area-paperclip-icon--width);
     }
     fill: var(--input-area-paperclip-icon--fill) !important;
@@ -146,7 +146,7 @@ export default {
     position: absolute;
     cursor: pointer;
     left: var(--input-area-send-icon--left) !important;
-    &#myIcon {
+    &#mdi {
       width: var(--input-area-send-icon--width) !important;
     }
     fill: var(--input-area-send-icon--fill) !important;

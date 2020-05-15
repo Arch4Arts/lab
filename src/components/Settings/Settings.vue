@@ -113,7 +113,7 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
         <!-- Горячие клавиши -->
-        <v-expansion-panel >
+        <v-expansion-panel :disabled="this.$root.isTouchDevice">
           <v-expansion-panel-header>
             <div class="header">
               <a-icon class="header__icon" :icon="['fas', 'keyboard']" />
@@ -125,7 +125,7 @@
           </v-expansion-panel-content>
         </v-expansion-panel>
       </v-expansion-panels>
-
+      
       <!-- Настройки различных параметров (ползунки) -->
       <v-list subheader two-line flat>
 
@@ -235,6 +235,8 @@ import SettingsAppearance from './SettingsAppearance'
 import SettingsHotkeys from './SettingsHotkeys'
 import SettingsSound from './SettingsSound'
 
+import TouchIcon from '../../assets/TouchIcon.vue'
+
 import eventBus from '../../js/eventBus'
 
 export default {
@@ -266,6 +268,7 @@ export default {
     SettingsAppearance,
     SettingsHotkeys,
     SettingsSound,
+    TouchIcon
   }
 }
 </script>
@@ -309,6 +312,11 @@ export default {
   &__icon {
     font-size: 28px;
   }
+}
+
+#touch_icon {
+  width: 31px;
+  fill: white !important;
 }
 
 </style>
