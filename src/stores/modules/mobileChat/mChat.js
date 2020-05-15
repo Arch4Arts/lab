@@ -10,6 +10,9 @@ const mChat = {
         showAvatars: true, // Скрытие аватарок в чате
         showBarPanelPermanent: true, // Если false, панель будет скрываться при скролинге вниз, и показываться при скролинге вверх
         showDecorativeInputPanel: true, // Скрытие декоративной панели ввода в чате
+
+        posX_floatButton: window.innerWidth - 90,   // Позиция чата по горизонтали
+        posY_floatButton: window.innerHeight - 120,      // Позиция чата по вертикали
         
         posX: undefined,   // Позиция чата по горизонтали
         posY: 0,      // Позиция чата по вертикали

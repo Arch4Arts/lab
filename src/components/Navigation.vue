@@ -19,7 +19,7 @@
 		<!-- Плавающая кпнока для мобильной навигации -->
 		<Navigation-Floating-Button v-if="!$store.state.mChat.show" class="hidden-md-and-up"/> 
 		<!-- КНОПКИ В МЕНЮ -->
-		<v-app-bar v-if="!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs)" app dense dark class="v-app-bar" elevation="14">
+		<v-app-bar id="test222" v-if="!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs)" app dense dark class="v-app-bar" elevation="14">
 			<!-- Название игры + версия -->
 			<router-link to="/" tag="span" style="cursor:pointer">
 				<v-toolbar-title style="opacity: 0.75">

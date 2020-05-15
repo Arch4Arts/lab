@@ -1,76 +1,76 @@
 <i18n>
-	{
-		"en": {
-			"panel-title__sound": "Sound",
-			"panel-title__appearance": "Appearance",
-      "panel-title__hotkeys": "Hotkeys",
-      "list-item__saves": {
-        "title": "Saves panel",
-        "1": {
-          "title": "Automatically hide",
-          "subtitle": "Automatically hide the panel after saving, overwriting, or loading operations"
-        }
+{
+  "en": {
+    "panel-title__sound": "Sound",
+    "panel-title__appearance": "Appearance",
+    "panel-title__hotkeys": "Hotkeys",
+    "list-item__saves": {
+      "1": {
+        "title": "Automatically hide",
+        "subtitle": "Automatically hide the panel after saving, overwriting, or loading operations"
       },
-			"list-item__mChat": {
-        "title": "Chat settings",
-        "1": {
-          "title": "Automatic playback",
-          "subtitle": "Automatic video playback on mouse hovering"
-        },
-        "2": {
-          "title": "Simulating a message set",
-          "subtitle": "Animation of a set of messages by a chat participant"
-        },
-        "3": {
-          "title": "Avatar",
-          "subtitle": "Disables the display of the chat participant's avatar"
-        },
-        "4": {
-          "title": "The title of the chat",
-          "subtitle": "Don't hide the top panel when scrolling the chat"
-        },
-        "5": {
-          "title": "Typeset element",
-          "subtitle": "The lower decorative dial element of the chat"
-        }
-      }
-		},
-		"ru": {
-			"panel-title__sound": "Звук",
-			"panel-title__appearance": "Внешний вид",
-      "panel-title__hotkeys": "Горячие клавиши",
-      "list-item__saves": {
-        "title": "Панель сохранений",
-        "1": {
-          "title": "Автоматически скрывать",
-          "subtitle": "Автоматически скрывать панель, после операции сохранения, перезаписи, загрузки"
-        }
+      "title": "Saves panel"
+    },
+    "list-item__mChat": {
+      "1": {
+        "title": "Automatic playback",
+        "subtitle": "Automatic video playback on mouse hovering"
       },
-			"list-item__mChat": {
-        "title": "Настройки чата",
-        "1": {
-          "title": "Автоматическое воспроизведение",
-          "subtitle": "Автоматическое воспроизведение видео при наведении мыши"
-        },
-        "2": {
-          "title": "Имитация набора сообщения",
-          "subtitle": "Анимация набора сообщений участником чата"
-        },
-        "3": {
-          "title": "Аватар",
-          "subtitle": "Отключает отображение аватарки у участника чата"
-        },
-        "4": {
-          "title": "Заголовок чата",
-          "subtitle": "Не скрывать верхнюю панель при прокрутке чата"
-        },
-        "5": {
-          "title": "Наборный элемент",
-          "subtitle": "Нижний декоративный наборный элемент чата"
-        }
-      }
-		}
-	}
+      "2": {
+        "title": "Simulating a message set",
+        "subtitle": "Animation of a set of messages by a chat participant"
+      },
+      "3": {
+        "title": "Avatars",
+        "subtitle": "Disables the display of avatars in the group chat"
+      },
+      "4": {
+        "title": "The title of the chat",
+        "subtitle": "Don't hide the top panel when scrolling the chat"
+      },
+      "5": {
+        "title": "Typeset element",
+        "subtitle": "The lower decorative dial element of the chat"
+      },
+      "title": "Chat settings"
+    }
+  },
+  "ru": {
+    "panel-title__sound": "Звук",
+    "panel-title__appearance": "Внешний вид",
+    "panel-title__hotkeys": "Горячие клавиши",
+    "list-item__saves": {
+      "1": {
+        "title": "Автоматически скрывать",
+        "subtitle": "Автоматически скрывать панель, после операции сохранения, перезаписи, загрузки"
+      },
+      "title": "Панель сохранений"
+    },
+    "list-item__mChat": {
+      "1": {
+        "title": "Автоматическое воспроизведение",
+        "subtitle": "Автоматическое воспроизведение видео при наведении мыши"
+      },
+      "2": {
+        "title": "Имитация набора сообщения",
+        "subtitle": "Анимация набора сообщений участником чата"
+      },
+      "3": {
+        "title": "Аватары",
+        "subtitle": "Отключает отображение аватарок в групповом чате"
+      },
+      "4": {
+        "title": "Заголовок чата",
+        "subtitle": "Не скрывать верхнюю панель при прокрутке чата"
+      },
+      "5": {
+        "title": "Наборный элемент",
+        "subtitle": "Нижний декоративный наборный элемент чата"
+      },
+      "title": "Настройки чата"
+    }
+  }
+}
 </i18n>
 
 <template>

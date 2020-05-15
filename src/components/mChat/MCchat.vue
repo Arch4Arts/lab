@@ -6,7 +6,6 @@
     :chatList="getChatList"
   />
 </div>
-
 </template>
 
 <script>

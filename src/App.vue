@@ -67,7 +67,6 @@ export default {
       element.style.setProperty("--AppWidth", `${window.innerWidth}px`);
       element.style.setProperty("--AppFontSize", `${window.innerWidth / 18}px`);
       element.style.setProperty("--AppHeight", `${window.innerHeight}px`);
-      console.log('111')
     }
   },
   created() {
