@@ -14,7 +14,7 @@
       v-show="RadialMenuStatus"
     >
       <!-- Основная кнопка раскрытия списка -->
-      <v-btn slot="activator" dark icon hover v-model="fab" v-show="visible">
+      <v-btn slot="activator" dark icon small hover v-model="fab" v-show="visible">
         <a-icon :icon="['fas', 'compass']" class="main-btn" />
       </v-btn>
       <!-- Saves -->

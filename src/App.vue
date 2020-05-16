@@ -1,7 +1,7 @@
 <template>  
   <v-app> 
   <v-layout v-touch="{ right: () => swipeRight(), left: () => swipeLeft(), down: () => swipeBottom(), up: () => swipeTop() }">
-  <v-content>
+  <v-content @click="test()">
     <StartPage v-if="$store.state.gameDisplayingStartPage" />
 
     <Settings />
@@ -67,7 +67,7 @@ export default {
       element.style.setProperty("--AppWidth", `${window.innerWidth}px`);
       element.style.setProperty("--AppFontSize", `${window.innerWidth / 18}px`);
       element.style.setProperty("--AppHeight", `${window.innerHeight}px`);
-    }
+    },
   },
   created() {
     // Для адаптивности

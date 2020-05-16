@@ -6,10 +6,11 @@ const mChat = {
         chatListShow: true, // Отображение списка контактов
 
         autoplayVideoMessageOnHover: false, // Воспроизводить ли видео при наведении мышки
-        typingIndicatorEnable: true, // Если true отображается имитация набора текста, если false, то ничего не отображаетсяm
-        showAvatars: true, // Скрытие аватарок в чате
-        showBarPanelPermanent: true, // Если false, панель будет скрываться при скролинге вниз, и показываться при скролинге вверх
-        showDecorativeInputPanel: true, // Скрытие декоративной панели ввода в чате
+        typingIndicatorEnable: true,        // Если true отображается имитация набора текста, если false, то ничего не отображаетсяm
+        showAvatars: true,                  // Скрытие аватарок в чате
+        showBarPanelPermanent: true,        // Если false, панель будет скрываться при скролинге вниз, и показываться при скролинге вверх
+        showDecorativeInputPanel: true,     // Скрытие декоративной панели ввода в чате
+        closeChatOnClickedOutside: true,    // Закрытие чата при клике снаружи
 
         posX_floatButton: window.innerWidth - 90,   // Позиция чата по горизонтали
         posY_floatButton: window.innerHeight - 120,      // Позиция чата по вертикали
@@ -45,6 +46,9 @@ const mChat = {
         this.state.mChat.chatListShow = !this.state.mChat.chatListShow
       },
 
+      closeChatOnClickedOutside(){
+        this.state.mChat.closeChatOnClickedOutside = !this.state.mChat.closeChatOnClickedOutside
+      },
       autoplayVideoMessageOnHover(){
         this.state.mChat.autoplayVideoMessageOnHover = !this.state.mChat.autoplayVideoMessageOnHover
       },

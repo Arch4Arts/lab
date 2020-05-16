@@ -6,6 +6,9 @@ import store from './stores/store'
 
 import vuetify from './styles/vuetify'
 
+import vClickOutside from 'v-click-outside'
+Vue.use(vClickOutside)
+
 import i18n from './i18n'
 
 import favicon from './assets/favicon.png'; // Для экспорта иконки в run build

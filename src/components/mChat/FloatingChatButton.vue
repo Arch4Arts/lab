@@ -48,14 +48,13 @@ export default {
     onDrag(x, y) {
       this.x = x
       this.y = y
-      console.log(`x: ${this.x}, y: ${this.y}`)
       this.isDragNow = true
     },
     savePosition(x, y){
       this.$store.state.mChat.posX_floatButton = x
       this.$store.state.mChat.posY_floatButton = y
       this.$store.commit('updateStores');
-
+      // Задержка для отработки после события click
       setTimeout(() => { this.isDragNow = false }, 100);
     },
     openChat() {
@@ -64,9 +63,6 @@ export default {
     closeChat() {
       if (!this.isDragNow) this.$store.commit('mChatShow');
     },
-  },
-  mounted(){
-    console.log(`x: ${this.x}, y: ${this.y}`)
   },
   components: {
     'vue-draggable-resizable': VueDraggableResizable,

@@ -4,6 +4,7 @@
   <mChatFrame
     :mChatData="mChatData"
     :chatList="getChatList"
+    v-click-outside="closeChat"
   />
 </div>
 </template>
@@ -14,11 +15,6 @@ import FloatingChatButton from './FloatingChatButton.vue'
 
 export default {
   name: 'MC_chat', // Экземпляр главного героя
-  data() {
-    return {
-
-    }
-  },
   computed: {
     mChatData(){
       return this.$store.state.mChatData.MC;
@@ -38,6 +34,12 @@ export default {
       return totalUnreadMessages;
     }
   },
+  methods: {
+    closeChat(){
+      // Если чат отображается и включена настройка по его закрытию кликом снаружи
+      if (this.$store.state.mChat.show && this.$store.state.mChat.closeChatOnClickedOutside) this.$store.commit('mChatShow');
+    },
+  },
   components: {
     mChatFrame,
     FloatingChatButton
@@ -45,6 +47,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

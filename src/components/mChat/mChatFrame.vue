@@ -20,8 +20,8 @@
     @resizestop="saveSizes"
     :resizable="!$vuetify.breakpoint.xsOnly"
 
-    v-show="$store.state.mChat.show
-  ">
+    v-show="$store.state.mChat.show"
+    >
     <div>
       <!-- <p class="hidden-sm-and-down" style="position: absolute; left: -100px; bottom:300px">width: {{width}}</p>
       <p class="hidden-sm-and-down" style="position: absolute; left: -120px; bottom:280px">calcHeight: {{height - (height / 100 * 11.32)}}</p> -->
