@@ -167,7 +167,11 @@
       <v-tooltip top>
         <template v-slot:activator="{ on }">
           <v-btn class="delete-all-saves-btn" @click="showModalDelSavesAll = !showModalDelSavesAll" :disabled="(numberSavesIDB == 0) ? true : false" v-on="on" icon>
-            <a-icon class="delete-all-saves-btn__color" :icon="['fas', 'trash-alt']" />
+            <a-icon 
+              class="delete-all-saves-btn__color" 
+              :class="{ 'delete-all-saves-btn__color__disabled': (numberSavesIDB == 0) }" 
+              :icon="['fas', 'trash-alt']" 
+            />
           </v-btn>
         </template>
           <span>{{ $t('tooltip__delete-all-saves') }}</span>
@@ -227,40 +231,21 @@ import dayjs from 'dayjs'; // библиотека для работы с вре
 import advancedFormat from 'dayjs/plugin/advancedFormat'; // Плагин
 dayjs.extend(advancedFormat);
 
+import store from '../../stores/store';
 import WebCrypto from './SavesWebCrypto'; // Модуль для шифрования и дешифрования сохранений
-
 import localforage from 'localforage';
 
-// import { resetState }  from '../../stores/store';
-import store from '../../stores/store';
-
-import iziToast from 'izitoast/dist/js/iziToast.min.js';
-
-import updateThemes from '../../styles/updateThemes';
-
 import eventBus from '../../js/eventBus'
-
-import savesListComponent from './SavesList'
+import { saveNotify } from '../../js/notificationSystem'
+import updateThemes from '../../styles/updateThemes';
 
 import VirtualList from 'vue-virtual-scroll-list'
 
-// Конфиги
+import savesListComponent from './SavesList'
+
 localforage.config({
     name: 'vuex',
     storeName: 'saves'
-});
-
-// идентификатор infoCircle нигде не используется, но импорт нужен для загрузки самого svg файла
-import infoCircle from '../../assets/info-circle.svg'
-iziToast.settings({
-  progressBar: false,
-  displayMode: 2,
-  closeOnClick: true,
-  close: false,
-  iconUrl: 'assets/img/info-circle.svg',
-  messageSize: '16',
-  theme: 'light',
-  position: 'bottomCenter'
 });
 
 export default {
@@ -374,8 +359,8 @@ export default {
       await WebCrypto(saveHeader, JSON.stringify(this.$store.state))
       // Оповещение
       this.$store.state.gameLang == 'ru'
-        ? iziToast.info({message: 'Игра успешно сохранена'})
-        : iziToast.info({message: 'Game successfully saved'});
+        ? saveNotify({message: 'Игра успешно сохранена'})
+        : saveNotify({message: 'Game successfully saved'});
       // Добавляем новоё сохранение в отображаемый список
       this.savesList.unshift({ 
         saveName: this.$store.state.saveName, 
@@ -398,8 +383,8 @@ export default {
       await WebCrypto(saveHeader, JSON.stringify(this.$store.state)) // Добавем новый за место старого (удалённого)
       // Оповещение
       this.$store.state.gameLang == 'ru'
-        ? iziToast.info({message: 'Сохранение успешно перезаписано'})
-        : iziToast.info({message: 'Saving successfully overwritten'});
+        ? saveNotify({message: 'Сохранение успешно перезаписано'})
+        : saveNotify({message: 'Saving successfully overwritten'});
       // Ищем выбранное сохранение для перезаписи и обновляем его время и ID (чтобы не перерендоривать весь список)
       this.savesList.find(function(item) {
         if (item.saveID === saveID) {
@@ -430,8 +415,8 @@ export default {
       if (this.$store.state.autoCloseSavesDrawer) this.autoCloseDrawer()
       // Оповещение
       this.$store.state.gameLang == 'ru'
-        ? iziToast.info({message: 'Игра загружена успешно', backgroundColor: 'rgb(255, 254, 173)'})
-        : iziToast.info({message: 'Game loaded successfully', backgroundColor: 'rgb(255, 254, 173)'});
+        ? saveNotify({message: 'Игра загружена успешно', class: 'save-notify__load'})
+        : saveNotify({message: 'Game loaded successfully', class: 'save-notify__load'});
       // сбрасываем выделения списка сохранений
       setTimeout(() => this.ListSelectedSaves = [], 100)
     },
@@ -441,8 +426,8 @@ export default {
       localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVersion}`)
       // Оповещенеие
       this.$store.state.gameLang == 'ru'
-        ? iziToast.info({message: 'Сохранение было удалено!', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'})
-        : iziToast.info({message: 'Saving has been deleted!', backgroundColor: 'rgb(255, 102, 102)', icon: 'fas fa-exclamation-triangle'});
+        ? saveNotify({message: 'Сохранение было удалено!', iconUrl: 'assets/img/exclamation-triangle.svg', class: 'save-notify__delete'})
+        : saveNotify({message: 'Saving has been deleted!', iconUrl: 'assets/img/exclamation-triangle.svg', class: 'save-notify__delete'});
       // Находим в отображаемом списке удалённое сохранение
       let indexDeletedSave = this.savesList.findIndex(function(item) {
         return (item.saveID === saveID)
@@ -461,8 +446,8 @@ export default {
       await localforage.clear()
       // Оповещение
       this.$store.state.gameLang == 'ru'
-        ? iziToast.warning({message: 'Всё сохранения были удалены!', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
-        : iziToast.warning({message: 'All saves have been deleted!', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'});
+        ? saveNotify({message: 'Всё сохранения были удалены!', iconUrl: 'assets/img/exclamation-triangle.svg', class: 'save-notify__delete'})
+        : saveNotify({message: 'All saves have been deleted!', iconUrl: 'assets/img/exclamation-triangle.svg', class: 'save-notify__delete'});
       // Закрываем модальное окно
       this.showModalDelSavesAll = false
       // Обнуляем список сохранений (перерисовываем список)
@@ -515,9 +500,9 @@ export default {
       }
       else {
         if (this.$store.state.gameLang == 'ru')
-          iziToast.info({message: 'Сохранения отсутствуют'});
+          saveNotify({message: 'Сохранения отсутствуют'});
         else
-          iziToast.info({message: 'There are no saves'});
+          saveNotify({message: 'There are no saves'});
       }
     },
     // Сохранение на диск
@@ -625,8 +610,8 @@ export default {
             }
           } else {
             this.$store.state.gameLang == 'ru'
-              ? iziToast.warning({message: 'В данном файле не содержится данные сохранения', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'})
-              : iziToast.warning({message: 'This file does not contain any save data', position: 'bottomCenter', icon: 'fas fa-exclamation-triangle', backgroundColor: 'rgb(255, 102, 102)'});
+              ? saveNotify({message: 'В данном файле не содержится данные сохранения', iconUrl: 'assets/img/exclamation-triangle.svg', class: 'save-notify__delete'})
+              : saveNotify({message: 'This file does not contain any save data', iconUrl: 'assets/img/exclamation-triangle.svg', class: 'save-notify__delete'});
           }
         }).then(() => {
             // Сортируем
@@ -731,6 +716,9 @@ export default {
   background: transparent !important;
   &__color  {
     color: var(--saves--delete-all-saves-btn--color);
+    &__disabled {
+      color: hsla(0,0%,100%,.3)!important;
+    }
   }
 }
 

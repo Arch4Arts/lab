@@ -1,6 +1,8 @@
 // Настройки стилей по умолчанию
 html {
 	&[gameTheme='NordDark'] {	
+	--errors-handling-notify: rgb(255, 102, 102);
+
 	// Переиспользуемые переменные
 	--v-primary-base: #ECEFF4;
 	--v-secondary-base: #2E3440;
@@ -55,6 +57,10 @@ html {
 	--savesList--load-btn--color: rgb(255, 254, 173);
 	--savesList--delete-btn--color: rgb(255, 102, 102);
 
+	--save-notify--save: rgb(157,222,255);
+	--save-notify--load: rgb(255, 254, 173);
+	--save-notify--delete: rgb(255, 102, 102);
+
 // RadialMenu.vue
 	--RadialMenu--main-btn--background: transparent;
 	--RadialMenu--main-btn--color: #88C0D0;
@@ -74,6 +80,25 @@ html {
 	&[gameTheme='NordLight'] {	
 	}
 }
+
+// Сообственные стили
+
+.save-notify {
+	&__save {
+		background-color: var(--save-notify--save) !important;
+	}
+	&__load {
+		background-color: var(--save-notify--load) !important;
+	}
+	&__delete {
+		background-color: var(--save-notify--delete) !important;
+	}
+}
+
+.errors-handling-notify {
+	background-color: var(--errors-handling-notify) !important;
+}
+
 
 // Переопределяем глобальные стили Vuetify
 

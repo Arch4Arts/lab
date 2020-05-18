@@ -24,17 +24,12 @@ Vue.use(VuePlyr) // Видео/Аудио плеер
 import vueScrollBehavior from 'vue-scroll-behavior' // Сохранение положения прокрутки
 Vue.use(vueScrollBehavior, { router: router })
 
-import VueIziToast from 'vue-izitoast'; // Уведомления
-import 'izitoast/dist/css/iziToast.min.css';
-import iziToast from 'izitoast/dist/js/iziToast.min.js';
-Vue.use(VueIziToast);
-
 import updateThemes from './styles/updateThemes';
-import { checkSoundsEnable } from './js/GameSound'
-import { bindHotkeys, unbindHotkeys }from './js/Hotkeys'
+import { checkSoundsEnable } from './js/gameSound'
+import { bindHotkeys, unbindHotkeys }from './js/hotkeys'
 
-import { SentryPush } from './js/GlobalErrorsHandling';
-import './js/GlobalErrorsHandling'
+import { SentryPush } from './js/globalErrorsHandling';
+import './js/globalErrorsHandling'
 
 
 

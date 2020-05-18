@@ -1,8 +1,8 @@
 const mChat = {
     namespaced: false,
     state: {
-        enable: true, // Вкл/Выкл чата
-        show: false, // Статус отображения чата
+        enable: true,       // Вкл/Выкл чата
+        show: false,        // Статус отображения чата
         chatListShow: true, // Отображение списка контактов
 
         autoplayVideoMessageOnHover: false, // Воспроизводить ли видео при наведении мышки
@@ -13,10 +13,10 @@ const mChat = {
         closeChatOnClickedOutside: true,    // Закрытие чата при клике снаружи
 
         posX_floatButton: window.innerWidth - 90,   // Позиция чата по горизонтали
-        posY_floatButton: window.innerHeight - 120,      // Позиция чата по вертикали
+        posY_floatButton: window.innerHeight - 120, // Позиция чата по вертикали
         
         posX: undefined,   // Позиция чата по горизонтали
-        posY: 0,      // Позиция чата по вертикали
+        posY: 0,           // Позиция чата по вертикали
         width: 340,   // Ширина "экрана" на svg текстуре смартфона
         height: 740,  // Высота "экрана" на svg текстуре смартфона
 

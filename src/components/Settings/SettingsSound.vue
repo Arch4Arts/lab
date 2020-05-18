@@ -210,7 +210,7 @@
 </template>
 
 <script>
-import { checkSoundsEnable, soundPlay, soundPlayLoop } from '../../js/GameSound'
+import { checkSoundsEnable, soundPlay, soundPlayLoop } from '../../js/gameSound'
 
 export default {
   data(){

@@ -7,6 +7,7 @@
     <h2>Пролог</h2>
     <h3>Пролог</h3>
     {{ $t('message') }}
+    <v-btn @click="test()" />
     <!-- <img src="assets/img/info-circle.svg" height="65" width="68"> -->
     <!-- <img src="@/assets/info-circle.svg" height="65" width="68"> -->
     <h4>Пролог</h4>
@@ -40,7 +41,9 @@ export default {
     mChatTestPage,
   },
   methods: {
-
+    test(){
+      this.$toast.error('Illegal operation', 'Error')
+    }
   }
 }
 </script>

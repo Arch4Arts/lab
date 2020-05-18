@@ -3,25 +3,10 @@ import store from '../stores/store'
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
 
-import VueIziToast from 'vue-izitoast'; // Уведомления
-import 'izitoast/dist/css/iziToast.min.css';
-import iziToast from 'izitoast/dist/js/iziToast.min.js';
-Vue.use(VueIziToast);
+import { errorsHandlingNotify } from './notificationSystem'
 
-
-// идентификатор exclamationTriangle нигде не используется, но импорт нужен для загрузки самого svg файла
-import exclamationTriangle from '../assets/exclamation-triangle.svg'
 function errorMessage(msg_ru, msg){
-  iziToast.info({
-    message: store.state.gameLang === 'ru' ? msg_ru : msg,
-    position: 'bottomCenter', 
-    backgroundColor: 'rgb(255, 102, 102)', 
-    iconUrl: 'assets/img/exclamation-triangle.svg', 
-    close: true, 
-    closeOnClick: false, 
-    drag: false, 
-    timeout: 0
-  })
+  errorsHandlingNotify({ message: store.state.gameLang === 'ru' ? msg_ru : msg })
 }
 
 export function SentryPush(error){
@@ -29,7 +14,7 @@ export function SentryPush(error){
   errorMessage(error)
 }
 
-if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена
+if (process.env.NODE_ENV === 'development') { // Включение Sentry только для продакшена
   let uniqid = require('uniqid');
   Sentry.init({
     dsn: 'https://6b82c070a6874f70ad6e9fe5ebcb9fb8@sentry.io/1509214',
@@ -91,7 +76,7 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
 };
 
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'development') {
   Vue.config.errorHandler = function(err, vm, info) { // Обработчик ошибок Vue
     Sentry.captureException(err, vm, info);
 
@@ -103,11 +88,11 @@ if (process.env.NODE_ENV === 'production') {
   };  
 }
 
-// warnHandler - отключён по умолчанию в production
-// renderError - отключён по умолчанию в production
+// warnHandler - отключён по умолчанию в development
+// renderError - отключён по умолчанию в development
 // И т.д
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'development') {
   window.onerror = function(message, source, line, column, error) {
     Sentry.captureException(message, source, line, column, error);
 
