@@ -10,13 +10,12 @@ export function saveNotify(options){
   // Параметры по умолчанию
   iziToast.settings({
     class: 'save-notify-save',
-    progressBar: false,
-    displayMode: 2,
+    iconUrl: 'assets/img/info-circle.svg',
+    position: 'bottomCenter',
+    messageSize: '16',
+    displayMode: 2, 
     closeOnClick: true,
     close: false,
-    iconUrl: 'assets/img/info-circle.svg',
-    messageSize: '16',
-    position: 'bottomCenter',
   });
   // Вывод оповещения
   iziToast.info(options)
@@ -27,11 +26,11 @@ export function errorsHandlingNotify(options){
   // Параметры по умолчанию
   iziToast.settings({
     class: 'errors-handling-notify',
-    position: 'bottomCenter', 
     iconUrl: 'assets/img/exclamation-triangle.svg', 
+    position: 'bottomCenter', 
     messageSize: '16',
+    closeOnClick: false,     
     close: true, 
-    closeOnClick: false, 
     drag: false, 
     timeout: 0
   });
