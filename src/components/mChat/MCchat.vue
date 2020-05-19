@@ -4,7 +4,7 @@
   <mChatFrame
     :mChatData="mChatData"
     :chatList="getChatList"
-    v-click-outside="closeChat"
+    v-click-outside="vConfig"
   />
 </div>
 </template>
@@ -15,6 +15,15 @@ import FloatingChatButton from './FloatingChatButton.vue'
 
 export default {
   name: 'MC_chat', // Экземпляр главного героя
+  data () {
+    return {
+      vConfig: {
+        handler: this.closeChat, // Обработчик
+        middleware: this.middleware, // Промежуточный слой проверки объекта попавшего под клик
+        isActive: true
+      }
+    }
+  },
   computed: {
     mChatData(){
       return this.$store.state.mChatData.MC;
@@ -39,6 +48,24 @@ export default {
       // Если чат отображается и включена настройка по его закрытию кликом снаружи
       if (this.$store.state.mChat.show && this.$store.state.mChat.closeChatOnClickedOutside) this.$store.commit('mChatShow');
     },
+    middleware (event) {
+      if (this.$store.state.mChat.show) { // Только при открытом чате
+        console.log(event.target)
+        // Промежуточный слой проверки целевого объекта попавшего под клик
+        // Выполнит handler (closeChat) если нет ни одного совпадения в списке исключений
+        let exceptionList = [
+          'palette-menu',
+          'viewer'
+        ];
+
+        // Проверяет содержится ли целевой класс в списке исключений
+        function checkClickTarget(exception){
+          return event.target.className.includes(exception);
+        }
+        // true, если нет ни одного совпадения
+        return exceptionList.some(checkClickTarget) === false        
+      }
+    }
   },
   components: {
     mChatFrame,
