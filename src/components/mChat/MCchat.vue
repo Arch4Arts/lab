@@ -36,7 +36,6 @@ export default {
     },
     getMessageList() {
       this.$store.state.mChat.chatListShow // обновляет список сообщений при каждом открытии и закрытии списка пользователей
-      console.log(this.mChatData)
 
       var chatData = this.mChatData;
       var selectedChat = this.$store.state.mChat.selectedChatID
@@ -45,7 +44,6 @@ export default {
           // Сбрасывает счётчик сообщений текущего выбранного чата, только если чат отображается
           if (this.$store.state.mChat.show) chatData.chatList[i].unreadMessageCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
           eventBus.emit('mChatScrollToBottom');
-          console.log(chatData.chatList[i].messagesHistory)
           return chatData.chatList[i].messagesHistory
         }
       }
@@ -65,7 +63,8 @@ export default {
   methods: {
     closeChat(){
       // Если чат отображается и включена настройка по его закрытию кликом снаружи
-      if (this.$store.state.mChat.show && this.$store.state.mChat.closeChatOnClickedOutside) this.$store.commit('mChatShow');
+      if (this.$store.state.mChat.show && this.$store.state.mChat.closeChatOnClickedOutside) 
+        this.$store.commit('mChatShow');
     },
     middleware (event) {
       if (this.$store.state.mChat.show) { // Только при открытом чате
@@ -79,7 +78,8 @@ export default {
 
         // Проверяет содержится ли целевой класс в списке исключений
         function checkClickTarget(exception){
-          return event.target.className.includes(exception);
+          if (typeof event.target.className === 'string')
+            return event.target.className.includes(exception);
         }
         // true, если нет ни одного совпадения
         return exceptionList.some(checkClickTarget) === false        
