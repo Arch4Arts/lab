@@ -1,11 +1,10 @@
 <template>
-<div>
+<div v-click-outside="vConfig">
   <FloatingChatButton :unreadMessagesCount="getUnreadMessagesCount" />
   <mChatFrame
     :mChatData="mChatData"
     :chatList="getChatList"
     :messageList="getMessageList"
-    v-click-outside="vConfig"
   />
 </div>
 </template>
@@ -68,7 +67,7 @@ export default {
     },
     middleware (event) {
       if (this.$store.state.mChat.show) { // Только при открытом чате
-        console.log(event.target)
+        // console.log(event.target)
         // Промежуточный слой проверки целевого объекта попавшего под клик
         // Выполнит handler (closeChat) если нет ни одного совпадения в списке исключений
         let exceptionList = [
