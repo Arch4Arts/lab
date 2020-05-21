@@ -4,6 +4,7 @@
   <mChatFrame
     :mChatData="mChatData"
     :chatList="getChatList"
+    :messageList="getMessageList"
     v-click-outside="vConfig"
   />
 </div>
@@ -12,6 +13,8 @@
 <script>
 import mChatFrame from './mChatFrame.vue'
 import FloatingChatButton from './FloatingChatButton.vue'
+
+import eventBus from '../../js/eventBus.js'
 
 export default {
   name: 'MC_chat', // Экземпляр главного героя
@@ -30,6 +33,22 @@ export default {
     },
     getChatList(){
       return this.$store.state.mChatData.MC.сurrentChatList;
+    },
+    getMessageList() {
+      this.$store.state.mChat.chatListShow // обновляет список сообщений при каждом открытии и закрытии списка пользователей
+      console.log(this.mChatData)
+
+      var chatData = this.mChatData;
+      var selectedChat = this.$store.state.mChat.selectedChatID
+      for (let i in chatData.chatList) { // Перебираем для каждого пользователя
+        if (chatData.chatList[i].chatID === selectedChat) {
+          // Сбрасывает счётчик сообщений текущего выбранного чата, только если чат отображается
+          if (this.$store.state.mChat.show) chatData.chatList[i].unreadMessageCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
+          eventBus.emit('mChatScrollToBottom');
+          console.log(chatData.chatList[i].messagesHistory)
+          return chatData.chatList[i].messagesHistory
+        }
+      }
     },
     getUnreadMessagesCount() {
       let totalUnreadMessages = 0;

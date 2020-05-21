@@ -5,6 +5,21 @@ import iziToast from 'izitoast/dist/js/iziToast.min.js';
 import exclamationTriangle from '../assets/exclamation-triangle.svg'
 import infoCircle from '../assets/info-circle.svg'
 
+// Оповещения для globalErrorsHandling.js
+export function mChatNotify(options){
+  // Параметры по умолчанию
+  iziToast.settings({
+    class: 'mchat-notify',
+    // iconUrl: 'assets/img/info-circle.svg',
+    position: 'bottomRight',
+    messageSize: '16',
+    close: false,
+    timeout: 0
+  });
+  // Вывод оповещения
+  iziToast.info(options)
+}
+
 // Оповещения для компонента saves
 export function saveNotify(options){
   // Параметры по умолчанию

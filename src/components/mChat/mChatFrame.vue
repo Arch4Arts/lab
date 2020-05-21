@@ -46,7 +46,7 @@
           <MessageListToolbar :height="calcMessageList_ToolbarHeight" />
           <!-- Область прокрутки с сообщениями -->
           <MessageList
-            :messages="getMessageList"
+            :messages="messageList"
             :mChatData="mChatData"
             
             :width="calcWidth"
@@ -93,22 +93,14 @@ export default {
       type: Array,
       required: true
     },
+    messageList: {
+      type: Array,
+      default: function () {
+        return []
+      }
+    }
   },
   computed: {
-    getMessageList() {
-      this.$store.state.mChat.chatListShow // обновляет список сообщений при каждом открытии и закрытии списка пользователей
-      
-      var chatData = this.mChatData;
-      var selectedChat = this.$store.state.mChat.selectedChatID
-      for (let i in chatData.chatList) { // Перебираем для каждого пользователя
-        if (chatData.chatList[i].chatID === selectedChat) {
-          // Сбрасывает счётчик сообщений текущего выбранного чата, только если чат отображается
-          if (this.$store.state.mChat.show) chatData.chatList[i].unreadMessageCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
-          eventBus.emit('mChatScrollToBottom');
-          return chatData.chatList[i].messagesHistory
-        }
-      }
-    },
     calcWidth() {
       // Если мобильное представление
       if (this.$vuetify.breakpoint.xsOnly) {
