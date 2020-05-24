@@ -13,6 +13,7 @@
 import mChatFrame from './mChatFrame.vue'
 import FloatingChatButton from './FloatingChatButton.vue'
 
+import { mChatNotify } from '../../js/notificationSystem'
 import eventBus from '../../js/eventBus.js'
 
 export default {
@@ -83,7 +84,18 @@ export default {
         // true, если нет ни одного совпадения
         return exceptionList.some(checkClickTarget) === false        
       }
+    },
+
+    sendNotify(){
+      // let 
+      // mChatNotify({ message: ''})
     }
+  },
+  mounted(){
+    eventBus.on('mChatMessageWasSent', this.sendNotify);
+  },
+  beforeDestroy(){
+    eventBus.off('mChatMessageWasSent');
   },
   components: {
     mChatFrame,

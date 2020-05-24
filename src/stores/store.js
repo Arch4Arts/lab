@@ -12,6 +12,9 @@ var utf8 = require('crypto-js/enc-utf8')
 var PBKDF2 = require('crypto-js/pbkdf2')
 
 var deepExtend = require('deep-extend');
+var merge = require("deepmerge");
+const assign = require('assign-deep');
+
 
 Vue.use(Vuex)
 
@@ -25,6 +28,7 @@ const store = new Vuex.Store({
       { themeName: 'NordLight' },
       { themeName: 'NordDark' },
       { themeName: 'CustomDark' },
+      { themeName: 'slut' },
     ],
     gameHotkeysEnable: true, // Горячие клавиши в игре 
     keyboardShortcutsVersion: '0',   
@@ -86,9 +90,10 @@ const store = new Vuex.Store({
       return undefined;
     },
     // Функция слияния значений по умолчанию, и пользовательским store.
-    arrayMerger(store, saved){
-      return deepExtend(store, saved)
-    }
+    // ! Надо попробовать обновлять store через Set
+    // arrayMerger(store, saved){ 
+    //   return assign(store, saved)
+    // }
   })],
   mutations:{
     updateStores() { // Используется только для закрепления изменений во всех Store's

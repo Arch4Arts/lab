@@ -26,7 +26,7 @@
           class="chat-list__palette-menu--hover"
           v-for="(ThemesList, index) in $store.state.mChat.themesList"
           :key="index"
-          @click="chatThemes(ThemesList.themeName)"
+          @click="applySelectedTheme(ThemesList.themeName)"
         >
           <v-list-item-title class="chat-list__palette-menu-font">{{ ThemesList.themeName }}</v-list-item-title>
         </v-list-item>
@@ -83,7 +83,6 @@
       </v-list-item>
     </template>
   </v-list>
-  
 </v-card>
 </template>
 
@@ -111,16 +110,21 @@ export default {
       let chatData = JSON.parse(JSON.stringify(this.mChatData)); // Данные чатов
       let chatListData = [] // Список текущих чатов с информацией о контакте и последнем сообщении
       // Формируем список текущий чатов
-      for (let i in сurrentChatList) { // Перебираем каждого в списке contacts
-        for (let key in chatData.chatList) { // Перебирем всех
+      for (let i in сurrentChatList) {
+        for (let key in chatData.chatList) {
           if (chatData.chatList[key].chatID === сurrentChatList[i]) {
-            chatData.chatList[key].messagesHistory.find(function(message) { 
+            chatData.chatList[key].messagesHistory.reverse() // Инвертируем и ищем с конца
+            chatData.chatList[key].messagesHistory.find(function(message, index) { 
               // Заменяем весь массив с сообщениями, на одно удовлетворяющее критерию
-              if (message.type !== 'suggestion' && message.type === 'text') {
+              if (message.type !== 'suggestion' && message.type === 'text') { // Если текстовое сообщение
                 message.data.text = markdown(message.data.text)
                 chatData.chatList[key].messagesHistory = message
+                return true
               }
-              else if (message.type !== 'suggestion') chatData.chatList[key].messagesHistory = message
+              else if (message.type !== 'suggestion') { // Или любого другого типа кроме suggestion
+                chatData.chatList[key].messagesHistory = message
+                return true
+              }
             })
             chatListData.push(chatData.chatList[key])
           }
@@ -174,7 +178,7 @@ export default {
       this.$store.state.mChat.selectedChatIsGroup = selectedChatIsGroup
       this.$store.commit('mChatListShow');
     },
-    chatThemes(select){
+    applySelectedTheme(select){
       this.mChatData.currentSelectedTheme = select;
       this.$store.commit('updateStores');
       updateThemes()
