@@ -4,17 +4,17 @@
 		<v-flex md8 class="Page">
 			<h1 class=" text-center">Достижения</h1>
 			<div class="container"> 
-				<AchievementCard class="Achievement" :dataImage="require('../../media/img/Achievement_imgs/asslick.jpg')">
+				<AchievementCard class="Achievement" :dataImage="require('../../media/img/Achievement_imgs/test.jpg')">
 						<div slot="header_h1">Lorem ipsum</div>
 						<div slot="content_h2">More lorem ipsum bacon ipsum.</div>
 						<div slot="content_p">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken.</div>
 				</AchievementCard>
-				<AchievementCard class="Achievement" :dataImage="require('../../media/img/Achievement_imgs/asslick.jpg')">
+				<AchievementCard class="Achievement" :dataImage="require('../../media/img/Achievement_imgs/test.jpg')">
 						<div slot="header_h1">Lorem ipsum</div>
 						<div slot="content_h2">More lorem ipsum bacon ipsum.</div>
 						<div slot="content_p">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken.</div>
 				</AchievementCard>
-				<AchievementCard class="Achievement" :dataImage="require('../../media/img/Achievement_imgs/asslick.jpg')">
+				<AchievementCard class="Achievement" :dataImage="require('../../media/img/Achievement_imgs/test.jpg')">
 						<div slot="header_h1">Lorem ipsum</div>
 						<div slot="content_h2">More lorem ipsum bacon ipsum.</div>
 						<div slot="content_p">Bacon ipsum dolor amet pork belly tri-tip turducken, pancetta bresaola pork chicken meatloaf. Flank sirloin strip steak prosciutto kevin turducken.</div>

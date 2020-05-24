@@ -3,8 +3,7 @@
 		"en": {
 			"v-card-title": "You must be 18 or older to access this game",
 			"v-card-text": {
-        "1": "<br>This game contains <b>explicit scenes of a sexual nature</b>, with a great bias in <b>femdom</b>!",
-        "2": "<br>By clicking on the «<b>Continue</b>» button, you confirm that you are at least 18 years old."
+        "1": "<br>the game contains scenes of Smoking and blah-blah-blah"
       },
 			"v-btn-enter": "Continue",
 			"v-btn-leave": "Cancel"
@@ -12,8 +11,7 @@
 		"ru": {
 			"v-card-title": "Вы должны быть старше 18 лет для доступа к этой игре",
 			"v-card-text": {
-        "1": "<br>Данная игра содержит <b>откровенные сцены сексуального характера</b>, с большим уклоном в <b>женское доминирование</b>!",
-        "2": "<br>Нажимая на кнопку «<b>Продолжить</b>», вы подтверждаете, что вам как минимум 18 лет."
+        "1": "<br>игра содержит сцены <b>курения</b> и бла-бла-бла!"
       },
 			"v-btn-enter": "Продолжить",
 			"v-btn-leave": "Отменить"
@@ -28,7 +26,6 @@
       <v-card-title class="headline dark important-modal__header">{{ $t('v-card-title') }}</v-card-title>
         <v-card-text class="text--primary">
           <div v-html="$t('v-card-text.1')"></div>
-          <div v-html="$t('v-card-text.2')"></div>
         </v-card-text>
 
       <v-card-actions class="buttons-container">

@@ -385,7 +385,7 @@ export default {
       this.$store.state.gameLang == 'ru'
         ? saveNotify({message: 'Сохранение успешно перезаписано'})
         : saveNotify({message: 'Saving successfully overwritten'});
-      // Ищем выбранное сохранение для перезаписи и обновляем его время и ID (чтобы не перерендоривать весь список)
+      // Ищем выбранное сохранение для перезаписи и обновляем его время и ID (чтобы не перерендерить весь список)
       this.savesList.find(function(item) {
         if (item.saveID === saveID) {
           item.saveTime = dayjs().format("DD.MM.YYYY - HH:mm");

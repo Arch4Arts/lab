@@ -73,7 +73,8 @@ export default {
         // Выполнит handler (closeChat) если нет ни одного совпадения в списке исключений
         let exceptionList = [
           'palette-menu',
-          'viewer'
+          'viewer',
+          'test-chat'
         ];
 
         // Проверяет содержится ли целевой класс в списке исключений

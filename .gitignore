@@ -1,4 +1,5 @@
 .DS_Store
+.sentryclirc
 node_modules
 source_files
 /dist

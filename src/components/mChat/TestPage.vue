@@ -2,20 +2,22 @@
   <section>
   <v-form>
     <v-autocomplete
+      class="test-chat"
       v-model="selectedCharID"
       :items="getCharIDList"
       chips
-      label="CharID"
+      label="Char ID"
       hide-details
       hide-no-data
       hide-selected
     ></v-autocomplete>
     <br>
     <v-autocomplete
+      class="test-chat"
       v-model="selectedChatID"
       :items="getChatIDList"
       chips
-      label="ChatID"
+      label="Chat ID"
       hide-details
       hide-no-data
       hide-selected
@@ -24,18 +26,18 @@
  
   <br>
   <br><br>
-  <v-btn @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "lorum!" })'>short text...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "Lorum **ipsum** orom!" })'>text...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "Ipsum **_lorom odno_** id narokomoron is naruch begin end" })'>long text...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedCharID, "image", { src: require("../../media/img/2.gif") })'>image gif...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedCharID, "video", { src: require("../../media/video/Carmelita.mp4"), preview: require("D:/H/HPic/Humiliation/094e17751cb73ac0bbcdea350c82473ebdf72e3c.jpeg") })'>video...</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedCharID, "audio", { src: require("../../media/audio/test.mp3") })'>audio..</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedCharID, "emoji", { src: require("../../media/img/smiling-face.png") })'>emoji..</v-btn>
-  <v-btn @click='sendMessage(selectedChatID, selectedCharID, "suggestion", { suggestions: ["no", "Yes"] })'>suggetions</v-btn>
+  <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "lorum!" })'>short text...</v-btn>
+  <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "Lorum **ipsum** orom!" })'>text...</v-btn>
+  <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "Ipsum **_lorom odno_** id narokomoron is naruch begin end" })'>long text...</v-btn>
+  <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "image", { src: require("../../media/img/2.gif") })'>image gif...</v-btn>
+  <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "video", { src: require("../../media/video/Carmelita.mp4"), preview: require("../../media/img/video test preview.jpeg") })'>video...</v-btn>
+  <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "audio", { src: require("../../media/audio/test.mp3") })'>audio..</v-btn>
+  <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "emoji", { src: require("../../media/img/smiling-face.png") })'>emoji..</v-btn>
+  <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "suggestion", { suggestions: ["no", "Yes"] })'>suggetions</v-btn>
   <br>
-  <v-btn text @click="addContactToChatList('mc_erza')">Добавить mc в контакты</v-btn>
+  <v-btn class="test-chat" text @click="addContactToChatList('mc_erza')">Добавить mc в контакты</v-btn>
   <br><br>
-  <v-btn @click="genUID()">Gen UID</v-btn>
+  <v-btn class="test-chat" @click="genUID()">Gen UID</v-btn>
   {{ uniqid }}  
   </section>
 </template>

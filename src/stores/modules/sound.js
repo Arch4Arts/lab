@@ -16,12 +16,11 @@ const sound = {
     smartphoneSoundEnable: true, // Вкл/Выкл звука
 
     // Выбор звука
-    achievementSound: 'Moan', // Вкл/Выкл звука
+    achievementSound: 'iOS Notification', // Вкл/Выкл звука
     diarySound: 'Diary write sound', // Вкл/Выкл звука
     smartphoneSound: 'MIUI Notification', // Вкл/Выкл звука
     
     soundsList: [
-      { soundName: 'Moan' },
       { soundName: 'Diary write sound' },
       { soundName: 'iOS Notification' },
       { soundName: 'MIUI Notification' },

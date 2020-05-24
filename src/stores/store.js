@@ -28,7 +28,6 @@ const store = new Vuex.Store({
       { themeName: 'NordLight' },
       { themeName: 'NordDark' },
       { themeName: 'CustomDark' },
-      { themeName: 'slut' },
     ],
     gameHotkeysEnable: true, // Горячие клавиши в игре 
     keyboardShortcutsVersion: '0',   
@@ -90,7 +89,6 @@ const store = new Vuex.Store({
       return undefined;
     },
     // Функция слияния значений по умолчанию, и пользовательским store.
-    // ! Надо попробовать обновлять store через Set
     // arrayMerger(store, saved){ 
     //   return assign(store, saved)
     // }

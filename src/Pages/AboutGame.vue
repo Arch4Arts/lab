@@ -1,39 +1,17 @@
 <i18n>
 	{
 		"en": {
-			"section-aboutGame": {
-        "title": "About the game",
-        "1": "This game contains many fetishes, perversions, before starting the game, please read the list below:",
-        "2": "Click on the tag to open the description.",
-        "3": "If you are satisfied with the above fetishes, then welcome, otherwise, do not play this game, you have been warned."
-      },
-      "section-support": {
-        "title": "Support",
-        "1": "If you like the game and you want to support me, visit my <a :href='$store.state.patreon_link' class='subscribe-star'>Subscribe Star</a>",
-        "2": "Also, the game requires an adequate translation into English, and if you can help with this in any way, write to me."
-      },
-      "section-community": {
-        "title": "Community",
-        "1": "If you have suggestions for improving the game, ideas or questions, you can visit our <a :href='$store.state.discord_link' class='discord'>Discord</a>",
-        "2": "Also visit these resources: <a :href='$store.state.tfgames_link' class='tfgames'>TFGames</a> and <a :href='$store.state.f95zone_link' class='f95'>F95</a><a :href='$store.state.f95zone_link' class='f95-zone'>Zone</a> there you can also find useful information in discussions."
+      "test": {
+        "1": "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+        "2": "Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?",
+        "3": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo."
       }
 		},
 		"ru": {
-			"section-aboutGame": {
-        "title": "Об игре",
-        "1": "Данная игра, содержит множество фетишей, извращений, перед началом игры, пожалуйста, ознакомтесь со списком ниже:",
-        "2": "Нажми на тег, чтобы открыть описание",
-        "3": "Если вас устраивает вышеперечисленные фетиши, тогда добро пожаловать, в противном случае, не играйте в эту игру, вы были предупреждены."
-      },
-      "section-support": {
-        "title": "Поддержка",
-        "1": "Если вам нравится игра, и вы хотите поддержать меня, посетите мой  <a :href='$store.state.patreon_link' class='subscribe-star'>Subscribe Star</a>",
-        "2": "Также игре требуется адекватный перевод на английский язык, и если вы можете как-либо помочь с этим, напишите мне."
-      },
-      "section-community": {
-        "title": "Сообщество",
-        "1": "Если у вас есть предложения по улучшению игры, идеи или вопросы, вы можете посетить наш <a :href='$store.state.discord_link' class='discord'>Discord</a>",
-        "2": "Также посетите данные ресурсы: <a :href='$store.state.tfgames_link' class='tfgames'>TFGames</a> and <a :href='$store.state.f95zone_link' class='f95'>F95</a><a :href='$store.state.f95zone_link' class='f95-zone'>Zone</a> там вы также можете найти полезную информацию в обсуждениях."
+      "test": {
+        "1": "С другой стороны реализация намеченных плановых заданий позволяет выполнять важные задания по разработке форм развития. Не следует, однако забывать, что консультация с широким активом обеспечивает широкому кругу (специалистов) участие в формировании направлений прогрессивного развития. Задача организации, в особенности же рамки и место обучения кадров требуют определения и уточнения позиций, занимаемых участниками в отношении поставленных задач. С другой стороны рамки и место обучения кадров играет важную роль в формировании существенных финансовых и административных условий.",
+        "2": "Идейные соображения высшего порядка, а также реализация намеченных плановых заданий требуют от нас анализа систем массового участия. Значимость этих проблем настолько очевидна, что консультация с широким активом требуют от нас анализа системы обучения кадров, соответствует насущным потребностям.",
+        "3": "Идейные соображения высшего порядка, а также новая модель организационной деятельности влечет за собой процесс внедрения и модернизации дальнейших направлений развития. Не следует, однако забывать, что рамки и место обучения кадров требуют от нас анализа дальнейших направлений развития. Товарищи! начало повседневной работы по формированию позиции играет важную роль в формировании позиций, занимаемых участниками в отношении поставленных задач."
       }
 		}
 	}
@@ -41,26 +19,11 @@
 
 <template>
 <div>
-  <!-- ВЫБОР ЯЗЫКА -->
   <!-- ОБ ИГРЕ -->
   <p></p>
-  <div class="separator"><h1>{{ $t('section-aboutGame.title') }}</h1></div>
-  <p></p>
-  <p>{{ $t('section-aboutGame.1') }}</p>
-  <p><i>{{ $t('section-aboutGame.2') }}</i></p>
-  <v-chip class="genres" v-for="(genre, i) in genres" :key="'genre' + i" @click="openGenreDescriptionLink(genresLink[i])"> {{ genres[i] }} </v-chip>
-  <p></p>
-  <p>{{ $t('section-aboutGame.3') }}</p>
-  <!-- ПОДДЕРЖКА -->
-  <div class="separator"><h2>{{ $t('section-support.title') }}</h2></div>
-  <p />
-  <p v-html="$t('section-support.1')" />
-  <p v-html="$t('section-support.2')" />
-  <!-- СООБЩЕСТВО -->
-  <div class="separator"><h2>{{ $t('section-community.title') }}</h2></div>
-  <p></p>
-  <p v-html="$t('section-community.1')" />
-  <p v-html="$t('section-community.2')" />
+  <p v-html="$t('test.1')" />
+  <p v-html="$t('test.2')" />
+  <p v-html="$t('test.3')" />
 </div>
 
 </template>
