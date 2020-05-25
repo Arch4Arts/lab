@@ -48,8 +48,8 @@ import { sendMessage, addContactToChatList } from './mChatFunctions.js'
 export default {
   data(){
     return {
-      selectedCharID: '',
-      selectedChatID: '',
+      selectedCharID: 'erza',
+      selectedChatID: 'erza',
       uniqid: '',
 
       sendMessage: sendMessage,

@@ -10,11 +10,10 @@ export function mChatNotify(extOptions){
   // Параметры по умолчанию
   let options = {
     class: 'mchat-notify',
-    // iconUrl: 'assets/img/info-circle.svg',
+    balloon: true,
     position: 'bottomRight',
     messageSize: '16',
     close: false,
-    timeout: 0,
     progressBar: false
   }
   // Вывод оповещения
