@@ -87,16 +87,16 @@ export default {
       }
     },
 
-    sendNotify(){
-      // let 
-      // mChatNotify({ message: ''})
+    sendNotify(message){
+      console.log(message)
+      mChatNotify({ message: message.data.text })
     }
   },
   mounted(){
-    eventBus.on('mChatMessageWasSent', this.sendNotify);
+    eventBus.on('mChatMessageWasSent_Notify', this.sendNotify);
   },
   beforeDestroy(){
-    eventBus.off('mChatMessageWasSent');
+    eventBus.off('mChatMessageWasSent_Notify');
   },
   components: {
     mChatFrame,

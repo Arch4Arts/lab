@@ -30,6 +30,7 @@ export function onMessageWasSent(ChatID, message){ // Импорт для userIn
 
       store.commit('updateStores');
       eventBus.emit('mChatMessageWasSent');
+      eventBus.emit('mChatMessageWasSent_Notify', message);
     }
   }
 }
