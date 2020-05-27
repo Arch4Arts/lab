@@ -14,6 +14,8 @@ import mChatFrame from './mChatFrame.vue'
 import FloatingChatButton from './FloatingChatButton.vue'
 
 import { mChatNotify } from '../../js/notificationSystem'
+import { markdown } from './messages/drawdown'
+
 import eventBus from '../../js/eventBus.js'
 
 export default {
@@ -115,7 +117,7 @@ export default {
               ${message.name}
             </div>
             <div class="mchat-notify__message-container__message">
-              ${message.data.text}
+              ${markdown(message.data.text)}
             </div>            
           </div>
         </div>
