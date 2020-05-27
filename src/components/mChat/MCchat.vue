@@ -124,7 +124,8 @@ export default {
         </div>
       `
       mChatNotify({ message: template })
-      soundPlay(this.$store.state.sound.smartphoneSound, this.$store.state.sound.smartphoneVolume)
+      if (this.$store.state.sound.smartphoneSoundEnable)
+        soundPlay(this.$store.state.sound.smartphoneSound, this.$store.state.sound.smartphoneVolume)
     }
   },
   mounted(){

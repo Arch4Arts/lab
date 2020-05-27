@@ -31,17 +31,21 @@ export function searchPath(soundName){
   return searchResult
 }
 
-export function soundPlay(soundName, volumeState = 0.5){ 
-  var audio = new Audio(searchPath(soundName));
-  audio.volume = volumeState
-  audio.play();
+export function soundPlay(soundName, volumeState = 0.5){
+  if (store.state.sound.gameGlobalSoundsEnable) {
+    var audio = new Audio(searchPath(soundName));
+    audio.volume = volumeState
+    audio.play();    
+  }
 }
 
 export function soundPlayLoop(soundName, volumeState = 0.5){ 
-  var loopAudio = new Audio(searchPath(soundName));
-  loopAudio.volume = volumeState;
-  loopAudio.loop = true;
-  loopAudio.id = 'soundPlayLoop';
-  loopAudio.play();
-  document.body.appendChild(loopAudio); // Для остановка проигрывания изневго, при поиске по id
+  if (store.state.sound.gameGlobalSoundsEnable) {
+    var loopAudio = new Audio(searchPath(soundName));
+    loopAudio.volume = volumeState;
+    loopAudio.loop = true;
+    loopAudio.id = 'soundPlayLoop';
+    loopAudio.play();
+    document.body.appendChild(loopAudio); // Для остановка проигрывания изневго, при поиске по id
+  }
 }
