@@ -130,6 +130,7 @@ export default {
           }
         }
       }
+      
       return this.setChatInfo(chatListData) // Определение параметров аватара и имени
     },
   },

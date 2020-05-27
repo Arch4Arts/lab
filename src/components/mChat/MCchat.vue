@@ -86,10 +86,41 @@ export default {
         return exceptionList.some(checkClickTarget) === false        
       }
     },
-
     sendNotify(message){
-      console.log(message)
-      mChatNotify({ message: message.data.text })
+      let chatData = this.mChatData;
+      function getData(messageAuthor) {
+        for (let i in chatData.charProfiles) {
+          if (messageAuthor === chatData.charProfiles[i].charID) 
+            // Если используется псевдоним
+            if (chatData.charProfiles[i].isAlias) {
+              message.name = chatData.charProfiles[i].aliasName;
+              message.avatar = chatData.charProfiles[i].avatar;    
+            }
+            else {
+              message.name = chatData.charProfiles[i].name;
+              message.avatar = chatData.charProfiles[i].avatar;                
+            }
+        }
+      }
+      getData(message.author);
+
+      // console.log(message)
+      let template = `
+        <div class="mchat-notify__container">
+          <div>
+            <img class="mchat-notify__avatar" src="${message.avatar}" />
+          </div>
+          <div class="mchat-notify__message-container">
+            <div class="mchat-notify__message-container__title">
+              ${message.name}
+            </div>
+            <div class="mchat-notify__message-container__message">
+              ${message.data.text}
+            </div>            
+          </div>
+        </div>
+      `
+      mChatNotify({ message: template })
     }
   },
   mounted(){

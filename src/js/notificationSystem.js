@@ -1,5 +1,6 @@
 import 'izitoast/dist/css/iziToast.min.css';
 import iziToast from 'izitoast/dist/js/iziToast.min.js';
+import vuetify from '../styles/vuetify'
 
 // идентификатор infoCircle нигде не используется, но импорт нужен для загрузки самого svg файла
 import exclamationTriangle from '../assets/exclamation-triangle.svg'
@@ -10,14 +11,15 @@ export function mChatNotify(extOptions){
   // Параметры по умолчанию
   let options = {
     class: 'mchat-notify',
-    balloon: true,
     position: 'bottomRight',
     messageSize: '16',
+    displayMode: vuetify.framework.breakpoint.xsOnly ? 2 : 0,
     close: false,
+    timeout: 0,
     progressBar: false
   }
   // Вывод оповещения
-  iziToast.info(Object.assign(options, extOptions))
+  iziToast.show(Object.assign(options, extOptions))
 }
 
 // Оповещения для компонента saves

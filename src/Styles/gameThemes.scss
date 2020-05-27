@@ -1,7 +1,10 @@
 // Настройки стилей по умолчанию
 html {
 	&[gameTheme='NordDark'] {	
-	--errors-handling-notify: rgb(255, 102, 102);
+	--errors-handling-notify--background: rgb(255, 102, 102);
+	--mchat-notify--background: #4C566A;
+	--mchat-notify--title--color: #ECEFF4;
+	--mchat-notify--message--color: #ECEFF4;
 
 	// Переиспользуемые переменные
 	--v-primary-base: #ECEFF4;
@@ -57,9 +60,9 @@ html {
 	--savesList--load-btn--color: rgb(255, 254, 173);
 	--savesList--delete-btn--color: rgb(255, 102, 102);
 
-	--save-notify--save: rgb(157,222,255);
-	--save-notify--load: rgb(255, 254, 173);
-	--save-notify--delete: rgb(255, 102, 102);
+	--save-notify--save--background: rgb(157,222,255);
+	--save-notify--load--background: rgb(255, 254, 173);
+	--save-notify--delete--background: rgb(255, 102, 102);
 
 // RadialMenu.vue
 	--RadialMenu--main-btn--background: transparent;
@@ -83,20 +86,60 @@ html {
 
 // Сообственные стили
 
+.iziToast:after {
+	box-shadow: none; // отключение тени
+}
+
+.mchat-notify {
+	background-color: var(--mchat-notify--background) !important;
+	max-width: 30%;
+
+	&__container {
+		display: flex;
+	}
+	&__message-container {
+		display: flex;
+		flex-direction: column;
+
+		padding-left: 10px;
+		&__title {
+			color: var(--mchat-notify--title--color);
+			font-weight: 700;  
+		}
+		&__message {
+			color: var(--mchat-notify--message--color);
+
+			padding-top: 6px;
+		}
+	}
+	&__avatar {
+		border-radius: 50%;
+		height: 3.8em;
+	}
+
+	.iziToast-body {
+		padding: none !important;
+	}
+}
+
+.test23 {
+	color: red;
+}
+
 .save-notify {
 	&__save {
-		background-color: var(--save-notify--save) !important;
+		background-color: var(--save-notify--save--background) !important;
 	}
 	&__load {
-		background-color: var(--save-notify--load) !important;
+		background-color: var(--save-notify--load--background) !important;
 	}
 	&__delete {
-		background-color: var(--save-notify--delete) !important;
+		background-color: var(--save-notify--delete--background) !important;
 	}
 }
 
 .errors-handling-notify {
-	background-color: var(--errors-handling-notify) !important;
+	background-color: var(--errors-handling-notify--background) !important;
 }
 
 
@@ -152,4 +195,9 @@ html {
 }	
 
 
-
+@import '~vuetify/src/styles/styles.sass';
+@media #{map-get($display-breakpoints, 'xs-only')} {
+	.mchat-notify {
+		max-width: 100%;
+	}
+}

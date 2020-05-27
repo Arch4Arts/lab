@@ -140,7 +140,7 @@ export default {
 		font-size: em($radius);
 	  }
 	}
-  }
+}
 
 @mixin tail($radius: 8, $side: right, $tail_color: dodgerblue) {
 	$tail: $radius * 1.5;

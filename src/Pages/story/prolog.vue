@@ -7,7 +7,21 @@
     <h2>Пролог</h2>
     <h3>Пролог</h3>
     {{ $t('message') }}
-    <v-btn @click="test()" />
+    
+        <div class="mchat-notify__container">
+          <div>
+            <img class="mchat-notify__avatar" src="${message.avatar}" />
+          </div>
+          <div class="mchat-notify__message-container">
+            <div class="mchat-notify__message-container__title">
+              ${message.name}
+            </div>
+            <div class="mchat-notify__message-container__message">
+              ${message.data.text}
+            </div>            
+          </div>
+        </div>
+
     <!-- <img src="assets/img/info-circle.svg" height="65" width="68"> -->
     <!-- <img src="@/assets/info-circle.svg" height="65" width="68"> -->
     <h4>Пролог</h4>

@@ -26,6 +26,7 @@
  
   <br>
   <br><br>
+  <p>Send</p>
   <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "lorum!" })'>short text...</v-btn>
   <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "Lorum **ipsum** orom!" })'>text...</v-btn>
   <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "Ipsum **_lorom odno_** id narokomoron is naruch begin end" })'>long text...</v-btn>
