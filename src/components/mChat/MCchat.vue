@@ -14,6 +14,7 @@ import mChatFrame from './mChatFrame.vue'
 import FloatingChatButton from './FloatingChatButton.vue'
 
 import { mChatNotify } from '../../js/notificationSystem'
+import { soundPlay } from '../../js/gameSound'
 import { markdown } from './messages/drawdown'
 
 import eventBus from '../../js/eventBus.js'
@@ -123,6 +124,7 @@ export default {
         </div>
       `
       mChatNotify({ message: template })
+      soundPlay(this.$store.state.sound.smartphoneSound, this.$store.state.sound.smartphoneVolume)
     }
   },
   mounted(){

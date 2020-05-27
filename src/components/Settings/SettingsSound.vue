@@ -213,11 +213,6 @@
 import { checkSoundsEnable, soundPlay, soundPlayLoop } from '../../js/gameSound'
 
 export default {
-  data(){
-    return {
-      
-    }
-  },
   methods: {
       // Проиграть выбранный звук (для спика)
       playbacSelectedSound(soundName, volume){
