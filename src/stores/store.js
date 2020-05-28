@@ -11,11 +11,6 @@ var AES = require("crypto-js/aes");
 var utf8 = require('crypto-js/enc-utf8')
 var PBKDF2 = require('crypto-js/pbkdf2')
 
-var deepExtend = require('deep-extend');
-var merge = require("deepmerge");
-const assign = require('assign-deep');
-
-
 Vue.use(Vuex)
 
 const store = new Vuex.Store({

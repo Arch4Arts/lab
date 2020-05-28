@@ -47,7 +47,10 @@ import sister from '../../components/Chars/CharStyles/sister'
 import mcSettings from '../../components/Chars/CharSettings/mcSettings'
 import mChatTestPage from '../../components/mChat/TestPage'
 
+import twemoji from 'twemoji'
+
 export default {
+  data
   components: {
     mc,
     sister,

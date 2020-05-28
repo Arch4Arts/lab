@@ -30,39 +30,7 @@
 
 <script>
 export default {
-	data(){
-		return {
-			genres: [
-        'Sissy',
-        'Humiliation',
-        'Femdom',
-        'Pegging',
-        'Chastity Cage',
-        'Asswoship',
-        'Asslick',
-        'Dick shrinking',
-        'SPH',
-        'Homosexuality',
-		  ],
-      genresLink: [
-        'https://www.urbandictionary.com/define.php?term=sissy',
-        'https://www.urbandictionary.com/define.php?term=humiliation',
-        'https://www.urbandictionary.com/define.php?term=Femdom',
-        'https://www.urbandictionary.com/define.php?term=pegging',
-        'https://www.urbandictionary.com/define.php?term=chastity+cage',
-        'https://www.urbandictionary.com/define.php?term=ass%20worship',
-        'https://www.urbandictionary.com/define.php?term=asslick',
-        'https://www.urbandictionary.com/define.php?term=shrink+dick',
-        'https://www.urbandictionary.com/define.php?term=sph',
-        'https://www.urbandictionary.com/define.php?term=homosexuality',
-      ],
-		}
-	},
-	methods: {
-		openGenreDescriptionLink(link){
-			window.open(link);
-		},
-	}
+
 }
 </script>
 
