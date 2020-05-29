@@ -3,7 +3,7 @@ const packageJson = require('D:/Dev/lab/package.json');
 const CopyPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack')
 
-const emojiFileList = require('./src/js/twemojiji')
+const emojiFileList = require('./src/js/twemoji')
 
 module.exports = {
   configureWebpack: config => {
