@@ -90,6 +90,10 @@ html {
 	box-shadow: none; // отключение тени
 }
 
+.emoji-test {
+	height: 24px;
+}
+
 .mchat-notify {
 	background-color: var(--mchat-notify--background) !important;
 	min-width: 25%;;

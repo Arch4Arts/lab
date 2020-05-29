@@ -8,19 +8,22 @@
     <h3>Пролог</h3>
     {{ $t('message') }}
     
-        <div class="mchat-notify__container">
-          <div>
-            <img class="mchat-notify__avatar" src="${message.avatar}" />
-          </div>
-          <div class="mchat-notify__message-container">
-            <div class="mchat-notify__message-container__title">
-              ${message.name}
-            </div>
-            <div class="mchat-notify__message-container__message">
-              ${message.data.text}
-            </div>            
-          </div>
+    <!-- <div class="mchat-notify__container">
+      <div>
+        <img class="mchat-notify__avatar" src="${message.avatar}" />
+      </div>
+      <div class="mchat-notify__message-container">
+        <div class="mchat-notify__message-container__title">
+          ${message.name}
         </div>
+        <div class="mchat-notify__message-container__message">
+          ${message.data.text}
+        </div>            
+      </div>
+    </div> -->
+
+    <div v-html="text" />
+    <v-btn @click="test()">emoji</v-btn>
 
     <!-- <img src="assets/img/info-circle.svg" height="65" width="68"> -->
     <!-- <img src="@/assets/info-circle.svg" height="65" width="68"> -->
@@ -50,7 +53,11 @@ import mChatTestPage from '../../components/mChat/TestPage'
 import twemoji from 'twemoji'
 
 export default {
-  data
+  data() {
+    return {
+      text: 'I 😄 emoji! and 😅 & ❤️',
+    }
+  },
   components: {
     mc,
     sister,
@@ -59,7 +66,24 @@ export default {
   },
   methods: {
     test(){
-      this.$toast.error('Illegal operation', 'Error')
+      console.log(twemoji.parse(this.text, {
+        // callback: (e) => {console.log(e)},   // default the common replacer
+        // attributes: (e) => {console.log(e)}, // default returns {}
+        base: 'assets/img/',         // default MaxCDN
+        ext: ".svg",          // default ".png"
+        className: "emoji-test",    // default "emoji"
+        // size: 32,  // default "72x72"
+        folder: "twemoji"       // in case it's specified
+      }))
+      this.text = twemoji.parse(this.text, {
+        // callback: Function,   // default the common replacer
+        // attributes: Function, // default returns {}
+        base: 'assets/img/',         // default MaxCDN
+        ext: ".svg",          // default ".png"
+        className: "emoji-test",    // default "emoji"
+        // size: 32,  // default "72x72"
+        folder: "twemoji"       // in case it's specified
+      })
     }
   }
 }

@@ -15,20 +15,13 @@
 import Prolog from './story/Prolog'
 
 export default {
-    components: {
-        Prolog,
-    },
-    data(){
-        return {
-        }
-    },
-    methods: {
-
-    },
-    mounted: function(){ 
-        document.getElementById("StoryTextArea").style.fontFamily = this.$store.state.gameFont;
-        document.getElementById("StoryTextArea").style.fontSize = `${this.$store.state.gameFontSize}`;
-    }
+	mounted: function(){ 
+		document.getElementById("StoryTextArea").style.fontFamily = this.$store.state.gameFont;
+		document.getElementById("StoryTextArea").style.fontSize = `${this.$store.state.gameFontSize}`;
+	},
+	components: {
+		Prolog,
+	},
 }
 </script>
 

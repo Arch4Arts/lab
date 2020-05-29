@@ -1,6 +1,9 @@
 const SentryCliPlugin = require('@sentry/webpack-plugin');
-var packageJson = require('D:/Dev/lab/package.json');
+const packageJson = require('D:/Dev/lab/package.json');
+const CopyPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack')
+
+const emojiFileList = require('./src/js/twemojiji')
 
 module.exports = {
   configureWebpack: config => {
@@ -31,19 +34,25 @@ module.exports = {
     // Undefined - community версия, т.к в .env.production нет переменной VUE_APP_EDITION, но есть в .env.special
     (process.env.VUE_APP_EDITION === undefined && process.env.NODE_ENV !== 'development') ? // Production
       [
-      new SentryCliPlugin({ // Обработчик ошибок
-        release: packageJson.version, // извлечение версии игры из переменной
-        include: `./dist/${packageJson.name} ${packageJson.version} community/js/`, // Загрузка js файлов на сервер
-        filenameTransform: filename => '~/js/' + filename,
-        ignoreFile: '.sentrycliignore',
-        ignore: ['node_modules', 'webpack.config.js'],
-      }),
-      // Не включает файлы в сборку, попадаюшие под данное регулярное выражение
-      // Таким образом все файлы Special Edtion должны оканчиваться на _special.vue
-      new webpack.IgnorePlugin(/.*_special.vue/)
+        new CopyPlugin({
+          patterns: emojiFileList
+        }),
+        new SentryCliPlugin({ // Обработчик ошибок
+          release: packageJson.version, // извлечение версии игры из переменной
+          include: `./dist/${packageJson.name} ${packageJson.version} community/js/`, // Загрузка js файлов на сервер
+          filenameTransform: filename => '~/js/' + filename,
+          ignoreFile: '.sentrycliignore',
+          ignore: ['node_modules', 'webpack.config.js'],
+        }),
+        // Не включает файлы в сборку, попадаюшие под данное регулярное выражение
+        // Таким образом все файлы Special Edtion должны оканчиваться на _special.vue
+        new webpack.IgnorePlugin(/.*_special.vue/)
       ]
     : (process.env.VUE_APP_EDITION === 'special') ? // Special
         [
+          new CopyPlugin({
+            patterns: emojiFileList
+          }),
           new SentryCliPlugin({ // Обработчик ошибок
             release: packageJson.version, // извлечение версии игры из переменной
             include: `./dist/${packageJson.name} ${packageJson.version} special/js/`, // Загрузка js файлов на сервер
@@ -61,6 +70,9 @@ module.exports = {
           //   ignoreFile: '.sentrycliignore',
           //   ignore: ['node_modules', 'webpack.config.js'],
           // }),
+          new CopyPlugin({
+            patterns: emojiFileList
+          }),
         ]
   },
   // chainWebpack: config => {
