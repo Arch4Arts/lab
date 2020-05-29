@@ -4,6 +4,8 @@ const CopyPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack')
 
 const emojiFileList = require('./src/js/twemoji')
+const faviconPath = { from: './src/assets/favicon.png', to: 'assets/img/' }
+const fileList = [].concat(emojiFileList, faviconPath)
 
 module.exports = {
   configureWebpack: config => {
@@ -35,7 +37,7 @@ module.exports = {
     (process.env.VUE_APP_EDITION === undefined && process.env.NODE_ENV !== 'development') ? // Production
       [
         new CopyPlugin({
-          patterns: emojiFileList
+          patterns: fileList
         }),
         new SentryCliPlugin({ // Обработчик ошибок
           release: packageJson.version, // извлечение версии игры из переменной
@@ -51,7 +53,7 @@ module.exports = {
     : (process.env.VUE_APP_EDITION === 'special') ? // Special
         [
           new CopyPlugin({
-            patterns: emojiFileList
+            patterns: fileList
           }),
           new SentryCliPlugin({ // Обработчик ошибок
             release: packageJson.version, // извлечение версии игры из переменной
@@ -71,7 +73,7 @@ module.exports = {
           //   ignore: ['node_modules', 'webpack.config.js'],
           // }),
           new CopyPlugin({
-            patterns: emojiFileList
+            patterns: fileList
           }),
         ]
   },
