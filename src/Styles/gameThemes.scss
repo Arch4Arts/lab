@@ -96,8 +96,9 @@ html {
 
 .mchat-notify {
 	background-color: var(--mchat-notify--background) !important;
-	min-width: 25%;;
+	min-width: 25%;
 	max-width: 25%;
+	max-height: 100px;
 
 	&__container {
 		display: flex;
@@ -105,6 +106,7 @@ html {
 	&__message-container {
 		display: flex;
 		flex-direction: column;
+		max-height: 48px;
 
 		padding-left: 10px;
 		&__title {
@@ -112,20 +114,30 @@ html {
 			font-weight: 700;  
 		}
 		&__message {
-			color: var(--mchat-notify--message--color);
-			opacity: .850;
-
-			// Ограчение текста в 2 строки с троеточием в конце
-			overflow: hidden;
-			text-overflow: ellipsis;
-			display: -webkit-box;
-			-webkit-line-clamp: 2;
-			-webkit-box-orient: vertical;
-
-			padding-top: 6px;
+			padding-top: 3px;
+			max-height: inherit;
+			p {
+				color: var(--mchat-notify--message--color);
+				font-size: 0.950em;
+				line-height: 1.350em;
+				opacity: .850;
+	
+				// Ограчение текста в 2 строки с троеточием в конце
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+			}
 			&__emoji {
 				height: 18px;
 				vertical-align: -.2em;
+				padding: 0 .05em 0 .1em;
+			}		
+			&__image {
+				max-height: inherit;
+				border-radius: 4px;
+				float: right;
 			}
 		}
 	}
@@ -135,12 +147,14 @@ html {
 	}
 
 	.iziToast-body {
-		padding: none !important;
+		padding: 0px 0px 0px 0px !important;
+		.iziToast-texts {
+			margin: 0px 0px 0px 0px;		
+			.iziToast-message {
+			margin: 0px 0px 0px 0px !important;
+			}
+		}
 	}
-}
-
-.test23 {
-	color: red;
 }
 
 .save-notify {
@@ -216,5 +230,6 @@ html {
 @media #{map-get($display-breakpoints, 'xs-only')} {
 	.mchat-notify {
 		max-width: 100%;
+		min-width: 100%;
 	}
 }

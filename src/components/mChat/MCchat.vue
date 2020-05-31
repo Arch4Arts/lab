@@ -91,52 +91,73 @@ export default {
       }
     },
     sendNotify(message){
-      let chatData = this.mChatData;
-      function getData(messageAuthor) {
-        for (let i in chatData.charProfiles) {
-          if (messageAuthor === chatData.charProfiles[i].charID) 
-            // Если используется псевдоним
-            if (chatData.charProfiles[i].isAlias) {
-              message.name = chatData.charProfiles[i].aliasName;
-              message.avatar = chatData.charProfiles[i].avatar;    
-            }
-            else {
-              message.name = chatData.charProfiles[i].name;
-              message.avatar = chatData.charProfiles[i].avatar;                
-            }
+      if (!this.$store.state.mChat.show) {
+        let chatData = this.mChatData;
+        function getChatData(messageAuthor) {
+          for (let i in chatData.charProfiles) {
+            if (messageAuthor === chatData.charProfiles[i].charID) 
+              // Если используется псевдоним
+              if (chatData.charProfiles[i].isAlias) {
+                message.name = chatData.charProfiles[i].aliasName;
+                message.avatar = chatData.charProfiles[i].avatar;    
+              }
+              else {
+                message.name = chatData.charProfiles[i].name;
+                message.avatar = chatData.charProfiles[i].avatar;                
+              }
+          }
         }
-      }
-      getData(message.author);
-      function getFormatMessage(message) { 
-        message = markdown(message) // Применение форматирования к тексту, демо: https://markdown-it.github.io
-        message = twemoji.parse(message, {
-          base: 'assets/img/',                                          // default MaxCDN
-          ext: ".svg",                                                  // default ".png"
-          className: "mchat-notify__message-container__message__emoji", // default "emoji"
-          folder: "twemoji"
-        })
-        return message        
-      }
-      message.data.text = getFormatMessage(message.data.text)
-      // console.log(message)
-      let template = `
-        <div class="mchat-notify__container">
-          <div>
-            <img class="mchat-notify__avatar" src="${message.avatar}" />
-          </div>
-          <div class="mchat-notify__message-container">
-            <div class="mchat-notify__message-container__title">
-              ${message.name}
+        getChatData(message.author);
+
+        if (message.type == 'text') {
+          message.content = markdown(message.data.text) // Применение форматирования к тексту, демо: https://markdown-it.github.io
+          message.content = twemoji.parse(message.content, {
+            base: 'assets/img/',                                          // default MaxCDN
+            ext: ".svg",                                                  // default ".png"
+            className: "mchat-notify__message-container__message__emoji", // default "emoji"
+            folder: "twemoji"
+          })
+        }
+        else if (message.type == 'emoji') {
+          message.content = twemoji.parse(message.data.emoji, {
+            base: 'assets/img/',                                          // default MaxCDN
+            ext: ".svg",                                                  // default ".png"
+            folder: "twemoji"
+          })
+        }
+        else if (message.type == 'image') {
+          message.content = `<img src="${message.data.src}" class="mchat-notify__message-container__message__image" />`
+        }
+        else if (message.type == 'video') {
+          message.content = ''
+        }
+        else if (message.type == 'audio') {
+          message.content = ''
+        }
+        // * если Suggestions, system и прочие не перечисленные выше типы, то отправка не происходит.
+
+        if (message.content != undefined) {
+          let template = `
+            <div class="mchat-notify__container">
+              <div>
+                <img class="mchat-notify__avatar" src="${message.avatar}" />
+              </div>
+              <div class="mchat-notify__message-container">
+                <div class="mchat-notify__message-container__title">
+                  ${message.name}
+                </div>
+                <div class="mchat-notify__message-container__message">
+                  ${message.content}
+                </div>            
+              </div>
             </div>
-            <div class="mchat-notify__message-container__message">
-              ${message.data.text}
-            </div>            
-          </div>
-        </div>
-      `
-      mChatNotify({ message: template })
-      if (this.$store.state.sound.smartphoneSoundEnable)
-        soundPlay(this.$store.state.sound.smartphoneSound, this.$store.state.sound.smartphoneVolume)
+          `
+          mChatNotify({ message: template })
+          if (this.$store.state.sound.smartphoneSoundEnable)
+            soundPlay(this.$store.state.sound.smartphoneSound, this.$store.state.sound.smartphoneVolume)
+        }        
+      }
+
     }
   },
   mounted(){
