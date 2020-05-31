@@ -59,16 +59,18 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
           }
         } else {
           errorMessage(
-            `Sentry не удалось отправить отчёт об ошибке: status: ${result.status}\nmsg: ${result.statusText}\nOK: ${result.ok}. Добавьте сайт в список исключений блокировщика рекламы.`,
-            `Sentry failed to send error report: status: ${result.status}\nmsg: ${result.statusText}\nOK: ${result.ok}. Add your site to the ad blocker exception list.`
+            `Sentry не удалось отправить отчёт об ошибке <br> ${result} <br> Проверьте подключение к сети или добавьте игру в список исключений блокировщика рекламы.`,
+            `Sentry failed to send error report <br> ${result} <br> Check your network connection or add the game to the ad blocker's list of exceptions.`
           )
+          console.error(`Sentry failed to send error report\n${err}`);
         }
       })
-      .catch(result => {
+      .catch(err => {
         errorMessage(
-          `Sentry не удалось отправить отчёт об ошибке: ${result}. Добавьте сайт в список исключений блокировщика рекламы.`,
-          `Sentry failed to send error report: ${result}. Add your site to the ad blocker exception list.`
+          `Sentry не удалось отправить отчёт об ошибке <br> ${err} <br> Проверьте подключение к сети или добавьте игру в список исключений блокировщика рекламы.`,
+          `Sentry failed to send error report <br> ${err} <br> Check your network connection or add the game to the ad blocker's list of exceptions.`
         )
+        console.error(`Sentry failed to send error report\n${err}`);
       })
       return event;
     }
@@ -82,8 +84,8 @@ if (process.env.NODE_ENV === 'production') {
 
     console.error(`${err} \n${info}`);
     errorMessage(
-      `Ошибка: ${err.toString()} Инфо: ${info}`,
-      `Error: ${err.toString()} Info: ${info}`
+      `Ошибка: ${err.toString()} <br> Инфо: ${info}`,
+      `Error: ${err.toString()} <br> Info: ${info}`
     )
   };  
 }
@@ -98,8 +100,8 @@ if (process.env.NODE_ENV === 'production') {
 
     console.error(`${message}\n${source}\n${error}`);
     errorMessage(
-      `Ошибка: ${message.toString()} ${source} ${error}`,
-      `Error: ${message.toString()} ${source} ${error}`
+      `Ошибка: ${message.toString()} <br> ${source} ${error}`,
+      `Error: ${message.toString()} <br> ${source} ${error}`
     )
   };
 }
