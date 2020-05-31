@@ -16,6 +16,7 @@ import FloatingChatButton from './FloatingChatButton.vue'
 import { mChatNotify } from '../../js/notificationSystem'
 import { soundPlay } from '../../js/gameSound'
 import { markdown } from './messages/drawdown'
+import twemoji from 'twemoji'
 
 import eventBus from '../../js/eventBus.js'
 
@@ -106,7 +107,17 @@ export default {
         }
       }
       getData(message.author);
-
+      function getFormatMessage(message) { 
+        message = markdown(message) // Применение форматирования к тексту, демо: https://markdown-it.github.io
+        message = twemoji.parse(message, {
+          base: 'assets/img/',                                          // default MaxCDN
+          ext: ".svg",                                                  // default ".png"
+          className: "mchat-notify__message-container__message__emoji", // default "emoji"
+          folder: "twemoji"
+        })
+        return message        
+      }
+      message.data.text = getFormatMessage(message.data.text)
       // console.log(message)
       let template = `
         <div class="mchat-notify__container">
@@ -118,7 +129,7 @@ export default {
               ${message.name}
             </div>
             <div class="mchat-notify__message-container__message">
-              ${markdown(message.data.text)}
+              ${message.data.text}
             </div>            
           </div>
         </div>

@@ -123,6 +123,10 @@ html {
 			-webkit-box-orient: vertical;
 
 			padding-top: 6px;
+			&__emoji {
+				height: 18px;
+				vertical-align: -.2em;
+			}
 		}
 	}
 	&__avatar {

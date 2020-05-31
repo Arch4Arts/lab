@@ -5,6 +5,7 @@ const twemoji = require('twemoji')
 let emojiList = [ 
   '😄',
   '😅',
+  '😍',
   '❤️',
 ]
 

@@ -38,10 +38,10 @@ export default {
       if (exceptionList.some(checkMessageWasFormatted) === false) {
         message = markdown(message) // Применение форматирования к тексту, демо: https://markdown-it.github.io
         message = twemoji.parse(message, {
-          base: 'assets/img/',         // default MaxCDN
-          ext: ".svg",          // default ".png"
-          className: "text-message__emoji",    // default "emoji"
-          folder: "twemoji"       // in case it's specified
+          base: 'assets/img/',              // default MaxCDN
+          ext: ".svg",                      // default ".png"
+          className: "text-message__emoji", // default "emoji"
+          folder: "twemoji"
         })
         return message        
       }
