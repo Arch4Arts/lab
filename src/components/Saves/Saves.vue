@@ -290,7 +290,7 @@ export default {
   },
   methods:{
     reRender(){
-      this.$store.state.reRender_mChatPlayersVolume += 1;
+      this.$store.state.reRender_mChatPlayersVolume++;
     },
     // Сортировка по...
     sortBy(key) { // (убыванию) < desc, asc > (возрастанию)

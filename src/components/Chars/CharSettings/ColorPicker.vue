@@ -42,7 +42,7 @@ export default {
       var element = document.getElementById(this.parentBlockNameID);
       var elementInfo = element.getBoundingClientRect();
       this.calcWidth = elementInfo.width
-      this.$store.state.reRender_ColorPickerCanvas += 1;
+      this.$store.state.reRender_ColorPickerCanvas++;
     },
   },
   watch: {

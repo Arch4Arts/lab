@@ -279,7 +279,7 @@ export default {
       // Прекращаем отслеживать нажатие клавиш
       hotkeys.unbind('*');
       // Увеличиваем версию сочетания клавиш, для перепривязки hotkeys
-      this.$store.state.keyboardShortcutsVersion += 1;
+      this.$store.state.keyboardShortcutsVersion++;
     }
   },
   computed: {

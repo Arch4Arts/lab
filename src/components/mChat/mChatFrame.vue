@@ -208,7 +208,7 @@ export default {
       this.$store.state.mChat.width = width
       this.$store.state.mChat.height = size.height
       this.$store.commit('updateStores');
-      this.reRender += 1;
+      this.reRender++;
     },
     getSmartphoneSize(){ // Получение размеров smartphoneMockup
       let element = document.getElementById('smartphone-mockup');
@@ -231,7 +231,7 @@ export default {
       }
     },
     reRenderChat(){ // Для полной перерисовки чата
-      this.reRender += 1;
+      this.reRender++;
     }
   },
   mounted(){

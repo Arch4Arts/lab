@@ -21,7 +21,7 @@ export function onMessageWasSent(ChatID, message){ // Импорт для userIn
   var users = store.state.mChatData.MC.chatList; // Не копируем массив, чтобы изменять оригинал
   for (let user of users) { // Перебираем для каждого пользователя
     if (user.chatID === ChatID) {
-      user.unreadMessageCount += 1
+      user.unreadMessageCount++
       // Удаляем сообщение typing, если используется имитация набора
       if (user.messagesHistory[user.messagesHistory.length - 1].type === 'typing') user.messagesHistory.splice([user.messagesHistory.length - 1], 1)
       // Удаляем предложенные варианты ответов, если таковые есть
