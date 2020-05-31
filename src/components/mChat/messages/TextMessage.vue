@@ -35,7 +35,7 @@ export default {
         return message.includes(exception);
       }
       // Было ли сообщение отформитированно ранее (Для предотвращения повторной обработки после перерендера)
-      if (exceptionList.some(checkClickTarget) === false) {
+      if (exceptionList.some(checkMessageWasFormatted) === false) {
         message = markdown(message) // Применение форматирования к тексту, демо: https://markdown-it.github.io
         message = twemoji.parse(message, {
           base: 'assets/img/',         // default MaxCDN
