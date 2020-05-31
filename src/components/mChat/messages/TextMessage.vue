@@ -11,6 +11,7 @@
 
 <script>
 import { markdown } from './drawdown'
+import twemoji from 'twemoji'
 
 export default {
   props: {
@@ -21,8 +22,31 @@ export default {
     author: [String],
   },
   computed: {
-    getFormatMessage() { // Применение форматирования к тексту, демо: https://markdown-it.github.io
-      return markdown(this.data.text)
+    getFormatMessage() { 
+      let message = this.data.text 
+      let exceptionList = [
+        '<p>',
+        '<b>',
+        '<i>',
+        '<img'
+      ];
+
+      function checkMessageWasFormatted(exception){
+        return message.includes(exception);
+      }
+      // Было ли сообщение отформитированно ранее (Для предотвращения повторной обработки после перерендера)
+      if (exceptionList.some(checkClickTarget) === false) {
+        message = markdown(message) // Применение форматирования к тексту, демо: https://markdown-it.github.io
+        message = twemoji.parse(message, {
+          base: 'assets/img/',         // default MaxCDN
+          ext: ".svg",          // default ".png"
+          className: "text-message__emoji",    // default "emoji"
+          folder: "twemoji"       // in case it's specified
+        })
+        return message        
+      }
+      // Если да, оставляем как есть
+      else return message
     }
   }
 }

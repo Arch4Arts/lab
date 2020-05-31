@@ -67,21 +67,15 @@ export default {
   methods: {
     test(){
       console.log(twemoji.parse(this.text, {
-        // callback: (e) => {console.log(e)},   // default the common replacer
-        // attributes: (e) => {console.log(e)}, // default returns {}
         base: 'assets/img/',         // default MaxCDN
         ext: ".svg",          // default ".png"
         className: "emoji-test",    // default "emoji"
-        // size: 32,  // default "72x72"
         folder: "twemoji"       // in case it's specified
       }))
       this.text = twemoji.parse(this.text, {
-        // callback: Function,   // default the common replacer
-        // attributes: Function, // default returns {}
         base: 'assets/img/',         // default MaxCDN
         ext: ".svg",          // default ".png"
         className: "emoji-test",    // default "emoji"
-        // size: 32,  // default "72x72"
         folder: "twemoji"       // in case it's specified
       })
     }

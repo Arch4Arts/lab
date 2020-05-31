@@ -218,6 +218,10 @@ export default {
         p {
           margin-bottom: 0px !important;
         }
+        &__emoji {
+          height: calc(var(--mChatHeight) / 100 * 3);
+          vertical-align: -.2em;
+        }
       }
       .tail { // Стиль хвостика сообщения
         @include tail(20, left, var(--text-message__from_them__tail--color))

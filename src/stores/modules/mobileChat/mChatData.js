@@ -45,7 +45,7 @@ const mChatData = {
           disabled: false,
           unreadMessageCount: 0,
           messagesHistory: [
-            { uid: '1k971ar09', type: 'text', author: `erza`, data: { text: `Lorem ipsum dolor sit **amet**?` } },
+            { uid: '1k971ar09', type: 'text', author: `erza`, data: { text: `Lorem ipsum dolor 😄 sit **amet**?` } },
             { uid: '1k971bswh', type: 'system', data: { text: 'User changed security key', meta: '04-08-2018 15:57' } },
             { uid: '1k971bzux', type: 'emoji', author: `me`, data: { src: require('../../../media/img/smiling-face.png') } },
             { uid: '1k971c3iy', type: 'text', author: `me`, data: { text: `Do you read me...`, meta: '✓✓ Read' } },
