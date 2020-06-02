@@ -19,16 +19,16 @@
 	<v-app>
 	<v-tabs centered dark id="journal">
 		<v-tab><a-icon class="mr-2" :icon="['fas', 'user-crown']" />{{ $t('mc') }}</v-tab>
-		<v-tab-item> <MC-page/> </v-tab-item>
+			<v-tab-item> <MC-page/> </v-tab-item>
 
 		<v-tab><a-icon class="mr-2" :icon="['fas', 'users']" />{{ $t('characters') }}</v-tab>
-		<v-tab-item> <Characters/> </v-tab-item>
+			<v-tab-item> <Characters/> </v-tab-item>
 
 		<v-tab><a-icon class="mr-2" :icon="['fas', 'book-heart']" />{{ $t('diary') }}</v-tab>
-		<v-tab-item> <Diary/> </v-tab-item>
+			<v-tab-item> <Diary/> </v-tab-item>
 
 		<v-tab><a-icon class="mr-2" :icon="['fas', 'trophy-alt']" />{{ $t('achievements') }}</v-tab>
-		<v-tab-item> <Achievements/> </v-tab-item>
+			<v-tab-item> <Achievements/> </v-tab-item>
 	</v-tabs>
 	</v-app>
 </template>
@@ -49,7 +49,11 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+
+#journal .v-slide-group__prev {
+	display: none !important; // fix черный блок по краям
+}
 
 #journal .v-tabs-bar__content {
 	background: #242933 !important;
