@@ -81,7 +81,8 @@ export default {
       height: (this.$vuetify.breakpoint.xsOnly) ? window.innerHeight : this.$store.state.mChat.height,
       y: (this.$vuetify.breakpoint.xsOnly) ? 0 : this.$store.state.mChat.posY,
 
-      reRender: 0
+      reRender: 0,
+      updateSize: 0
     }
   },
   props: {    
@@ -102,22 +103,26 @@ export default {
   },
   computed: {
     calcWidth() {
+      this.updateSize;
       // Если мобильное представление
       if (this.$vuetify.breakpoint.xsOnly) {
-        this.changeCSSVars(window.innerWidth);
-        window.innerWidth
+        this.width = window.innerWidth
+        this.changeCSSVars(this.width);
+        return this.width;
       }
       // Desktop
       else {
         this.changeCSSVars(this.width - (this.width / 100 * 6.24));
-        return this.width- (this.width / 100 * 6.24)        
+        return this.width - (this.width / 100 * 6.24);    
       }
     },
     calcHeight() {
       // Если мобильное представление
+      this.updateSize;
       if (this.$vuetify.breakpoint.xsOnly) {
-        this.changeCSSVars(undefined, window.innerHeight);
-        return window.innerHeight
+        this.height = window.innerHeight;
+        this.changeCSSVars(undefined, this.height);
+        return this.height
       }
       // Desktop
       else {
@@ -127,7 +132,9 @@ export default {
     },
     calcChatList_ToolbarHeight() {
       // Если мобильное представление
+      this.updateSize;
       if (this.$vuetify.breakpoint.xsOnly) {
+        this.height = window.innerHeight;
         return this.height / 100 * 8
       }
       // Desktop
@@ -137,7 +144,9 @@ export default {
     },
     calcMessageList_ToolbarHeight() {
       // Если мобильное представление
+      this.updateSize;
       if (this.$vuetify.breakpoint.xsOnly) {
+        this.height = window.innerHeight;
         return this.height / 100 * 8
       }
       // Desktop
@@ -147,10 +156,13 @@ export default {
     },
     calcMessageList_Height() {
       //  Если мобильное представление
+      this.updateSize;
       if (this.$vuetify.breakpoint.xsOnly && this.$store.state.mChat.showDecorativeInputPanel) {
+        this.height = window.innerHeight;
         return this.height - (this.height / 100 * (8.5))
       }
       else if (this.$vuetify.breakpoint.xsOnly) {
+        this.height = window.innerHeight;
         return this.height
       }
       // Desktop
@@ -163,7 +175,9 @@ export default {
     },
     calcMessageList_InputHeight() {
       // Если мобильное представление
+      this.updateSize;
       if (this.$vuetify.breakpoint.xsOnly) {
+        this.height = window.innerHeight;
         return this.height / 100 * 8.5
       }
       // Desktop
@@ -230,15 +244,14 @@ export default {
           return this.$store.state.mChat.posX;
       }
     },
-    reRenderChat(){ // Для полной перерисовки чата
-      this.reRender++;
-    }
   },
   mounted(){
-    eventBus.on('reRender_mChat', this.reRenderChat);
+    eventBus.on('reRender_mChat', () => this.reRender++); // Для полной перерисовки чата
+    eventBus.on('updateSizes_mChat', () => this.updateSize++);
   },
   beforeDestroy(){
     eventBus.off('reRender_mChat')
+    eventBus.off('updateSizes_mChat')
   },
   components: {
     MessageListToolbar,

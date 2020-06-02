@@ -31,6 +31,7 @@ import { bindHotkeys, unbindHotkeys }from './js/hotkeys'
 import { SentryPush } from './js/globalErrorsHandling';
 import './js/globalErrorsHandling'
 
+import eventBus from './js/eventBus'
 
 
 import { name as gameName } from  '../package.json';
