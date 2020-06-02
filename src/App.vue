@@ -32,7 +32,7 @@ export default {
       // Открытие/закрытие панели сохранений
       if (this.$store.state.isOpenSavesDrawer) this.$store.state.isOpenSavesDrawer = !this.$store.state.isOpenSavesDrawer
       // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
-      if (this.$route.path != '/Diary') {
+      if (this.$route.path != '/Journal') {
         if (this.$store.state.mChat.show) { // проверка открыт ли чат, если да то...
           // Открыта ли страница контактов, true, то закрываем, если false, возвращаемся к странице контактов, т.к открыт чат с контактом
           if (this.$store.state.mChat.chatListShow) {
@@ -46,7 +46,7 @@ export default {
     swipeLeft(){
       if (this.$store.state.mChat.enable) { // Включён ли чат (Отключается при выборе палитры цвета диалогов)
         // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
-        if (this.$route.path != '/Diary') {
+        if (this.$route.path != '/Journal') {
           // открываем окно чата, если оно не было открыто ранее
           if (!this.$store.state.mChat.show) this.$store.commit('mChatShow');
         }

@@ -30,7 +30,7 @@
         <a-icon :icon="['fas', 'save']" />
       </v-btn>
       <!-- Journal -->
-      <v-btn icon dark class="btns" to="/Diary" @click="visible = false">
+      <v-btn icon dark class="btns" to="/Journal" @click="visible = false">
         <a-icon :icon="['fas', 'book']" />
       </v-btn>
       <!-- Toggle FullScreen Mode -->

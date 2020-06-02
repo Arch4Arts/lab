@@ -1,7 +1,7 @@
 import store from '../stores/store'
 
 var soundsPath = [ 
-  { path: require('../media/audio/notifications/Diary write sound.mp3') },
+  { path: require('../media/audio/notifications/Journal write sound.mp3') },
   { path: require('../media/audio/notifications/iOS Notification.mp3') },
   { path: require('../media/audio/notifications/MIUI Notification.mp3') },
   { path: require('../media/audio/notifications/MotoX Notification.mp3') },

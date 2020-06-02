@@ -51,7 +51,7 @@ export function bindHotkeys(){
           break;
         }
         case keyShortcuts.journalOpen: {
-          router.push('/Diary')
+          router.push('/Journal')
           break;
         }
         case keyShortcuts.journalTabCharacters: {
