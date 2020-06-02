@@ -117,21 +117,17 @@ export default {
             className: "mchat-notify__message-container__message__emoji", // default "emoji"
             folder: "twemoji"
           })
-        }
-        else if (message.type == 'emoji') {
+        } else if (message.type == 'emoji') {
           message.content = twemoji.parse(message.data.emoji, {
             base: 'assets/img/',                                          // default MaxCDN
             ext: ".svg",                                                  // default ".png"
             folder: "twemoji"
           })
-        }
-        else if (message.type == 'image') {
+        } else if (message.type == 'image') {
           message.content = `<img src="${message.data.src}" class="mchat-notify__message-container__message__image" />`
-        }
-        else if (message.type == 'video') {
+        } else if (message.type == 'video') {
           message.content = ''
-        }
-        else if (message.type == 'audio') {
+        } else if (message.type == 'audio') {
           message.content = ''
         }
         // * если Suggestions, system и прочие не перечисленные выше типы, то отправка не происходит.

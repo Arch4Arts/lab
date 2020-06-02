@@ -98,7 +98,6 @@ html {
 	background-color: var(--mchat-notify--background) !important;
 	min-width: 25%;
 	max-width: 25%;
-	max-height: 100px;
 
 	&__container {
 		display: flex;
@@ -106,7 +105,6 @@ html {
 	&__message-container {
 		display: flex;
 		flex-direction: column;
-		max-height: 48px;
 
 		padding-left: 10px;
 		&__title {
@@ -115,7 +113,6 @@ html {
 		}
 		&__message {
 			padding-top: 3px;
-			max-height: inherit;
 			p {
 				color: var(--mchat-notify--message--color);
 				font-size: 0.950em;
@@ -135,9 +132,8 @@ html {
 				padding: 0 .05em 0 .1em;
 			}		
 			&__image {
-				max-height: inherit;
+				max-height: 96px;
 				border-radius: 4px;
-				float: right;
 			}
 		}
 	}

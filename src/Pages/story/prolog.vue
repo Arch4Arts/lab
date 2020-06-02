@@ -24,6 +24,7 @@
 
     <div v-html="text" />
     <v-btn @click="test()">emoji</v-btn>
+    <v-btn @click="$root.toggleFullScreen()">call error</v-btn>
 
     <!-- <img src="assets/img/info-circle.svg" height="65" width="68"> -->
     <!-- <img src="@/assets/info-circle.svg" height="65" width="68"> -->

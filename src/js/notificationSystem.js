@@ -15,6 +15,7 @@ export function mChatNotify(extOptions){
     messageSize: '16',
     displayMode: vuetify.framework.breakpoint.xsOnly ? 2 : 0,
     close: false,
+    drag: true, 
     timeout: 0,
     progressBar: false
   }

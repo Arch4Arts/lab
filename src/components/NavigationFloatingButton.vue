@@ -17,6 +17,14 @@
       <v-btn slot="activator" dark icon small hover v-model="fab" v-show="visible">
         <a-icon :icon="['fas', 'compass']" class="main-btn" />
       </v-btn>
+      <!-- FAQ -->
+      <v-btn icon dark class="btns" to="/FAQ" @click="visible = false">
+        <a-icon :icon="['fas', 'question-circle']" />
+      </v-btn>
+      <!-- Settings -->
+      <v-btn icon dark class="btns" @click="() => this.$store.state.isOpenSettingsDrawer = true">
+        <a-icon :icon="['fas', 'cog']" />
+      </v-btn>
       <!-- Saves -->
       <v-btn icon dark class="btns" @click="() => this.$store.state.isOpenSavesDrawer = true">
         <a-icon :icon="['fas', 'save']" />
@@ -25,14 +33,15 @@
       <v-btn icon dark class="btns" to="/Diary" @click="visible = false">
         <a-icon :icon="['fas', 'book']" />
       </v-btn>
-      <!-- Settings -->
-      <v-btn icon dark class="btns" @click="() => this.$store.state.isOpenSettingsDrawer = true">
-        <a-icon :icon="['fas', 'cog']" />
-      </v-btn>
-      <!-- FAQ -->
-      <v-btn icon dark class="btns" to="/FAQ" @click="visible = false">
-        <a-icon :icon="['fas', 'question-circle']" />
-      </v-btn>  
+      <!-- Toggle FullScreen Mode -->
+      <div>
+        <v-btn v-if="this.$root.isFullScreen == false" icon dark class="btns" @click="$root.launchFullScreen()">
+          <a-icon :icon="['fas', 'expand']" />
+        </v-btn>
+        <v-btn v-else icon dark class="btns" @click="$root.exitFullScreen()">
+          <a-icon :icon="['fas', 'compress']" />
+        </v-btn>     
+      </div>
     </v-speed-dial>
     </v-fab-transition>
 

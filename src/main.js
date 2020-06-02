@@ -47,20 +47,30 @@ new Vue({
     gameVersion: gameVersion,
 
     isTouchDevice: false, // Является ли устройство сенсорным
+    isFullScreen: false, // Находится ли приложение в полноэкраном режиме
     gameEdition: process.env.VUE_APP_EDITION, // Присваивается при npm run build-special
   },
   mounted: function () { // Определение языка при первой загрузке / А также тип устройства
     this.$nextTick(function () { // https://vuejsdevelopers.com/2019/01/22/vue-what-is-next-tick/
       // Определение языка ТОЛЬКО при первой загрузке 
       this.detectLanguage()
-      // // Является ли устройство сенсорным
-      this.isTouchDevice = this.detectTouchDevice()
+      // Является ли устройство сенсорным
+      this.isTouchDevice = this.detectTouchDevice();
       // Обновляем оформление игры
-      updateThemes()
+      updateThemes();
       // Подключаем горячие клавиши (проверка внутри функции)
-      bindHotkeys()
+      bindHotkeys();
       // проверка состояния звука
-      checkSoundsEnable()
+      checkSoundsEnable();
+      
+      let self = this;
+      document.addEventListener("fullscreenchange", function () {
+        if (document.fullscreenElement) {
+          self.isFullScreen = true;
+        } else {
+          self.isFullScreen = false;
+        }
+      });
     })
   },
   methods: {
@@ -74,6 +84,28 @@ new Vue({
         lang = lang.substr(0, 2).toLowerCase();
         store.commit('gameFirstLoad');
         lang == 'ru' ? store.commit('langChange', 'ru') : store.commit('langChange', 'en');
+      }
+    },
+    launchFullScreen() {
+      let element = document.documentElement;
+
+      if(element.requestFullscreen) {
+        element.requestFullscreen();
+      } else if(element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+      } else if(element.webkitRequestFullscreen) {
+        element.webkitRequestFullscreen();
+      } else if(element.msRequestFullscreen) {
+        element.msRequestFullscreen();
+      }
+    },
+    exitFullScreen() {
+      if(document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if(document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if(document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
       }
     },
     errNotify(error){
