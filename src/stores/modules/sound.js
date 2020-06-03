@@ -17,11 +17,11 @@ const sound = {
 
     // Выбор звука
     achievementSound: 'iOS Notification', // Вкл/Выкл звука
-    diarySound: 'Diary write sound', // Вкл/Выкл звука
+    diarySound: 'Journal write sound', // Вкл/Выкл звука
     smartphoneSound: 'MIUI Notification', // Вкл/Выкл звука
     
     soundsList: [
-      { soundName: 'Diary write sound' },
+      { soundName: 'Journal write sound' },
       { soundName: 'iOS Notification' },
       { soundName: 'MIUI Notification' },
       { soundName: 'MotoX Notification' },
