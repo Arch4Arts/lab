@@ -312,7 +312,7 @@ html {
   left: calc(var(--mChatWidth) / 100 * 3.24);
   right: calc(var(--mChatWidth) / 100 * 3.24);
   top: calc(var(--mChatWidth) / 100 * 13);
-  bottom: calc(var(--mChatWidth) / 100 * 5.72);
+  // bottom: calc(var(--mChatWidth) / 100 * 5.72);
 
   // left: 3.12%;
   // right: 3.12%;
@@ -333,7 +333,7 @@ html {
   left: calc(var(--mChatWidth) / 100 * 3.24);
   right: calc(var(--mChatWidth) / 100 * 3.24);
   top: calc(var(--mChatWidth) / 100 * 13);
-  bottom: calc(var(--mChatWidth) / 100 * 5.72);
+  // bottom: calc(var(--mChatWidth) / 100 * 5.72);
 
   // left: 3.12%;
   // right: 3.12%;
