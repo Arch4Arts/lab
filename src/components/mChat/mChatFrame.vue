@@ -309,10 +309,15 @@ html {
 .chat-list {
   position: absolute;
 
-  left: 3.12%;
-  right: 3.12%;
-  top: 5.6%;
-  bottom: 5.72%;
+  left: calc(var(--mChatWidth) / 100 * 3.24);
+  right: calc(var(--mChatWidth) / 100 * 3.24);
+  top: calc(var(--mChatWidth) / 100 * 13);
+  bottom: calc(var(--mChatWidth) / 100 * 5.72);
+
+  // left: 3.12%;
+  // right: 3.12%;
+  // top: 5.6%;
+  // bottom: 5.72%;
 
   border-radius: calc(var(--mChatWidth) / 100 * 6) !important;
   // Для border-radius
@@ -325,10 +330,15 @@ html {
 .message-list {
   position: absolute;
 
-  left: 3.12%;
-  right: 3.12%;
-  top: 5.6%;
-  bottom: 5.72%;
+  left: calc(var(--mChatWidth) / 100 * 3.24);
+  right: calc(var(--mChatWidth) / 100 * 3.24);
+  top: calc(var(--mChatWidth) / 100 * 13);
+  bottom: calc(var(--mChatWidth) / 100 * 5.72);
+
+  // left: 3.12%;
+  // right: 3.12%;
+  // top: 5.6%;
+  // bottom: 5.72%;
 
   border-radius: calc(var(--mChatWidth) / 100 * 6) !important;
   // Для border-radius

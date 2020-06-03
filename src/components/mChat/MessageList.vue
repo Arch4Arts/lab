@@ -4,7 +4,17 @@
   <!-- // ! id НЕ МЕНЯТЬ! -->
   <virtual-list
     class="virtual-list"
-    :style="{ width: `${width}px`, height: `${height}px`, 'padding-top': `${ToolbarHeight + 10}px` }"
+    :style="{ 
+      width: `${width}px`, 
+      height: `${height}px`, 
+      'padding-top': `${ToolbarHeight + 10}px`,
+      // manual bottom border-radius
+      'border-radius': (!$store.state.mChat.showDecorativeInputPanel) 
+        ? 
+          '0px 0px calc(var(--mChatWidth) / 100 * 6) calc(var(--mChatWidth) / 100 * 6)' 
+        : 
+          '0px 0px 0px 0px' 
+    }"
     id="scrolling-techniques-4"
     ref="mChatMessageList"
 
@@ -63,10 +73,10 @@ export default {
 <style lang="scss" scoped>
 
 .virtual-list {
-  padding-top: 3%;
-  padding-left: 1.5%;
-  padding-right: 1.5%;
-  padding-bottom: 1%;
+  // padding-top: 3%;
+  // padding-left: 1.5%;
+  // padding-right: 1.5%;
+  // padding-bottom: 1%;
   // height: var(--mChatHeight);
   // min-height: var(--mChatHeight);
   overflow-y: auto;

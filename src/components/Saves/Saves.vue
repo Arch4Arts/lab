@@ -650,6 +650,7 @@ export default {
 .v-navigation-drawer {
   background: var(--v-navigation-drawer--background) !important;
   border-left: var(--v-navigation-drawer--border-left) !important;
+  height: 100vh !important;
 }
 
 .input-area {
