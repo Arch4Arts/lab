@@ -76,7 +76,7 @@ export default {
     return {
       options: {
         loadSprite: false,
-        controls: ['play','progress','volume'],
+        controls: ['play','progress','mute','volume'],
         muted: !this.$store.state.sound.gameGlobalSoundsEnable,
         volume: this.$store.state.mChat.plyrAudioVolume, // Значение по умолчанию, потом плеер берёт данные из plyr-audio
         storage: { enabled: false, key: 'plyr-audio' }

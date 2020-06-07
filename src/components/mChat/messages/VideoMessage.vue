@@ -69,12 +69,35 @@
 
 <script>
 
+// const controls2 = `
+// <div class="plyr__controls">
+//     <div class="plyr__progress">
+//         <input data-plyr="seek" type="range" min="0" max="100" step="0.01" value="0" aria-label="Seek">
+//         <progress class="plyr__progress__buffer" min="0" max="100" value="0">% buffered</progress>
+//         <span role="tooltip" class="plyr__tooltip">00:00</span>
+//     </div>
+//     <div>
+//         <div class="range-slider">
+//             <input data-plyr="volume" orient="vertical" type="range" min="0" max="1" step="0.05" value="1" autocomplete="off" aria-label="Volume">
+//         </div>
+//         <button type="button" class="plyr__control" aria-label="Mute" data-plyr="mute">
+//             <div>
+//               <svg class="icon--pressed" role="presentation"><use xlink:href="#plyr-muted"></use></svg>
+//               <svg class="icon--not-pressed" role="presentation"><use xlink:href="#plyr-volume"></use></svg>
+//               <span class="label--pressed plyr__tooltip" role="tooltip">Unmute</span>
+//               <span class="label--not-pressed plyr__tooltip" role="tooltip">Mute</span>
+//             </div>
+//         </button>
+//     </div>
+// </div>
+// `;
+
 export default {
   data() {
     return {
       options: {
         loadSprite: false,
-        controls: ['play','progress','play-large','volume','pip','airplay','fullscreen'],
+        controls: ['play','progress','mute','volume','play-large'],
         loop: { active: true },
         muted: !this.$store.state.sound.gameGlobalSoundsEnable,
         volume: this.$store.state.mChat.plyrVideoVolume, // Значение по умолчанию, потом плеер берёт данные из plyr-video

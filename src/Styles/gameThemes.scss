@@ -222,6 +222,61 @@ html {
 }	
 
 
+// .plyr__progress input[type=range] {
+// 	position: absolute;
+// 	bottom: 10px;
+// }
+
+// .plyr__control {
+// 	padding: 6px;
+// 	border-radius: 50% !important;
+// }
+
+// .plyr__controls {
+// 	align-items: flex-end !important;
+// 	.plyr__progress input[type="range"] {
+// 		padding-bottom: 13px;
+// 	}
+// }
+
+// .plyr__volume_bar {
+// 	height: 60px !important;
+// 	input[type=range][orient=vertical] {
+//     //outline: 1px dashed white; // debug
+//     position: relative;  
+//     margin: 0;
+//     height: 100%;  
+//     width: 100%;
+//     display: inline-block;  
+//     position: relative;    
+//     writing-mode: bt-lr; // IE
+//     -webkit-appearance: slider-vertical;  // webkit      
+//     &::-webkit-slider-runnable-track, 
+//     &::-webkit-slider-thumb {
+//       -webkit-appearance: none;   
+// 		}
+// 	}
+	// position: absolute;
+	// flex: 1;
+	// display: flex;
+	// // right: 3px;
+	// bottom: 42px;
+	// transform: rotate(-90deg);
+// }
+
+// .plyr__volume {
+// 	// max-width: 20px;
+// 	// min-width: 20px;
+// 	// width: 20px;
+// 	flex: 0;
+// }
+
+// .plyr__controls__item.plyr__volume:hover > input {
+// 	width: 100% !important;
+// 	transition: visibility 1s, opacity 1s, height 1s 1s, width 1s, left 1s 1s, top 1s 1s;
+// 	opacity: 1;	
+// }
+
 @import '~vuetify/src/styles/styles.sass';
 @media #{map-get($display-breakpoints, 'xs-only')} {
 	.mchat-notify {
