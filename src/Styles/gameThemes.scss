@@ -132,8 +132,8 @@ html {
 				padding: 0 .05em 0 .1em;
 			}		
 			&__image {
-				max-height: 96px;
-				border-radius: 4px;
+				font-size: 1.8em !important;
+				color: var(--mchat-notify--message--color);;
 			}
 		}
 	}

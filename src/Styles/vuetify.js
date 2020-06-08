@@ -59,7 +59,9 @@ import {
   faArrowLeft,// Стрелка влево
   faPhone,    // Иконка телефонной трубки
 
-  faPhotoVideo, // Для чата (иконка в списке чатов (содержимое сообщения))
+  faFileImage, // Для чата (иконка в списке чатов (содержимое сообщения))
+  faFileVideo, // Для чата (иконка в списке чатов (содержимое сообщения))
+  faFileAudio, // Для чата (иконка в списке чатов (содержимое сообщения)) 
   
 } from '../../source_files/pro-solid-svg-icons'   // fas
 import { faHdd as faHdd2 } from '../../source_files/pro-regular-svg-icons' // far
@@ -119,7 +121,9 @@ library.add({
   faPlus,       // Плюс
   faSmile,      // Смайлик
 
-  faPhotoVideo, // Для чата (иконка в списке чатов (содержимое сообщения))
+  faFileImage, // Для чата (иконка в списке чатов (содержимое сообщения))
+  faFileVideo, // Для чата (иконка в списке чатов (содержимое сообщения))
+  faFileAudio, // Для чата (иконка в списке чатов (содержимое сообщения)) 
 })
 
 export default new Vuetify({

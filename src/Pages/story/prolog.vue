@@ -7,6 +7,9 @@
     <h2>Пролог</h2>
     <h3>Пролог</h3>
     {{ $t('message') }}
+
+    <!-- <a-icon class="mchat-notify__message-container__message__image" :icon="[]"></a-icon> -->
+
     
     <!-- <div class="mchat-notify__container">
       <div>

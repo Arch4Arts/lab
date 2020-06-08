@@ -69,8 +69,14 @@
             <img class="chat-list__vlist--chat__subtitle-emoji-preview" :src="chat.messagesHistory.data.src" />
           </v-list-item-subtitle>
           <!-- Иконка фото/видео контента в сообщении -->
-          <v-list-item-subtitle v-else class=""> 
-            <a-icon class="chat-list__vlist--chat__subtitle-icon" :icon="['fas', 'photo-video']"></a-icon>
+          <v-list-item-subtitle v-else-if="chat.messagesHistory.type === 'image'"> 
+            <a-icon class="chat-list__vlist--chat__subtitle-icon" :icon="['fas', 'file-image']"></a-icon>
+          </v-list-item-subtitle>
+          <v-list-item-subtitle v-else-if="chat.messagesHistory.type === 'video'"> 
+            <a-icon class="chat-list__vlist--chat__subtitle-icon" :icon="['fas', 'file-video']"></a-icon>
+          </v-list-item-subtitle>
+          <v-list-item-subtitle v-else-if="chat.messagesHistory.type === 'audio'"> 
+            <a-icon class="chat-list__vlist--chat__subtitle-icon" :icon="['fas', 'file-audio']"></a-icon>
           </v-list-item-subtitle>
         </v-list-item-content>
 
@@ -298,7 +304,7 @@ export default {
 }
 
 .chat-list__vlist--chat__subtitle-icon {
-  font-size: 1.7em !important;
+  font-size: 2em !important;
   margin-bottom: 2.7%;
   color: var(--chat-list__vlist--chat__subtitle-icon--color) !important;
 }

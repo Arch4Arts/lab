@@ -12,7 +12,7 @@ const mChat = {
         showAvatars: true,                  // Скрытие аватарок в чате
         showBarPanelPermanent: true,        // Если false, панель будет скрываться при скролинге вниз, и показываться при скролинге вверх
         showDecorativeInputPanel: true,     // Скрытие декоративной панели ввода в чате
-        closeChatOnClickedOutside: true,    // Закрытие чата при клике снаружи
+        closeChatOnClickedOutside: false,    // Закрытие чата при клике снаружи
 
         posX_floatButton: window.innerWidth - 90,   // Позиция чата по горизонтали
         posY_floatButton: window.innerHeight - 120, // Позиция чата по вертикали
@@ -34,7 +34,7 @@ const mChat = {
         themesList: [
           { themeName: 'Minimalistic' },
           { themeName: 'Dark minimalistic' },
-          { themeName: 'Scarllet' }
+          // { themeName: 'Scarllet' }
         ],
      },
     mutations: {      

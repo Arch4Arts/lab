@@ -20,6 +20,10 @@ import twemoji from 'twemoji'
 
 import eventBus from '../../js/eventBus.js'
 
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+Vue.component('a-icon', FontAwesomeIcon)
+import Vue from 'vue/dist/vue.js';
+
 export default {
   name: 'MC_chat', // Экземпляр главного героя
   data () {
@@ -27,8 +31,8 @@ export default {
       vConfig: {
         handler: this.closeChat, // Обработчик
         middleware: this.middleware, // Промежуточный слой проверки объекта попавшего под клик
-        isActive: true
-      }
+        isActive: true,
+      },
     }
   },
   computed: {
@@ -93,6 +97,7 @@ export default {
     sendNotify(message){
       if (!this.$store.state.mChat.show) {
         let chatData = this.mChatData;
+
         function getChatData(messageAuthor) {
           for (let i in chatData.charProfiles) {
             if (messageAuthor === chatData.charProfiles[i].charID) 
@@ -124,7 +129,14 @@ export default {
             folder: "twemoji"
           })
         } else if (message.type == 'image') {
-          message.content = `<img src="${message.data.src}" class="mchat-notify__message-container__message__image" />`
+          message.content = (function(){
+            let el = Vue.compile(`<a-icon class="mchat-notify__message-container__message__image" :icon="['fas', 'photo-video']"></a-icon>`)
+            el = new Vue({
+              render: el.render,
+              staticRenderFns: el.staticRenderFns
+            }).$mount()
+            return el.$el.outerHTML
+          })()
         } else if (message.type == 'video') {
           message.content = ''
         } else if (message.type == 'audio') {
@@ -164,7 +176,7 @@ export default {
   },
   components: {
     mChatFrame,
-    FloatingChatButton
+    FloatingChatButton,
   }
 }
 </script>
