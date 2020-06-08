@@ -74,8 +74,8 @@ export default {
 
 .virtual-list {
   // padding-top: 3%;
-  // padding-left: 1.5%;
-  // padding-right: 1.5%;
+  padding-left: 1.5%;
+  padding-right: 1.5%;
   // padding-bottom: 1%;
   // height: var(--mChatHeight);
   // min-height: var(--mChatHeight);
