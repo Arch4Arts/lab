@@ -43,8 +43,6 @@ const mChat = {
       },
       mChatShow(){
         this.state.mChat.show = !this.state.mChat.show
-        if (this.state.mChat.show) 
-          eventBus.emit('updateSizes_mChat');
       },
       mChatListShow(){
         this.state.mChat.chatListShow = !this.state.mChat.chatListShow

@@ -189,7 +189,6 @@ export default {
       updateThemes()
     },
     getFormatMessage(message) { 
-      console.log(message)
       let exceptionList = [
         '<p>',
         '<b>',
@@ -209,7 +208,6 @@ export default {
           className: "chat-list__vlist--chat__subtitle-text__emoji", // default "emoji"
           folder: "twemoji"
         })
-        console.log(message)
         return message        
       }
       // Если да, оставляем как есть

@@ -7,7 +7,6 @@
     :x="getCurrentPosition()"
     :y="y"
     :z="3"
-    :key="reRender"
     
     :handles="['ml','mr']" 
     drag-cancel=".smartphone-screen"
@@ -80,9 +79,6 @@ export default {
       width: (this.$vuetify.breakpoint.xsOnly) ? window.innerWidth : this.$store.state.mChat.width,
       height: (this.$vuetify.breakpoint.xsOnly) ? window.innerHeight : this.$store.state.mChat.height,
       y: (this.$vuetify.breakpoint.xsOnly) ? 0 : this.$store.state.mChat.posY,
-
-      reRender: 0,
-      updateSize: 0
     }
   },
   props: {    
@@ -222,7 +218,6 @@ export default {
       this.$store.state.mChat.width = width
       this.$store.state.mChat.height = size.height
       this.$store.commit('updateStores');
-      this.reRender++;
     },
     getSmartphoneSize(){ // Получение размеров smartphoneMockup
       let element = document.getElementById('smartphone-mockup');
@@ -244,14 +239,6 @@ export default {
           return this.$store.state.mChat.posX;
       }
     },
-  },
-  mounted(){
-    eventBus.on('reRender_mChat', () => this.reRender++); // Для полной перерисовки чата
-    eventBus.on('updateSizes_mChat', () => this.updateSize++);
-  },
-  beforeDestroy(){
-    eventBus.off('reRender_mChat')
-    eventBus.off('updateSizes_mChat')
   },
   components: {
     MessageListToolbar,

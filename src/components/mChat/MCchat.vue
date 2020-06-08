@@ -113,8 +113,20 @@ export default {
           }
         }
         getChatData(message.author);
-
         
+        // izitoast отображает коккретно только стандартный html элементы
+        // Для использования vue компонентов и прочих пакетов нужно обработать их вручную через Render и получить конечный html код 
+        // I assume that you mean, you inserted those elements into the DOM. 
+        // However, Once a component is running, the template is handled internally by the virtualDOM - Vue is not parsing the DOM anymore. 
+        // So when you add vue-related markup into the DOM, Vue has no way of seeing and parsing this.
+        function vueRender(html){
+          let el = Vue.compile(html)
+          el = new Vue({
+            render: el.render,
+            staticRenderFns: el.staticRenderFns
+          }).$mount()
+          return el.$el.outerHTML
+        }
 
         if (message.type == 'text') {
           message.content = markdown(message.data.text) // Применение форматирования к тексту, демо: https://markdown-it.github.io
@@ -131,18 +143,11 @@ export default {
             folder: "twemoji"
           })
         } else if (message.type == 'image') {
-          message.content = (function(){
-            let el = Vue.compile(`<a-icon class="mchat-notify__message-container__message__image" :icon="['fas', 'photo-video']"></a-icon>`)
-            el = new Vue({
-              render: el.render,
-              staticRenderFns: el.staticRenderFns
-            }).$mount()
-            return el.$el.outerHTML
-          })()
+          message.content = vueRender(`<a-icon class="mchat-notify__message-container__message__image" :icon="['fas', 'file-image']"></a-icon>`)
         } else if (message.type == 'video') {
-          message.content = ''
+          message.content = vueRender(`<a-icon class="mchat-notify__message-container__message__image" :icon="['fas', 'file-video']"></a-icon>`)
         } else if (message.type == 'audio') {
-          message.content = ''
+          message.content = vueRender(`<a-icon class="mchat-notify__message-container__message__image" :icon="['fas', 'file-audio']"></a-icon>`)
         }
         // * если Suggestions, system и прочие не перечисленные выше типы, то отправка не происходит.
 
@@ -162,7 +167,7 @@ export default {
               </div>
             </div>
           `
-          mChatNotify({ message: template })
+          mChatNotify({ message: template, chatID: message.author, chatAvatar: message.avatar })
           if (this.$store.state.sound.smartphoneSoundEnable)
             soundPlay(this.$store.state.sound.smartphoneSound, this.$store.state.sound.smartphoneVolume)
         }        

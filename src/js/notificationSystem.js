@@ -6,6 +6,8 @@ import vuetify from '../styles/vuetify'
 import exclamationTriangle from '../assets/exclamation-triangle.svg'
 import infoCircle from '../assets/info-circle.svg'
 
+import store from '../stores/store'
+
 // Оповещения для globalErrorsHandling.js
 export function mChatNotify(extOptions){
   // Параметры по умолчанию
@@ -15,8 +17,15 @@ export function mChatNotify(extOptions){
     messageSize: '16',
     displayMode: vuetify.framework.breakpoint.xsOnly ? 2 : 0,
     close: false,
-    drag: true, 
-    timeout: 0,
+    closeOnClick: true,
+    onClosing: () => { // Открывает чат при нажатии на уведомление
+      store.commit('mChatShow');
+      store.state.mChat.selectedChatID = extOptions.chatID
+      store.state.mChat.selectedChatAvatar = extOptions.chatAvatar
+      store.commit('mChatListShow');
+    },
+    drag: true,
+    // timeout: 15000,
     progressBar: false
   }
   // Вывод оповещения

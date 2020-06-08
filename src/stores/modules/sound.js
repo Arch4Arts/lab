@@ -10,7 +10,7 @@ const sound = {
     smartphoneVolume: 0.50, // Громкость уведомления смартфона
 
     // Включение звука
-    gameGlobalSoundsEnable: false, // Откл все звуки по умолчанию
+    gameGlobalSoundsEnable: true, // Откл все звуки по умолчанию
     achievementSoundEnable: true, // Вкл/Выкл звука
     diarySoundEnable: true, // Вкл/Выкл звука
     smartphoneSoundEnable: true, // Вкл/Выкл звука
