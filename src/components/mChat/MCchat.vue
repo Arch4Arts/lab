@@ -114,6 +114,8 @@ export default {
         }
         getChatData(message.author);
 
+        
+
         if (message.type == 'text') {
           message.content = markdown(message.data.text) // Применение форматирования к тексту, демо: https://markdown-it.github.io
           message.content = twemoji.parse(message.content, {

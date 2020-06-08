@@ -59,24 +59,22 @@
             <div v-else>{{ chat.chatName }}</div>
           </v-list-item-title>
           <!-- Текст последнего сообщения -->
-          <v-list-item-subtitle v-if="chat.messagesHistory.type === 'text' || chat.messagesHistory.type === 'system'" 
-            class="chat-list__vlist--chat__subtitle"
-            v-html="chat.messagesHistory.data.text"
-          > 
+          <v-list-item-subtitle v-if="chat.messagesHistory.type === 'text'" class="chat-list__vlist--chat__subtitle-text"> 
+            <div v-html="getFormatMessage(chat.messagesHistory.data.text)" />
           </v-list-item-subtitle>
           <!-- Смайлик -->
           <v-list-item-subtitle v-else-if="chat.messagesHistory.type === 'emoji'"> 
-            <img class="chat-list__vlist--chat__subtitle-emoji-preview" :src="chat.messagesHistory.data.src" />
+            <div v-html="getTwemoji(chat.messagesHistory.data.emoji)" />
           </v-list-item-subtitle>
           <!-- Иконка фото/видео контента в сообщении -->
           <v-list-item-subtitle v-else-if="chat.messagesHistory.type === 'image'"> 
-            <a-icon class="chat-list__vlist--chat__subtitle-icon" :icon="['fas', 'file-image']"></a-icon>
+            <a-icon class="chat-list__vlist--chat__subtitle-attachement-icon" :icon="['fas', 'file-image']"></a-icon>
           </v-list-item-subtitle>
           <v-list-item-subtitle v-else-if="chat.messagesHistory.type === 'video'"> 
-            <a-icon class="chat-list__vlist--chat__subtitle-icon" :icon="['fas', 'file-video']"></a-icon>
+            <a-icon class="chat-list__vlist--chat__subtitle-attachement-icon" :icon="['fas', 'file-video']"></a-icon>
           </v-list-item-subtitle>
           <v-list-item-subtitle v-else-if="chat.messagesHistory.type === 'audio'"> 
-            <a-icon class="chat-list__vlist--chat__subtitle-icon" :icon="['fas', 'file-audio']"></a-icon>
+            <a-icon class="chat-list__vlist--chat__subtitle-attachement-icon" :icon="['fas', 'file-audio']"></a-icon>
           </v-list-item-subtitle>
         </v-list-item-content>
 
@@ -95,6 +93,7 @@
 <script>
 import updateThemes from '../../styles/updateThemes';
 import { markdown } from './messages/drawdown'
+import twemoji from 'twemoji'
 
 export default {
   props: {
@@ -123,7 +122,6 @@ export default {
             chatData.chatList[key].messagesHistory.find(function(message, index) { 
               // Заменяем весь массив с сообщениями, на одно удовлетворяющее критерию
               if (message.type !== 'suggestion' && message.type === 'text') { // Если текстовое сообщение
-                message.data.text = markdown(message.data.text)
                 chatData.chatList[key].messagesHistory = message
                 return true
               }
@@ -189,6 +187,55 @@ export default {
       this.mChatData.currentSelectedTheme = select;
       this.$store.commit('updateStores');
       updateThemes()
+    },
+    getFormatMessage(message) { 
+      console.log(message)
+      let exceptionList = [
+        '<p>',
+        '<b>',
+        '<i>',
+        '<img'
+      ];
+
+      function checkMessageWasFormatted(exception){
+        return message.includes(exception);
+      }
+      // Было ли сообщение отформитированно ранее (Для предотвращения повторной обработки после перерендера)
+      if (exceptionList.some(checkMessageWasFormatted) === false) {
+        message = markdown(message) // Применение форматирования к тексту, демо: https://markdown-it.github.io
+        message = twemoji.parse(message, {
+          base: 'assets/img/',              // default MaxCDN
+          ext: ".svg",                      // default ".png"
+          className: "chat-list__vlist--chat__subtitle-text__emoji", // default "emoji"
+          folder: "twemoji"
+        })
+        console.log(message)
+        return message        
+      }
+      // Если да, оставляем как есть
+      else return message
+    },
+    getTwemoji(message) { 
+      let exceptionList = [
+        '<p>',
+        '<img'
+      ];
+
+      function checkEmojiWasGet(exception){
+        return message.includes(exception);
+      }
+      // Было ли сообщение отформитированно ранее (Для предотвращения повторной обработки после перерендера)
+      if (exceptionList.some(checkEmojiWasGet) === false) {
+        message = twemoji.parse(message, {
+          base: 'assets/img/',            // default MaxCDN
+          ext: ".svg",                    // default ".png"
+          className: "chat-list__vlist--chat__subtitle-emoji",     // default "emoji"
+          folder: "twemoji"
+        })
+        return message        
+      }
+      // Если да, оставляем как есть
+      else return message
     }
   },
 }
@@ -273,12 +320,6 @@ export default {
   margin-left: 0px !important;
 }
 
-// .chat-list__vlist--chat__avatar__badge {
-//   width: 54px !important;
-//   border: var(--chat-list__vlist--chat__avatar__badge--border) !important;
-//   box-shadow: var(--chat-list__vlist--chat__avatar__badge--box-shadow) !important;
-// }
-
 .chat-list__vlist--chat__title {
   font-size: 0.9em !important;
   font-weight: var(--chat-list__vlist--chat__title--font-weight) !important;  
@@ -291,7 +332,7 @@ export default {
   }
 }
 
-.chat-list__vlist--chat__subtitle {
+.chat-list__vlist--chat__subtitle-text {
   font-size: 0.8em !important;
   margin-bottom: 3%;
   color: var(--chat-list__vlist--chat__subtitle--color) !important;
@@ -301,9 +342,18 @@ export default {
     text-overflow: ellipsis !important;
     overflow: hidden !important;
   }
+  &__emoji {
+    height: calc(var(--mChatWidth) / 100 * 6);
+    vertical-align: -.2em;
+    padding: 0 .05em 0 .1em;
+  }
 }
 
-.chat-list__vlist--chat__subtitle-icon {
+.chat-list__vlist--chat__subtitle-emoji {
+  height: calc(var(--mChatWidth) / 100 * 9);
+}
+
+.chat-list__vlist--chat__subtitle-attachement-icon {
   font-size: 2em !important;
   margin-bottom: 2.7%;
   color: var(--chat-list__vlist--chat__subtitle-icon--color) !important;

@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="message-title" style="margin-bottom: 6%" v-if="$store.state.mChat.selectedChatIsGroup">{{ author }}</div>
-  <div v-html="getEmoji"></div>
+  <div v-html="getTwemoji"></div>
 </div>
 
 </template>
@@ -18,7 +18,7 @@ export default {
     author: [String],
   },
   computed: {
-    getEmoji() { 
+    getTwemoji() { 
       let message = this.data.emoji 
       let exceptionList = [
         '<p>',

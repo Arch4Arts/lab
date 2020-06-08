@@ -255,7 +255,7 @@ export default {
           margin-bottom: 0px !important;
         }
         &__emoji {
-          height: calc(var(--mChatWidth) / 100 * 3);
+          height: calc(var(--mChatWidth) / 100 * 6);
           vertical-align: -.2em;
           padding: 0 .05em 0 .1em;
         }
