@@ -174,7 +174,7 @@
           <v-divider />
           <!-- Автоматическое воспроизведение видео -->
           <v-list-item class="v-list-item">
-            <v-list-item-content @click="autoPlayMsgVideoOnHover()">
+            <v-list-item-content @click="changeOption('autoplayVideoMessageOnHover')">
               <v-list-item-title>{{ $t('list-item__mChat.2.title') }}</v-list-item-title>
               <v-list-item-subtitle>{{ $t('list-item__mChat.2.subtitle') }}</v-list-item-subtitle>
             </v-list-item-content>
@@ -182,7 +182,7 @@
             <v-list-item-action>
               <v-switch
                 v-model="$store.state.mChat.autoplayVideoMessageOnHover"
-                @click.stop="autoPlayMsgVideoOnHover()"
+                @click.stop="changeOption('autoplayVideoMessageOnHover')"
               ></v-switch>
             </v-list-item-action>
           </v-list-item>

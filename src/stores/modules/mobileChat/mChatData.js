@@ -52,7 +52,7 @@ const mChatData = {
             { uid: '1k971c7a1', type: 'image', author: `erza`, data: { src: require('../../../media/img/2.gif'), meta: '✓✓ Read' } },
             { uid: '1k971cbgd', type: 'image', author: `me`, data: { src: require('../../../media/img/1.jpg'), meta: '✓✓ Read' } },
             { uid: '1k971cfl7', type: 'audio', author: `erza`, data: { src: require('../../../media/audio/test.mp3') } },
-            { uid: '1k971cj83', type: 'video', author: `erza`, data: { src: require('../../../media/video/Carmelita.mp4'), preview: require("../../../media/img/video test preview.jpeg") } },
+            { uid: '1k971cj83', type: 'video', author: `erza`, data: { src: require('../../../media/video/Carmelita.mp4'), poster: require("../../../media/img/video test preview.jpeg") } },
             { uid: '1k971cmt1', type: 'text', author: `me`, data: { text: `...or **not**?`, meta: '✓ Delivered' }},
             { uid: '1k971cmt1', type: 'suggestion', author: `me`, data: { suggestions: ["Looks good!", "It's OK.", "Uhh.. Do I really have to say something?", "This suggestion is way too long for css purpose. Let's make it long... Longer, and more and more.. Never ending."] } },
           ]

@@ -1,110 +1,18 @@
 <template>
-<div>
-  <div class="message-title" v-if="$store.state.mChat.selectedChatIsGroup">{{ author }}</div>
-  <div @mouseenter="play" @mouseleave="pause" class="video-message" @click="saveVolumeSettings()"> 
-    <vue-plyr ref="VideoMessagePlyr" class="video-message" :options="options" :key="$store.state.reRender_mChatPlayersVolume"> 
-      <video :data-poster="data.preview" preload="none" :src="data.src"></video>
-
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-          <symbol viewBox="0 0 18 18" id="plyr-airplay">
-              <path d="M16 1H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3v-2H3V3h12v8h-2v2h3a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
-              <path d="M4 17h10l-5-6z" />
-          </symbol>
-          <symbol viewBox="0 0 18 18" id="plyr-captions-off">
-              <path d="M1 1c-.6 0-1 .4-1 1v11c0 .6.4 1 1 1h4.6l2.7 2.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3l2.7-2.7H17c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1H1zm4.52 10.15c1.99 0 3.01-1.32 3.28-2.41l-1.29-.39c-.19.66-.78 1.45-1.99 1.45-1.14 0-2.2-.83-2.2-2.34 0-1.61 1.12-2.37 2.18-2.37 1.23 0 1.78.75 1.95 1.43l1.3-.41C8.47 4.96 7.46 3.76 5.5 3.76c-1.9 0-3.61 1.44-3.61 3.7 0 2.26 1.65 3.69 3.63 3.69zm7.57 0c1.99 0 3.01-1.32 3.28-2.41l-1.29-.39c-.19.66-.78 1.45-1.99 1.45-1.14 0-2.2-.83-2.2-2.34 0-1.61 1.12-2.37 2.18-2.37 1.23 0 1.78.75 1.95 1.43l1.3-.41c-.28-1.15-1.29-2.35-3.25-2.35-1.9 0-3.61 1.44-3.61 3.7 0 2.26 1.65 3.69 3.63 3.69z" fill-rule="evenodd" fill-opacity=".5" />
-          </symbol>
-          <symbol viewBox="0 0 18 18" id="plyr-captions-on">
-              <path d="M1 1c-.6 0-1 .4-1 1v11c0 .6.4 1 1 1h4.6l2.7 2.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3l2.7-2.7H17c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1H1zm4.52 10.15c1.99 0 3.01-1.32 3.28-2.41l-1.29-.39c-.19.66-.78 1.45-1.99 1.45-1.14 0-2.2-.83-2.2-2.34 0-1.61 1.12-2.37 2.18-2.37 1.23 0 1.78.75 1.95 1.43l1.3-.41C8.47 4.96 7.46 3.76 5.5 3.76c-1.9 0-3.61 1.44-3.61 3.7 0 2.26 1.65 3.69 3.63 3.69zm7.57 0c1.99 0 3.01-1.32 3.28-2.41l-1.29-.39c-.19.66-.78 1.45-1.99 1.45-1.14 0-2.2-.83-2.2-2.34 0-1.61 1.12-2.37 2.18-2.37 1.23 0 1.78.75 1.95 1.43l1.3-.41c-.28-1.15-1.29-2.35-3.25-2.35-1.9 0-3.61 1.44-3.61 3.7 0 2.26 1.65 3.69 3.63 3.69z" fill-rule="evenodd" />
-          </symbol>
-          <symbol viewBox="0 0 18 18" id="plyr-download">
-              <path d="M9 13c.3 0 .5-.1.7-.3L15.4 7 14 5.6l-4 4V1H8v8.6l-4-4L2.6 7l5.7 5.7c.2.2.4.3.7.3zm-7 2h14v2H2z" />
-          </symbol>
-          <symbol viewBox="0 0 18 18" id="plyr-enter-fullscreen">
-              <path d="M10 3h3.6l-4 4L11 8.4l4-4V8h2V1h-7zM7 9.6l-4 4V10H1v7h7v-2H4.4l4-4z" />
-          </symbol>
-          <symbol viewBox="0 0 18 18" id="plyr-exit-fullscreen">
-              <path d="M1 12h3.6l-4 4L2 17.4l4-4V17h2v-7H1zM16 .6l-4 4V1h-2v7h7V6h-3.6l4-4z" />
-          </symbol>
-          <symbol viewBox="0 0 18 18" id="plyr-fast-forward">
-              <path d="M7.875 7.171L0 1v16l7.875-6.171V17L18 9 7.875 1z" />
-          </symbol>
-          <symbol viewBox="0 0 18 18" id="plyr-logo-vimeo">
-              <path d="M17 5.3c-.1 1.6-1.2 3.7-3.3 6.4-2.2 2.8-4 4.2-5.5 4.2-.9 0-1.7-.9-2.4-2.6C5 10.9 4.4 6 3 6c-.1 0-.5.3-1.2.8l-.8-1c.8-.7 3.5-3.4 4.7-3.5 1.2-.1 2 .7 2.3 2.5.3 2 .8 6.1 1.8 6.1.9 0 2.5-3.4 2.6-4 .1-.9-.3-1.9-2.3-1.1.8-2.6 2.3-3.8 4.5-3.8 1.7.1 2.5 1.2 2.4 3.3z" />
-          </symbol>
-          <symbol viewBox="0 0 18 18" id="plyr-logo-youtube">
-              <path d="M16.8 5.8c-.2-1.3-.8-2.2-2.2-2.4C12.4 3 9 3 9 3s-3.4 0-5.6.4C2 3.6 1.3 4.5 1.2 5.8 1 7.1 1 9 1 9s0 1.9.2 3.2c.2 1.3.8 2.2 2.2 2.4C5.6 15 9 15 9 15s3.4 0 5.6-.4c1.4-.3 2-1.1 2.2-2.4.2-1.3.2-3.2.2-3.2s0-1.9-.2-3.2zM7 12V6l5 3-5 3z" />
-          </symbol>
-          <symbol viewBox="0 0 18 18" id="plyr-muted">
-              <path d="M12.4 12.5l2.1-2.1 2.1 2.1 1.4-1.4L15.9 9 18 6.9l-1.4-1.4-2.1 2.1-2.1-2.1L11 6.9 13.1 9 11 11.1zM3.786 6.008H.714C.286 6.008 0 6.31 0 6.76v4.512c0 .452.286.752.714.752h3.072l4.071 3.858c.5.3 1.143 0 1.143-.602V2.752c0-.601-.643-.977-1.143-.601L3.786 6.008z" />
-          </symbol>
-          <symbol viewBox="0 0 18 18" id="plyr-pause">
-              <path d="M6 1H3c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h3c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1zm6 0c-.6 0-1 .4-1 1v14c0 .6.4 1 1 1h3c.6 0 1-.4 1-1V2c0-.6-.4-1-1-1h-3z" />
-          </symbol>
-          <symbol viewBox="0 0 18 18" id="plyr-pip">
-              <path d="M13.293 3.293L7.022 9.564l1.414 1.414 6.271-6.271L17 7V1h-6z" />
-              <path d="M13 15H3V5h5V3H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6h-2v5z" />
-          </symbol>
-          <symbol viewBox="0 0 18 18" id="plyr-play">
-              <path d="M15.562 8.1L3.87.225c-.818-.562-1.87 0-1.87.9v15.75c0 .9 1.052 1.462 1.87.9L15.563 9.9c.584-.45.584-1.35 0-1.8z" />
-          </symbol>
-          <symbol viewBox="0 0 18 18" id="plyr-restart">
-              <path d="M9.7 1.2l.7 6.4 2.1-2.1c1.9 1.9 1.9 5.1 0 7-.9 1-2.2 1.5-3.5 1.5-1.3 0-2.6-.5-3.5-1.5-1.9-1.9-1.9-5.1 0-7 .6-.6 1.4-1.1 2.3-1.3l-.6-1.9C6 2.6 4.9 3.2 4 4.1 1.3 6.8 1.3 11.2 4 14c1.3 1.3 3.1 2 4.9 2 1.9 0 3.6-.7 4.9-2 2.7-2.7 2.7-7.1 0-9.9L16 1.9l-6.3-.7z" />
-          </symbol>
-          <symbol viewBox="0 0 18 18" id="plyr-rewind">
-              <path d="M10.125 1L0 9l10.125 8v-6.171L18 17V1l-7.875 6.171z" />
-          </symbol>
-          <symbol viewBox="0 0 18 18" id="plyr-settings">
-              <path d="M16.135 7.784a2 2 0 0 1-1.23-2.969c.322-.536.225-.998-.094-1.316l-.31-.31c-.318-.318-.78-.415-1.316-.094a2 2 0 0 1-2.969-1.23C10.065 1.258 9.669 1 9.219 1h-.438c-.45 0-.845.258-.997.865a2 2 0 0 1-2.969 1.23c-.536-.322-.999-.225-1.317.093l-.31.31c-.318.318-.415.781-.093 1.317a2 2 0 0 1-1.23 2.969C1.26 7.935 1 8.33 1 8.781v.438c0 .45.258.845.865.997a2 2 0 0 1 1.23 2.969c-.322.536-.225.998.094 1.316l.31.31c.319.319.782.415 1.316.094a2 2 0 0 1 2.969 1.23c.151.607.547.865.997.865h.438c.45 0 .845-.258.997-.865a2 2 0 0 1 2.969-1.23c.535.321.997.225 1.316-.094l.31-.31c.318-.318.415-.781.094-1.316a2 2 0 0 1 1.23-2.969c.607-.151.865-.547.865-.997v-.438c0-.451-.26-.846-.865-.997zM9 12a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
-          </symbol>
-          <symbol viewBox="0 0 18 18" id="plyr-volume">
-              <path d="M15.6 3.3c-.4-.4-1-.4-1.4 0-.4.4-.4 1 0 1.4C15.4 5.9 16 7.4 16 9c0 1.6-.6 3.1-1.8 4.3-.4.4-.4 1 0 1.4.2.2.5.3.7.3.3 0 .5-.1.7-.3C17.1 13.2 18 11.2 18 9s-.9-4.2-2.4-5.7z" />
-              <path d="M11.282 5.282a.909.909 0 0 0 0 1.316c.735.735.995 1.458.995 2.402 0 .936-.425 1.917-.995 2.487a.909.909 0 0 0 0 1.316c.145.145.636.262 1.018.156a.725.725 0 0 0 .298-.156C13.773 11.733 14.13 10.16 14.13 9c0-.17-.002-.34-.011-.51-.053-.992-.319-2.005-1.522-3.208a.909.909 0 0 0-1.316 0zm-7.496.726H.714C.286 6.008 0 6.31 0 6.76v4.512c0 .452.286.752.714.752h3.072l4.071 3.858c.5.3 1.143 0 1.143-.602V2.752c0-.601-.643-.977-1.143-.601L3.786 6.008z" />
-          </symbol>
-      </svg>
-    </vue-plyr>
-  </div>  
-</div>
-
+  <div>
+    <div class="message-title" v-if="$store.state.mChat.selectedChatIsGroup">{{ author }}</div>
+    <div @mouseenter="play" @mouseleave="pause" class="video-message" @click="saveVolumeSettings()"> 
+      <video ref="videoPlayer" class="video-js" :key="$store.state.reRender_mChatPlayersVolume" />
+    </div>
+  </div>
 </template>
 
 <script>
-
-// const controls2 = `
-// <div class="plyr__controls">
-//     <div class="plyr__progress">
-//         <input data-plyr="seek" type="range" min="0" max="100" step="0.01" value="0" aria-label="Seek">
-//         <progress class="plyr__progress__buffer" min="0" max="100" value="0">% buffered</progress>
-//         <span role="tooltip" class="plyr__tooltip">00:00</span>
-//     </div>
-//     <div>
-//         <div class="range-slider">
-//             <input data-plyr="volume" orient="vertical" type="range" min="0" max="1" step="0.05" value="1" autocomplete="off" aria-label="Volume">
-//         </div>
-//         <button type="button" class="plyr__control" aria-label="Mute" data-plyr="mute">
-//             <div>
-//               <svg class="icon--pressed" role="presentation"><use xlink:href="#plyr-muted"></use></svg>
-//               <svg class="icon--not-pressed" role="presentation"><use xlink:href="#plyr-volume"></use></svg>
-//               <span class="label--pressed plyr__tooltip" role="tooltip">Unmute</span>
-//               <span class="label--not-pressed plyr__tooltip" role="tooltip">Mute</span>
-//             </div>
-//         </button>
-//     </div>
-// </div>
-// `;
+import videojs from 'video.js/dist/alt/video.core.novtt.min.js';
+import 'video.js/dist/video-js.css'
 
 export default {
-  data() {
-    return {
-      options: {
-        loadSprite: false,
-        controls: ['play','progress','mute','volume','play-large'],
-        loop: { active: true },
-        muted: !this.$store.state.sound.gameGlobalSoundsEnable,
-        volume: this.$store.state.mChat.plyrVideoVolume, // Значение по умолчанию, потом плеер берёт данные из plyr-video
-        storage: { enabled: false, key: 'plyr-video' },
-      }
-    };
-  },
+  name: "videojs",
   props: {
     data: {
       type: Object,
@@ -112,26 +20,187 @@ export default {
     },
     author: [String],
   },
+  data() {
+    return {
+      player: null,
+      options: {
+        controls: true,
+        loop: true,
+        preload: 'none',
+        // responsive: true,
+        poster: this.data.poster,
+        sources: [
+          {
+            src: this.data.src,
+          }
+        ]
+      }
+    }
+  },
   methods: {
     saveVolumeSettings(){
-      this.$store.state.mChat.plyrVideoVolume = this.$refs.VideoMessagePlyr.player.volume
+      this.$store.state.mChat.videoVolume = this.player.volume();
       this.$store.commit('updateStores');
     },
     play(){
-      if (this.$store.state.mChat.autoplayVideoMessageOnHover) this.$refs.VideoMessagePlyr.player.play()
+      if (this.$store.state.mChat.autoplayVideoMessageOnHover) this.$refs.videoPlayer.play()
     },
     pause(){
-      if (this.$store.state.mChat.autoplayVideoMessageOnHover) this.$refs.VideoMessagePlyr.player.pause()
+      if (this.$store.state.mChat.autoplayVideoMessageOnHover) this.$refs.videoPlayer.pause();
     }
   },
-};
+  mounted() {
+    this.player = videojs(this.$refs.videoPlayer, this.options, function onPlayerReady() {
+      // console.log('onPlayerReady', this);
+    })
+    this.player.volume(this.$store.state.mChat.videoVolume)
+    if (!this.$store.state.sound.gameGlobalSoundsEnable) 
+      this.player.muted(true);
+  },
+  beforeDestroy() {
+    if (this.player) {
+      this.player.dispose()
+    }
+  }
+}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
-svg {
-  display: none;
+.video-js {
+  width: calc(var(--mChatWidth) / 100 * 75);
+  height: calc(var(--mChatWidth) / 100 * 50);
+
+  z-index: 1; // Не удалять!!!
+
+  border-radius: calc(var(--mChatWidth) / 100 * 6);
+  // Для border-radius
+  mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
+  -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
+
   overflow: hidden;
+
+  &:hover {
+    .vjs-big-play-button {
+      opacity: .9;
+      background: #00b3ff;
+    }
+  }
+
+  .vjs-poster {
+    background-size: cover;
+  }
+
+  .vjs-control-bar {
+    background-color: transparent;
+    font-size: calc(var(--mChatWidth) / 100 * 3.5);
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+
+  .vjs-big-play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    border: none;
+    opacity: .6;
+    background: #00b3ff;
+    .vjs-icon-placeholder:before {
+      position: absolute;
+      height: initial;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .vjs-button {
+    opacity: .9;
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .vjs-progress-control {   // на всю ширину поверх панели управления
+    position: absolute;
+    bottom: calc(var(--mChatWidth) / 100 * 9.5);
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 10px;
+    .vjs-play-progress:before {
+      opacity: 0;
+    }
+    &:hover {
+      .vjs-play-progress:before {
+        opacity: 1;
+      }
+    }
+  }
+
+  .vjs-volume-panel {
+    .vjs-mute-control {
+      width: 2em;
+    }
+  }
+
+  .vjs-time-control {
+    display: block;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .vjs-time-divider {
+    padding-left: .9em;
+  }
+  .vjs-duration-display {
+      opacity: 0.7;
+  }
+  .vjs-remaining-time {
+    display: none;
+  }
+
+
+  .vjs-picture-in-picture-control {
+    position: absolute;
+    bottom: 0;
+    // right: 16%;
+    right: 16%;
+
+    width: 2em;
+    .vjs-icon-placeholder {
+      background: url('https://gen.jut.su/templates/school/video-js-additional/pip-icon.png') center center no-repeat;
+      background-size: contain;
+      display: inline-block;
+      width: calc(var(--mChatWidth) / 100 * 5);
+      height: calc(var(--mChatWidth) / 100 * 5);
+      &:before {
+        content: none;
+      }
+    }
+  }
+
+  .vjs-fullscreen-control {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+.vjs-fullscreen {
+  .vjs-control-bar {
+    background-color: transparent;
+    font-size: calc(var(--mChatWidth) / 100 * 6);
+  }
+  .vjs-progress-control {   // на всю ширину поверх панели управления
+    bottom: 100%;
+  }
+  .vjs-picture-in-picture-control {
+    display: none;
+  }
 }
 
 </style>

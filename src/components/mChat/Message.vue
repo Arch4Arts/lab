@@ -306,48 +306,6 @@ export default {
   max-width: 92%;
 }
 
-.video-message {
-  width: calc(var(--mChatWidth) / 100 * 75);
-  height: calc(var(--mChatWidth) / 100 * 50);
-
-  z-index: 1; // Не удалять!!!
-  .plyr {
-    border-radius: calc(var(--mChatWidth) / 100 * 6);
-    // Для border-radius
-    mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
-    -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
-
-    overflow: hidden;
-  }
-  .plyr__video-wrapper { // Для чистого border-radius (убирает черные вкрапления на сгибах)
-    background: transparent !important;
-  }
-  .plyr--video { // Для чистого border-radius (убирает черные вкрапления на сгибах)
-    background: transparent !important;
-  }
-  // Картинка заполняет всю область блока видео
-  .plyr__poster {
-    background-color: transparent !important; // Для чистого border-radius (убирает черные вкрапления на сгибах)
-    background-size: cover;
-  }
-  // play-large
-  .plyr__control--overlaid {
-    opacity: .6;
-  }
-  // Анимация появления и исчезания нижней панели при наведении
-  .plyr__controls {
-    opacity: 0 !important;
-  }
-  :hover {
-    .plyr__controls {
-      opacity: 1 !important;
-    }
-    .plyr__control--overlaid {
-      opacity: 1 !important;
-    }
-  }
-}
-
 .emoji-message {
   height: 2.5em;
 }
