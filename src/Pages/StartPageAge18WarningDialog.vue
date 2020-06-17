@@ -1,17 +1,17 @@
 <i18n>
 	{
 		"en": {
-			"v-card-title": "You must be 18 or older to access this game",
+			"v-card-title": "Forced modal window",
 			"v-card-text": {
-        "1": "<br>the game contains scenes of Smoking and blah-blah-blah"
+        "1": "Text"
       },
 			"v-btn-enter": "Continue",
 			"v-btn-leave": "Cancel"
 		},
 		"ru": {
-			"v-card-title": "Вы должны быть старше 18 лет для доступа к этой игре",
+			"v-card-title": "Принудительное модальное окно",
 			"v-card-text": {
-        "1": "<br>игра содержит сцены <b>курения</b> и бла-бла-бла!"
+        "1": "Текст"
       },
 			"v-btn-enter": "Продолжить",
 			"v-btn-leave": "Отменить"

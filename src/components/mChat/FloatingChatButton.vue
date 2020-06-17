@@ -226,6 +226,6 @@ $trigger: 'shake-trigger' !default;
 .#{$prefix}-freeze:hover,
 .#{$trigger}:hover .#{$prefix}-freeze { @extend %running; }
 
-.shake-slow { @include do-shake('shake-slow', 2, 0, 35, 6s, $chunk: 40%); }
+.shake-slow { @include do-shake('shake-slow', 0, 0, 43, 6s, $chunk: 60%); }
 
 </style>

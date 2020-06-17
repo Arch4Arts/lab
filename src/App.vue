@@ -1,7 +1,7 @@
 <template>  
   <v-app> 
   <v-layout v-touch="{ right: () => swipeRight(), left: () => swipeLeft(), down: () => swipeBottom(), up: () => swipeTop() }">
-  <v-content @click="test()">
+  <v-main @click="test()">
     <StartPage v-if="$store.state.gameDisplayingStartPage" />
 
     <Settings />
@@ -12,7 +12,7 @@
     <router-view v-if="!$store.state.gameDisplayingStartPage">
       <!-- Entry --> 
     </router-view>
-  </v-content>
+  </v-main>
   </v-layout>  
   </v-app>
 </template>

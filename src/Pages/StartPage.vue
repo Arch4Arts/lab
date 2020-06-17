@@ -20,7 +20,7 @@
 	<v-layout justify-center class="v-layout">
 		<v-flex md8 text-center class="Page">
 
-			<StartPageAge18WarningDialog />
+			<!-- <StartPageAge18WarningDialog /> -->
 
 			<!-- ВЫБОР ЯЗЫКА -->
 			<div><h1>{{ $t('langChange-title') }}</h1></div>
