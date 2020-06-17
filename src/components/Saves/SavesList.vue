@@ -89,7 +89,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
 .position-btns {
   display: inline;

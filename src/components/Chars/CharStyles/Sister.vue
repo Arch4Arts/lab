@@ -8,7 +8,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 
 * {
     margin-bottom: 0px;

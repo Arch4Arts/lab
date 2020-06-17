@@ -307,7 +307,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
 .v-menu--background {
   background: var(--settings-v-list-item--background) !important;

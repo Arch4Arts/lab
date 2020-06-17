@@ -162,12 +162,3 @@ html {
 	padding: 0px 0px 0px 0px !important;
 	color: var(--plyr--audio--color);
 }
-
-// Мащтабирование svg иконок
-.plyr__controls__item.plyr__control {
-	color: var(--plyr--audio--color);
-	svg {
-		height: var(--mChatFontSize) !important;
-		width: var(--mChatFontSize) !important;
-	}
-}

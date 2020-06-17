@@ -86,7 +86,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
 .main-btn {
 	background: var(--RadialMenu--main-btn--background) !important;

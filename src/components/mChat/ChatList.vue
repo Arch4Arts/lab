@@ -239,7 +239,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 
 .chat-list.v-card {
   background: var(--chat-list--background) !important;

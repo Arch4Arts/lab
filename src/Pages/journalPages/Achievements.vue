@@ -35,7 +35,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 
 .Achievement {
     margin: 10px 10px 10px 10px;

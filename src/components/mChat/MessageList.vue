@@ -70,7 +70,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
 .virtual-list {
   // padding-top: 3%;

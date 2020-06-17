@@ -49,7 +49,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
 .input-area { // Зона размещения поля ввода и кнопок
   display: flex;

@@ -91,8 +91,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import './styles/normalize.css';
+<style lang='scss'>
+@import '../node_modules/normalize.css';
 @import './styles/gameThemes.scss';
 @import './styles/mChatThemes.scss';
 

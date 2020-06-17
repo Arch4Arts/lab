@@ -173,7 +173,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 
 .v-card {
   background: var(--Page--background) !important;

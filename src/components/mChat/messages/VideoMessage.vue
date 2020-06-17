@@ -65,7 +65,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 
 .video-js {
   width: calc(var(--mChatWidth) / 100 * 75);

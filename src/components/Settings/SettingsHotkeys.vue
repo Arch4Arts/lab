@@ -305,7 +305,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
 .v-list-item {
   padding: 0px !important;

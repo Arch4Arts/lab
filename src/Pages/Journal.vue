@@ -49,7 +49,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 
 #journal .v-slide-group__prev {
 	display: none !important; // fix черный блок по краям

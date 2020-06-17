@@ -53,7 +53,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 
 .v-color-picker {
   background-color: var(--Page--background) !important;

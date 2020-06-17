@@ -283,7 +283,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
 .v-navigation-drawer {
   background: var(--v-navigation-drawer--background) !important;

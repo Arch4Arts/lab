@@ -22,7 +22,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
 
 .suggestions-row {
 	text-align: center;

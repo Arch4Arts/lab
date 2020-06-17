@@ -128,10 +128,10 @@ library.add({
 
 export default new Vuetify({
   theme: {
-      options: {
-        customProperties: true,
-      },
-      dark: true,
+    options: {
+      customProperties: true,
+    },
+    dark: true,
   },
   icons: {
     iconfont: 'faSvg' && 'mdiSvg',

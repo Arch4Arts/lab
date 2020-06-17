@@ -45,7 +45,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
 .v-btn {
   background: var(--message-list__v-btn--background) !important;

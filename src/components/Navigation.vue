@@ -69,7 +69,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
 
 .v-app-bar {
 	background: var(--v-app-bar--background) !important;
