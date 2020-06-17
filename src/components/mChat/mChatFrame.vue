@@ -200,7 +200,7 @@ export default {
     savePosition(x, y){
       this.$store.state.mChat.posX = x
       this.$store.state.mChat.posY = y
-      this.$store.commit('updateStores');
+      this.$store.commit('updateStore');
     },
     onResize(x, y, width, height) {
       this.x = x
@@ -217,7 +217,7 @@ export default {
 
       this.$store.state.mChat.width = width
       this.$store.state.mChat.height = size.height
-      this.$store.commit('updateStores');
+      this.$store.commit('updateStore');
     },
     getSmartphoneSize(){ // Получение размеров smartphoneMockup
       let element = document.getElementById('smartphone-mockup');

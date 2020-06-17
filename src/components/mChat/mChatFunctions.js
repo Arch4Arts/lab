@@ -1,4 +1,4 @@
-import store from '../../stores/store'
+import store from '../../store/store'
 import eventBus from '../../js/eventBus'
 
 let numberPendingMessages = 0;
@@ -53,7 +53,7 @@ export function onMessageWasSent(ChatID, message){ // Импорт для userIn
       if (numberPendingMessages >= 1 && user.messagesHistory[user.messagesHistory.length - 1].type !== 'typing')
         user.messagesHistory = [...user.messagesHistory, typingMessageCopy]
 
-      store.commit('updateStores');
+      store.commit('updateStore');
       eventBus.emit('mChatMessageWasSent');
       eventBus.emit('mChatMessageWasSent_Notify', message);
     }
@@ -68,6 +68,6 @@ export function addContactToChatList(newContact){
   }
   if (doubleDetect === false) {
     store.state.mChat.сurrentChatList_MC.push(newContact);
-    store.commit('updateStores');
+    store.commit('updateStore');
   }
 }

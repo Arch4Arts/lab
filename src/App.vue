@@ -1,7 +1,7 @@
 <template>  
   <v-app> 
   <v-layout v-touch="{ right: () => swipeRight(), left: () => swipeLeft(), down: () => swipeBottom(), up: () => swipeTop() }">
-  <v-main @click="test()">
+  <v-main>
     <StartPage v-if="$store.state.gameDisplayingStartPage" />
 
     <Settings />
@@ -28,61 +28,64 @@ export default {
   methods: {
     swipeRight(){
       // Открытие/Закрытие панели настроек
-      if (this.$store.state.isOpenSettingsDrawer) this.$store.state.isOpenSettingsDrawer = !this.$store.state.isOpenSettingsDrawer
+      if (this.$store.state.isOpenSettingsDrawer) 
+        this.$store.commit('isOpenSettingsDrawer');
       // Открытие/закрытие панели сохранений
-      if (this.$store.state.isOpenSavesDrawer) this.$store.state.isOpenSavesDrawer = !this.$store.state.isOpenSavesDrawer
+      if (this.$store.state.isOpenSavesDrawer) 
+        this.$store.commit('autoCloseSavesDrawer');
       // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
       if (this.$route.path != '/Journal') {
         if (this.$store.state.mChat.show) { // проверка открыт ли чат, если да то...
-          // Открыта ли страница контактов, true, то закрываем, если false, возвращаемся к странице контактов, т.к открыт чат с контактом
-          if (this.$store.state.mChat.chatListShow) {
+          // Открыта ли страница контактов, true - закрываем, false - возвращаемся к странице контактов, т.к открыт чат с контактом
+          if (this.$store.state.mChat.chatListShow)
             this.$store.commit('mChatShow'); // закрываем окно чата
-          }
           // Закрывает чат с контактом если он открыт
-          else this.$store.state.mChat.chatListShow = !this.$store.state.mChat.chatListShow
+          else 
+            this.$store.commit('mChatListShow');
         }
       }
     },
     swipeLeft(){
-      if (this.$store.state.mChat.enable) { // Включён ли чат (Отключается при выборе палитры цвета диалогов)
-        // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
+      if (this.$store.state.mChat.enable) {
+        // Отключение свайпа на странице дневника (tabs использует переход по подстраницам на свайпах влево/вправо)
         if (this.$route.path != '/Journal') {
           // открываем окно чата, если оно не было открыто ранее
-          if (!this.$store.state.mChat.show) this.$store.commit('mChatShow');
+          if (!this.$store.state.mChat.show) 
+            this.$store.commit('mChatShow');
         }
       }
     },
-    // Тригеры для появления и исчезновения radialMenu
+    // Тригер для появления и исчезновения radialMenu
     swipeBottom(){
-      this.$store.state.radialMenuShow = true // ! Не менять, на телефоне прокрутка свайпами не соотвествует направлению прокрутки на компе
-      this.$store.commit('updateStores');
+      this.$store.state.radialMenuShow = true
+      this.$store.commit('updateStore');
     },
-    // Тригеры для появления и исчезновения radialMenu
+    // Тригер для появления и исчезновения radialMenu
     swipeTop(){
       this.$store.state.radialMenuShow = false
-      this.$store.commit('updateStores');
+      this.$store.commit('updateStore');
     },    
-    updateCSSVars(){
-      let element = document.querySelector('html');
-      element.style.setProperty("--AppWidth", `${window.innerWidth}px`);
-      element.style.setProperty("--AppFontSize", `${window.innerWidth / 18}px`);
-      element.style.setProperty("--AppHeight", `${window.innerHeight}px`);
-    },
+    // updateCSSVars(){
+    //   let element = document.querySelector('html');
+    //   element.style.setProperty("--AppWidth", `${window.innerWidth}px`);
+    //   element.style.setProperty("--AppFontSize", `${window.innerWidth / 18}px`);
+    //   element.style.setProperty("--AppHeight", `${window.innerHeight}px`);
+    // },
   },
-  created() {
-    // Для адаптивности
-    this.updateCSSVars()
-    window.addEventListener("resize", this.updateCSSVars);
-  },
-  destroyed() {
-    window.removeEventListener("resize", this.updateCSSVars);
-  },
+  // created() {
+  //   this.updateCSSVars() // Для адаптивности
+  //   window.addEventListener("resize", this.updateCSSVars);
+  // },
+  // destroyed() {
+  //   window.removeEventListener("resize", this.updateCSSVars);
+  // },
   components: {
     Navigation,
     StartPage,
     Entry,
     'mc-chat': mcChat,
-    Settings: () => import('./components/Settings/Settings'), // Ленивая загрузка компонента (Dynamic Imports) для повышения производительности
+    // Ленивая загрузка компонентов (Dynamic Imports) для повышения производительности
+    Settings: () => import('./components/Settings/Settings'),
     Saves: () => import('./components/Saves/Saves'),
   },
 }
@@ -93,15 +96,15 @@ export default {
 @import './styles/gameThemes.scss';
 @import './styles/mChatThemes.scss';
 
-a { // убираем подчёркивание и делаем жирнее
+// убирает подчёркивание у ссылок и делаем их жирнее
+a {
 	text-decoration: none;
   font-weight:bold;
+  &:hover { 
+    text-decoration: none;
+    font-weight:bold;
+  } 
 }  
-
-a:hover { 
-	text-decoration: none;
-  font-weight:bold;
-} 
 
 .v-layout {
   background: var(--v-layout--background) !important;

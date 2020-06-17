@@ -7,21 +7,21 @@ import FAQ from "./pages/FAQ.vue"
 Vue.use(VueRouter)
 
 export default new VueRouter({
-    routes: [
-        {
-            path: '/', // Корень
-            name: '',
-            component: Entry
-        },
-        {
-            path: '/FAQ',
-            name: 'FAQ',
-            component: FAQ
-        },
-        {
-            path: '/Journal',
-            name: 'Journal',
-            component: Journal
-        },
-    ],
+	routes: [
+		{
+			path: '/',
+			name: '',
+			component: Entry
+		},
+		{
+			path: '/FAQ',
+			name: 'FAQ',
+			component: FAQ
+		},
+		{
+			path: '/Journal',
+			name: 'Journal',
+			component: Journal
+		},
+	],
 })

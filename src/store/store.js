@@ -89,7 +89,7 @@ const store = new Vuex.Store({
     // }
   })],
   mutations:{
-    updateStores() { // Используется только для закрепления изменений во всех Store's
+    updateStore() { // Используется только для закрепления изменений во всех Store's
       this.state.gameName = this.state.gameName; // Пустышка
     },
 

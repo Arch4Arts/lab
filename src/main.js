@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 import App from './App.vue'
 import router from './router.js'
-import store from './stores/store'
+import store from './store/store'
 
 import vuetify from './styles/vuetify'
 
@@ -11,20 +11,23 @@ Vue.use(vClickOutside)
 
 import i18n from './i18n'
 
-import favicon from './assets/favicon.png'; // Для экспорта иконки в run build
-
+// Открывает картинку в новом окне ( аналог просмоторщика Picasa )
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer'
-Vue.use(Viewer) // Открывает картинку в новом окне ( аналог просмоторщика Picasa )
+Vue.use(Viewer)
 
+// Видео/Аудио плеер
 import VuePlyr from 'vue-plyr'
 import 'plyr/dist/plyr.css'
-Vue.use(VuePlyr) // Видео/Аудио плеер
+Vue.use(VuePlyr)
 
-import vueScrollBehavior from 'vue-scroll-behavior' // Сохранение положения прокрутки
+// Сохранение положения прокрутки
+import vueScrollBehavior from 'vue-scroll-behavior'
 Vue.use(vueScrollBehavior, { router: router })
 
-import updateThemes from './styles/updateThemes';
+
+// Сообственные функции и методы
+import updateTheme from './styles/updateTheme';
 import { checkSoundsEnable } from './js/gameSound'
 import { bindHotkeys, unbindHotkeys }from './js/hotkeys'
 
@@ -58,7 +61,8 @@ new Vue({
       // Является ли устройство сенсорным
       this.isTouchDevice = this.detectTouchDevice();
       // Обновляем оформление игры
-      updateThemes();
+      updateTheme('game');
+      updateTheme('mChat');
       // Подключаем горячие клавиши (проверка внутри функции)
       bindHotkeys();
       // проверка состояния звука

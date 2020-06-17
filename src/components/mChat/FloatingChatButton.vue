@@ -50,7 +50,7 @@ export default {
     savePosition(x, y){
       this.$store.state.mChat.posX_floatButton = x
       this.$store.state.mChat.posY_floatButton = y
-      this.$store.commit('updateStores');
+      this.$store.commit('updateStore');
       // Задержка для отработки после события click
       setTimeout(() => { this.isDragNow = false }, 100);
     },

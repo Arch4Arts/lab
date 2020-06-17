@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import store from '../stores/store'
+import store from '../store/store'
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
 

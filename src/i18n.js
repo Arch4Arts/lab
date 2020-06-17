@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import store from './stores/store'
+import store from './store/store'
 import VueI18n from 'vue-i18n'
 
 Vue.use(VueI18n)

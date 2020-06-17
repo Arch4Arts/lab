@@ -1,4 +1,4 @@
-import store from '../stores/store'
+import store from '../store/store'
 
 var soundsPath = [ 
   { path: require('../media/audio/notifications/Journal write sound.mp3') },

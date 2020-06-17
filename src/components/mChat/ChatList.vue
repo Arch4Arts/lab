@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import updateThemes from '../../styles/updateThemes';
+import updateTheme from '../../styles/updateTheme';
 import { markdown } from './messages/drawdown'
 import twemoji from 'twemoji'
 
@@ -185,8 +185,8 @@ export default {
     },
     applySelectedTheme(select){
       this.mChatData.currentSelectedTheme = select;
-      this.$store.commit('updateStores');
-      updateThemes()
+      this.$store.commit('updateStore');
+      updateTheme('mChat');
     },
     getFormatMessage(message) { 
       let exceptionList = [

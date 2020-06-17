@@ -7,11 +7,19 @@ const emojiFileList = require('./src/js/twemoji')
 const faviconPath = { from: './src/assets/favicon.png', to: 'assets/img/' }
 const fileList = [].concat(emojiFileList, faviconPath)
 
+const getOutputDir = function () {
+  // Если Undefined - community версия 
+  // так как в .env.production нет переменной VUE_APP_EDITION, но она есть в .env.special
+  if (process.env.VUE_APP_EDITION === undefined) {
+    return `./dist/${packageJson.name} ${packageJson.version} community`
+  } else {
+    return `./dist/${packageJson.name} ${packageJson.version} special`
+  }
+}
+
 module.exports = {
-  configureWebpack: config => {
-    // config.output.filename = 'js/[name].js';
-  },
   chainWebpack: config => {
+    // поддержка yaml и json файлов
     config.module
       .rule('i18n-loader')
       .test(/.\.yaml$/)
@@ -22,7 +30,7 @@ module.exports = {
         .loader('yaml-loader')
       .end();
 
-      // Исключает комментарии из chunk-vendors.js
+      // Удаляет комментарии из chunk-vendors.js
       config.optimization.minimizer('terser').tap((args) => {
         args[0].terserOptions.output = {
           ...args[0].terserOptions.output,
@@ -32,9 +40,9 @@ module.exports = {
       })
   },
   configureWebpack: {
-    plugins: 
-    // Undefined - community версия, т.к в .env.production нет переменной VUE_APP_EDITION, но есть в .env.special
-    (process.env.VUE_APP_EDITION === undefined && process.env.NODE_ENV !== 'development') ? // Production
+    // Если Undefined - community версия 
+    // так как в .env.production нет переменной VUE_APP_EDITION, но она есть в .env.special
+    plugins: (process.env.VUE_APP_EDITION === undefined && process.env.NODE_ENV !== 'development') ? // Production
       [
         new CopyPlugin({
           patterns: fileList
@@ -50,55 +58,33 @@ module.exports = {
         // Таким образом все файлы Special Edtion должны оканчиваться на _special.vue
         new webpack.IgnorePlugin(/.*_special.vue/)
       ]
-    : (process.env.VUE_APP_EDITION === 'special') ? // Special
-        [
-          new CopyPlugin({
-            patterns: fileList
-          }),
-          new SentryCliPlugin({ // Обработчик ошибок
-            release: packageJson.version, // извлечение версии игры из переменной
-            include: `./dist/${packageJson.name} ${packageJson.version} special/js/`, // Загрузка js файлов на сервер
-            // filenameTransform: filename => '~/js/' + filename,
-            ignoreFile: '.sentrycliignore',
-            ignore: ['node_modules', 'webpack.config.js'],
-          }),
-        ]
-      : // Development
-        [
-          // new SentryCliPlugin({ // Обработчик ошибок
-          //   release: packageJson.version, // извлечение версии игры из переменной
-          //   include: 'D:/Dev/lab/dist/js/', // Загрузка js файлов на сервер
-          //   // filenameTransform: filename => '~/js/' + filename,
-          //   ignoreFile: '.sentrycliignore',
-          //   ignore: ['node_modules', 'webpack.config.js'],
-          // }),
-          new CopyPlugin({
-            patterns: fileList
-          }),
-        ]
+      : (process.env.VUE_APP_EDITION === 'special') ? // Special
+          [
+            new CopyPlugin({
+              patterns: fileList
+            }),
+            new SentryCliPlugin({ // Обработчик ошибок
+              release: packageJson.version, // извлечение версии игры из переменной
+              include: `./dist/${packageJson.name} ${packageJson.version} special/js/`, // Загрузка js файлов на сервер
+              // filenameTransform: filename => '~/js/' + filename,
+              ignoreFile: '.sentrycliignore',
+              ignore: ['node_modules', 'webpack.config.js'],
+            }),
+          ]
+        : // Development
+          [
+            // new SentryCliPlugin({ // Обработчик ошибок
+            //   release: packageJson.version, // извлечение версии игры из переменной
+            //   include: 'D:/Dev/lab/dist/js/', // Загрузка js файлов на сервер
+            //   // filenameTransform: filename => '~/js/' + filename,
+            //   ignoreFile: '.sentrycliignore',
+            //   ignore: ['node_modules', 'webpack.config.js'],
+            // }),
+            new CopyPlugin({
+              patterns: fileList
+            }),
+          ]
   },
-  // chainWebpack: config => {
-  //   config.module
-  //     .rule('images')
-  //     .use('url-loader')
-  //     .loader('url-loader')
-  //     .tap(options => {
-  //       options.limit = -1
-  //       return options
-  //     });
-  // },
-  // chainWebpack: (config) => {
-  //   const svgRule = config.module.rule('svg');
- 
-  //   svgRule.uses.clear();
- 
-  //   svgRule
-  //     .use('babel-loader')
-  //     .loader('babel-loader')
-  //     .end()
-  //     .use('vue-svg-loader')
-  //     .loader('vue-svg-loader');
-  // },
   pluginOptions: {
     i18n: {
       locale: 'en',
@@ -109,14 +95,8 @@ module.exports = {
   },
 
   publicPath: './',
-  // Undefined - community версия, т.к в .env.production нет переменной VUE_APP_EDITION, но есть в .env.special
-  outputDir: (process.env.VUE_APP_EDITION === undefined) ? 
-    `./dist/${packageJson.name} ${packageJson.version} community` 
-  : 
-    `./dist/${packageJson.name} ${packageJson.version} special`,
-  // Каталог для хранения сгенерированных статических ресурсов (js, css, img, fonts).
-  assetsDir: 'assets',
+  outputDir: getOutputDir(),
+  assetsDir: 'assets',        // Каталог для хранения сгенерированных статических ресурсов (js, css, img, fonts).
   filenameHashing: false,
-  // чтобы ошибки в консоле указавали точно местоположение в js
   productionSourceMap: false,
 }

@@ -1,4 +1,4 @@
-import store from '../stores/store'
+import store from '../store/store'
 import router from '../router'
 import hotkeys from 'hotkeys-js';
 import eventBus from './eventBus'

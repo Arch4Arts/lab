@@ -6,7 +6,7 @@ import vuetify from '../styles/vuetify'
 import exclamationTriangle from '../assets/exclamation-triangle.svg'
 import infoCircle from '../assets/info-circle.svg'
 
-import store from '../stores/store'
+import store from '../store/store'
 
 // Оповещения для globalErrorsHandling.js
 export function mChatNotify(extOptions){

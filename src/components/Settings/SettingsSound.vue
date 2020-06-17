@@ -250,7 +250,7 @@ export default {
         },
         set: function (soundName) {
           this.$store.state.sound.achievementSound = soundName;
-          this.$store.commit('updateStores');
+          this.$store.commit('updateStore');
         } 
       },
       diarySelectedSound: { 
@@ -259,7 +259,7 @@ export default {
         },
         set: function (soundName) {
           this.$store.state.sound.diarySound = soundName;
-          this.$store.commit('updateStores');
+          this.$store.commit('updateStore');
         } 
       },
       smartphoneSelectedSound: { 
@@ -268,7 +268,7 @@ export default {
         },
         set: function (soundName) {
           this.$store.state.sound.smartphoneSound = soundName;
-          this.$store.commit('updateStores');
+          this.$store.commit('updateStore');
         } 
       },
 
@@ -280,7 +280,7 @@ export default {
         },
         set: function (level) {
           this.$store.state.sound.achievementVolume = (level /= 100)
-          this.$store.commit("updateStores");
+          this.$store.commit("updateStore");
         } 
       },
       diaryVolumeSlider: {
@@ -290,7 +290,7 @@ export default {
         },
         set: function (level) {
           this.$store.state.sound.diaryVolume = (level /= 100)
-          this.$store.commit("updateStores");
+          this.$store.commit("updateStore");
         } 
       },
       smartphoneVolumeSlider: {
@@ -300,7 +300,7 @@ export default {
         },
         set: function (level) {
           this.$store.state.sound.smartphoneVolume = (level /= 100)
-          this.$store.commit("updateStores");
+          this.$store.commit("updateStore");
         } 
       },
   },

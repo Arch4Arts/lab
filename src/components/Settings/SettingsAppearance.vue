@@ -75,7 +75,7 @@ export default {
       set: function (selected) {
         this.$store.state.gameFont = selected;
         document.getElementById("StoryTextArea").style.fontFamily = selected;
-        this.$store.commit("updateStores");
+        this.$store.commit("updateStore");
       }
     },
     // Размер шрифта
@@ -86,7 +86,7 @@ export default {
       set: function (selected) {
         this.$store.state.gameFontSize = `${selected}pt`;
         document.getElementById("StoryTextArea").style.fontSize = `${selected}pt`;
-        this.$store.commit("updateStores");
+        this.$store.commit("updateStore");
       } 
     }
   },

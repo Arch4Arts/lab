@@ -40,7 +40,7 @@ export default {
   methods: {
     saveVolumeSettings(){
       this.$store.state.mChat.videoVolume = this.player.volume();
-      this.$store.commit('updateStores');
+      this.$store.commit('updateStore');
     },
     play(){
       if (this.$store.state.mChat.autoplayVideoMessageOnHover) this.$refs.videoPlayer.play()

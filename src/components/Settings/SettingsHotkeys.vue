@@ -244,7 +244,7 @@ export default {
           let keyName = keycode(keyCode[0]);
           // Записываем данные в хранилище
           this.$store.state.settingsHotkeys[this.selected.key] = keyName
-          this.$store.commit('updateStores');
+          this.$store.commit('updateStore');
           break;
         }
         case 'journal': {
@@ -252,7 +252,7 @@ export default {
           let keyName = keycode(keyCode[0]);
           // Записываем данные в хранилище
           this.$store.state.journalHotkeys[this.selected.key] = keyName
-          this.$store.commit('updateStores');
+          this.$store.commit('updateStore');
           break;
         }
         case 'saves': {
@@ -260,7 +260,7 @@ export default {
           let keyName = keycode(keyCode[0]);
           // Записываем данные в хранилище
           this.$store.state.savesHotkeys[this.selected.key] = keyName
-          this.$store.commit('updateStores');
+          this.$store.commit('updateStore');
           break;
         }
         case 'mChat': {
@@ -268,7 +268,7 @@ export default {
           let keyName = keycode(keyCode[0]);
           // Записываем данные в хранилище
           this.$store.state.mChatHotkeys[this.selected.key] = keyName
-          this.$store.commit('updateStores');
+          this.$store.commit('updateStore');
           break;
         }
       }
