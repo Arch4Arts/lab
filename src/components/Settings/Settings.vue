@@ -263,8 +263,9 @@ import eventBus from '../../js/eventBus'
 
 export default {
   methods: {
-    drawerShowState(isShow){ // Записывает изменения стейта из v-model
-      if (!isShow) this.$store.commit('updateStore')
+    drawerShowState(isShow){ // регистрация изменений $store.state.isOpenSettingsDrawer из v-model
+      if (!isShow) 
+        this.$store.commit('updateStore')
     },
     changeOption(commitName){
       this.$store.commit(commitName)

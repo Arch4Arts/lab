@@ -27,14 +27,22 @@
   <br>
   <br><br>
   <p>Send</p>
-  <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "lorum! 😍" })'>short text...</v-btn>
-  <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "Lorum 😍 **ipsum** orom!" })'>text...</v-btn>
-  <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "Ipsum **_lorom odno_** id narokomoron 😍 is naruch begin end" })'>long text...</v-btn>
-  <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "image", { src: require("../../media/img/2.gif") })'>image gif...</v-btn>
-  <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "video", { src: require("../../media/video/Carmelita.mp4"), poster: require("../../media/img/video test preview.jpeg") })'>video...</v-btn>
-  <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "audio", { src: require("../../media/audio/test.mp3") })'>audio..</v-btn>
-  <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "emoji", { emoji: "😍" })'>emoji..</v-btn>
-  <v-btn class="test-chat" @click='sendMessage(selectedChatID, selectedCharID, "suggestion", { suggestions: ["no", "Yes"] })'>suggetions</v-btn>
+  <v-btn class="test-chat" 
+    @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "lorum! 😍" })'>short text...</v-btn>
+  <v-btn class="test-chat" 
+    @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "Lorum 😍 **ipsum** orom!" })'>text...</v-btn>
+  <v-btn class="test-chat" 
+    @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "Ipsum **_lorom odno_** id narokomoron 😍 is naruch begin end" })'>long text...</v-btn>
+  <v-btn class="test-chat" 
+    @click='sendMessage(selectedChatID, selectedCharID, "image", { src: require("../../media/img/2.gif") })'>image gif...</v-btn>
+  <v-btn class="test-chat" 
+    @click='sendMessage(selectedChatID, selectedCharID, "video", { src: require("../../media/video/Carmelita.mp4"), poster: require("../../media/img/video test preview.jpeg") })'>video...</v-btn>
+  <v-btn class="test-chat" 
+    @click='sendMessage(selectedChatID, selectedCharID, "audio", { src: require("../../media/audio/test.mp3") })'>audio..</v-btn>
+  <v-btn class="test-chat" 
+    @click='sendMessage(selectedChatID, selectedCharID, "emoji", { emoji: "😍" })'>emoji..</v-btn>
+  <v-btn class="test-chat" 
+    @click='sendMessage(selectedChatID, selectedCharID, "suggestion", { suggestions: ["no", "Yes"] })'>suggetions</v-btn>
   <br>
   <v-btn class="test-chat" text @click="addContactToChatList('mc_erza')">Добавить mc в контакты</v-btn>
   <br><br>
@@ -60,7 +68,7 @@ export default {
   computed: {
     getCharIDList() {
       let CharIDList = [];
-      var users = this.$store.state.mChatData.MC.charProfiles;
+      let users = this.$store.state.mChatData.MC.charProfiles;
       for (let user of users) { // Перебираем для каждого пользователя
         CharIDList.push(user.charID)
       }
@@ -68,7 +76,7 @@ export default {
     },
     getChatIDList() {
       let ChatIDList = [];
-      var users = this.$store.state.mChatData.MC.chatList;
+      let users = this.$store.state.mChatData.MC.chatList;
       for (let user of users) { // Перебираем для каждого пользователя
         ChatIDList.push(user.chatID)
       }
@@ -77,7 +85,7 @@ export default {
   },
   methods: {
     genUID(){
-      var uniqid = require('uniqid');
+      let uniqid = require('uniqid');
       this.uniqid = uniqid()
     }
   }

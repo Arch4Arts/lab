@@ -23,7 +23,7 @@ export function checkSoundsEnable(){
 
 export function searchPath(soundName){
   // Если путь был найден, возвращает путь
-  var searchResult;
+  let searchResult;
   soundsPath.find(function(item) {
     if (item.path.indexOf(soundName) > 0)
     searchResult = item.path
@@ -33,7 +33,7 @@ export function searchPath(soundName){
 
 export function soundPlay(soundName, volumeState = 0.5){
   if (store.state.sound.gameGlobalSoundsEnable) {
-    var audio = new Audio(searchPath(soundName));
+    let audio = new Audio(searchPath(soundName));
     audio.volume = volumeState
     audio.play();    
   }
@@ -41,7 +41,7 @@ export function soundPlay(soundName, volumeState = 0.5){
 
 export function soundPlayLoop(soundName, volumeState = 0.5){ 
   if (store.state.sound.gameGlobalSoundsEnable) {
-    var loopAudio = new Audio(searchPath(soundName));
+    let loopAudio = new Audio(searchPath(soundName));
     loopAudio.volume = volumeState;
     loopAudio.loop = true;
     loopAudio.id = 'soundPlayLoop';

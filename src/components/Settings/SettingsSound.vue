@@ -214,95 +214,94 @@ import { checkSoundsEnable, soundPlay, soundPlayLoop } from '../../js/gameSound'
 
 export default {
   methods: {
-      // Проиграть выбранный звук (для спика)
-      playbacSelectedSound(soundName, volume){
-        soundPlay(soundName, volume)
-      },
-      // Играть звук, пока мышь удерживает ползунок слайдера
-      volumeChangePlayLoop(soundName, volume){
-        soundPlayLoop(soundName, volume)
-      },
-      // Перестать играть звук, когда мышь отпускает ползунок слайдера
-      volumeChangeStop(){
-        var soundPlayLoop = document.getElementById('soundPlayLoop')
-        soundPlayLoop.pause();
-        document.body.removeChild(soundPlayLoop); 
-      },
-      // Обновление уровня громкости в реальном времени при перетаскивании ползунка слайдера (во время проигрывании звука)      
-      realtimeVolumeChange(volume) { 
-        var soundPlayLoop = document.getElementById('soundPlayLoop')
-        if (soundPlayLoop != null) soundPlayLoop.volume = volume
-      },
-      // Вкл / выкл всех звуков в игре по нажатию на v-list-item
-      changeGlobalSoundEnable(){
-        this.$store.commit('gameGlobalSoundsEnable')
-      },
-      // Вкл / Выкл звука по значку ноты
-      changeSoundEnable(commitName) {
-        this.$store.commit(commitName)
-      },
+    // Проиграть выбранный звук (для спика)
+    playbacSelectedSound(soundName, volume){
+      soundPlay(soundName, volume)
+    },
+    // Играть звук, пока мышь удерживает ползунок слайдера
+    volumeChangePlayLoop(soundName, volume){
+      soundPlayLoop(soundName, volume)
+    },
+    // Перестать играть звук, когда мышь отпускает ползунок слайдера
+    volumeChangeStop(){
+      var soundPlayLoop = document.getElementById('soundPlayLoop')
+      soundPlayLoop.pause();
+      document.body.removeChild(soundPlayLoop); 
+    },
+    // Обновление уровня громкости в реальном времени при перетаскивании ползунка слайдера (во время проигрывании звука)      
+    realtimeVolumeChange(volume) { 
+      var soundPlayLoop = document.getElementById('soundPlayLoop')
+      if (soundPlayLoop != null) soundPlayLoop.volume = volume
+    },
+    // Вкл / выкл всех звуков в игре по нажатию на v-list-item
+    changeGlobalSoundEnable(){
+      this.$store.commit('gameGlobalSoundsEnable')
+    },
+    // Вкл / Выкл звука по значку ноты
+    changeSoundEnable(commitName) {
+      this.$store.commit(commitName)
+    },
   },
   computed: {
-      // Текущий выбранный звук, выбор нового звука
-      achievementSelectedSound: { 
-        get: function () {
-          return this.$store.state.sound.achievementSound
-        },
-        set: function (soundName) {
-          this.$store.state.sound.achievementSound = soundName;
-          this.$store.commit('updateStore');
-        } 
+    // Текущий выбранный звук, выбор нового звука
+    achievementSelectedSound: { 
+      get: function () {
+        return this.$store.state.sound.achievementSound
       },
-      diarySelectedSound: { 
-        get: function () {
-          return this.$store.state.sound.diarySound
-        },
-        set: function (soundName) {
-          this.$store.state.sound.diarySound = soundName;
-          this.$store.commit('updateStore');
-        } 
+      set: function (soundName) {
+        this.$store.state.sound.achievementSound = soundName;
+        this.$store.commit('updateStore');
+      } 
+    },
+    diarySelectedSound: { 
+      get: function () {
+        return this.$store.state.sound.diarySound
       },
-      smartphoneSelectedSound: { 
-        get: function () {
-          return this.$store.state.sound.smartphoneSound
-        },
-        set: function (soundName) {
-          this.$store.state.sound.smartphoneSound = soundName;
-          this.$store.commit('updateStore');
-        } 
+      set: function (soundName) {
+        this.$store.state.sound.diarySound = soundName;
+        this.$store.commit('updateStore');
+      } 
+    },
+    smartphoneSelectedSound: { 
+      get: function () {
+        return this.$store.state.sound.smartphoneSound
       },
-
-      // Изменение громкости на слайдере
-      achievementVolumeSlider: {
-        get: function () {
-          var Volume = (this.$store.state.sound.achievementVolume * 100)
-          return Volume;
-        },
-        set: function (level) {
-          this.$store.state.sound.achievementVolume = (level /= 100)
-          this.$store.commit("updateStore");
-        } 
+      set: function (soundName) {
+        this.$store.state.sound.smartphoneSound = soundName;
+        this.$store.commit('updateStore');
+      } 
+    },
+    // Изменение громкости на слайдере
+    achievementVolumeSlider: {
+      get: function () {
+        var Volume = (this.$store.state.sound.achievementVolume * 100)
+        return Volume;
       },
-      diaryVolumeSlider: {
-        get: function () {
-          var Volume = (this.$store.state.sound.diaryVolume * 100)
-          return Volume;
-        },
-        set: function (level) {
-          this.$store.state.sound.diaryVolume = (level /= 100)
-          this.$store.commit("updateStore");
-        } 
+      set: function (level) {
+        this.$store.state.sound.achievementVolume = (level /= 100)
+        this.$store.commit("updateStore");
+      } 
+    },
+    diaryVolumeSlider: {
+      get: function () {
+        var Volume = (this.$store.state.sound.diaryVolume * 100)
+        return Volume;
       },
-      smartphoneVolumeSlider: {
-        get: function () {
-          var Volume = (this.$store.state.sound.smartphoneVolume * 100)
-          return Volume;
-        },
-        set: function (level) {
-          this.$store.state.sound.smartphoneVolume = (level /= 100)
-          this.$store.commit("updateStore");
-        } 
+      set: function (level) {
+        this.$store.state.sound.diaryVolume = (level /= 100)
+        this.$store.commit("updateStore");
+      } 
+    },
+    smartphoneVolumeSlider: {
+      get: function () {
+        var Volume = (this.$store.state.sound.smartphoneVolume * 100)
+        return Volume;
       },
+      set: function (level) {
+        this.$store.state.sound.smartphoneVolume = (level /= 100)
+        this.$store.commit("updateStore");
+      } 
+    },
   },
 }
 </script>

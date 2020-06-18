@@ -8,23 +8,6 @@
     <h3>Пролог</h3>
     {{ $t('message') }}
 
-    <!-- <a-icon class="mchat-notify__message-container__message__image" :icon="[]"></a-icon> -->
-
-    
-    <!-- <div class="mchat-notify__container">
-      <div>
-        <img class="mchat-notify__avatar" src="${message.avatar}" />
-      </div>
-      <div class="mchat-notify__message-container">
-        <div class="mchat-notify__message-container__title">
-          ${message.name}
-        </div>
-        <div class="mchat-notify__message-container__message">
-          ${message.data.text}
-        </div>            
-      </div>
-    </div> -->
-
     <div v-html="text" />
     <v-btn @click="test()">emoji</v-btn>
     <v-btn @click="$root.toggleFullScreen()">call error</v-btn>

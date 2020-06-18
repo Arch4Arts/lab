@@ -68,40 +68,4 @@ export default {
 	background: var(--FirstLaunchPageInfo--continue-button--background) !important;
 }
 
-.genres {
-	font-size: 12pt;
-	margin: 4px 2px 2px 2px;
-	background: var(--v-chip--background) !important;
-}
-
-a { 
-  text-decoration: none;
-	font-weight:bold;
-}  
-
-a:hover { 
-  text-decoration: none;
-	font-weight:bold;
-} 
-
-p ::v-deep .subscribe-star {
-	color: var(--subscribe-star--color) !important;
-}
-
-p ::v-deep .discord {
-	color: var(--discord--color) !important;
-}
-
-p ::v-deep .tfgames {
-	color: var(--tfgames--color) !important;
-}
-
-p ::v-deep .f95 {
-	color: var(--f95--color) !important;
-}
-
-p ::v-deep .f95-zone {
-	color: var(--f95-zone--color) !important;
-}
-
 </style>

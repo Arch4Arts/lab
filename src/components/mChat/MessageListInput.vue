@@ -16,13 +16,13 @@
       :placeholder="$t('placeholder')"
       class="text-input" />
     <div class="buttons-container">
-        <div class="plus-icon">
-          <a-icon class="plus-icon__icon" :icon="['far', 'plus']" />
-        </div>
-        <mdi class="send-icon" :path="send" />
-        <a-icon class="smile-icon" :icon="['far', 'smile']" />
-        <mdi class="paperclip-icon" :path="paperclip" />
-        <!-- <a-icon class="microphone-icon" :icon="['far', 'paperclip']" /> -->
+      <div class="plus-icon">
+        <a-icon class="plus-icon__icon" :icon="['far', 'plus']" />
+      </div>
+      <mdi class="send-icon" :path="send" />
+      <a-icon class="smile-icon" :icon="['far', 'smile']" />
+      <mdi class="paperclip-icon" :path="paperclip" />
+      <!-- <a-icon class="microphone-icon" :icon="['far', 'paperclip']" /> -->
     </div>
   </div>
   <!-- Пространство под панелью ввода (чтобы туда не залазил MessageList) -->

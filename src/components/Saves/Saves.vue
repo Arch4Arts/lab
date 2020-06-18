@@ -244,8 +244,8 @@ import VirtualList from 'vue-virtual-scroll-list'
 import savesListComponent from './SavesList'
 
 localforage.config({
-    name: 'vuex',
-    storeName: 'saves'
+  name: 'vuex',
+  storeName: 'saves'
 });
 
 export default {
@@ -272,7 +272,7 @@ export default {
     this.numberSavesIDB = await localforage.length().then(length => this.numberSavesIDB = length); // Кол-во сохранений в IndexedDB
     if (this.numberSavesIDB > 0) {
       for (let i = 0; i < this.numberSavesIDB; i++) { // Преобразуем строку в объект для сортировки
-        var saveHeader = this.savesHeaderIDB[i].split(',');
+        let saveHeader = this.savesHeaderIDB[i].split(',');
         this.savesHeaderIDBSorted.push({saveName: saveHeader[0],saveTime: saveHeader[1],saveID: saveHeader[2],saveGameVersion: saveHeader[3]}); 
       }
       this.savesList = this.savesHeaderIDBSorted.sort(this.sortBy('saveID')); // сортируем
@@ -341,7 +341,7 @@ export default {
       if (isQuickSave) { 
         name = this.$t('default-quick-save-name');  
       } else {
-        var name = this.saveNameInput // Копируем значение
+        let name = this.saveNameInput // Копируем значение
         this.saveNameInput = '' // И очищаем поле ввода
         if (name === '') // Проверка введенно ли имя сохранения, если нет, назначаем стандартное
           name = this.$t('default-save-name');
@@ -354,7 +354,7 @@ export default {
       this.$store.state.saveGameVersion = this.$root.gameVersion; // Версия игры на момент сохранения
 
       // Объединяем все данные в один заголовок
-      var saveHeader = `${this.$store.state.saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$store.state.saveGameVersion}`;
+      let saveHeader = `${this.$store.state.saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$store.state.saveGameVersion}`;
       // Шифруем
       await WebCrypto(saveHeader, JSON.stringify(this.$store.state))
       // Оповещение
@@ -379,7 +379,7 @@ export default {
       this.$store.state.saveID = dayjs().format("x");// миллисекунды с начала эпохи Unix
       
       // Объединяем все данные в один заголовок
-      var saveHeader = `${saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$root.gameVersion}`;
+      let saveHeader = `${saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$root.gameVersion}`;
       await WebCrypto(saveHeader, JSON.stringify(this.$store.state)) // Добавем новый за место старого (удалённого)
       // Оповещение
       this.$store.state.gameLang == 'ru'
@@ -457,7 +457,33 @@ export default {
     },
     // Подготовка данных к сохранению на диск пользователя
     async prepareDataSaveToDisk() {
-      var saveFile = ''
+      let saveFile = ''
+      let saveToDisk = function(filename, data, mime, bom) { // Сохранение на диск
+        // сбрасываем выделения списка сохранений
+        setTimeout(() => this.ListSelectedSaves = [], 100)
+
+        let blobData = (typeof bom !== 'undefined') ? [bom, data] : [data]
+        let blob = new Blob(blobData, {type: mime || 'application/octet-stream'});
+        if (typeof window.navigator.msSaveBlob !== 'undefined') {
+          window.navigator.msSaveBlob(blob, filename);
+        }
+        else {
+          let blobURL = (window.URL && window.URL.createObjectURL) ? window.URL.createObjectURL(blob) : window.webkitURL.createObjectURL(blob);
+          let tempLink = document.createElement('a');
+          tempLink.style.display = 'none';
+          tempLink.href = blobURL;
+          tempLink.setAttribute('download', filename);
+          if (typeof tempLink.download === 'undefined') {
+            tempLink.setAttribute('target', '_blank');
+          }
+          document.body.appendChild(tempLink);
+          tempLink.click();
+          setTimeout(function() {
+            document.body.removeChild(tempLink);
+            window.URL.revokeObjectURL(blobURL);
+          }, 0)
+        }
+      }
       // Выбранны ли определённые сохранения пользователем
       if (this.ListSelectedSaves.length > 0) {
         for (var i = 0; i < this.ListSelectedSaves.length; i++) {
@@ -474,9 +500,9 @@ export default {
             saveFile = `${saveFile}((${this.ListSelectedSaves[i]},cipherData${cipherData}iv${iv}))`
         }
         if (this.$store.state.gameLang == 'ru')
-          this.saveToDisk(`${this.$root.gameName}.${(i == 1 ? 'save' : 'saves')}`, saveFile)
+          saveToDisk(`${this.$root.gameName}.${(i == 1 ? 'save' : 'saves')}`, saveFile)
         else
-          this.saveToDisk(`${this.$root.gameName}.${(i == 1 ? 'save' : 'saves')}`, saveFile)
+          saveToDisk(`${this.$root.gameName}.${(i == 1 ? 'save' : 'saves')}`, saveFile)
       }
       else if (this.numberSavesIDB > 0) { // Если нет, обрабатываем всё
         var allSavesKey = await localforage.keys().then(keysList => keysList)
@@ -495,9 +521,9 @@ export default {
             saveFile = `${saveFile}((${allSavesKey[i]},cipherData${cipherData}iv${iv}))`
         }
         if (this.$store.state.gameLang == 'ru')
-          this.saveToDisk(`${this.$root.gameName}.saves`, saveFile)
+          saveToDisk(`${this.$root.gameName}.saves`, saveFile)
         else
-          this.saveToDisk(`${this.$root.gameName}.saves`, saveFile)
+          saveToDisk(`${this.$root.gameName}.saves`, saveFile)
       }
       else {
         if (this.$store.state.gameLang == 'ru')
@@ -506,45 +532,18 @@ export default {
           saveNotify({message: 'There are no saves'});
       }
     },
-    // Сохранение на диск
-    saveToDisk(filename, data, mime, bom) {
-      // сбрасываем выделения списка сохранений
-      setTimeout(() => this.ListSelectedSaves = [], 100)
-
-      var blobData = (typeof bom !== 'undefined') ? [bom, data] : [data]
-      var blob = new Blob(blobData, {type: mime || 'application/octet-stream'});
-      if (typeof window.navigator.msSaveBlob !== 'undefined') {
-        window.navigator.msSaveBlob(blob, filename);
-      }
-      else {
-        var blobURL = (window.URL && window.URL.createObjectURL) ? window.URL.createObjectURL(blob) : window.webkitURL.createObjectURL(blob);
-        var tempLink = document.createElement('a');
-        tempLink.style.display = 'none';
-        tempLink.href = blobURL;
-        tempLink.setAttribute('download', filename);
-        if (typeof tempLink.download === 'undefined') {
-          tempLink.setAttribute('target', '_blank');
-        }
-        document.body.appendChild(tempLink);
-        tempLink.click();
-        setTimeout(function() {
-          document.body.removeChild(tempLink);
-          window.URL.revokeObjectURL(blobURL);
-        }, 0)
-      }
-    },
-    // Для выбора файлов на загрузку
+    // Открытие диалогового окна с выбром файлов (для загрузки в приложение)
     chooseFiles() {
       document.getElementById("saveUpload").click()
     },
     // Загрузка файлов с диска пользователя
     loadFromDisk(event){
       // Файлы
-      var files = event.target.files 
+      let files = event.target.files 
       // Если файлов несколько, обрабатываем каждый
-      for (var file of files) {
+      for (let file of files) {
         // Процесс чтения данных из файла (нужен для FileReader, т.е он асинхронный)
-        var processFile = new Promise((resolve, reject) => {
+        let processFile = new Promise((resolve, reject) => {
           let reader = new FileReader();
           // Если данные были успешно прочитаны
           reader.onload = function() {
@@ -562,10 +561,10 @@ export default {
           if (result.indexOf('cipherData') > 0) {
             // Функция преобразования в ArrayBuffer и BufferView, завращаются два этих представления
             let str2ab = function(str) {
-              var data = new Object();
+              let data = new Object();
               data.buf = new ArrayBuffer(str.length);
               data.bufView = new Uint8Array(data.buf);
-              for (var i = 0, strLen = str.length; i < strLen; i++) {
+              for (let i = 0, strLen = str.length; i < strLen; i++) {
                 data.bufView[i] = str.charCodeAt(i);
               }
               return data;
@@ -582,7 +581,7 @@ export default {
             // Количество сохранений в одном файле
             let savesNumber = detectMultiSave(result, 'cipherData').length
             // Перебираем все сохранения в файле
-            for (var i = 0; i < savesNumber; i++) {
+            for (let i = 0; i < savesNumber; i++) {
               // Определяем позиции заголовка сохранения
               let saveHeader_Start = result.indexOf("((") + 2;
               let saveHeader_End = result.indexOf(",cipherData", 0);
@@ -632,11 +631,13 @@ export default {
       await location.reload()
     },
     autoCloseDrawer(){
-      if (this.$store.state.isOpenSavesDrawer) this.$store.state.isOpenSavesDrawer = false;
+      if (this.$store.state.isOpenSavesDrawer) 
+        this.$store.state.isOpenSavesDrawer = false;
     },
-    // Записывает изменения стейта из v-model
+    // регистрация изменений $store.state.isOpenSavesDrawer из v-model
     drawerShowState(isShow){
-      if (!isShow) this.$store.commit('updateStore')
+      if (!isShow) 
+        this.$store.commit('updateStore')
     },
   },
   components: {

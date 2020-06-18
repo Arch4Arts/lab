@@ -150,7 +150,7 @@
 
 <script>
 // библиотека для конвертирования кода клавиши в имя !store.state.isOpenSettingsDrawer
-var keycode = require('keycode');
+let keycode = require('keycode');
 
 export default {
   data(){

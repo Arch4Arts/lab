@@ -67,8 +67,8 @@ export default {
   },
   methods: {
     submitSuggestion(suggestion){ 
-      var chatData = this.mChatData; // присваиваем ссылку, чтобы изменять оригинал
-      var selectedChatID = this.$store.state.mChat.selectedChatID // В какой чат отправлять
+      let chatData = this.mChatData; // присваиваем ссылку, чтобы изменять оригинал
+      let selectedChatID = this.$store.state.mChat.selectedChatID // В какой чат отправлять
       for (let chat of chatData.chatList) { // Перебираем для каждого пользователя
         if (chat.chatID === selectedChatID) {
           // если отправляемый suggestion автономен(т.е с type = suggestion), то нужно удалить его запись из истории, и добавить уже в виде ответа от From_me
@@ -83,7 +83,7 @@ export default {
     },
     _submitSuggestion(suggestion) {
       let uniqid = require('uniqid');
-      this.submitSuggestion({uid: uniqid(), type: 'text', author: 'me', data: { text: suggestion }})
+      this.submitSuggestion({ uid: uniqid(), type: 'text', author: 'me', data: { text: suggestion } })
     },
     getSuggestions(){
       return this.source.data.suggestions

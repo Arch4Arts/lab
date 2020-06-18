@@ -1,18 +1,18 @@
 <template>
-    <v-app>
-    <v-layout class="v-layout" justify-center>
-        <v-flex md8 class="Page">
-            <section id="StoryTextArea">
-                <h1>Entry</h1>
-                <Prolog/>
-            </section>
-        </v-flex>
-    </v-layout>
-    </v-app>
+  <v-app>
+  <v-layout class="v-layout" justify-center>
+    <v-flex md8 class="Page">
+      <section id="StoryTextArea">
+        <h1>Entry</h1>
+        <test-page />
+      </section>
+    </v-flex>
+  </v-layout>
+  </v-app>
 </template>
 
 <script>
-import Prolog from './story/Prolog'
+import testPage from './story/testPage'
 
 export default {
 	mounted: function(){ 
@@ -20,7 +20,7 @@ export default {
 		document.getElementById("StoryTextArea").style.fontSize = `${this.$store.state.gameFontSize}`;
 	},
 	components: {
-		Prolog,
+		'test-page': testPage
 	},
 }
 </script>

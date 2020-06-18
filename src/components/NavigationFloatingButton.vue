@@ -64,25 +64,23 @@
 <script>
 export default {
   data: () => ({
-      direction: "top",
-      fab: false,
-      fling: false,
-      hover: false,
-      tabs: null,
-      top: false,
-      right: true,
-      bottom: true,
-      left: false,
-      transition: 'slide-y-reverse-transition',
-      visible: true // Отображение компаса или кнопки назад
-    }),
-    computed: {
-      RadialMenuStatus(){
-        return this.$store.state.radialMenuShow;
-      }
-    },
-    methods: {
+    direction: "top",
+    fab: false,
+    fling: false,
+    hover: false,
+    tabs: null,
+    top: false,
+    right: true,
+    bottom: true,
+    left: false,
+    transition: 'slide-y-reverse-transition',
+    visible: true // Отображение компаса или кнопки назад
+  }),
+  computed: {
+    RadialMenuStatus(){
+      return this.$store.state.radialMenuShow;
     }
+  },
 }
 </script>
 

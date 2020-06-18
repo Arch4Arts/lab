@@ -15,6 +15,7 @@
 
 <template>
 <div>
+  Требуется доработка
   <!-- Выбор языка -->
   <div class="text-center">
     <div>{{ $t('langChange-title') }}</div>
@@ -63,9 +64,7 @@ export default {
   computed: {
     // Для кнопки смены языка, чтобы было выделение на текущем выбранном языке
 		getCurrentLanguage() { 
-			let result;
-			this.$store.state.gameLang == 'ru' ? result = 0 : result = 1;
-			return result;
+			return this.$store.state.gameLang == 'ru' ? 0 : 1;
 		},
     // Шрифт
     fontFamily: {

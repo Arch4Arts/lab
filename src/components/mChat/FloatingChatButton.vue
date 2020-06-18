@@ -55,10 +55,12 @@ export default {
       setTimeout(() => { this.isDragNow = false }, 100);
     },
     openChat() {
-      if (!this.isDragNow) this.$store.commit('mChatShow');
+      if (!this.isDragNow) 
+        this.$store.commit('mChatShow');
     },
     closeChat() {
-      if (!this.isDragNow) this.$store.commit('mChatShow');
+      if (!this.isDragNow) 
+        this.$store.commit('mChatShow');
     },
   },
   components: {

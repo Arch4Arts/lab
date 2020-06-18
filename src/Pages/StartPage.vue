@@ -45,9 +45,7 @@ import StartPageAge18WarningDialog from "./StartPageAge18WarningDialog";
 export default {
 	computed: {
 		getCurrentLanguage() { // Для кнопки смены языка, чтобы было выделение на текущем выбранном языке
-			let result;
-			this.$store.state.gameLang == 'ru' ? result = 0 : result = 1;
-			return result;
+			return this.$store.state.gameLang == 'ru' ? 0 : 1;
 		}
 	},
 	methods: {
