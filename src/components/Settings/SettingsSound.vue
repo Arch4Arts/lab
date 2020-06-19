@@ -224,13 +224,13 @@ export default {
     },
     // Перестать играть звук, когда мышь отпускает ползунок слайдера
     volumeChangeStop(){
-      var soundPlayLoop = document.getElementById('soundPlayLoop')
+      let soundPlayLoop = document.getElementById('soundPlayLoop')
       soundPlayLoop.pause();
       document.body.removeChild(soundPlayLoop); 
     },
     // Обновление уровня громкости в реальном времени при перетаскивании ползунка слайдера (во время проигрывании звука)      
     realtimeVolumeChange(volume) { 
-      var soundPlayLoop = document.getElementById('soundPlayLoop')
+      let soundPlayLoop = document.getElementById('soundPlayLoop')
       if (soundPlayLoop != null) soundPlayLoop.volume = volume
     },
     // Вкл / выкл всех звуков в игре по нажатию на v-list-item
@@ -274,7 +274,7 @@ export default {
     // Изменение громкости на слайдере
     achievementVolumeSlider: {
       get: function () {
-        var Volume = (this.$store.state.sound.achievementVolume * 100)
+        let Volume = (this.$store.state.sound.achievementVolume * 100)
         return Volume;
       },
       set: function (level) {
@@ -284,7 +284,7 @@ export default {
     },
     diaryVolumeSlider: {
       get: function () {
-        var Volume = (this.$store.state.sound.diaryVolume * 100)
+        let Volume = (this.$store.state.sound.diaryVolume * 100)
         return Volume;
       },
       set: function (level) {
@@ -294,7 +294,7 @@ export default {
     },
     smartphoneVolumeSlider: {
       get: function () {
-        var Volume = (this.$store.state.sound.smartphoneVolume * 100)
+        let Volume = (this.$store.state.sound.smartphoneVolume * 100)
         return Volume;
       },
       set: function (level) {

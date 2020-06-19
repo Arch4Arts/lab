@@ -140,7 +140,7 @@ export default {
       set: function (text) {
         if (text.length > 0) {
           this.$store.state.chars.mcIm = text;
-          var name = new RussianName(this.$store.state.chars.mcIm); // Склоняем
+          let name = new RussianName(this.$store.state.chars.mcIm); // Склоняем
           // Записываем слоненные значение в Store
           this.$store.state.chars.mcRod = name.fullName(name.gcaseRod)
           this.$store.state.chars.mcDat = name.fullName(name.gcaseDat)

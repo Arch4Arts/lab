@@ -7,9 +7,9 @@ import mChatData from './modules/mobileChat/mChatData'
 import sound from './modules/sound'
 import chars from './modules/chars'
 
-var AES = require("crypto-js/aes");
-var utf8 = require('crypto-js/enc-utf8')
-var PBKDF2 = require('crypto-js/pbkdf2')
+const AES = require("crypto-js/aes");
+const UTF8 = require('crypto-js/enc-utf8')
+const PBKDF2 = require('crypto-js/pbkdf2')
 
 Vue.use(Vuex)
 
@@ -77,7 +77,7 @@ const store = new Vuex.Store({
     getState(key, storage, value) {
       try {
         return (value = storage.getItem(key).toString()) && typeof value !== 'undefined'
-          ? JSON.parse(AES.decrypt(value, keyGen(key)).toString(utf8))
+          ? JSON.parse(AES.decrypt(value, keyGen(key)).toString(UTF8))
           : undefined;
       } catch (error) {}
   
@@ -132,7 +132,7 @@ const store = new Vuex.Store({
 })
 
 function keyGen(saveName){ // Генерация уникального ключа
-  var salt = '3F4428472B4B6250';
+  const salt = '3F4428472B4B6250';
   return PBKDF2(saveName, salt, { keySize: 256 / 32 , iterations: 1}).toString();
 }
 

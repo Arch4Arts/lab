@@ -1,6 +1,6 @@
 import store from '../store/store'
 
-var soundsPath = [ 
+const SOUNDS_PATH = [ 
   { path: require('../media/audio/notifications/Journal write sound.mp3') },
   { path: require('../media/audio/notifications/iOS Notification.mp3') },
   { path: require('../media/audio/notifications/MIUI Notification.mp3') },
@@ -24,7 +24,7 @@ export function checkSoundsEnable(){
 export function searchPath(soundName){
   // Если путь был найден, возвращает путь
   let searchResult;
-  soundsPath.find(function(item) {
+  SOUNDS_PATH.find(function(item) {
     if (item.path.indexOf(soundName) > 0)
     searchResult = item.path
   })

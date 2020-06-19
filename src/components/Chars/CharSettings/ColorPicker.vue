@@ -39,8 +39,8 @@ export default {
   methods: {
     // Автомаштабирование по ширине на основании родительского компонента
     widthSizeDetect() {
-      var element = document.getElementById(this.parentBlockNameID);
-      var elementInfo = element.getBoundingClientRect();
+      let element = document.getElementById(this.parentBlockNameID);
+      let elementInfo = element.getBoundingClientRect();
       this.calcWidth = elementInfo.width
       this.$store.state.reRender_ColorPickerCanvas++;
     },

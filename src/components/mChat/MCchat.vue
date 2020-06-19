@@ -45,8 +45,8 @@ export default {
     getMessageList() {
       this.$store.state.mChat.chatListShow // обновляет список сообщений при каждом открытии и закрытии списка пользователей
 
-      var chatData = this.mChatData;
-      var selectedChat = this.$store.state.mChat.selectedChatID
+      let chatData = this.mChatData;
+      let selectedChat = this.$store.state.mChat.selectedChatID
       for (let i in chatData.chatList) { // Перебираем для каждого пользователя
         if (chatData.chatList[i].chatID === selectedChat) {
           // Сбрасывает счётчик сообщений текущего выбранного чата, только если чат отображается

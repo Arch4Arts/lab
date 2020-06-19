@@ -2,15 +2,15 @@ const twemoji = require('twemoji')
 
 // Текущий список смайликов, на основе этого списка производится копирование нужных файлов в сборку.
 // * https://emojipedia.org
-let emojiList = [ 
+const EMOJI_LIST = [ 
   '😄',
   '😅',
   '😍',
   '❤️',
 ]
 
-// Получаем Twemoji CodePaint (название файлов в twemoji-assets) из emojiList
-let twemojiCodeList = emojiList.map((emoji) => {
+// Получаем Twemoji CodePaint (название файлов в twemoji-assets) из EMOJI_LIST
+let twemojiCodeList = EMOJI_LIST.map((emoji) => {
   let result;
   twemoji.parse(emoji, { callback: (twemojiCode) => { result = twemojiCode } });
   return result;
