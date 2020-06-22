@@ -249,24 +249,26 @@ localforage.config({
 });
 
 export default {
-  data: () => ({
-    component: savesListComponent,
+  data () {
+    return {
+      component: savesListComponent,
 
-    showModalRestart: false, // Для показа модального окна, меняется при нажатия на кнопку и появляется диалог
-    showModalDelSavesAll: false, // Для показа модального окна, меняется при нажатия на кнопку и появляется диалог
+      showModalRestart: false, // Для показа модального окна, меняется при нажатия на кнопку и появляется диалог
+      showModalDelSavesAll: false, // Для показа модального окна, меняется при нажатия на кнопку и появляется диалог
 
-    isEndSaveList: false, // Достигнут ли конец списка
-    savesNumber: 0, // Кол-во сейвов
+      isEndSaveList: false, // Достигнут ли конец списка
+      savesNumber: 0, // Кол-во сейвов
 
-    ListSelectedSaves: [],
+      ListSelectedSaves: [],
 
-    saveNameInput: '', // Поле ввода сохранения
+      saveNameInput: '', // Поле ввода сохранения
 
-    savesList: [], // Рабочий список отсортированных сохранений 
-    savesHeaderIDB: [], // Список сохранений, для сортировки
-    savesHeaderIDBSorted: [], // Первоначальный список отсортированных сохранеий (по дате Unix)
-    numberSavesIDB: 0, //  Кол-во сохранений в БД
-  }),
+      savesList: [], // Рабочий список отсортированных сохранений 
+      savesHeaderIDB: [], // Список сохранений, для сортировки
+      savesHeaderIDBSorted: [], // Первоначальный список отсортированных сохранеий (по дате Unix)
+      numberSavesIDB: 0, //  Кол-во сохранений в БД
+    }
+  },
   created: async function () {
     this.savesHeaderIDB = await localforage.keys().then(keysList => this.savesHeaderIDB = keysList); // все ключи из IndexedDB
     this.numberSavesIDB = await localforage.length().then(length => this.numberSavesIDB = length); // Кол-во сохранений в IndexedDB
@@ -338,16 +340,17 @@ export default {
     // Сохранение игры
     async saveGame(isQuickSave){
       // Проверка на QuickSave
+      let saveName;
       if (isQuickSave) { 
-        name = this.$t('default-quick-save-name');  
+        saveName = this.$t('default-quick-save-name');  
       } else {
-        let name = this.saveNameInput // Копируем значение
+        saveName = this.saveNameInput // Копируем значение
         this.saveNameInput = '' // И очищаем поле ввода
-        if (name === '') // Проверка введенно ли имя сохранения, если нет, назначаем стандартное
-          name = this.$t('default-save-name');
+        if (saveName === '') // Проверка введенно ли имя сохранения, если нет, назначаем стандартное
+          saveName = this.$t('default-save-name');
       }
 
-      this.$store.state.saveName = name; // Имя
+      this.$store.state.saveName = saveName; // Имя
       this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm"); // Время сохранения
 
       this.$store.state.saveID = dayjs().format("x"); // миллисекунды с начала эпохи Unix
