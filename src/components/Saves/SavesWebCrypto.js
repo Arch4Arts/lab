@@ -47,10 +47,9 @@ async function decrypt (saveName,encryptedData) {
 // Экспорт финальной функции
 export default async function WebCrypto(saveName, saveData){
 	if (typeof saveName !== 'undefined' && typeof saveData !== 'undefined') {
-		return await encrypt(saveName, saveData).then(encryptedData => localforage.setItem(saveName, encryptedData))
+		return await encrypt(saveName, saveData).then( encryptedData => localforage.setItem(saveName, encryptedData) )
 	} else {
-		let Data;
-		await localforage.getItem(saveName).then(encryptedData => Data = encryptedData)
-		return await decrypt(saveName, Data).then(DecryptedData => JSON.parse(DecryptedData))
+		let data = await localforage.getItem(saveName).then( encryptedData => encryptedData )
+		return await decrypt(saveName, data).then(DecryptedData => JSON.parse(DecryptedData))
 	}
 }
