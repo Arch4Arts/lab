@@ -1,7 +1,8 @@
 <template>
   <div class="chat-area">
     <!-- Стиливая сообщения -->
-    <div class="messages-container" :class="{        
+    <div class="messages-container" 
+      :class="{        
         from_me: source.author === 'me',
         from_them: source.author !== 'me' && source.type !== 'system' && source.type !== 'suggestion',
         suggestions: source.type === 'suggestion',
@@ -10,7 +11,10 @@
       <!-- Аватар отправителя -->
       <!-- Если не системное msg, не предложение, включено отображение аватаров и это групповой чат -->
       <div 
-        v-if="source.type !== 'system' && source.type !== 'suggestion' && $store.state.mChat.showAvatars && $store.state.mChat.selectedChatIsGroup" 
+        v-if="source.type !== 'system' && 
+              source.type !== 'suggestion' && 
+              $store.state.mChat.showAvatars && 
+              $store.state.mChat.selectedChatIsGroup" 
         :title="authorName(source.author)" class="avatar"
         :style="{ backgroundImage: `url(${chatImageUrl(source.author)})` }">
       </div>

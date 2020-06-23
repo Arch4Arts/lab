@@ -8,7 +8,11 @@ let typingMessageCopy = undefined;
 export function sendMessage(ChatID, author, type, data) { 
   let uniqid = require('uniqid');
   // Если иммитация включан, не suggestion, список чатов не отображается, чат отображается
-  if (store.state.mChat.typingIndicatorEnable && type !== 'suggestion' && store.state.mChat.chatListShow === false && store.state.mChat.show === true){
+  if (store.state.mChat.typingIndicatorEnable && 
+      type !== 'suggestion' && 
+      store.state.mChat.chatListShow === false && 
+      store.state.mChat.show === true) 
+  {
     numberPendingMessages++;
     onMessageWasSent(ChatID, {uid: uniqid(), author: author, type: 'typing'});
     typingMessageCopy = {uid: uniqid(), author: author, type: 'typing'};
