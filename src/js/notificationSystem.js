@@ -1,5 +1,5 @@
-import 'izitoast/dist/css/iziToast.min.css';
-import iziToast from 'izitoast/dist/js/iziToast.min.js';
+import '../../source_files/iziToast/dist/css/iziToast.min.css';
+import iziToast from '../../source_files/iziToast/dist/js/iziToast.js';
 import vuetify from '../styles/vuetify'
 
 // идентификатор infoCircle нигде не используется, но импорт нужен для загрузки самого svg файла
@@ -18,8 +18,7 @@ export function mChatNotify(extOptions){
     displayMode: vuetify.framework.breakpoint.xsOnly ? 2 : 0,
     close: false,
     closeOnClick: true,
-    onClosing: (e) => { // Открывает чат при нажатии на уведомление
-      console.log(e)
+    onClick: () => { // Открывает чат при нажатии на уведомление
       store.commit('mChatShow', true);
       store.state.mChat.selectedChatID = extOptions.chatID
       store.state.mChat.selectedChatAvatar = extOptions.chatAvatar

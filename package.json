@@ -22,7 +22,6 @@
     "dayjs": "^1.8.28",
     "extract-numbers": "^1.0.5",
     "hotkeys-js": "^3.8.1",
-    "izitoast": "^1.4.0",
     "keycode": "^2.2.0",
     "localforage": "^1.7.4",
     "mitt": "^1.2.0",
