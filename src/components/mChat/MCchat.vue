@@ -72,7 +72,7 @@ export default {
     closeChat(){
       // Если чат отображается и включена настройка по его закрытию кликом снаружи
       if (this.$store.state.mChat.show && this.$store.state.mChat.closeChatOnClickedOutside) 
-        this.$store.commit('mChatShow');
+        this.$store.commit('mChatShow', false);
     },
     middleware (event) {
       if (this.$store.state.mChat.show) { // Только при открытом чате

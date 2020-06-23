@@ -83,7 +83,10 @@ export function bindHotkeys(){
         }
         // Открыть чат
         case keyShortcuts.mChatOpen: {
-          store.commit('mChatShow')
+          if (!store.state.mChat.show)
+            store.commit('mChatShow', true);
+          else 
+            store.commit('mChatShow', false);
           break;
         }
       }      

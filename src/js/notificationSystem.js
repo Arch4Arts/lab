@@ -11,15 +11,16 @@ import store from '../store/store'
 // Оповещения для globalErrorsHandling.js
 export function mChatNotify(extOptions){
   // Параметры по умолчанию
-  let options = {
+  const OPTIONS = {
     class: 'mchat-notify',
     position: 'bottomRight',
     messageSize: '16',
     displayMode: vuetify.framework.breakpoint.xsOnly ? 2 : 0,
     close: false,
     closeOnClick: true,
-    onClosing: () => { // Открывает чат при нажатии на уведомление
-      store.commit('mChatShow');
+    onClosing: (e) => { // Открывает чат при нажатии на уведомление
+      console.log(e)
+      store.commit('mChatShow', true);
       store.state.mChat.selectedChatID = extOptions.chatID
       store.state.mChat.selectedChatAvatar = extOptions.chatAvatar
       store.commit('mChatListShow');
@@ -29,13 +30,13 @@ export function mChatNotify(extOptions){
     progressBar: false
   }
   // Вывод оповещения
-  iziToast.show(Object.assign(options, extOptions))
+  iziToast.show(Object.assign(OPTIONS, extOptions))
 }
 
 // Оповещения для компонента saves
 export function saveNotify(extOptions){
   // Параметры по умолчанию
-  let options = {
+  const OPTIONS = {
     class: 'save-notify-save',
     iconUrl: 'assets/img/info-circle.svg',
     position: 'bottomCenter',
@@ -46,13 +47,13 @@ export function saveNotify(extOptions){
     progressBar: false
   }
   // Вывод оповещения
-  iziToast.info(Object.assign(options, extOptions))
+  iziToast.info(Object.assign(OPTIONS, extOptions))
 }
 
 // Оповещения для globalErrorsHandling.js
 export function errorsHandlingNotify(extOptions){
   // Параметры по умолчанию
-  let options = {
+  const OPTIONS = {
     class: 'errors-handling-notify',
     iconUrl: 'assets/img/exclamation-triangle.svg', 
     position: 'bottomCenter', 
@@ -64,5 +65,5 @@ export function errorsHandlingNotify(extOptions){
     progressBar: false
   }
   // Вывод оповещения
-  iziToast.info(Object.assign(options, extOptions))
+  iziToast.info(Object.assign(OPTIONS, extOptions))
 }
