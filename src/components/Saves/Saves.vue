@@ -359,7 +359,8 @@ export default {
       // Объединяем все данные в один заголовок
       let saveHeader = `${this.$store.state.saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$store.state.saveGameVersion}`;
       // Шифруем
-      await WebCrypto(saveHeader, JSON.stringify(this.$store.state))
+      await WebCrypto.encrypt(saveHeader, JSON.stringify(this.$store.state))
+        .then( encryptedData => localforage.setItem(saveHeader, encryptedData) )
       // Оповещение
       this.$store.state.gameLang == 'ru'
         ? saveNotify({message: 'Игра успешно сохранена'})
@@ -383,7 +384,9 @@ export default {
       
       // Объединяем все данные в один заголовок
       let saveHeader = `${saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$root.gameVersion}`;
-      await WebCrypto(saveHeader, JSON.stringify(this.$store.state)) // Добавем новый за место старого (удалённого)
+      // Добавем новый за место старого (удалённого)
+      await WebCrypto.encrypt(saveHeader, JSON.stringify(this.$store.state))
+        .then( encryptedData => localforage.setItem(saveHeader, encryptedData) )
       // Оповещение
       this.$store.state.gameLang == 'ru'
         ? saveNotify({message: 'Сохранение успешно перезаписано'})
@@ -406,8 +409,11 @@ export default {
     },
     // Загрузка сохранения
     async loadSave(saveName, saveTime, saveID, saveGameVersion){
+      const name = `${saveName},${saveTime},${saveID},${saveGameVersion}`
+      const encryptedData = await localforage.getItem(name).then( data => data )
+      const decryptedData = await WebCrypto.decrypt(name, encryptedData).then(data => JSON.parse(data))
       // Заменяем store
-      await this.$store.replaceState(await WebCrypto(`${saveName},${saveTime},${saveID},${saveGameVersion}`));
+      await this.$store.replaceState(decryptedData);
       // Перерисовываем компоненты
       this.reRender()
       // Фиксируем новые переменные
