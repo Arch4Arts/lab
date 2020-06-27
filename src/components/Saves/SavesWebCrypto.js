@@ -21,7 +21,7 @@ export default {
 			length: 256,
 			iv: crypto.getRandomValues(new Uint8Array(12))
 		};
-		let key = await genEncryptionKey(saveName, 'AES-GCM', 256);
+		let key = await genEncryptionKey(saveName, algo.name, algo.length);
 		let encoded = new TextEncoder().encode(saveData);
 		
 		return {
@@ -35,7 +35,7 @@ export default {
 			length: 256,
 			iv: encryptedData.iv
 		};
-		let key = await genEncryptionKey(saveName, 'AES-GCM', 256);
+		let key = await genEncryptionKey(saveName, algo.name, algo.length);
 		let decrypted = await crypto.subtle.decrypt(algo, key, encryptedData.cipherData);
 	
 		return new TextDecoder().decode(decrypted);
