@@ -43,16 +43,15 @@ export default {
       return this.$store.state.mChatData.MC.сurrentChatList;
     },
     getMessageList() {
-      this.$store.state.mChat.chatListShow // обновляет список сообщений при каждом открытии и закрытии списка пользователей
-
-      let chatData = this.mChatData;
-      let selectedChat = this.$store.state.mChat.selectedChatID
-      for (let i in chatData.chatList) { // Перебираем для каждого пользователя
-        if (chatData.chatList[i].chatID === selectedChat) {
+      const chatData = this.mChatData;
+      const selectedChat = this.$store.state.mChat.selectedChatID
+      for (let chat of chatData.chatList) { // Перебираем для каждого пользователя
+        if (chat.chatID === selectedChat) {
           // Сбрасывает счётчик сообщений текущего выбранного чата, только если чат отображается
-          if (this.$store.state.mChat.show) chatData.chatList[i].unreadMessageCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
+          if (this.$store.state.mChat.show) 
+            chat.unreadMessageCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
           eventBus.emit('mChatScrollToBottom');
-          return chatData.chatList[i].messagesHistory
+          return chat.messagesHistory;
         }
       }
     },
