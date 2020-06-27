@@ -467,7 +467,7 @@ export default {
     // Подготовка данных к сохранению на диск пользователя
     async prepareDataSaveToDisk() {
       let saveFile = ''
-      let saveToDisk = function(filename, data, mime, bom) { // Сохранение на диск
+      const saveToDisk = function(filename, data, mime, bom) { // Сохранение на диск
         // сбрасываем выделения списка сохранений
         setTimeout(() => this.ListSelectedSaves = [], 100)
 
@@ -552,7 +552,7 @@ export default {
       // Если файлов несколько, обрабатываем каждый
       for (let file of files) {
         // Процесс чтения данных из файла (нужен для FileReader, т.е он асинхронный)
-        let processFile = new Promise((resolve, reject) => {
+        const processFile = new Promise((resolve, reject) => {
           let reader = new FileReader();
           // Если данные были успешно прочитаны
           reader.onload = function() {
@@ -569,7 +569,7 @@ export default {
         processFile.then(result => {
           if (result.indexOf('cipherData') > 0) {
             // Функция преобразования в ArrayBuffer и BufferView, завращаются два этих представления
-            let str2ab = function(str) {
+            const str2ab = function(str) {
               let data = new Object();
               data.buf = new ArrayBuffer(str.length);
               data.bufView = new Uint8Array(data.buf);
@@ -579,7 +579,7 @@ export default {
               return data;
             };
             // Функция определения содержится ли в файле больше одного сохранения
-            let detectMultiSave = function(str, substr) {
+            const detectMultiSave = function(str, substr) {
               let listIdx = []
               let lastIndex = -1
               while ((lastIndex = str.indexOf(substr, lastIndex + 1)) !== -1) {
@@ -622,7 +622,8 @@ export default {
               ? saveNotify({message: 'В данном файле не содержится данные сохранения', iconUrl: 'assets/img/exclamation-triangle.svg', class: 'save-notify__delete'})
               : saveNotify({message: 'This file does not contain any save data', iconUrl: 'assets/img/exclamation-triangle.svg', class: 'save-notify__delete'});
           }
-        }).then(() => {
+        })
+        .then(() => {
             // Сортируем
             this.numberSavesIDB += this.savesList.length
             this.updateNumberSavesIDB()
