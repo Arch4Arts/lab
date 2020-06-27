@@ -366,7 +366,7 @@ export default {
         ? saveNotify({message: 'Игра успешно сохранена'})
         : saveNotify({message: 'Game successfully saved'});
       // Добавляем новоё сохранение в отображаемый список
-      this.savesList.unshift({ 
+      this.savesList.push({ 
         saveName: this.$store.state.saveName, 
         saveTime: this.$store.state.saveTime, 
         saveID: this.$store.state.saveID, 
@@ -567,7 +567,7 @@ export default {
           reader.readAsText(file);
         })
         processFile.then(result => {
-          if (result.indexOf('cipherData') > 0) {
+          if (result.includes('cipherData')) {
             // Функция преобразования в ArrayBuffer и BufferView, завращаются два этих представления
             const str2ab = function(str) {
               let data = new Object();
@@ -610,7 +610,7 @@ export default {
               // Загружаем данные в IDB
               localforage.setItem(saveHeader, { cipherData: str2ab(cipherData).buf, iv: str2ab(iv).bufView })
               // Добавляем сохранение в отображаемый список
-              this.savesList.unshift({ 
+              this.savesList.push({ 
                 saveName: saveHeaderElem[0], 
                 saveTime: saveHeaderElem[1], 
                 saveID: saveHeaderElem[2], 
