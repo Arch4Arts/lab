@@ -15,7 +15,7 @@ export function SentryPush(error){
 }
 
 if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена
-  let uniqid = require('uniqid');
+  const uniqid = require('uniqid');
   Sentry.init({
     dsn: 'https://6b82c070a6874f70ad6e9fe5ebcb9fb8@sentry.io/1509214',
     integrations: [new Integrations.Vue({Vue, attachProps: true})],

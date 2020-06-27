@@ -86,7 +86,7 @@ export default {
       }
     },
     _submitSuggestion(suggestion) {
-      let uniqid = require('uniqid');
+      const uniqid = require('uniqid');
       this.submitSuggestion({ uid: uniqid(), type: 'text', author: 'me', data: { text: suggestion } })
     },
     getSuggestions(){

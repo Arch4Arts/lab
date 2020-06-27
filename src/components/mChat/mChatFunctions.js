@@ -6,7 +6,7 @@ let typingMessageCopy = undefined;
 
 // Для suggestion ONLY нужно указать type: suggestion и data: undefined
 export function sendMessage(ChatID, author, type, data) { 
-  let uniqid = require('uniqid');
+  const uniqid = require('uniqid');
   // Если иммитация включан, не suggestion, список чатов не отображается, чат отображается
   if (store.state.mChat.typingIndicatorEnable && 
       type !== 'suggestion' && 
