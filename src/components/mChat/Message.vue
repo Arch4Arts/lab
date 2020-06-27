@@ -77,9 +77,9 @@ export default {
         if (chat.chatID === selectedChatID) {
           // если отправляемый suggestion автономен(т.е с type = suggestion), то нужно удалить его запись из истории, и добавить уже в виде ответа от From_me
           if (chat.messagesHistory[chat.messagesHistory.length - 1].type === 'suggestion') 
-            chat.messagesHistory.splice([chat.messagesHistory.length - 1], 1)
+            chat.messagesHistory.pop()
           // В противном случае просто отправить ответ от From_me, т.к suggestion был привязан к From_them
-          chat.messagesHistory = [...chat.messagesHistory, suggestion]
+          chat.messagesHistory.push(suggestion)
           this.$store.commit('updateStore');
           eventBus.emit('mChatMessageWasSent')
         }

@@ -44,18 +44,18 @@ export function onMessageWasSent(ChatID, message){ // Импорт для userIn
       user.unreadMessageCount++
       // Удаляем сообщение typing, если используется имитация набора
       if (user.messagesHistory[user.messagesHistory.length - 1].type === 'typing') {
-        user.messagesHistory.splice([user.messagesHistory.length - 1], 1);
+        user.messagesHistory.pop()
       }
       // Удаляем предложенные варианты ответов, если таковые есть
       if (user.messagesHistory[user.messagesHistory.length - 1].type === 'suggestion') 
-        user.messagesHistory.splice([user.messagesHistory.length - 1], 1);
+        user.messagesHistory.pop()
       
       // Добавляем сообщение
-      user.messagesHistory = [...user.messagesHistory, message]
+      user.messagesHistory.push(message)
 
       // Добавляем имитацию набора если все еще присуствуют сообщения в очереди (setTimeout stack)
       if (numberPendingMessages >= 1 && user.messagesHistory[user.messagesHistory.length - 1].type !== 'typing')
-        user.messagesHistory = [...user.messagesHistory, typingMessageCopy]
+        user.messagesHistory.push(typingMessageCopy);
 
       store.commit('updateStore');
       eventBus.emit('mChatMessageWasSent');
