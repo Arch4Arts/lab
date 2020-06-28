@@ -58,10 +58,10 @@ export default {
     getUnreadMessagesCount() {
       const chatData = this.mChatData;
       let totalUnreadMessages = 0;
-      for (let chatID of this.getCurrentChatList) { // Перебираем сurrentChatList
-        for (let i in this.mChatData.chatList) { // Перебираем все чаты
-          if (chatID === this.mChatData.chatList[i].chatID) {
-            totalUnreadMessages += this.mChatData.chatList[i].unreadMessageCount;
+      for (let currentChat of this.getCurrentChatList) {
+        for (let chat of this.mChatData.chatList) {
+          if (currentChat === chat.chatID) {
+            totalUnreadMessages += chat.unreadMessageCount;
           }
         }
       }
