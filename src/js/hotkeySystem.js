@@ -21,7 +21,7 @@ function _getKeyboardShortcuts(){
 
     mChatOpen: store.state.mChatHotkeys.mChatOpen,
   }
-  const str = '';
+  let str = '';
   // Объёдиняем все значение в одну строку
   for (let key in HOTKEYS_DATA) {
     str = `${str}${HOTKEYS_DATA[key]},`

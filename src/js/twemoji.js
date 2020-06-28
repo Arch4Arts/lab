@@ -10,14 +10,14 @@ const EMOJI_LIST = [
 ]
 
 // Получаем Twemoji CodePaint (название файлов в twemoji-assets) из EMOJI_LIST
-let twemojiCodeList = EMOJI_LIST.map((emoji) => {
+const twemojiCodeList = EMOJI_LIST.map((emoji) => {
   let result;
   twemoji.parse(emoji, { callback: (twemojiCode) => { result = twemojiCode } });
   return result;
 });
 
 // Формирование массива путей для копирования файлов в сбоку
-let copyPluginPaths = twemojiCodeList.map((twemojiCode) => {
+const copyPluginPaths = twemojiCodeList.map((twemojiCode) => {
   return { from: `./source_files/twemoji-assets/svg/${twemojiCode}.svg`, to: 'assets/img/twemoji/' }
 })
 
