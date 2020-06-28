@@ -29,12 +29,10 @@ Vue.use(vueScrollBehavior, { router: router })
 // Сообственные функции и методы
 import updateTheme from './styles/updateTheme';
 import { checkSoundsEnable } from './js/gameSound'
-import { bindHotkeys, unbindHotkeys }from './js/hotkeys'
+import hotkeySystem from './js/hotkeySystem'
 
 import { SentryPush } from './js/globalErrorsHandling';
 import './js/globalErrorsHandling'
-
-import eventBus from './js/eventBus'
 
 
 import { name as gameName } from  '../package.json';
@@ -64,7 +62,7 @@ new Vue({
       updateTheme('game');
       updateTheme('mChat');
       // Подключаем горячие клавиши (проверка внутри функции)
-      bindHotkeys();
+      hotkeySystem.bindHotkeys();
       // проверка состояния звука
       checkSoundsEnable();
       
@@ -121,9 +119,9 @@ new Vue({
   watch: { // Клавиатурные сокращения
     '$store.state.keyboardShortcutsVersion': function () {
       // Отвязываем обработчик со старыми значениями
-      unbindHotkeys()
+      hotkeySystem.unbindHotkeys()
       // Привязываем обработчик с новыми значениями
-      bindHotkeys()
+      hotkeySystem.bindHotkeys()
     }
   },
   render: function (h) { return h(App) }

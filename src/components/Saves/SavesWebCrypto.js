@@ -1,5 +1,5 @@
 // Генерация уникального ключа на основе имени сохранения
-async function genEncryptionKey(saveName, mode, length) {
+async function _genEncryptionKey(saveName, mode, length) {
 	const algoritm = {
 		name: 'PBKDF2',
 		hash: 'SHA-512',
@@ -23,7 +23,7 @@ export default {
 	encrypt: async function (saveName, saveData) {
 		const algo = this.algoritm;
 
-		let key = await genEncryptionKey(saveName, algo.name, algo.length);
+		let key = await _genEncryptionKey(saveName, algo.name, algo.length);
 		let encoded = new TextEncoder().encode(saveData);
 		
 		return {
@@ -35,7 +35,7 @@ export default {
 		const algo = this.algoritm;
 		algo.iv = encrypted.iv;
 
-		let key = await genEncryptionKey(saveName, algo.name, algo.length);
+		let key = await _genEncryptionKey(saveName, algo.name, algo.length);
 		let decrypted = await crypto.subtle.decrypt(algo, key, encrypted.cipherData);
 	
 		return new TextDecoder().decode(decrypted);
