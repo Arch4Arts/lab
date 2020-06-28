@@ -2,10 +2,6 @@ import '../../source_files/iziToast/dist/css/iziToast.min.css';
 import iziToast from '../../source_files/iziToast/dist/js/iziToast.js';
 import vuetify from '../styles/vuetify'
 
-// идентификатор infoCircle нигде не используется, но импорт нужен для загрузки самого svg файла
-import exclamationTriangle from '../assets/exclamation-triangle.svg'
-import infoCircle from '../assets/info-circle.svg'
-
 import store from '../store/store'
 
 // Оповещения для globalErrorsHandling.js
@@ -37,7 +33,7 @@ export function saveNotify(extOptions){
   // Параметры по умолчанию
   const OPTIONS = {
     class: 'save-notify-save',
-    iconUrl: 'assets/img/info-circle.svg',
+    iconUrl: 'assets/img/icons/info-circle.svg',
     position: 'bottomCenter',
     messageSize: '16',
     displayMode: 2, 
@@ -54,7 +50,7 @@ export function errorsHandlingNotify(extOptions){
   // Параметры по умолчанию
   const OPTIONS = {
     class: 'errors-handling-notify',
-    iconUrl: 'assets/img/exclamation-triangle.svg', 
+    iconUrl: 'assets/img/icons/exclamation-triangle.svg', 
     position: 'bottomCenter', 
     messageSize: '16',
     closeOnClick: false,     
