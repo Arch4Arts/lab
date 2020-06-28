@@ -37,7 +37,7 @@ export function saveNotify(extOptions){
   // Параметры по умолчанию
   const OPTIONS = {
     class: 'save-notify-save',
-    iconUrl: 'assets/img/info-circle.svg',
+    iconUrl: 'assets/img/icons/info-circle.svg',
     position: 'bottomCenter',
     messageSize: '16',
     displayMode: 2, 
@@ -54,7 +54,7 @@ export function errorsHandlingNotify(extOptions){
   // Параметры по умолчанию
   const OPTIONS = {
     class: 'errors-handling-notify',
-    iconUrl: 'assets/img/exclamation-triangle.svg', 
+    iconUrl: 'assets/img/icons/exclamation-triangle.svg', 
     position: 'bottomCenter', 
     messageSize: '16',
     closeOnClick: false,     

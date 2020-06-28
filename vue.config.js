@@ -45,7 +45,7 @@ module.exports = {
     plugins: (process.env.VUE_APP_EDITION === undefined && process.env.NODE_ENV !== 'development') ? // Production
       [
         new CopyPlugin({
-          patterns: fileList
+          patterns: FILE_LIST
         }),
         new SentryCliPlugin({ // Обработчик ошибок
           release: packageJson.version, // извлечение версии игры из переменной
@@ -61,7 +61,7 @@ module.exports = {
       : (process.env.VUE_APP_EDITION === 'special') ? // Special
           [
             new CopyPlugin({
-              patterns: fileList
+              patterns: FILE_LIST
             }),
             new SentryCliPlugin({ // Обработчик ошибок
               release: packageJson.version, // извлечение версии игры из переменной
@@ -81,7 +81,7 @@ module.exports = {
             //   ignore: ['node_modules', 'webpack.config.js'],
             // }),
             new CopyPlugin({
-              patterns: fileList
+              patterns: FILE_LIST
             }),
           ]
   },
