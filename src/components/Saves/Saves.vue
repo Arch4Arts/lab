@@ -305,17 +305,16 @@ export default {
     isQuickSave(){
       let isExist = false;
       // Перебираем список
-      for (let key in this.savesList) {
+      for (let save of this.savesList) {
         // Если быстрое сохранение найдно, перезаписываем
-        if (this.savesList[key].saveName == 'Quick Save' || this.savesList[key].saveName == 'Быстрое сохранение') {
+        if (save.saveName == 'Quick Save' || save.saveName == 'Быстрое сохранение') {
           isExist = true
           this.overwriteSave(
-            this.savesList[key].saveName, 
-            this.savesList[key].saveTime, 
-            this.savesList[key].saveID, 
-            this.savesList[key].saveGameVersion
+            save.saveName, 
+            save.saveTime, 
+            save.saveID, 
+            save.saveGameVersion
           )
-          // Прерываем цикл, чтобы не создавались дубликаты
           break;
         }
       }
@@ -325,13 +324,13 @@ export default {
       }
     },
     isQuickLoad(){
-      for (let key in this.savesList) {
-        if (this.savesList[key].saveName == 'Quick Save' || this.savesList[key].saveName == 'Быстрое сохранение') {
+      for (let save of this.savesList) {
+        if (save.saveName == 'Quick Save' || save.saveName == 'Быстрое сохранение') {
           this.loadSave(
-            this.savesList[key].saveName, 
-            this.savesList[key].saveTime, 
-            this.savesList[key].saveID, 
-            this.savesList[key].saveGameVersion
+            save.saveName, 
+            save.saveTime, 
+            save.saveID, 
+            save.saveGameVersion
           )
           break;
         }
