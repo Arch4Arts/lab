@@ -3,9 +3,7 @@ const packageJson = require('D:/Dev/lab/package.json');
 const CopyPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack')
 
-const emojiFileList = require('./src/js/twemoji')
-const faviconPath = { from: './src/assets/favicon.png', to: 'assets/img/' }
-const fileList = [].concat(emojiFileList, faviconPath)
+const FILE_LIST = require('./src/js/genFileListToCopy')
 
 const getOutputDir = function () {
   // Если Undefined - community версия 
@@ -45,7 +43,7 @@ module.exports = {
     plugins: (process.env.VUE_APP_EDITION === undefined && process.env.NODE_ENV !== 'development') ? // Production
       [
         new CopyPlugin({
-          patterns: fileList
+          patterns: FILE_LIST
         }),
         new SentryCliPlugin({ // Обработчик ошибок
           release: packageJson.version, // извлечение версии игры из переменной
@@ -61,7 +59,7 @@ module.exports = {
       : (process.env.VUE_APP_EDITION === 'special') ? // Special
           [
             new CopyPlugin({
-              patterns: fileList
+              patterns: FILE_LIST
             }),
             new SentryCliPlugin({ // Обработчик ошибок
               release: packageJson.version, // извлечение версии игры из переменной
@@ -81,7 +79,7 @@ module.exports = {
             //   ignore: ['node_modules', 'webpack.config.js'],
             // }),
             new CopyPlugin({
-              patterns: fileList
+              patterns: FILE_LIST
             }),
           ]
   },
