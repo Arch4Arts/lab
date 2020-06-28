@@ -4,7 +4,7 @@ const mChatData = {
   namespaced: false,
   state: {
     MC: {
-      сurrentChatList: ['erza','erza&arch'], // Текущие чаты в телефоне
+      сurrentChatList: ['erza','erza&arch'], // Текущие чаты в смарте
       currentSelectedTheme: 'Minimalistic', // Текущая тема оформления
 
       charProfiles: [
@@ -40,9 +40,7 @@ const mChatData = {
           chatName: undefined,
           chatAvatar: undefined,
           isGroupChat: false,
-          groupChatName: undefined, // Используется только если isGroupChat
-          groupChatAvatar: undefined,
-          disabled: false,
+          isDisabled: false,
           unreadMessageCount: 0,
           messagesHistory: [
             { uid: '1k971ar09', type: 'text', author: `erza`, data: { text: `Lorem ipsum dolor 😄 sit **amet**?` } },
@@ -59,12 +57,10 @@ const mChatData = {
         },
         {
           chatID: 'erza&arch',   
-          chatName: undefined,             
-          chatAvatar: undefined,      
+          chatName: 'Беседка',             
+          chatAvatar: require('../../../media/img/preview - костыльки.jpeg'),      
           isGroupChat: true,
-          groupChatName: 'Беседка', // Используется только если isGroupChat
-          groupChatAvatar: require('../../../media/img/preview - костыльки.jpeg'),
-          disabled: false,
+          isDisabled: false,
           unreadMessageCount: 3,
           messagesHistory: [
             { uid: '1k971ar09', type: 'text', author: `erza`, data: { text: `Aenean massa. Cum sociis natoque penatibus et magnis dis parturient **_montes_**, nascetur ridiculus mus.` } },

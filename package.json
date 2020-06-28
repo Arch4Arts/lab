@@ -24,6 +24,7 @@
     "hotkeys-js": "^3.8.1",
     "keycode": "^2.2.0",
     "localforage": "^1.7.4",
+    "lodash.clonedeep": "^4.5.0",
     "mitt": "^1.2.0",
     "normalize.css": "^8.0.1",
     "twemoji": "^13.0.0",

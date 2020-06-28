@@ -42,21 +42,19 @@
       <v-list-item
         class="chat-list__vlist-item"
         :key="chat.chatID"
-        :disabled="chat.disabled"
-        :class="{ 'chat-list__vlist-item__disabled': chat.disabled }"
-        @click="openSelectedChat(chat.chatID, chat.chatName, chat.groupChatName, chat.chatAvatar, chat.groupChatAvatar, chat.isGroupChat)">
+        :disabled="chat.isDisabled"
+        :class="{ 'chat-list__vlist-item__disabled': chat.isDisabled }"
+        @click="setSelectedChat(chat.chatID, chat.chatName, chat.chatAvatar, chat.isGroupChat)">
         <!-- Аватар -->
         <v-list-item-avatar class="chat-list__vlist--chat__avatar" :class="{ 'chat-list__vlist--chat__avatar__badge': chat.unreadMessageCount > 0 }">
-          <img v-if="chat.isGroupChat" :src="chat.groupChatAvatar">
-          <img v-else :src="chat.chatAvatar">
+          <img :src="chat.chatAvatar">
         </v-list-item-avatar>
 
         <!-- Основной блок с информацией -->
         <v-list-item-content>
           <!-- Имя контакта -->
           <v-list-item-title class="chat-list__vlist--chat__title">
-            <div v-if="chat.isGroupChat">{{ chat.groupChatName }}</div>
-            <div v-else>{{ chat.chatName }}</div>
+            <div>{{ chat.chatName }}</div>
           </v-list-item-title>
           <!-- Текст последнего сообщения -->
           <v-list-item-subtitle v-if="chat.messagesHistory.type === 'text'" class="chat-list__vlist--chat__subtitle-text"> 
@@ -95,12 +93,19 @@ import updateTheme from '../../styles/updateTheme';
 import { markdown } from './messages/drawdown'
 import twemoji from 'twemoji'
 
+const cloneDeep = require('lodash.clonedeep');
+
 export default {
+  data () {
+    return {
+      ChatListCache: ''
+    }
+  },
   props: {
     width: [Number, String],
     height: [Number, String],
     calcHeightToolbar: [Number, String],
-    chatList: {
+    currentChatList: {
       type: Array,
       required: true,
     },
@@ -111,76 +116,53 @@ export default {
   },
   computed: {
     getChatList() {
-      let сurrentChatList = this.chatList // Контакты в телефоне персонажа
-      let chatData = JSON.parse(JSON.stringify(this.mChatData)); // Данные чатов
-      let chatListData = [] // Список текущих чатов с информацией о контакте и последнем сообщении
-      // Формируем список текущий чатов
-      for (let i in сurrentChatList) {
-        for (let key in chatData.chatList) {
-          if (chatData.chatList[key].chatID === сurrentChatList[i]) {
-            chatData.chatList[key].messagesHistory.reverse() // Инвертируем и ищем с конца
-            chatData.chatList[key].messagesHistory.find(function(message, index) { 
-              // Заменяем весь массив с сообщениями, на одно удовлетворяющее критерию
-              if (message.type !== 'suggestion' && message.type === 'text') { // Если текстовое сообщение
-                chatData.chatList[key].messagesHistory = message
-                return true
-              }
-              else if (message.type !== 'suggestion') { // Или любого другого типа кроме suggestion
-                chatData.chatList[key].messagesHistory = message
-                return true
-              }
-            })
-            chatListData.push(chatData.chatList[key])
-          }
-        }
-      }
-      
-      return this.setChatInfo(chatListData) // Определение параметров аватара и имени
+      const currentChatList = this.currentChatList; // Контакты в телефоне персонажа
+      const chatData = cloneDeep(this.mChatData); // Данные чатов
+      let chatList = []; // Список текущих чатов с информацией о чате с последнем сообщением
+
+      chatList = this.getChatInfo(chatData);
+      chatList = this.getChatLastMessage(chatList);
+      return chatList;
     },
   },
   methods: {
-    // Процесс определения имени, аватара чата
-    setChatInfo(chatListData){
-      let chatData = JSON.parse(JSON.stringify(this.mChatData)); // Данные чатов
-      // Процесс определения имени, аватара чата
-      for (let i in chatListData) {
-        // Если это не групповой чат, присваиваем имя и аватарку из charProfiles
-        // Если групповой чат, то имя и аватар там уже заданы
-        if (!chatListData[i].isGroupChat) {
-          let str = chatListData[i].chatID;
-          // Извлекаем sister из mc_sister
-          let getCharID = str.slice(str.indexOf('_') + 1, str.length)
-          // Обрабатываем данные из профиля персонажа
-          for (let key in chatData.charProfiles) {
-            if (getCharID == chatData.charProfiles[key].charID) {
+    getChatInfo(mChatData){
+      const chatList = mChatData.chatList;
+      const charProfiles = mChatData.charProfiles;
+      for (let chat of chatList) {
+        if (chat.isGroupChat === false) {
+          // в групповом чат изначально заданы имя и аватар
+          // Для пользовательского чата данные загружаются из профиля
+          charProfiles.find((char) => {
+            if (char.charID === chat.chatID) {
               // Если используется псевдоним
-              if (chatData.charProfiles[key].isAlias) {
-                chatListData[i].chatName = chatData.charProfiles[key].aliasName;
-                chatListData[i].chatAvatar = chatData.charProfiles[key].avatar;    
-              }
-              else {
-                chatListData[i].chatName = chatData.charProfiles[key].name;
-                chatListData[i].chatAvatar = chatData.charProfiles[key].avatar;                
-              }
+              chat.chatName = char.isAlias ? char.aliasName : char.name
+              chat.chatAvatar = char.avatar;
             }
+          })
+        }
+      }
+      return chatList
+    },
+    getChatLastMessage(chatList){
+      for (let chat of chatList) {
+        for (let i = chat.messagesHistory.length - 1; i >= 0; i--) {
+          if (chat.messagesHistory[i].type !== 'suggestion') {
+            chat.messagesHistory = chat.messagesHistory[i];
+            break;
           }
         }
       }
-      return chatListData
+      return chatList
     },
-    openSelectedChat(selectedChatID, selectedChatName, selectedGroupChatName, selectedChatAvatar, selectedGroupChatAvatar, selectedChatIsGroup){
-      this.$store.state.mChat.selectedChatID = selectedChatID // Для MessageList
-      // Если групповой чат
-      if (selectedChatIsGroup) { // Для MessageListToolbar
-        this.$store.state.mChat.selectedChatName = selectedGroupChatName
-        this.$store.state.mChat.selectedChatAvatar = selectedGroupChatAvatar
-      }
-      // Если не групповой чат
-      else { // Для MessageListToolbar
-        this.$store.state.mChat.selectedChatName = selectedChatName
-        this.$store.state.mChat.selectedChatAvatar = selectedChatAvatar 
-      }
+    setSelectedChat(selectedChatID, selectedChatName, selectedChatAvatar, selectedChatIsGroup){
+      // Для MessageList
+      this.$store.state.mChat.selectedChatID = selectedChatID 
       this.$store.state.mChat.selectedChatIsGroup = selectedChatIsGroup
+      // Для MessageListToolbar
+      this.$store.state.mChat.selectedChatName = selectedChatName
+      this.$store.state.mChat.selectedChatAvatar = selectedChatAvatar
+
       this.$store.commit('mChatListShow');
     },
     applySelectedTheme(select){
@@ -189,7 +171,7 @@ export default {
       updateTheme('mChat');
     },
     getFormatMessage(message) { 
-      let exceptionList = [
+      const exceptionList = [
         '<p>',
         '<b>',
         '<i>',
@@ -214,7 +196,7 @@ export default {
       else return message
     },
     getTwemoji(message) { 
-      let exceptionList = [
+      const exceptionList = [
         '<p>',
         '<img'
       ];

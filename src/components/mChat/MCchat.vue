@@ -3,7 +3,7 @@
   <FloatingChatButton :unreadMessagesCount="getUnreadMessagesCount" />
   <mChatFrame
     :mChatData="mChatData"
-    :chatList="getChatList"
+    :currentChatList="getCurrentChatList"
     :messageList="getMessageList"
   />
 </div>
@@ -39,7 +39,7 @@ export default {
     mChatData(){
       return this.$store.state.mChatData.MC;
     },
-    getChatList(){
+    getCurrentChatList(){
       return this.$store.state.mChatData.MC.сurrentChatList;
     },
     getMessageList() {
@@ -56,8 +56,9 @@ export default {
       }
     },
     getUnreadMessagesCount() {
+      const chatData = this.mChatData;
       let totalUnreadMessages = 0;
-      for (let chatID of this.getChatList) { // Перебираем сurrentChatList
+      for (let chatID of this.getCurrentChatList) { // Перебираем сurrentChatList
         for (let i in this.mChatData.chatList) { // Перебираем все чаты
           if (chatID === this.mChatData.chatList[i].chatID) {
             totalUnreadMessages += this.mChatData.chatList[i].unreadMessageCount;

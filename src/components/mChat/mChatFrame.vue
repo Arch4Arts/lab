@@ -36,7 +36,7 @@
           :height="calcHeight"
           :calcHeightToolbar="calcChatList_ToolbarHeight"
 
-          :chatList="chatList"
+          :currentChatList="currentChatList"
           :mChatData="mChatData"
         />
         <!-- Отображаемый чат -->
@@ -86,7 +86,7 @@ export default {
       type: Object,
       required: true,
     },    
-    chatList: {
+    currentChatList: {
       type: Array,
       required: true
     },
