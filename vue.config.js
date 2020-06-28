@@ -5,7 +5,7 @@ const webpack = require('webpack')
 
 const emojiFileList = require('./src/js/twemoji')
 const faviconPath = { from: './src/assets/favicon.png', to: 'assets/img/' }
-const fileList = [].concat(emojiFileList, faviconPath)
+const fileList = [].concat(emojiFileList, faviconPath) 
 
 const getOutputDir = function () {
   // Если Undefined - community версия 

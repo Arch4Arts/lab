@@ -4,7 +4,7 @@ import vuetify from '../styles/vuetify'
 
 // идентификатор infoCircle нигде не используется, но импорт нужен для загрузки самого svg файла
 import exclamationTriangle from '../assets/exclamation-triangle.svg'
-import infoCircle from '../assets/info-circle.svg'
+import infoCircle from '../assets/info-circle.svg' 
 
 import store from '../store/store'
 
