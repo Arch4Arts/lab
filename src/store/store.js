@@ -11,8 +11,8 @@ const AES = require("crypto-js/aes");
 const UTF8 = require('crypto-js/enc-utf8')
 const PBKDF2 = require('crypto-js/pbkdf2')
 
-const serialize = require('serialize-javascript');
-function deserialize(serializedJavascript){
+JSON.serialize = require('serialize-javascript');
+JSON.deserialize = function(serializedJavascript){
   return eval('(' + serializedJavascript + ')');
 }
 
@@ -77,12 +77,12 @@ const store = new Vuex.Store({
   },
   plugins: [createPersistedState({ // WebCrypto здесь не подходит, тут однопоток.
     setState(key, state, storage) {
-      return storage.setItem(key, AES.encrypt(serialize(state), keyGen(key)));
+      return storage.setItem(key, AES.encrypt(JSON.serialize(state), keyGen(key)));
     },
     getState(key, storage, value) {
       try {
         return (value = storage.getItem(key).toString()) && typeof value !== 'undefined'
-          ? deserialize(AES.decrypt(value, keyGen(key)).toString(UTF8))
+          ? JSON.deserialize(AES.decrypt(value, keyGen(key)).toString(UTF8))
           : undefined;
       } catch (error) {}
   

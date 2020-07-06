@@ -367,7 +367,7 @@ export default {
       // Объединяем все данные в один заголовок
       let saveHeader = `${this.$store.state.saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$store.state.saveGameVersion}`;
       // Шифруем
-      await WebCrypto.encrypt(saveHeader, JSON.stringify(this.$store.state))
+      await WebCrypto.encrypt(saveHeader, JSON.serialize(this.$store.state))
       .then( encryptedData => localforage.setItem(saveHeader, encryptedData) )
       .then(() => saveNotify({message: this.$t('notify-save')}))
       .catch(err => this.$root.errNotify(err.toString()))
@@ -391,7 +391,7 @@ export default {
       // Объединяем все данные в один заголовок
       let saveHeader = `${saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$root.gameVersion}`;
       // Добавем новый за место старого (удалённого)
-      await WebCrypto.encrypt(saveHeader, JSON.stringify(this.$store.state))
+      await WebCrypto.encrypt(saveHeader, JSON.serialize(this.$store.state))
         .then( encryptedData => localforage.setItem(saveHeader, encryptedData) )
         .then(() => saveNotify({message: this.$t('notify-overwrite-save')}))
         .catch(err => this.$root.errNotify(err.toString()))
@@ -417,7 +417,7 @@ export default {
       const name = `${saveName},${saveTime},${saveID},${saveGameVersion}`
       const encryptedData = await localforage.getItem(name).then( data => data )
       await WebCrypto.decrypt(name, encryptedData)
-        .then(decryptedData => JSON.parse(decryptedData))
+        .then(decryptedData => JSON.deserialize(decryptedData))
         .then(state => this.$store.replaceState(state))
         .then(() => saveNotify({message: this.$t('notify-load-save'), class: 'save-notify__load'}))
         .catch(err => this.$root.errNotify(err.toString()))
