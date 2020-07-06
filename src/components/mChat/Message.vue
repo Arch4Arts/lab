@@ -93,7 +93,7 @@ export default {
       return this.source.data.suggestions
     },
     profile(author) {
-      const profile = this.mChatData.charProfiles.find(profile => profile.charID === author())
+      const profile = this.mChatData.charProfiles.find(profile => profile.charID === author)
       // A profile may not be found for system messages or messages by 'me'
       return profile || {avatar: '', contactName: ''}
     },

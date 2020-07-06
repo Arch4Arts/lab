@@ -314,12 +314,9 @@ export default {
       return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
     },
     async updateSaveList() {
-      const t0 = performance.now()
       if (this.savesList.length) {
         this.savesList.sort(this.sortBy('saveID'))
       }
-      const t1 = performance.now()
-      console.log((t1 - t0).toFixed(3) + 'ms')
       this.savesNumber = await localforage.length().then(length => length);
     },
     async clearSelectedSavesList(){
@@ -372,6 +369,8 @@ export default {
       // Шифруем
       await WebCrypto.encrypt(saveHeader, JSON.stringify(this.$store.state))
       .then( encryptedData => localforage.setItem(saveHeader, encryptedData) )
+      .then(() => saveNotify({message: this.$t('notify-save')}))
+      .catch(err => this.$root.errNotify(err.toString()))
       // Добавляем новоё сохранение в отображаемый список
       this.savesList.push({
         saveName: this.$store.state.saveName, 
@@ -380,8 +379,6 @@ export default {
         saveGameVersion: this.$store.state.saveGameVersion
       })
       this.updateSaveList()
-      // Оповещение
-      saveNotify({message: this.$t('notify-save')})
       // Автоматическое закрытие панели сохранений
       if (this.$store.state.closeDrawerAfterSaving) 
         this.closeDrawerAfterSaving()
@@ -396,8 +393,8 @@ export default {
       // Добавем новый за место старого (удалённого)
       await WebCrypto.encrypt(saveHeader, JSON.stringify(this.$store.state))
         .then( encryptedData => localforage.setItem(saveHeader, encryptedData) )
-      // Оповещение
-      saveNotify({message: this.$t('notify-overwrite-save')})
+        .then(() => saveNotify({message: this.$t('notify-overwrite-save')}))
+        .catch(err => this.$root.errNotify(err.toString()))
       // Ищем выбранное сохранение для перезаписи и обновляем его время и ID (чтобы не перерендерить весь список)
       this.savesList.find(function(item) {
         if (item.saveID === saveID) {
@@ -419,9 +416,12 @@ export default {
     async loadSave(saveName, saveTime, saveID, saveGameVersion){
       const name = `${saveName},${saveTime},${saveID},${saveGameVersion}`
       const encryptedData = await localforage.getItem(name).then( data => data )
-      const decryptedData = await WebCrypto.decrypt(name, encryptedData).then(data => JSON.parse(data))
-      // Заменяем store
-      await this.$store.replaceState(decryptedData);
+      await WebCrypto.decrypt(name, encryptedData)
+        .then(decryptedData => JSON.parse(decryptedData))
+        .then(state => this.$store.replaceState(state))
+        .then(() => saveNotify({message: this.$t('notify-load-save'), class: 'save-notify__load'}))
+        .catch(err => this.$root.errNotify(err.toString()))
+
       // Перерисовываем компоненты
       this.$store.state.reRender_mChatPlayersVolume++;
       // Фиксируем новые переменные
@@ -431,8 +431,6 @@ export default {
       updateTheme('mChat');
       // Автоматическое закрытие панели сохранений, если включено
       if (this.$store.state.closeDrawerAfterSaving) this.closeDrawerAfterSaving()
-      // Оповещение
-      saveNotify({message: this.$t('notify-load-save'), class: 'save-notify__load'})
       // сбрасываем выделения списка сохранений
       this.clearSelectedSavesList()
     },
@@ -440,8 +438,8 @@ export default {
     async deleteSave(saveName, saveTime, saveID, saveGameVersion) {
       // Удаляем
       await localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVersion}`)
-      // Оповещенеие
-      saveNotify({message: this.$t('notify-delete-save'), iconUrl: 'assets/img/exclamation-triangle.svg', class: 'save-notify__delete'})
+        .then(() => saveNotify({message: this.$t('notify-delete-save'), iconUrl: 'assets/img/exclamation-triangle.svg', class: 'save-notify__delete'}))
+        .catch(err => this.$root.errNotify(err.toString()))
       // Находим в отображаемом списке удалённое сохранение
       const saveIndex = this.savesList.findIndex(function(item) {
         return (item.saveID === saveID)
@@ -458,8 +456,8 @@ export default {
     async DeleteAllSaves(){
       // Очистка хранилища
       await localforage.clear()
-      // Оповещение
-      saveNotify({message: this.$t('notify-delete-all-save'), iconUrl: 'assets/img/exclamation-triangle.svg', class: 'save-notify__delete'})
+        .then(() => saveNotify({message: this.$t('notify-delete-all-save'), iconUrl: 'assets/img/exclamation-triangle.svg', class: 'save-notify__delete'}))
+        .catch(err => this.$root.errNotify(err.toString()))
       // Закрываем модальное окно
       this.showModalDelSavesAll = false
       // Обнуляем список сохранений (перерисовываем список)

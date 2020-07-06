@@ -48,9 +48,9 @@ export async function loadFromDisk(event, savesList){
   const files = event.target.files
   for (let file of files) {
     _readFile(file)
-      .then(saveFile => _loadSaves(saveFile, savesList) )
-      .then(() => this.updateSaveList() )
-      .catch(error => this.$root.errNotify(error.toString()) )   
+      .then(saveFile => _loadSaves.call(this, saveFile, savesList))
+      .then(() => this.updateSaveList())
+      .catch(err => this.$root.errNotify(err.toString()))   
   }
 }
 

@@ -1,58 +1,42 @@
 'use strict';
 
-const wrap = f => {
-  let limit = 0;
-  let counter = 0;
-  let cancel = false;
+const crypto = require('crypto');
 
-  const wrapper = (...args) => {
-    if (limit && counter === limit) wrapper.cancel();
-    if (f && !cancel) {
-      const res = f(...args);
-      counter++;
-      return res;
-    }
+const argKey = x => x.toString() + ':' + typeof x;
+
+const generateKey = args => {
+  const key = args.map(argKey).join('|');
+  return crypto.createHash('sha256').update(key).digest('hex');
+};
+
+const memoize = fn => {
+  const cache = {};
+  return (...args) => {
+    const key = generateKey(args);
+    const val = cache[key];
+    if (val) return val;
+    const res = fn(...args);
+    cache[key] = res;
+    return res;
   };
-
-  wrapper.cancel = () => {
-    cancel = true;
-    return wrapper;
-  };
-
-  wrapper.continue = () => {
-    cancel = false;
-    return wrapper;
-  };
-
-  wrapper.timeout = msec => {
-    setTimeout(() => {
-      wrapper.cancel();
-    }, msec);
-    return wrapper;
-  };
-
-  wrapper.limit = count => {
-    limit = count;
-    return wrapper;
-  };
-
-  return wrapper;
 };
 
 // Usage
 
-const fn = par => {
-  console.log('Function called, par:', par);
+const sumSeq = (a, b) => {
+  console.log('Calculate sum');
+  let r = 0;
+  for (let i = a; i < b; i++) r += i;
+  return r;
 };
 
-const fn2 = wrap(fn).timeout(200).limit(4);
-fn2('1st');
+const mSumSeq = memoize(sumSeq);
 
-setTimeout(() => {
-  fn2('2nd');
-  fn2('3rd');
-  fn2.cancel();
-  fn2('4th');
-  fn2.continue();
-  fn2('5th');
-}, 150);
+console.log('First call mSumSeq(2, 5)');
+console.log('Value:', mSumSeq(2, 5));
+
+console.log('Second call mSumSeq(2, 5)');
+console.log('From cache:', mSumSeq(2, 5));
+
+console.log('Call mSumSeq(2, 6)');
+console.log('Calculated:', mSumSeq(2, 6));

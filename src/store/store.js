@@ -11,7 +11,7 @@ const AES = require("crypto-js/aes");
 const UTF8 = require('crypto-js/enc-utf8')
 const PBKDF2 = require('crypto-js/pbkdf2')
 
-var serialize = require('serialize-javascript');
+const serialize = require('serialize-javascript');
 function deserialize(serializedJavascript){
   return eval('(' + serializedJavascript + ')');
 }
@@ -140,9 +140,5 @@ function keyGen(saveName){ // Генерация уникального ключ
   const salt = '3F4428472B4B6250';
   return PBKDF2(saveName, salt, { keySize: 256 / 32 , iterations: 1}).toString();
 }
-
-globalThis.erza = store.state.mChatData.MC.charProfiles[2].charID
-console.log(globalThis.erza)
-console.log('### ' + store.state.mChatData.MC.charProfiles[2].charID)
 
 export default store

@@ -66,9 +66,9 @@ const mChatData = {
           isDisabled: false,
           unreadMessageCount: 3,
           messagesHistory: [
-            { uid: '1k971ar09', type: 'text', author() { return globalThis.erza }, data: { text: `Aenean massa. Cum sociis natoque penatibus et magnis dis parturient **_montes_**, nascetur ridiculus mus.` } },
-            { uid: '1k971bswh', type: 'text', author() { return 'arch' }, data: { text: 'Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque' } },
-            { uid: '1k971ar02', type: 'text', author() { return globalThis.erza }, data: { text: `Sed consequat, leo eget bibendum sodales` } },
+            { uid: '1k971ar09', type: 'text', author: `erza`, data: { text: `Aenean massa. Cum sociis natoque penatibus et magnis dis parturient **_montes_**, nascetur ridiculus mus.` } },
+            { uid: '1k971bswh', type: 'text', author: `arch`, data: { text: 'Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque' } },
+            { uid: '1k971ar02', type: 'text', author: `erza`, data: { text: `Sed consequat, leo eget bibendum sodales` } },
           ]
         },
       ]
