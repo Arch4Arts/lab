@@ -133,7 +133,7 @@ export default {
         if (chat.isGroupChat === false) {
           // в групповом чат изначально заданы имя и аватар
           // Для пользовательского чата данные загружаются из профиля
-          charProfiles.find((char) => {
+          charProfiles.find(char => {
             if (char.charID === chat.chatID) {
               // Если используется псевдоним
               chat.chatName = char.isAlias ? char.aliasName : char.name

@@ -85,6 +85,9 @@ export default {
       opacity: .9;
       background: #00b3ff;
     }
+    .vjs-control-bar {
+      opacity: 1;
+    }
   }
 
   .vjs-poster {
@@ -93,6 +96,8 @@ export default {
 
   .vjs-control-bar {
     background-color: transparent;
+    opacity: 0;
+    transition: .5s opacity;
     font-size: calc(var(--mChatWidth) / 100 * 3.5);
     -webkit-font-smoothing: subpixel-antialiased;
   }

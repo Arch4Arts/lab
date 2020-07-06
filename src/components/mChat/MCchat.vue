@@ -53,7 +53,6 @@ export default {
       }
     },
     getUnreadMessagesCount() {
-      const chatData = this.mChatData;
       let totalUnreadMessages = 0;
       for (let currentChat of this.getCurrentChatList) {
         for (let chat of this.mChatData.chatList) {
@@ -69,7 +68,7 @@ export default {
     closeChat(){
       // Если чат отображается и включена настройка по его закрытию кликом снаружи
       if (this.$store.state.mChat.show && this.$store.state.mChat.closeChatOnClickedOutside) 
-        this.$store.commit('mChatShow', false);
+        this.$store.commit('set_mChatShow', false);
     },
     middleware (event) {
       if (this.$store.state.mChat.show) { // Только при открытом чате

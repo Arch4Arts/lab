@@ -45,8 +45,8 @@
       "panel-title__hotkeys": "Горячие клавиши",
       "list-item__saves": {
         "1": {
-          "title": "Закрывать чат кликом снаружи",
-          "subtitle": "Закрывать чат"
+          "title": "Автоматически скрывать",
+          "subtitle": "Автоматическое скрытие панели после операций сохранения, перезаписи или загрузки"
         },
         "title": "Панель сохранений"
       },
@@ -89,7 +89,7 @@
     app
     touchless
     dark
-    @input="drawerShowState"
+    @input="updateDrawerState"
     width="700"
     class="v-navigation-drawer"
   >
@@ -141,15 +141,15 @@
         <!-- Панель сохранений -->
         <v-list-item-group multiple>
           <v-list-item class="v-list-item">
-            <v-list-item-content @click="changeOption('autoCloseSavesDrawer')">
+            <v-list-item-content @click="changeOption('closeDrawerAfterSaving')">
               <v-list-item-title>{{ $t('list-item__saves.1.title') }}</v-list-item-title>
               <v-list-item-subtitle>{{ $t('list-item__saves.1.subtitle') }}</v-list-item-subtitle>
             </v-list-item-content>
             <!-- Тумблер -->
             <v-list-item-action>
               <v-switch
-                v-model="$store.state.autoCloseSavesDrawer"
-                @click.stop="changeOption('autoCloseSavesDrawer')"
+                v-model="$store.state.closeDrawerAfterSaving"
+                @click.stop="changeOption('closeDrawerAfterSaving')"
               ></v-switch>
             </v-list-item-action>
           </v-list-item>
@@ -263,7 +263,7 @@ import eventBus from '../../js/eventBus'
 
 export default {
   methods: {
-    drawerShowState(isShow){ // регистрация изменений $store.state.isOpenSettingsDrawer из v-model
+    updateDrawerState(isShow){ // регистрация изменений $store.state.isOpenSettingsDrawer из v-model
       if (!isShow) 
         this.$store.commit('updateStore')
     },

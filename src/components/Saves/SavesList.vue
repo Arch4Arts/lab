@@ -1,18 +1,3 @@
-<i18n>
-	{
-		"en": {
-      "tooltip__overwrite": "Overwrite",
-      "tooltip__load": "Load",
-      "tooltip__delete": "Delete"
-		},
-		"ru": {
-      "tooltip__overwrite": "Перезаписать",
-      "tooltip__load": "Загрузить",
-      "tooltip__delete": "Удалить"
-		}
-	}
-</i18n>
-
 <template>
 <div>
   <v-list-item
@@ -27,38 +12,26 @@
     <!-- КНОПКИ WRITE/LOAD/DELETE -->
     <v-list-item-action class="position-btns">
       <!-- Перезаписать-->
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on }">
-          <v-btn v-on="on" icon
-            class="overwrite-btn"
-            @click="overwriteSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion)">
-            <a-icon class="overwrite-btn__color" :icon="['fas', 'download']" /> 
-          </v-btn>
-        </template>
-          <span>{{ $t('tooltip__overwrite') }}</span>
-      </v-tooltip>
+      <v-btn 
+        icon
+        class="overwrite-btn"
+        @click="overwriteSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion)">
+        <a-icon class="overwrite-btn__color" :icon="['fas', 'download']" /> 
+      </v-btn>
       <!-- Загрузить -->
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on }">
-          <v-btn v-on="on" icon
-            class="load-btn"
-            @click="loadSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion)"> 
-            <a-icon class="load-btn__color" :icon="['fas', 'upload']" />
-          </v-btn>
-        </template>
-          <span>{{ $t('tooltip__load') }}</span>
-      </v-tooltip>
+      <v-btn 
+        icon
+        class="load-btn"
+        @click="loadSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion)"> 
+        <a-icon class="load-btn__color" :icon="['fas', 'upload']" />
+      </v-btn>
       <!-- Удалить -->
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on }">
-          <v-btn v-on="on" icon
-            class="delete-btn"
-            @click="deleteSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion)"> 
-            <a-icon class="delete-btn__color" :icon="['fas', 'trash']" />
-          </v-btn>
-        </template>
-          <span>{{ $t('tooltip__delete') }}</span>
-      </v-tooltip>
+      <v-btn 
+        icon
+        class="delete-btn"
+        @click="deleteSave(source.saveName, source.saveTime, source.saveID, source.saveGameVersion)"> 
+        <a-icon class="delete-btn__color" :icon="['fas', 'trash']" />
+      </v-btn>
     </v-list-item-action>
   </v-list-item>    
 </div>

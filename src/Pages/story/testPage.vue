@@ -9,6 +9,7 @@
     {{ $t('message') }}
 
     <div v-html="text" />
+    <v-btn @click="test2()">getter</v-btn>
     <v-btn @click="test()">emoji</v-btn>
     <v-btn @click="$root.toggleFullScreen()">call error</v-btn>
 
@@ -65,6 +66,9 @@ export default {
         className: "emoji-test",    // default "emoji"
         folder: "twemoji"       // in case it's specified
       })
+    },
+    test2(){
+      console.log(this.$store.state.mChatData.MC.chatList[1])
     }
   }
 }

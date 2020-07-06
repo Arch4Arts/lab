@@ -11,6 +11,11 @@ const AES = require("crypto-js/aes");
 const UTF8 = require('crypto-js/enc-utf8')
 const PBKDF2 = require('crypto-js/pbkdf2')
 
+var serialize = require('serialize-javascript');
+function deserialize(serializedJavascript){
+  return eval('(' + serializedJavascript + ')');
+}
+
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -55,7 +60,7 @@ const store = new Vuex.Store({
     radialMenuShow: true, // Плавающая иконка с меню для мобильных устройств, при скрытой панели навигации
     appHeaderEnable: false, // По умолчанию выкл, на время показа стартовой страницы с информацией об игре.
 
-    autoCloseSavesDrawer: false, // Автоматически закрывать панель сохранений, после нового сохранения / перезаписи / загрузки
+    closeDrawerAfterSaving: false, // Автоматически закрывать панель сохранений, после нового сохранения / перезаписи / загрузки
     isOpenSettingsDrawer: false, // Открытие/Закрытия панели настройек
     isOpenSavesDrawer: false,
 
@@ -72,12 +77,12 @@ const store = new Vuex.Store({
   },
   plugins: [createPersistedState({ // WebCrypto здесь не подходит, тут однопоток.
     setState(key, state, storage) {
-      return storage.setItem(key, AES.encrypt(JSON.stringify(state), keyGen(key)));
+      return storage.setItem(key, AES.encrypt(serialize(state), keyGen(key)));
     },
     getState(key, storage, value) {
       try {
         return (value = storage.getItem(key).toString()) && typeof value !== 'undefined'
-          ? JSON.parse(AES.decrypt(value, keyGen(key)).toString(UTF8))
+          ? deserialize(AES.decrypt(value, keyGen(key)).toString(UTF8))
           : undefined;
       } catch (error) {}
   
@@ -104,14 +109,14 @@ const store = new Vuex.Store({
       this.state.appHeaderEnable = !this.state.appHeaderEnable;
     },
 
-    autoCloseSavesDrawer(){
-      this.state.autoCloseSavesDrawer = !this.state.autoCloseSavesDrawer
-    },
     isOpenSettingsDrawer(){
       this.state.isOpenSettingsDrawer = !this.state.isOpenSettingsDrawer;
     },
     isOpenSavesDrawer(){
       this.state.isOpenSavesDrawer = !this.state.isOpenSavesDrawer;
+    },
+    closeDrawerAfterSaving(){
+      this.state.closeDrawerAfterSaving = !this.state.closeDrawerAfterSaving
     },
 
     // Смена языка
@@ -135,5 +140,9 @@ function keyGen(saveName){ // Генерация уникального ключ
   const salt = '3F4428472B4B6250';
   return PBKDF2(saveName, salt, { keySize: 256 / 32 , iterations: 1}).toString();
 }
+
+globalThis.erza = store.state.mChatData.MC.charProfiles[2].charID
+console.log(globalThis.erza)
+console.log('### ' + store.state.mChatData.MC.charProfiles[2].charID)
 
 export default store

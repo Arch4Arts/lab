@@ -11,7 +11,7 @@ function errorMessage(msg_ru, msg){
 
 export function SentryPush(error){
   Sentry.captureException(error);
-  errorMessage(error)
+  errorMessage(error, error)
 }
 
 if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена

@@ -19,7 +19,7 @@ export function mChatNotify(extOptions){
     close: false,
     closeOnClick: true,
     onClick: () => { // Открывает чат при нажатии на уведомление
-      store.commit('mChatShow', true);
+      store.commit('set_mChatShow', true);
       store.state.mChat.selectedChatID = extOptions.chatID
       store.state.mChat.selectedChatAvatar = extOptions.chatAvatar
       store.commit('mChatListShow');
@@ -37,7 +37,7 @@ export function saveNotify(extOptions){
   // Параметры по умолчанию
   const OPTIONS = {
     class: 'save-notify-save',
-    iconUrl: 'assets/img/icons/info-circle.svg',
+    iconUrl: 'assets/img/info-circle.svg',
     position: 'bottomCenter',
     messageSize: '16',
     displayMode: 2, 
@@ -54,7 +54,7 @@ export function errorsHandlingNotify(extOptions){
   // Параметры по умолчанию
   const OPTIONS = {
     class: 'errors-handling-notify',
-    iconUrl: 'assets/img/icons/exclamation-triangle.svg', 
+    iconUrl: 'assets/img/exclamation-triangle.svg', 
     position: 'bottomCenter', 
     messageSize: '16',
     closeOnClick: false,     

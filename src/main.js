@@ -66,7 +66,7 @@ new Vue({
       // проверка состояния звука
       checkSoundsEnable();
       
-      let self = this;
+      const self = this;
       document.addEventListener("fullscreenchange", function () {
         if (document.fullscreenElement) {
           self.isFullScreen = true;
@@ -113,7 +113,7 @@ new Vue({
     },
     errNotify(error){
       SentryPush(error) // Отправка ошибки через Sentry
-      console.error(`${error}`);
+      console.error(error);
     }
   },
   watch: { // Клавиатурные сокращения

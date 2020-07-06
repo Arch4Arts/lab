@@ -41,7 +41,7 @@ const mChat = {
       mChatEnable(){
         this.state.mChat.enable = !this.state.mChat.enable
       },
-      mChatShow(state, value){
+      set_mChatShow(state, value){
         this.state.mChat.show = value
       },
       mChatListShow(){

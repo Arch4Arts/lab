@@ -10,9 +10,9 @@ const EMOJI_LIST = [
 ]
 
 // Получаем Twemoji CodePaint (название файлов в twemoji-assets) из EMOJI_LIST
-const twemojiCodeList = EMOJI_LIST.map((emoji) => {
+const twemojiCodeList = EMOJI_LIST.map(emoji => {
   let result;
-  twemoji.parse(emoji, { callback: (twemojiCode) => { result = twemojiCode } });
+  twemoji.parse(emoji, { callback: twemojiCode => { result = twemojiCode } });
   return result;
 });
 

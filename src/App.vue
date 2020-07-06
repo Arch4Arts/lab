@@ -32,13 +32,13 @@ export default {
         this.$store.commit('isOpenSettingsDrawer');
       // Открытие/закрытие панели сохранений
       if (this.$store.state.isOpenSavesDrawer) 
-        this.$store.commit('autoCloseSavesDrawer');
+        this.$store.commit('closeDrawerAfterSaving');
       // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
       if (this.$route.path != '/Journal') {
         if (this.$store.state.mChat.show) { // проверка открыт ли чат, если да то...
           // Открыта ли страница контактов, true - закрываем, false - возвращаемся к странице контактов, т.к открыт чат с контактом
           if (this.$store.state.mChat.chatListShow)
-            this.$store.commit('mChatShow', false); // закрываем окно чата
+            this.$store.commit('set_mChatShow', false); // закрываем окно чата
           // Закрывает чат с контактом если он открыт
           else 
             this.$store.commit('mChatListShow');
@@ -51,7 +51,7 @@ export default {
         if (this.$route.path != '/Journal') {
           // открываем окно чата, если оно не было открыто ранее
           if (!this.$store.state.mChat.show) 
-            this.$store.commit('mChatShow', true);
+            this.$store.commit('set_mChatShow', true);
         }
       }
     },
