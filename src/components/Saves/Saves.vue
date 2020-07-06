@@ -322,7 +322,6 @@ export default {
     async clearSelectedSavesList(){
       setTimeout(() => this.listSelectedSaves = [], 100)
     },
-    // Обновляет кол-во сохранений, при новом сохранении, или удалении и т.д.
     quickSave(){
       let isExist = false;
       for (let save of this.savesList) {
@@ -355,104 +354,88 @@ export default {
         }
       }
     },
-    // Сохранение игры
     async saveGame(saveName){
-      saveName = saveName.length ? saveName : this.$t('default-save-name')
+      saveName = saveName || this.$t('default-save-name')
       this.saveNameInput = ''; // Очищаем поле ввода
-      this.$store.state.saveName = saveName; // Имя
-      this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm"); // Время сохранения
-      this.$store.state.saveID = dayjs().format("x"); // миллисекунды с начала эпохи Unix
-      this.$store.state.saveGameVersion = this.$root.gameVersion; // Версия игры на момент сохранения
+      this.$store.state.saveName = saveName;
+      const saveTime = this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm");
+      const saveID = this.$store.state.saveID = dayjs().format("x");
+      const saveGameVersion = this.$store.state.saveGameVersion = this.$root.gameVersion;
 
-      // Объединяем все данные в один заголовок
-      let saveHeader = `${this.$store.state.saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$store.state.saveGameVersion}`;
-      // Шифруем
+      const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`;
       await WebCrypto.encrypt(saveHeader, JSON.serialize(this.$store.state))
-      .then( encryptedData => localforage.setItem(saveHeader, encryptedData) )
-      .then(() => saveNotify({message: this.$t('notify-save')}))
-      .catch(err => this.$root.errNotify(err.toString()))
-      // Добавляем новоё сохранение в отображаемый список
-      this.savesList.push({
-        saveName: this.$store.state.saveName, 
-        saveTime: this.$store.state.saveTime, 
-        saveID: this.$store.state.saveID, 
-        saveGameVersion: this.$store.state.saveGameVersion
-      })
-      this.updateSaveList()
-      // Автоматическое закрытие панели сохранений
-      if (this.$store.state.closeDrawerAfterSaving) 
-        this.closeDrawerAfterSaving()
+        .then(encryptedData => localforage.setItem(saveHeader, encryptedData))
+        .then(() => saveNotify({message: this.$t('notify-save')}))
+        .then(() => {
+          this.savesList.push({saveName, saveTime, saveID, saveGameVersion})
+          this.updateSaveList()
+          this.closeDrawerAfterSaving()
+        })
+        .catch(err => this.$root.errNotify(err.toString()))
     },
-    // Перезапись сохранения
     async overwriteSave(saveName, saveTime, saveID, saveGameVersion){
-      this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm"); // Обновляем время сохранения
-      this.$store.state.saveID = dayjs().format("x");// миллисекунды с начала эпохи Unix
+      const oldSaveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`
+      saveTime = this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm");
+      saveID = this.$store.state.saveID = dayjs().format("x");
+      saveGameVersion = this.$store.state.saveGameVersion = this.$root.gameVersion;
       
-      // Объединяем все данные в один заголовок
-      let saveHeader = `${saveName},${this.$store.state.saveTime},${this.$store.state.saveID},${this.$root.gameVersion}`;
-      // Добавем новый за место старого (удалённого)
+      // Добавляем новый
+      const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`;
       await WebCrypto.encrypt(saveHeader, JSON.serialize(this.$store.state))
         .then( encryptedData => localforage.setItem(saveHeader, encryptedData) )
         .then(() => saveNotify({message: this.$t('notify-overwrite-save')}))
         .catch(err => this.$root.errNotify(err.toString()))
-      // Ищем выбранное сохранение для перезаписи и обновляем его время и ID (чтобы не перерендерить весь список)
-      this.savesList.find(function(item) {
-        if (item.saveID === saveID) {
-          item.saveTime = dayjs().format("DD.MM.YYYY - HH:mm");
-          item.saveID = store.state.saveID;
-        }
-      })
-      // Удаляем выбранное сохранение для перезаписи, если шифрование не сработает, сохранение не будет удалённо
-      localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVersion}`)
-      // Сортируем (чтобы новый элемент в списке вышел на первое место (по времени))
+
+      // Удаляем старый
+      localforage.removeItem(oldSaveHeader)
+        .then(() => {
+          const oldSave = oldSaveHeader.split(',')
+          const saveID = oldSave[2]
+          this.savesList.find(function(save) {
+            if (save.saveID === saveID) {
+              save.saveTime = saveTime
+              save.saveID = saveID;
+            }
+          })
+          this.updateSaveList()
+          this.clearSelectedSavesList()
+          this.closeDrawerAfterSaving()
+        })
+        .catch(err => this.$root.errNotify(err.toString()))
       this.updateSaveList()
-      // сбрасываем выделения списка сохранений
-      this.clearSelectedSavesList()
-      // Автоматическое закрытие панели сохранений, если включено
-      if (this.$store.state.closeDrawerAfterSaving) 
-        this.closeDrawerAfterSaving()
     },
-    // Загрузка сохранения
     async loadSave(saveName, saveTime, saveID, saveGameVersion){
-      const name = `${saveName},${saveTime},${saveID},${saveGameVersion}`
-      const encryptedData = await localforage.getItem(name).then( data => data )
-      await WebCrypto.decrypt(name, encryptedData)
+      const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`
+      const encryptedData = await localforage.getItem(saveHeader).then( data => data )
+      await WebCrypto.decrypt(saveHeader, encryptedData)
         .then(decryptedData => JSON.deserialize(decryptedData))
         .then(state => this.$store.replaceState(state))
+        .then(() => {
+          // Перерисовываем компоненты
+          this.$store.state.reRender_mChatPlayersVolume++;
+          updateTheme('game');
+          updateTheme('mChat');
+          this.$store.commit('updateStore');
+          this.clearSelectedSavesList()
+          this.closeDrawerAfterSaving()
+        })
         .then(() => saveNotify({message: this.$t('notify-load-save'), class: 'save-notify__load'}))
         .catch(err => this.$root.errNotify(err.toString()))
-
-      // Перерисовываем компоненты
-      this.$store.state.reRender_mChatPlayersVolume++;
-      // Фиксируем новые переменные
-      this.$store.commit('updateStore');
-      // Обновляем темы
-      updateTheme('game');
-      updateTheme('mChat');
-      // Автоматическое закрытие панели сохранений, если включено
-      if (this.$store.state.closeDrawerAfterSaving) this.closeDrawerAfterSaving()
-      // сбрасываем выделения списка сохранений
-      this.clearSelectedSavesList()
     },
-    // Удаление сохранения
     async deleteSave(saveName, saveTime, saveID, saveGameVersion) {
-      // Удаляем
-      await localforage.removeItem(`${saveName},${saveTime},${saveID},${saveGameVersion}`)
+      const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`
+      await localforage.removeItem(saveHeader)
         .then(() => saveNotify({message: this.$t('notify-delete-save'), iconUrl: 'assets/img/exclamation-triangle.svg', class: 'save-notify__delete'}))
+        .then(() => {
+          const saveIndex = this.savesList.findIndex(function(save) {
+            return (save.saveID === saveID)
+          })
+          this.savesList.splice(saveIndex, 1);
+          this.updateSaveList()
+          this.clearSelectedSavesList()          
+        })
         .catch(err => this.$root.errNotify(err.toString()))
-      // Находим в отображаемом списке удалённое сохранение
-      const saveIndex = this.savesList.findIndex(function(item) {
-        return (item.saveID === saveID)
-      })
-      // Удаляем из списка
-      this.savesList.splice(saveIndex, 1);
-      // Стал ли список пустым?
-      // Обновляем кол-во сохранение в БД
-      this.updateSaveList()
-      // сбрасываем выделения списка сохранений
-      this.clearSelectedSavesList()
     },
-    // Удаление всех сохранений
     async DeleteAllSaves(){
       // Очистка хранилища
       await localforage.clear()
@@ -464,14 +447,12 @@ export default {
       this.savesList = [];
       this.updateSaveList()
     },
-    // Перезапуск игры
     async restartGame(){
-      // await resetState()
       await localStorage.removeItem(`vuex`);
       await location.reload()
     },
     closeDrawerAfterSaving(){
-      if (this.$store.state.isOpenSavesDrawer) 
+      if (this.$store.state.isOpenSavesDrawer && this.$store.state.closeDrawerAfterSaving) 
         this.$store.state.isOpenSavesDrawer = false;
     },
     // регистрация изменений $store.state.isOpenSavesDrawer из v-model

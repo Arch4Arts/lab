@@ -73,7 +73,6 @@ const store = new Vuex.Store({
     saveTime: '', // Когда была сохранена игра
     saveID: 0, // Номер сейва, совпадает с названием в localStorage
     saveGameVersion: '', // Версия сохранённой игры
-    incompatibleSavesVer: 0,
   },
   plugins: [createPersistedState({ // WebCrypto здесь не подходит, тут однопоток.
     setState(key, state, storage) {
