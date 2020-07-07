@@ -127,7 +127,6 @@ export default {
   },
   methods: {
     getChatInfo(mChatData){
-      const t0 = performance.now()
       const chatList = mChatData.chatList;
       const charProfiles = mChatData.charProfiles;
       for (let chat of chatList) {
@@ -143,8 +142,6 @@ export default {
           })
         }
       }
-      const t1 = performance.now()
-      console.log(`getChatInfo: ${(t1 - t0).toFixed(3)}ms`)
       return chatList
     },
     getChatLastMessage(chatList){

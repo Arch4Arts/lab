@@ -33,10 +33,9 @@ export function mChatNotify(extOptions){
 }
 
 // Оповещения для компонента saves
-export function saveNotify(extOptions){
-  // Параметры по умолчанию
-  const OPTIONS = {
-    class: 'save-notify-save',
+export const savesNotify = {
+  OPTIONS: {
+    class: 'saves-notify__save',
     iconUrl: 'assets/img/info-circle.svg',
     position: 'bottomCenter',
     messageSize: '16',
@@ -44,9 +43,29 @@ export function saveNotify(extOptions){
     closeOnClick: true,
     close: false,
     progressBar: false
-  }
-  // Вывод оповещения
-  iziToast.info(Object.assign(OPTIONS, extOptions))
+  },
+  save(message) {
+    iziToast.info(Object.assign(this.OPTIONS, message))
+  },
+  load(message) {
+    iziToast.info(Object.assign(this.OPTIONS, message, { class: 'saves-notify__load' }))
+  },
+  delete(message) {
+    iziToast.info(Object.assign(this.OPTIONS, message, { iconUrl: 'assets/img/exclamation-triangle.svg', class: 'saves-notify__delete' }))
+  },
+
+  import(message) {
+    iziToast.info(Object.assign(this.OPTIONS, message, { class: 'saves-notify__load' }))
+  },
+  importError(message) {
+    iziToast.info(Object.assign(this.OPTIONS, message, { iconUrl: 'assets/img/exclamation-triangle.svg', class: 'saves-notify__delete' }))
+  },
+  export(message) {
+    iziToast.info(Object.assign(this.OPTIONS, message))
+  },
+  exportError(message) {
+    iziToast.info(Object.assign(this.OPTIONS, message, { iconUrl: 'assets/img/exclamation-triangle.svg', class: 'saves-notify__error' }))
+  },
 }
 
 // Оповещения для globalErrorsHandling.js

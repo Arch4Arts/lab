@@ -60,9 +60,10 @@ html {
 	--savesList--load-btn--color: rgb(255, 254, 173);
 	--savesList--delete-btn--color: rgb(255, 102, 102);
 
-	--save-notify--save--background: rgb(157,222,255);
-	--save-notify--load--background: rgb(255, 254, 173);
-	--save-notify--delete--background: rgb(255, 102, 102);
+	--saves-notify--save--background: rgb(157,222,255);
+	--saves-notify--load--background: rgb(255, 254, 173);
+	--saves-notify--delete--background: rgb(255, 102, 102);
+	--saves-notify--error--background: rgb(255, 102, 102);
 
 // RadialMenu.vue
 	--RadialMenu--main-btn--background: transparent;
@@ -153,15 +154,18 @@ html {
 	}
 }
 
-.save-notify {
+.saves-notify {
 	&__save {
-		background-color: var(--save-notify--save--background) !important;
+		background-color: var(--saves-notify--save--background) !important;
 	}
 	&__load {
-		background-color: var(--save-notify--load--background) !important;
+		background-color: var(--saves-notify--load--background) !important;
 	}
 	&__delete {
-		background-color: var(--save-notify--delete--background) !important;
+		background-color: var(--saves-notify--delete--background) !important;
+	}
+	&__error {
+		background-color: var(--saves-notify--delete--background) !important;
 	}
 }
 

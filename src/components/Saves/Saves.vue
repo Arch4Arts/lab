@@ -254,7 +254,7 @@ import localforage from 'localforage';
 import { loadFromDisk, chooseFiles } from './utils/SavesImport'
 import saveToDisk from './utils/SavesExport'
 import eventBus from '../../js/eventBus';
-import { saveNotify } from '../../js/notificationSystem';
+import { savesNotify } from '../../js/notificationSystem';
 import updateTheme from '../../styles/updateTheme';
 
 import VirtualList from 'vue-virtual-scroll-list';
@@ -365,7 +365,7 @@ export default {
       const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`;
       await WebCrypto.encrypt(saveHeader, JSON.serialize(this.$store.state))
         .then(encryptedData => localforage.setItem(saveHeader, encryptedData))
-        .then(() => saveNotify({message: this.$t('notify-save')}))
+        .then(() => savesNotify.save({message: this.$t('notify-save')}))
         .then(() => {
           this.savesList.push({saveName, saveTime, saveID, saveGameVersion})
           this.updateSaveList()
@@ -383,7 +383,7 @@ export default {
       const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`;
       await WebCrypto.encrypt(saveHeader, JSON.serialize(this.$store.state))
         .then( encryptedData => localforage.setItem(saveHeader, encryptedData) )
-        .then(() => saveNotify({message: this.$t('notify-overwrite-save')}))
+        .then(() => savesNotify.save({message: this.$t('notify-overwrite-save')}))
         .catch(err => this.$root.errNotify(err.toString()))
 
       // Удаляем старый
@@ -419,13 +419,13 @@ export default {
           this.clearSelectedSavesList()
           this.closeDrawerAfterSaving()
         })
-        .then(() => saveNotify({message: this.$t('notify-load-save'), class: 'save-notify__load'}))
+        .then(() => savesNotify.load({message: this.$t('notify-load-save')}))
         .catch(err => this.$root.errNotify(err.toString()))
     },
     async deleteSave(saveName, saveTime, saveID, saveGameVersion) {
       const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`
       await localforage.removeItem(saveHeader)
-        .then(() => saveNotify({message: this.$t('notify-delete-save'), iconUrl: 'assets/img/exclamation-triangle.svg', class: 'save-notify__delete'}))
+        .then(() => savesNotify.delete({message: this.$t('notify-delete-save')}))
         .then(() => {
           const saveIndex = this.savesList.findIndex(function(save) {
             return (save.saveID === saveID)
@@ -439,7 +439,7 @@ export default {
     async DeleteAllSaves(){
       // Очистка хранилища
       await localforage.clear()
-        .then(() => saveNotify({message: this.$t('notify-delete-all-save'), iconUrl: 'assets/img/exclamation-triangle.svg', class: 'save-notify__delete'}))
+        .then(() => savesNotify.delete({message: this.$t('notify-delete-all-save')}))
         .catch(err => this.$root.errNotify(err.toString()))
       // Закрываем модальное окно
       this.showModalDelSavesAll = false

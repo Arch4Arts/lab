@@ -1,5 +1,5 @@
 import localforage from 'localforage';
-import { saveNotify } from '../../../js/notificationSystem';
+import { savesNotify } from '../../../js/notificationSystem';
 
 function _readFile(file) {
   return new Promise((resolve, reject) => {
@@ -37,10 +37,10 @@ function _loadSaves(saveFile, savesList) {
         saveGameVersion: saveHeader[3]
       })
     }
-    saveNotify({message: this.$t('notify-load-from-disk'), iconUrl: 'assets/img/info-circle.svg', class: 'save-notify__load'})
+    savesNotify.import({message: this.$t('notify-load-from-disk')})
   } 
   else {
-    saveNotify({message: this.$t('notify-load-from-disk-error'), iconUrl: 'assets/img/exclamation-triangle.svg', class: 'save-notify__delete'})
+    savesNotify.importError({message: this.$t('notify-load-from-disk-error')})
   }
 }
 

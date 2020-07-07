@@ -1,5 +1,5 @@
 import localforage from 'localforage';
-import { saveNotify } from '../../../js/notificationSystem';
+import { savesNotify } from '../../../js/notificationSystem';
 
 function _writeToDisk(filename, data, mime, bom) { // запись файла на диск
   let blobData = (typeof bom !== 'undefined') ? [bom, data] : [data]
@@ -46,7 +46,7 @@ async function _writeSaveFile(savesList) {
     await _getSaveData(save).then(saveData => saveFile.push(saveData))
   }
   _writeToDisk(`${this.$root.gameName}.${(saveFile.length > 1 ? 'saves' : 'save')}`, JSON.stringify(saveFile, null, 2))
-  saveNotify({message: this.$t('notify-save-to-disk')});
+  savesNotify.export({message: this.$t('notify-save-to-disk')});
 }
 
 
@@ -59,7 +59,7 @@ export default async function saveToDisk() {
     _writeSaveFile.call(this, allSaves)
   }
   else {
-    saveNotify({message: this.$t('notify-save-to-disk-error')});
+    savesNotify.exportError({message: this.$t('notify-save-to-disk-error')});
   }
   this.clearSelectedSavesList()
 }
