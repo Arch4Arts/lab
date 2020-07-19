@@ -7,7 +7,7 @@ html {
 		--text-message__from_them--background: #eee;
 		--text-message__from_them__tail--color: #eee;
 		--typing-message__span--background: #9E9EA1;
-		--audio-message__plyr-audio--color: black;
+		--audio-message__plyr-audio--color: #4a5764;
 		--suggestions__element--border: 1px solid #37addf;
 		--suggestions__element--color: #37addf;
 		--suggestions__element--background: transparent;
@@ -30,5 +30,5 @@ html {
 .plyr--audio .plyr__controls {
 	background: transparent !important;
 	padding: 0px 0px 0px 0px !important;
-	color: var(--audio-message__plyr-audio--color);
+	color: var(--audio-message__plyr-audio--color) !important;
 }
