@@ -33,12 +33,12 @@ export default {
 	cursor: pointer;
   margin: 1%;
   padding: 1.4% 3%;
-  border: var(--suggestions-element--border) !important;
+  border: var(--suggestions__element--border) !important;
 	border-radius: calc(var(--mChatWidth) / 100 * 6);
 	
   font-size: 0.850em;
-  color: var(--suggestions-element--color) !important;
-  background: var(--suggestions-element--background) !important;
+  color: var(--suggestions__element--color) !important;
+  background: var(--suggestions__element--background) !important;
 }
 
 </style>

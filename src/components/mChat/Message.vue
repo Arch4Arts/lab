@@ -203,7 +203,7 @@ export default {
 	&.from_them { // Гробальный стиль для всех сообщений в левой колонке
     justify-content: flex-start;
     .message-title {
-      color: var(--message-system--color) !important;
+      color: var(--message__system--color) !important;
       opacity: .6;
       font-size: 0.8em;
       margin-left: calc(var(--mChatWidth) / 100 * 6);
@@ -284,8 +284,8 @@ export default {
 }
 
 .message-system {
-  color: var(--message-system--color) !important;
-  background: var(--message-system--background) !important;
+  color: var(--message__system--color) !important;
+  background: var(--message__system--background) !important;
     
   padding: 2.8% 6%;
   border-radius: 12px;
@@ -315,7 +315,7 @@ export default {
 }
 
 .message-meta {
-  color: var(--message-meta--color);
+  color: var(--message__meta--color);
   opacity: .6;
   font-size: 0.8em;
   text-align: center;
@@ -323,7 +323,7 @@ export default {
   margin-bottom: 0px !important;
   margin-top: 2.5%;
   &.system {
-    color: var(--message-meta__system--color) !important;
+    color: var(--message__meta__system--color) !important;
   }
   &.text {
     color: var(--text-message__from_me--color) !important;

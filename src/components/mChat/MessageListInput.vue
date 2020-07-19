@@ -65,7 +65,7 @@ export default {
   border-radius: 0px 0px calc(var(--mChatWidth) / 100 * 6) calc(var(--mChatWidth) / 100 * 6);
   // padding-bottom: 1%;
 
-  background: var(--input-area--background) !important;
+  background: var(--message-list-input--background) !important;
   box-shadow: 0px 1px 4px black; // Маленькая тень
   z-index: 4;
 }
@@ -83,11 +83,11 @@ export default {
   border-radius: 18px;
   font-size: 0.850em;
   
-  background: var(--input-area__text-input--background) !important;
-  color: var(--input-area__text-input--color) !important;
+  background: var(--message-list-input__text-input--background) !important;
+  color: var(--message-list-input__text-input--color) !important;
   cursor: text;
   &:empty:before {
-    border-left: var(--input-area__text-input__blink-caret); /* The typwriter cursor */
+    border-left: var(--message-list-input__text-input__blink-caret); /* The typwriter cursor */
     animation: blink-caret 1s step-end infinite;
     content: attr(placeholder);
     outline: none;
@@ -96,7 +96,7 @@ export default {
 
 @keyframes blink-caret {
   from, to { border-color: transparent }
-  50% { border-color: var(--input-area__text-input__blink-caret--color) }
+  50% { border-color: var(--message-list-input__text-input__blink-caret--color) }
 }
 
 .buttons-container { // Контейнер для кнопок
@@ -111,12 +111,12 @@ export default {
   .plus-icon {
     position: absolute;
     cursor: pointer;
-    left: var(--input-area-plus-icon--left) !important;
-    width: var(--input-area-plus-icon--width) !important;
-    height: var(--input-area-plus-icon--height) !important;
-    border-radius: var(--input-area-plus-icon--border-radius) !important;
-    color: var(--input-area-plus-icon--color) !important;
-    background: var(--input-area-plus-icon--background) !important;
+    left: var(--message-list-input__plus-icon--left) !important;
+    width: var(--message-list-input__plus-icon--width) !important;
+    height: var(--message-list-input__plus-icon--height) !important;
+    border-radius: var(--message-list-input__plus-icon--border-radius) !important;
+    color: var(--message-list-input__plus-icon--color) !important;
+    background: var(--message-list-input__plus-icon--background) !important;
     &__icon {
       position: absolute;
       // width: 100%;
@@ -129,29 +129,29 @@ export default {
   .smile-icon { // Кнопка со смайликом
     position: absolute;
     cursor: pointer;
-    font-size: var(--input-area-smile-icon--font-size) !important;
-    left: var(--input-area-smile-icon--left) !important;
-    color: var(--input-area-smile-icon--color) !important;
-    background: var(--input-area-smile-icon--background) !important;
+    font-size: var(--message-list-input__smile-icon--font-size) !important;
+    left: var(--message-list-input__smile-icon--left) !important;
+    color: var(--message-list-input__smile-icon--color) !important;
+    background: var(--message-list-input__smile-icon--background) !important;
   }
   .paperclip-icon {
     position: absolute;
     cursor: pointer;
-    left: var(--input-area-paperclip-icon--left) !important;
+    left: var(--message-list-input__paperclip-icon--left) !important;
     &#mdi {
-      width: var(--input-area-paperclip-icon--width);
+      width: var(--message-list-input__paperclip-icon--width);
     }
-    fill: var(--input-area-paperclip-icon--fill) !important;
-    background: var(--input-area-paperclip-icon--background) !important;
+    fill: var(--message-list-input__paperclip-icon--fill) !important;
+    background: var(--message-list-input__paperclip-icon--background) !important;
   }
   .send-icon {
     position: absolute;
     cursor: pointer;
-    left: var(--input-area-send-icon--left) !important;
+    left: var(--message-list-input__send-icon--left) !important;
     &#mdi {
-      width: var(--input-area-send-icon--width) !important;
+      width: var(--message-list-input__send-icon--width) !important;
     }
-    fill: var(--input-area-send-icon--fill) !important;
+    fill: var(--message-list-input__send-icon--fill) !important;
   }
 }
 

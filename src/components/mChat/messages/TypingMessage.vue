@@ -26,7 +26,7 @@ span {
   float: left; 
   margin: 8px 0px;
 
-  background: var(--typing-indicator__span--background);
+  background: var(--typing-message__span--background);
   border-radius: 50%;
   opacity: 0.4;
   @for $i from 1 through 3 {

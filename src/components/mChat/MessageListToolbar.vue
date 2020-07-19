@@ -65,7 +65,7 @@ export default {
   width: 100%;
   // height: 6%;
 
-  background-color: var(--message-list--bar--background-color) !important;
+  background-color: var(--message-list__bar--background-color) !important;
   box-shadow: 0px -1px 4px black; // Маленькая тень
   z-index: 4;
 }
@@ -75,9 +75,9 @@ export default {
   width: 100%;
   align-items: center;
 
-  color:  var(--message-list--bar__title--color) !important;  
+  color:  var(--message-list__bar__title--color) !important;  
   font-size: 1.2em;
-  font-weight: var(--message-list--bar__title--font-weight) !important;  
+  font-weight: var(--message-list__bar__title--font-weight) !important;  
   &__avatar {
     width: 1.7em;
     height: 1.7em;
@@ -97,7 +97,7 @@ export default {
 .bar__back-btn {
   width: var(--vbtn--size) !important;
   height: var(--vbtn--size) !important;
-  color: var(--message-list--bar__back-btn--color) !important;
+  color: var(--message-list__bar__back-btn--color) !important;
   &__icon {
     font-size: var(--vbtn-icon--fontSize) !important;
   }
@@ -106,7 +106,7 @@ export default {
 .bar__phone-btn {
   width: var(--vbtn--size) !important;
   height: var(--vbtn--size) !important;
-  color: var(--message-list--bar__phone-btn--color) !important;
+  color: var(--message-list__bar__phone-btn--color) !important;
   &__icon {
     font-size: var(--vbtn-icon--fontSize) !important;
   }

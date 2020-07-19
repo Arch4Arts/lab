@@ -1,0 +1,55 @@
+html {
+	&[mChatTheme='Minimalistic'] {	
+		--chat-list--background: #fff;
+		--chat-list__bar--background: #fff;
+		--chat-list__vlist--background: #fff;
+		--chat-list__vlist-item--background: #fff;
+		--chat-list__vlist-item--margin-bttom: 0px;
+		--chat-list__palette-menu--hover--background: #f5f5f5;
+		--chat-list__vlist--chat__avatar__badge--border: 2px solid #ffffff;
+		--chat-list__vlist--chat__avatar__badge--box-shadow: 0 0 12px #37addf;
+		--chat-list__vlist--chat__title--color: #4c4c4c;
+		--chat-list__vlist--chat__title--font-weight: 700;
+		--chat-list__vlist--chat__subtitle--color: #6d6d6d;
+		--chat-list__vlist--chat__subtitle-icon--color: #818181;
+		--chat-list__bar__nav-btn--color: #37addf;
+		--chat-list__bar__palette-btn--color: #37addf;
+		--chat-list__bar__search_btn--color: #37addf;
+		--chat-list__v-btn--background: transparent;
+		--chat-list__palette-menu--background: #fff;
+		--chat-list__palette-menu-font--color: #4c4c4c;
+		--chat-list__vlist--chat__badge--color: #37addf;
+		--chat-list__vlist--chat__badge--background: #e8e8e8;
+		--chat-list__vlist--chat__badge--font-size: 0.775em;
+		--chat-list__vlist--chat__badge--font-weight: 700;
+		--chat-list__vlist--chat__badge--border-radius: 4px;
+		--chat-list__vlist--chat__badge--width: calc(var(--mChatWidth) / 100 * 7.7);
+		--chat-list__vlist--chat__badge--height: calc(var(--mChatWidth) / 100 * 7.7);
+	};
+	&[mChatTheme='Dark-Minimalistic'] {
+		--chat-list--background: #242933;
+		--chat-list__bar--background: #242933;
+		--chat-list__vlist--background: transparent;
+		--chat-list__vlist-item--background: #2E3440;
+		--chat-list__palette-menu--hover--background: #3B4252;
+		--chat-list__vlist--chat__avatar__badge--border: 2px solid #2E3440;
+		--chat-list__vlist--chat__avatar__badge--box-shadow: 0 0 12px #88c0d0;
+		--chat-list__vlist--chat__title--color: #ECEFF4;
+		--chat-list__vlist--chat__title--font-weight: 700;
+		--chat-list__vlist--chat__subtitle--color: #869cac;
+		--chat-list__vlist--chat__subtitle-icon--color: #869cac;
+		--chat-list__bar__nav-btn--color: #fff;
+		--chat-list__bar__palette-btn--color: #fff;
+		--chat-list__bar__search_btn--color: #fff;
+		--chat-list__v-btn--background: transparent;
+		--chat-list__palette-menu--background: #242933;
+		--chat-list__palette-menu-font--color: #ECEFF4;
+		--chat-list__vlist--chat__badge--color: #88c0d0;
+		--chat-list__vlist--chat__badge--background: #434C5E;
+		--chat-list__vlist--chat__badge--font-size: 0.775em;
+		--chat-list__vlist--chat__badge--font-weight: 700;
+		--chat-list__vlist--chat__badge--border-radius: 4px;
+		--chat-list__vlist--chat__badge--width: calc(var(--mChatWidth) / 100 * 7.7);
+		--chat-list__vlist--chat__badge--height: calc(var(--mChatWidth) / 100 * 7.7);
+	}
+};

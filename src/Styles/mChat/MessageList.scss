@@ -1,0 +1,24 @@
+html {
+	&[mChatTheme='Minimalistic'] {	
+		--message-list-toolbar__v-btn--background: transparent;
+		--message-list__bar--background-color: #fff;
+		--message-list__bar__title--color: #606060;
+		--message-list__bar__title--font-weight: 400;
+		--message-list__bar__back-btn--color: #37addf;
+		--message-list__bar__phone-btn--color: #37addf;
+		--message-list__bar__video-btn--color: #37addf;
+		--message-list__bar__ellipsis-btn--color: #37addf;
+		--message-list__virtual-list--background: #fff;
+  };
+	&[mChatTheme='Dark-Minimalistic'] {
+		--message-list-toolbar__v-btn--background: transparent;
+		--message-list__bar--background-color: #242933;
+		--message-list__bar__title--color: #ECEFF4;
+		--message-list__bar__title--font-weight: 400;
+		--message-list__bar__back-btn--color: #fff;
+		--message-list__bar__phone-btn--color: #fff;
+		--message-list__bar__video-btn--color: #fff;
+		--message-list__bar__ellipsis-btn--color: #fff;
+		--message-list__virtual-list--background: #242933;
+	}
+};

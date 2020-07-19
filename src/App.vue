@@ -93,8 +93,7 @@ export default {
 
 <style lang='scss'>
 @import '../node_modules/normalize.css';
-@import './styles/gameThemes.scss';
-@import './styles/mChatThemes.scss';
+@import './styles/main.scss';
 
 // убирает подчёркивание у ссылок и делаем их жирнее
 a {

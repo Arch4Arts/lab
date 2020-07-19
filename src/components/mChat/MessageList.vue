@@ -80,7 +80,7 @@ export default {
   // height: var(--mChatHeight);
   // min-height: var(--mChatHeight);
   overflow-y: auto;
-  background: var(--virtual-list--background) !important;
+  background: var(--message-list__virtual-list--background) !important;
 }
 
 @import '~vuetify/src/styles/styles.sass';

@@ -1,0 +1,14 @@
+html {
+	&[mChatTheme='Minimalistic'] {	
+		--message__system--background: #dedede;
+		--message__system--color: black;
+		--message__meta__system--color: #ECEFF4;
+		--message__meta--color: black;
+	};
+	&[mChatTheme='Dark-Minimalistic'] {
+		--message__system--background: #3B4252;
+		--message__system--color: #ECEFF4;
+		--message__meta__system--color: #ECEFF4;
+		--message__meta--color: #ECEFF4;
+	}
+};

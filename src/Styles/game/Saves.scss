@@ -1,0 +1,17 @@
+html {
+	&[gameTheme='NordDark'] {	
+	--saves--v-list--background: #2E3440;
+	--saves--saves-list--border-top: 2px solid #3B4252;
+	--saves--saves-list--border-bottom: 2px solid #3B4252;
+
+	--saves--restart-game-btn--color: rgb(255, 102, 102);
+	--saves--save-to-disk-btn--color: rgb(126, 193, 255);
+	--saves--load-from-disk-btn--color: rgb(255, 254, 173);
+	--saves--delete-all-saves-btn--color: rgb(255, 102, 102);
+
+	--savesList--overwrite-btn--color: rgb(126, 193, 255);
+	--savesList--load-btn--color: rgb(255, 254, 173);
+	--savesList--delete-btn--color: rgb(255, 102, 102);
+	}
+	&[gameTheme='NordLight'] {}
+}

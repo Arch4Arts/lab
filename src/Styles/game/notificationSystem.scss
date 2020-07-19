@@ -1,0 +1,96 @@
+html {
+	&[gameTheme='NordDark'] {	
+	--errors-handling-notify--background: rgb(255, 102, 102);
+	--mchat-notify--background: #4C566A;
+	--mchat-notify--title--color: #ECEFF4;
+	--mchat-notify--message--color: #ECEFF4;
+
+	--saves-notify--save--background: rgb(157,222,255);
+	--saves-notify--load--background: rgb(255, 254, 173);
+	--saves-notify--delete--background: rgb(255, 102, 102);
+  --saves-notify--error--background: rgb(255, 102, 102);
+  }
+	&[gameTheme='NordLight'] {}
+}
+
+.iziToast:after {
+	box-shadow: none; // отключение тени
+}
+
+.mchat-notify {
+	background-color: var(--mchat-notify--background) !important;
+	min-width: 25%;
+	max-width: 25%;
+
+	&__container {
+		display: flex;
+	}
+	&__message-container {
+		display: flex;
+		flex-direction: column;
+
+		padding-left: 10px;
+		&__title {
+			color: var(--mchat-notify--title--color);
+			font-weight: 700;  
+		}
+		&__message {
+			padding-top: 3px;
+			p {
+				color: var(--mchat-notify--message--color);
+				font-size: 0.950em;
+				line-height: 1.350em;
+				opacity: .850;
+	
+				// Ограчение текста в 2 строки с троеточием в конце
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+			}
+			&__emoji {
+				height: 18px;
+				vertical-align: -.2em;
+				padding: 0 .05em 0 .1em;
+			}		
+			&__image {
+				font-size: 1.8em !important;
+				color: var(--mchat-notify--message--color);;
+			}
+		}
+	}
+	&__avatar {
+		border-radius: 50%;
+		height: 3.8em;
+	}
+
+	.iziToast-body {
+		padding: 0px 0px 0px 0px !important;
+		.iziToast-texts {
+			margin: 0px 0px 0px 0px;		
+			.iziToast-message {
+			margin: 0px 0px 0px 0px !important;
+			}
+		}
+	}
+}
+
+.saves-notify {
+	&__save {
+		background-color: var(--saves-notify--save--background) !important;
+	}
+	&__load {
+		background-color: var(--saves-notify--load--background) !important;
+	}
+	&__delete {
+		background-color: var(--saves-notify--delete--background) !important;
+	}
+	&__error {
+		background-color: var(--saves-notify--delete--background) !important;
+	}
+}
+
+.errors-handling-notify {
+	background-color: var(--errors-handling-notify--background) !important;
+}

@@ -1,0 +1,52 @@
+html {
+	&[mChatTheme='Minimalistic'] {	
+		--message-list-input--background: #fff;
+		--message-list-input__text-input--background: #edf0f7;
+		--message-list-input__text-input--color: #9c9d9d;
+		--message-list-input__text-input__blink-caret: .15em solid #37addf;
+		--message-list-input__text-input__blink-caret--color: #37addf;
+		// Элементы панели ввода
+		--message-list-input__smile-icon--font-size: 1.275em;
+		--message-list-input__smile-icon--left: 93%;
+		--message-list-input__smile-icon--color: #9c9d9d;
+		--message-list-input__smile-icon--background: none;
+		--message-list-input__paperclip-icon--left: 110%;
+		--message-list-input__paperclip-icon--width: 11%;
+		--message-list-input__paperclip-icon--fill: #37addf;
+		--message-list-input__paperclip-icon--background: none;
+		--message-list-input__plus-icon--left: calc(var(--mChatWidth) / 100 * 2.5);
+		--message-list-input__plus-icon--width: calc(var(--mChatFontSize) / 100 * 150);
+		--message-list-input__plus-icon--height: calc(var(--mChatFontSize) / 100 * 150);
+		--message-list-input__plus-icon--border-radius: 40%;
+		--message-list-input__plus-icon--color: #37addf;
+		--message-list-input__plus-icon--background: #d9dade;
+		--message-list-input__send-icon--left: 125%;
+		--message-list-input__send-icon--width: 11%;
+		--message-list-input__send-icon--fill: #37addf;
+	};
+	&[mChatTheme='Dark-Minimalistic'] {
+		--message-list-input--background: #242933;
+		--message-list-input__text-input--background: #2E3440;
+		--message-list-input__text-input--color: #9c9d9d;
+		--message-list-input__text-input__blink-caret: .15em solid #88C0D0;
+		--message-list-input__text-input__blink-caret--color: #88C0D0;
+		// Элементы панели ввода
+		--message-list-input__smile-icon--font-size: 1.275em;
+		--message-list-input__smile-icon--left: 93%;
+		--message-list-input__smile-icon--color: #9c9d9d;
+		--message-list-input__smile-icon--background: none;
+		--message-list-input__paperclip-icon--left: 110%;
+		--message-list-input__paperclip-icon--width: 11%;
+		--message-list-input__paperclip-icon--fill: #88C0D0;
+		--message-list-input__paperclip-icon--background: none;
+		--message-list-input__plus-icon--left: calc(var(--mChatWidth) / 100 * 2.5);
+		--message-list-input__plus-icon--width: calc(var(--mChatFontSize) / 100 * 150);
+		--message-list-input__plus-icon--height: calc(var(--mChatFontSize) / 100 * 150);
+		--message-list-input__plus-icon--border-radius: 40%;
+		--message-list-input__plus-icon--color: #88C0D0;
+		--message-list-input__plus-icon--background: #3B4252;
+		--message-list-input__send-icon--left: 125%;
+		--message-list-input__send-icon--width: 11%;
+		--message-list-input__send-icon--fill: #88C0D0;
+	}
+};
