@@ -27,6 +27,7 @@ Vue.use(vueScrollBehavior, { router: router })
 
 
 // Сообственные функции и методы
+import './js/specialActivate-worker/index'
 import updateTheme from './styles/updateTheme';
 import { checkSoundsEnable } from './js/gameSound'
 import hotkeySystem from './js/hotkeySystem'
@@ -50,7 +51,6 @@ new Vue({
 
     isTouchDevice: false, // Является ли устройство сенсорным
     isFullScreen: false, // Находится ли приложение в полноэкраном режиме
-    gameEdition: process.env.VUE_APP_EDITION, // Присваивается при npm run build-special
   },
   mounted: function () { // Определение языка при первой загрузке / А также тип устройства
     this.$nextTick(function () { // https://vuejsdevelopers.com/2019/01/22/vue-what-is-next-tick/

@@ -52,6 +52,7 @@ const store = new Vuex.Store({
     
     reRender_mChatPlayersVolume: 0, // Используется для перерендера плееров в чате, изменяется в Saves.vue 
     reRender_ColorPickerCanvas: 0, // Для перерисовски окна с выбором цвета (исчезает при изменении размера)
+    reRender_SpecialComponents: 0, // Для обновления состояния Premium компонентов, при активации и деактивации
 
     gameFirstLoad: true, // Проверка, первый ли запуск игры (Для определения языка) gameDisplayingStartPage
     gameDisplayingStartPage: true, // Для отображения StartPage

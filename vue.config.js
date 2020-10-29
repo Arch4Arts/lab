@@ -1,21 +1,11 @@
 const SentryCliPlugin = require('@sentry/webpack-plugin');
 const packageJson = require('D:/Dev/lab/package.json');
 const CopyPlugin = require('copy-webpack-plugin');
-const webpack = require('webpack')
 
 const emojiFileList = require('./src/js/twemoji')
 const faviconPath = { from: './src/assets/favicon.png', to: 'assets/img/' }
 const fileList = [].concat(emojiFileList, faviconPath) 
 
-const getOutputDir = function () {
-  // Если Undefined - community версия 
-  // так как в .env.production нет переменной VUE_APP_EDITION, но она есть в .env.special
-  if (process.env.VUE_APP_EDITION === undefined) {
-    return `./dist/${packageJson.name} ${packageJson.version} community`
-  } else {
-    return `./dist/${packageJson.name} ${packageJson.version} special`
-  }
-}
 
 module.exports = {
   chainWebpack: config => {
@@ -30,6 +20,20 @@ module.exports = {
         .loader('yaml-loader')
       .end();
 
+      config.module
+      .rule('worker')
+      .test(/\.worker\.js$/i)
+      .use('worker-loader')
+      .loader('worker-loader')
+      .tap(options => {
+        return {
+          inline: 'no-fallback',
+          // filename: 'MyWorker.[hash].js'
+        };
+      })
+      .end();
+      config.module.rule('js').exclude.add(/\.worker\.js$/); // to avoid cache
+
       // Удаляет комментарии из chunk-vendors.js
       config.optimization.minimizer('terser').tap((args) => {
         args[0].terserOptions.output = {
@@ -40,9 +44,7 @@ module.exports = {
       })
   },
   configureWebpack: {
-    // Если Undefined - community версия 
-    // так как в .env.production нет переменной VUE_APP_EDITION, но она есть в .env.special
-    plugins: (process.env.VUE_APP_EDITION === undefined && process.env.NODE_ENV !== 'development') ? // Production
+    plugins: (process.env.NODE_ENV !== 'development' && process.env.FORMAT !== 'library') ? // Production
       [
         new CopyPlugin({
           patterns: fileList
@@ -54,36 +56,10 @@ module.exports = {
           ignoreFile: '.sentrycliignore',
           ignore: ['node_modules', 'webpack.config.js'],
         }),
-        // Не включает файлы в сборку, попадаюшие под данное регулярное выражение
-        // Таким образом все файлы Special Edtion должны оканчиваться на _special.vue
-        new webpack.IgnorePlugin(/.*_special.vue/)
-      ]
-      : (process.env.VUE_APP_EDITION === 'special') ? // Special
-          [
-            new CopyPlugin({
-              patterns: fileList
-            }),
-            new SentryCliPlugin({ // Обработчик ошибок
-              release: packageJson.version, // извлечение версии игры из переменной
-              include: `./dist/${packageJson.name} ${packageJson.version} special/js/`, // Загрузка js файлов на сервер
-              // filenameTransform: filename => '~/js/' + filename,
-              ignoreFile: '.sentrycliignore',
-              ignore: ['node_modules', 'webpack.config.js'],
-            }),
-          ]
-        : // Development
-          [
-            // new SentryCliPlugin({ // Обработчик ошибок
-            //   release: packageJson.version, // извлечение версии игры из переменной
-            //   include: 'D:/Dev/lab/dist/js/', // Загрузка js файлов на сервер
-            //   // filenameTransform: filename => '~/js/' + filename,
-            //   ignoreFile: '.sentrycliignore',
-            //   ignore: ['node_modules', 'webpack.config.js'],
-            // }),
-            new CopyPlugin({
-              patterns: fileList
-            }),
-          ]
+      ] : [] // Development
+  },
+  css: {
+    extract: false,
   },
   pluginOptions: {
     i18n: {
@@ -95,7 +71,7 @@ module.exports = {
   },
 
   publicPath: './',
-  outputDir: getOutputDir(),
+  outputDir: `./dist/${packageJson.name} ${packageJson.version}`,
   assetsDir: 'assets',        // Каталог для хранения сгенерированных статических ресурсов (js, css, img, fonts).
   filenameHashing: false,
   productionSourceMap: false,

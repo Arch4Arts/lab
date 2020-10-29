@@ -8,7 +8,7 @@
     <h3>Пролог</h3>
     {{ $t('message') }}
 
-    <div v-html="text" />
+    <div v-html="text"/>
     <v-btn @click="test2()">getter</v-btn>
     <v-btn @click="test()">emoji</v-btn>
     <v-btn @click="$root.toggleFullScreen()">call error</v-btn>
@@ -16,6 +16,9 @@
     <!-- <img src="assets/img/info-circle.svg" height="65" width="68"> -->
     <!-- <img src="@/assets/info-circle.svg" height="65" width="68"> -->
     <h4>Пролог</h4>
+    <v-btn @click="test3()">Загрузить компонент</v-btn>
+    <test-special :key="$store.state.reRender_SpecialComponents" />
+    <wolf :key="$store.state.reRender_SpecialComponents" />
     <p>Спустя пять дней после нападения "виртуоза", я выглядел как огурчик. Чувствовал себя, правда, паршиво, но главное - внешний вид. Особенно если ты Аматэру и постоянно на виду у десятков, иногда сотен, а порой и тысяч человек.</p>
     <p>- С тобой точно всё в порядке? - спросила с подозрением Атарашики.</p>
     <p>Мы с ней как раз по видеосвязи общались. Точнее, уже заканчивали общаться.</p>
@@ -37,6 +40,8 @@ import mc from '../../components/Chars/CharStyles/mc'
 import sister from '../../components/Chars/CharStyles/sister'
 import mcSettings from '../../components/Chars/CharSettings/mcSettings'
 import mChatTestPage from '../../components/mChat/TestPage'
+
+import eventBus from '../../js/eventBus.js'
 
 import twemoji from 'twemoji'
 
@@ -69,7 +74,10 @@ export default {
     },
     test2(){
       console.log(this.$store.state.mChatData.MC.chatList[1])
-    }
+    },
+    test3(){
+      eventBus.emit('specialCheck', 123)
+    },
   }
 }
 </script>

@@ -1,4 +1,7 @@
 import localforage from 'localforage';
+import dayjs from 'dayjs'; // библиотека для работы с временем
+import advancedFormat from 'dayjs/plugin/advancedFormat'; // Плагин
+dayjs.extend(advancedFormat);
 import { savesNotify } from '../../../js/notificationSystem';
 
 function _writeToDisk(filename, data, mime, bom) { // запись файла на диск
@@ -45,7 +48,7 @@ async function _writeSaveFile(savesList) {
   for (let save of savesList) {
     await _getSaveData(save).then(saveData => saveFile.push(saveData))
   }
-  _writeToDisk(`${this.$root.gameName}.${(saveFile.length > 1 ? 'saves' : 'save')}`, JSON.stringify(saveFile, null, 2))
+  _writeToDisk(`${this.$root.gameName}-${dayjs().format("DD.MM.YYYY - HH:mm")}.${(saveFile.length > 1 ? 'saves' : 'save')}`, JSON.stringify(saveFile, null, 2))
   savesNotify.export({message: this.$t('notify-save-to-disk')});
 }
 
