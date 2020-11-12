@@ -1,11 +1,12 @@
 const SentryCliPlugin = require('@sentry/webpack-plugin');
+const RemovePlugin = require('remove-files-webpack-plugin');
+const WebpackObfuscator = require('webpack-obfuscator');
 const packageJson = require('D:/Dev/lab/package.json');
 const CopyPlugin = require('copy-webpack-plugin');
 
 const emojiFileList = require('./src/js/twemoji')
 const faviconPath = { from: './src/assets/favicon.png', to: 'assets/img/' }
 const fileList = [].concat(emojiFileList, faviconPath) 
-
 
 module.exports = {
   chainWebpack: config => {
@@ -20,20 +21,6 @@ module.exports = {
         .loader('yaml-loader')
       .end();
 
-      config.module
-      .rule('worker')
-      .test(/\.worker\.js$/i)
-      .use('worker-loader')
-      .loader('worker-loader')
-      .tap(options => {
-        return {
-          inline: 'no-fallback',
-          // filename: 'MyWorker.[hash].js'
-        };
-      })
-      .end();
-      config.module.rule('js').exclude.add(/\.worker\.js$/); // to avoid cache
-
       // Удаляет комментарии из chunk-vendors.js
       config.optimization.minimizer('terser').tap((args) => {
         args[0].terserOptions.output = {
@@ -44,22 +31,67 @@ module.exports = {
       })
   },
   configureWebpack: {
+    module: {
+      rules: [ 
+        {
+          test: /specialActivate.js/,
+          enforce: 'post',
+          use: { 
+              loader: WebpackObfuscator.loader, 
+              options: {
+                controlFlowFlattening: true,
+                controlFlowFlatteningThreshold: 1,
+                deadCodeInjection: true,
+                deadCodeInjectionThreshold: 1,
+                identifierNamesGenerator: 'hexadecimal',
+                numbersToExpressions: true,
+                rotateStringArray: true,
+                selfDefending: true,
+                shuffleStringArray: true,
+                simplify: true,
+                splitStrings: true,
+                splitStringsChunkLength: 5,
+                stringArray: true,
+                stringArrayEncoding: ['rc4'],
+                stringArrayWrappersCount: 5,
+                stringArrayWrappersChainedCalls: true,
+                stringArrayWrappersType: 'function',
+                stringArrayThreshold: 1,
+                transformObjectKeys: true,
+              }
+          }
+        }
+    ]
+    },
     plugins: (process.env.NODE_ENV !== 'development' && process.env.FORMAT !== 'library') ? // Production
       [
+        // ! 
+        new SentryCliPlugin({ // Обработчик ошибок
+          release: packageJson.version, // извлечение версии игры из переменной
+          include: `./dist/${packageJson.name} ${packageJson.version}/assets/js/`, // Загрузка js файлов на сервер
+          // filenameTransform: filename => '~/js/' + filename,
+          ignoreFile: '.sentrycliignore',
+          ignore: ["node_modules", "vue.config.js"],
+        }),
+        new RemovePlugin({ // Удаление Source Maps после сборки
+          after: {
+            root: `./dist/${packageJson.name} ${packageJson.version}/assets/`,
+            test: [
+              {
+                folder: './js',
+                method: (absoluteItemPath) => {
+                  return new RegExp(/\.js\.map$/, 'm').test(absoluteItemPath);
+                },
+                recursive: true
+              }
+            ],
+            trash: true
+          }
+        }),
         new CopyPlugin({
           patterns: fileList
         }),
-        new SentryCliPlugin({ // Обработчик ошибок
-          release: packageJson.version, // извлечение версии игры из переменной
-          include: `./dist/${packageJson.name} ${packageJson.version} community/js/`, // Загрузка js файлов на сервер
-          filenameTransform: filename => '~/js/' + filename,
-          ignoreFile: '.sentrycliignore',
-          ignore: ['node_modules', 'webpack.config.js'],
-        }),
-      ] : [] // Development
-  },
-  css: {
-    extract: false,
+      ] : [], // Development
   },
   pluginOptions: {
     i18n: {
@@ -74,5 +106,5 @@ module.exports = {
   outputDir: `./dist/${packageJson.name} ${packageJson.version}`,
   assetsDir: 'assets',        // Каталог для хранения сгенерированных статических ресурсов (js, css, img, fonts).
   filenameHashing: false,
-  productionSourceMap: false,
+  productionSourceMap: true,
 }

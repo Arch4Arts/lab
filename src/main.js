@@ -27,7 +27,7 @@ Vue.use(vueScrollBehavior, { router: router })
 
 
 // Сообственные функции и методы
-import './js/specialActivate-worker/index'
+import './js/specialActivate'
 import updateTheme from './styles/updateTheme';
 import { checkSoundsEnable } from './js/gameSound'
 import hotkeySystem from './js/hotkeySystem'
