@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
   const uniqid = require('uniqid');
   Sentry.init({
     dsn: 'https://6b82c070a6874f70ad6e9fe5ebcb9fb8@sentry.io/1509214',
-    integrations: [ new Integrations.Vue( {Vue, attachProps: true} ) ],
+    integrations: [new Integrations.Vue({ Vue, attachProps: true })],
     release: store.state.gameVersion, // Версия ПО
     
     beforeSend(event) {

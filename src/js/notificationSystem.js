@@ -2,7 +2,7 @@ import '../../source_files/iziToast/dist/css/iziToast.min.css';
 import iziToast from '../../source_files/iziToast/dist/js/iziToast.js';
 import vuetify from '../styles/vuetify'
 
-// идентификатор infoCircle нигде не используется, но импорт нужен для загрузки самого svg файла
+// загрузка файла webpack'ом
 import exclamationTriangle from '../assets/exclamation-triangle.svg'
 import infoCircle from '../assets/info-circle.svg' 
 

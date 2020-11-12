@@ -17,6 +17,10 @@ html {
 	box-shadow: none; // отключение тени
 }
 
+.iziToast>.iziToast-body .iziToast-icon {
+	display: inline !important;
+}
+
 .mchat-notify {
 	background-color: var(--mchat-notify--background) !important;
 	min-width: 25%;
