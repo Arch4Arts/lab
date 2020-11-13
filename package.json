@@ -1,6 +1,6 @@
 {
   "name": "lab",
-  "version": "0.2.6",
+  "version": "0.3.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -12,11 +12,9 @@
     "@fortawesome/vue-fontawesome": "^0.1.10",
     "@mdi/js": "^5.8.55",
     "@mdi/svg": "^5.8.55",
-    "@sentry/browser": "^5.27.3",
-    "@sentry/cli": "^1.59.0",
-    "@sentry/integrations": "^5.27.3",
+    "@sentry/browser": "^5.27.4",
+    "@sentry/integrations": "^5.27.4",
     "@sentry/rrweb": "^0.2.0",
-    "@sentry/webpack-plugin": "^1.13.0",
     "@vue/cli": "^4.5.8",
     "@vue/cli-service": "^4.5.8",
     "crypto-js": "^4.0.0",
@@ -48,6 +46,7 @@
   },
   "devDependencies": {
     "@intlify/vue-i18n-loader": "^1.0.0",
+    "@sentry/webpack-plugin": "^1.13.0",
     "copy-webpack-plugin": "^6.3.0",
     "css-loader": "^4.3.0",
     "file-loader": "^6.2.0",

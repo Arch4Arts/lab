@@ -42,7 +42,8 @@ export const savesNotify = {
     displayMode: 2, 
     closeOnClick: true,
     close: false,
-    progressBar: false
+    progressBar: false,
+    timeout: 2000,
   },
   save(message) {
     iziToast.info(Object.assign(this.OPTIONS, message))

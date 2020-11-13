@@ -1,6 +1,6 @@
-const SentryCliPlugin = require('@sentry/webpack-plugin');
-const RemovePlugin = require('remove-files-webpack-plugin');
+const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 const WebpackObfuscator = require('webpack-obfuscator');
+const RemovePlugin = require('remove-files-webpack-plugin');
 const packageJson = require('D:/Dev/lab/package.json');
 const CopyPlugin = require('copy-webpack-plugin');
 
@@ -65,12 +65,9 @@ module.exports = {
     },
     plugins: (process.env.NODE_ENV !== 'development' && process.env.FORMAT !== 'library') ? // Production
       [
-        // ! 
-        new SentryCliPlugin({ // Обработчик ошибок
-          release: packageJson.version, // извлечение версии игры из переменной
-          include: `./dist/${packageJson.name} ${packageJson.version}/assets/js/`, // Загрузка js файлов на сервер
-          // filenameTransform: filename => '~/js/' + filename,
-          ignoreFile: '.sentrycliignore',
+        new SentryWebpackPlugin({
+          release: packageJson.version,
+          include: `./dist/${packageJson.name} ${packageJson.version}/assets/js/`,
           ignore: ["node_modules", "vue.config.js"],
         }),
         new RemovePlugin({ // Удаление Source Maps после сборки

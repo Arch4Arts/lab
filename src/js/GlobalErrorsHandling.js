@@ -2,6 +2,7 @@ import Vue from 'vue'
 import store from '../store/store'
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
+import { RewriteFrames } from "@sentry/integrations";
 import SentryRRWeb from "@sentry/rrweb";
 
 import { errorsHandlingNotify } from './notificationSystem'
@@ -15,11 +16,35 @@ export function SentryPush(error){
   errorMessage(error, error)
 }
 
+// правка для загрузки Source Maps
+// Преобразует file:///D:/Dev/lab/dist/lab%200.3.0/assets/js/chunk-vendors.js -> app://chunk-vendors.js
+// Пути должны совпадать если app://chunk-vendors.js то карта должна быть загружена и доступна по пути ~/chunk-vendors.js (См раздел с артефактами)
+const rewriteFramesIntegration = new RewriteFrames({
+  iteratee: frame => {
+    if (frame.filename) {
+      frame.filename = frame.filename
+        .replace(/^file\:\/\//, "")
+        .replace(/^address at /, "")
+        .replace(/^.*\/[^\.]+(\.app|CodePush|.*(?=\/))/, "")
+        .replace(/^at /, '')
+
+      const appPrefix = "app://";
+      // We always want to have a tripple slash
+      frame.filename =
+        frame.filename.indexOf("/") === 0
+          ? `${appPrefix}${frame.filename}`
+          : `${appPrefix}/${frame.filename}`;
+    }
+    return frame;
+  }
+});
+
 if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена
   const uniqid = require('uniqid');
   Sentry.init({
     dsn: 'https://6b82c070a6874f70ad6e9fe5ebcb9fb8@sentry.io/1509214',
     integrations: [
+      rewriteFramesIntegration,
       new Integrations.Vue({ 
         Vue, 
         attachProps: true 

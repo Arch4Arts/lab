@@ -2,7 +2,7 @@
 .sentryclirc
 node_modules
 /dist
-/Legacy
+/Other
 /source_files
 
 
