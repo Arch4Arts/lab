@@ -1,6 +1,6 @@
 {
   "name": "lab",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -15,6 +15,7 @@
     "@sentry/browser": "^5.27.3",
     "@sentry/cli": "^1.59.0",
     "@sentry/integrations": "^5.27.3",
+    "@sentry/rrweb": "^0.2.0",
     "@sentry/webpack-plugin": "^1.13.0",
     "@vue/cli": "^4.5.8",
     "@vue/cli-service": "^4.5.8",
@@ -27,6 +28,7 @@
     "lodash.clonedeep": "^4.5.0",
     "mitt": "^2.1.0",
     "normalize.css": "^8.0.1",
+    "rrweb": "^0.9.9",
     "serialize-javascript": "^4.0.0",
     "twemoji": "^13.0.1",
     "uniqid": "^5.2.0",

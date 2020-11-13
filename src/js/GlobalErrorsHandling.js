@@ -2,6 +2,7 @@ import Vue from 'vue'
 import store from '../store/store'
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
+import SentryRRWeb from "@sentry/rrweb";
 
 import { errorsHandlingNotify } from './notificationSystem'
 
@@ -18,7 +19,15 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
   const uniqid = require('uniqid');
   Sentry.init({
     dsn: 'https://6b82c070a6874f70ad6e9fe5ebcb9fb8@sentry.io/1509214',
-    integrations: [new Integrations.Vue({ Vue, attachProps: true })],
+    integrations: [
+      new Integrations.Vue({ 
+        Vue, 
+        attachProps: true 
+      }),     
+      new SentryRRWeb({
+        maskAllInputs: false
+      })
+    ],
     release: store.state.gameVersion, // Версия ПО
     
     beforeSend(event) {
