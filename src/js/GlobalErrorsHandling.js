@@ -40,7 +40,6 @@ const rewriteFramesIntegration = new RewriteFrames({
 });
 
 if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена
-  const uniqid = require('uniqid');
   Sentry.init({
     dsn: 'https://6b82c070a6874f70ad6e9fe5ebcb9fb8@sentry.io/1509214',
     integrations: [
@@ -74,7 +73,7 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
               errorFormEntry: 'Заполни все поля, и попробуй еще раз',
               successMessage: 'Спасибо! Отчёт был отправлен',
               user: {
-                name: `ID: ${uniqid()}`,
+                name: `Name`,
                 email: 'Player@example.ru'
               },
             });
@@ -86,7 +85,7 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
               subtitle: 'The game developer has been notified.',
               subtitle2: 'If you’d like to help, tell what happened below.',
               user: {
-                name: `ID: ${uniqid()}`,
+                name: `Name`,
                 email: 'Player@example.com'
               },
             });
