@@ -1,11 +1,12 @@
 {
   "name": "lab",
-  "version": "0.3.2",
+  "version": "0.0.0-development",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
+    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
+    "semantic-release": "semantic-release"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
@@ -46,6 +47,12 @@
   },
   "devDependencies": {
     "@intlify/vue-i18n-loader": "^1.0.0",
+    "@semantic-release/changelog": "github:semantic-release/changelog",
+    "@semantic-release/commit-analyzer": "github:semantic-release/commit-analyzer",
+    "@semantic-release/git": "github:semantic-release/git",
+    "@semantic-release/github": "github:semantic-release/github",
+    "@semantic-release/npm": "github:semantic-release/npm",
+    "@semantic-release/release-notes-generator": "github:semantic-release/release-notes-generator",
     "@sentry/webpack-plugin": "^1.13.0",
     "copy-webpack-plugin": "^6.3.1",
     "css-loader": "^5.0.1",
@@ -55,6 +62,8 @@
     "remove-files-webpack-plugin": "^1.4.4",
     "sass": "^1.29.0",
     "sass-loader": "^10.1.0",
+    "semantic-release": "^17.2.2",
+    "semantic-release-cli": "^5.4.0",
     "url-loader": "^4.1.1",
     "vue-cli-plugin-i18n": "^1.0.1",
     "vue-cli-plugin-vuetify": "^2.0.7",
@@ -70,5 +79,12 @@
   },
   "browserslist": [
     "defaults"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Libidine/lab.git"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
 }
