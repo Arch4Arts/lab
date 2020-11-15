@@ -10,8 +10,8 @@
 
     <div v-html="text"/>
     <v-btn @click="test2()">getter</v-btn>
-    <v-btn @click="test()">emoji</v-btn>
-    <v-btn @click="$root.toggleFullScreen()">call error</v-btn>
+    <v-btn @click="test()">Convert to twemoji</v-btn>
+    <v-btn @click="toggleFullScreen123()">call error</v-btn>
 
     <!-- <img src="assets/img/info-circle.svg" height="65" width="68"> -->
     <!-- <img src="@/assets/info-circle.svg" height="65" width="68"> -->
@@ -83,5 +83,9 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+
+.emoji-test {
+  height: 24px;
+}
 
 </style>
