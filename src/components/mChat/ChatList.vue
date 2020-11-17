@@ -34,7 +34,7 @@
     </v-menu>
   </v-toolbar>
   <!-- Пространство под шапкой (чтобы туда не уходил список чатов) -->
-  <div :style="{ height: `${calcHeightToolbar}px` }" />
+  <!-- <div :style="{ height: `${calcHeightToolbar}px` }" /> -->
   <!-- Список контактов -->
   <v-list two-line class="chat-list__vlist">
     <template v-for="chat in getChatList">
@@ -234,7 +234,7 @@ export default {
 
   position: fixed;
   height: 6%;
-  width: calc(100% - 6.24%);
+  // width: calc(100% - 6.24%);
 
   background: var(--chat-list__bar--background) !important;
   box-shadow: 0px -1px 4px black; // Маленькая тень
