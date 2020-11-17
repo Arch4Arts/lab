@@ -36,7 +36,7 @@
   <v-btn class="test-chat" 
     @click='sendMessage(selectedChatID, selectedCharID, "image", { src: require("../../media/img/2.gif") })'>image gif...</v-btn>
   <v-btn class="test-chat" 
-    @click='sendMessage(selectedChatID, selectedCharID, "video", { src: require("../../media/video/Carmelita.mp4"), poster: require("../../media/img/video test preview.jpeg") })'>video...</v-btn>
+    @click='sendMessage(selectedChatID, selectedCharID, "video", { src: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4", poster: require("../../media/img/video test preview.jpeg") })'>video...</v-btn>
   <v-btn class="test-chat" 
     @click='sendMessage(selectedChatID, selectedCharID, "audio", { src: require("../../media/audio/test.mp3") })'>audio..</v-btn>
   <v-btn class="test-chat" 

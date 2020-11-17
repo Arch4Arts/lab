@@ -21,6 +21,5 @@ eventBus.on('specialCheck', (code) => {
   for (let component in specialComponentList) {
     Vue.component(`${component}`, specialComponentList[component])
   }
-  console.log('Load')
   Store.state.reRender_SpecialComponents += 1;  
 })

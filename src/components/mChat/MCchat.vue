@@ -110,11 +110,11 @@ export default {
             folder: "twemoji"
           })
         } else if (message.type == 'image') {
-          message.content = vueRender(`<a-icon class="mchat-notify__message-container__message__image" :icon="['fas', 'file-image']"></a-icon>`)
+          message.content = this.vueRender(`<a-icon class="mchat-notify__message-container__message__icon" :icon="['fas', 'file-image']" />`)
         } else if (message.type == 'video') {
-          message.content = vueRender(`<a-icon class="mchat-notify__message-container__message__image" :icon="['fas', 'file-video']"></a-icon>`)
+          message.content = this.vueRender(`<a-icon class="mchat-notify__message-container__message__icon" :icon="['fas', 'file-video']" />`)
         } else if (message.type == 'audio') {
-          message.content = vueRender(`<a-icon class="mchat-notify__message-container__message__image" :icon="['fas', 'file-audio']"></a-icon>`)
+          message.content = this.vueRender(`<a-icon class="mchat-notify__message-container__message__icon" :icon="['fas', 'file-audio']" />`)
         }
 
         // * если Suggestions, system и т.д, то отправка не происходит.
@@ -155,12 +155,19 @@ export default {
       // I assume that you mean, you inserted those elements into the DOM. 
       // However, Once a component is running, the template is handled internally by the virtualDOM - Vue is not parsing the DOM anymore. 
       // So when you add vue-related markup into the DOM, Vue has no way of seeing and parsing this.
-      const el = Vue.compile(html)
+      let el = Vue.compile(html)
       el = new Vue({
         render: el.render,
-        staticRenderFns: el.staticRenderFns
-      }).$mount()
-      return el.$el.outerHTML
+        staticRenderFns: el.staticRenderFns,
+        beforeDestroy() {
+          console.log('before')
+        }
+      })
+      el.$options.components = this.$root.$options.components
+      el.$mount()
+      const compiledHTML = el.$el.outerHTML;
+      el.$destroy()
+      return compiledHTML
     }
   },
   mounted(){
