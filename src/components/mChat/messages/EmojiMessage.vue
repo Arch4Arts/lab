@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="message-title" style="margin-bottom: 6%" v-if="$store.state.mChat.selectedChatIsGroup">{{ author }}</div>
+  <div class="message-title" style="margin-bottom: 6%" v-if="isGroupChat">{{ author }}</div>
   <div v-html="getTwemoji"></div>
 </div>
 
@@ -13,6 +13,10 @@ export default {
   props: {
     data: {
       type: Object,
+      required: true
+    },
+    isGroupChat: {
+      type: Boolean,
       required: true
     },
     author: [String],

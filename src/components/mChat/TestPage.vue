@@ -43,6 +43,8 @@
     @click='sendMessage(selectedChatID, selectedCharID, "emoji", { emoji: "😍" })'>emoji..</v-btn>
   <v-btn class="test-chat" 
     @click='sendMessage(selectedChatID, selectedCharID, "suggestion", { suggestions: ["no", "Yes"] })'>suggetions</v-btn>
+    <v-btn class="test-chat" 
+    @click='sendMessage(selectedChatID, selectedCharID, "system", { text: "SYS lorum" })'>system</v-btn>
   <br>
   <v-btn class="test-chat" text @click="addContactToChatList('mc_erza')">Добавить mc в контакты</v-btn>
   <br><br>

@@ -14,18 +14,18 @@
         v-if="source.type !== 'system' && 
               source.type !== 'suggestion' && 
               $store.state.mChat.showAvatars && 
-              $store.state.mChat.selectedChatIsGroup" 
+              chatData.isGroupChat" 
         :title="authorName(source.author)" class="avatar"
         :style="{ backgroundImage: `url(${chatImageUrl(source.author)})` }">
       </div>
       <!-- Различные типы сообщений -->
-      <TextMessage v-if="source.type === 'text'" :data="source.data" :author="authorName(source.author)" />
-      <EmojiMessage v-else-if="source.type === 'emoji'" :data="source.data" :author="authorName(source.author)" />
-      <TypingMessage v-else-if="source.type === 'typing'" :author="authorName(source.author)" />
+      <TextMessage v-if="source.type === 'text'" :data="source.data" :author="authorName(source.author)" :isGroupChat="chatData.isGroupChat" />
+      <EmojiMessage v-else-if="source.type === 'emoji'" :data="source.data" :author="authorName(source.author)" :isGroupChat="chatData.isGroupChat" />
+      <TypingMessage v-else-if="source.type === 'typing'" :author="authorName(source.author)" :isGroupChat="chatData.isGroupChat" />
       <SystemMessage v-else-if="source.type === 'system'" :data="source.data" />
-      <ImageMessage v-else-if="source.type === 'image'"  :data="source.data" :author="authorName(source.author)" />
-      <VideoMessage v-else-if="source.type === 'video'" :data="source.data" :author="authorName(source.author)" />
-      <AudioMessage v-else-if="source.type === 'audio'" :data="source.data" :author="authorName(source.author)" />
+      <ImageMessage v-else-if="source.type === 'image'"  :data="source.data" :author="authorName(source.author)" :isGroupChat="chatData.isGroupChat" />
+      <VideoMessage v-else-if="source.type === 'video'" :data="source.data" :author="authorName(source.author)" :isGroupChat="chatData.isGroupChat" />
+      <AudioMessage v-else-if="source.type === 'audio'" :data="source.data" :author="authorName(source.author)" :isGroupChat="chatData.isGroupChat" />
       <!-- Варианты ответов -->
       <Suggestions v-if="source.type === 'suggestion'" 
         :suggestions="getSuggestions()" 
@@ -68,6 +68,10 @@ export default {
       type: Object,
       required: true,
     },
+    chatData: {
+      type: Object,
+      required: true,
+    },
   },
   methods: {
     submitSuggestion(suggestion){ 
@@ -76,10 +80,10 @@ export default {
       for (let chat of chatData.chatList) { // Перебираем для каждого пользователя
         if (chat.chatID === selectedChatID) {
           // если отправляемый suggestion автономен(т.е с type = suggestion), то нужно удалить его запись из истории, и добавить уже в виде ответа от From_me
-          if (chat.messagesHistory[chat.messagesHistory.length - 1].type === 'suggestion') 
-            chat.messagesHistory.pop()
+          if (chat.chatHistory[chat.chatHistory.length - 1].type === 'suggestion') 
+            chat.chatHistory.pop()
           // В противном случае просто отправить ответ от From_me, т.к suggestion был привязан к From_them
-          chat.messagesHistory.push(suggestion)
+          chat.chatHistory.push(suggestion)
           this.$store.commit('updateStore');
           eventBus.emit('mChatMessageWasSent')
         }

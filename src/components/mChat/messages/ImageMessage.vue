@@ -1,8 +1,8 @@
 <template>
   <div v-viewer="options">
-    <div class="message-title" v-if="$store.state.mChat.selectedChatIsGroup">{{ author }}</div>
+    <div class="message-title" v-if="isGroupChat">{{ author }}</div>
     <img class="image-message" :src="data.src"> 
-    <p v-if="data.meta" class='message-meta image'>{{data.meta}}</p>
+    <p v-if="data.meta" class='message-meta image'>{{ data.meta }}</p>
   </div>
 </template>
 
@@ -11,26 +11,19 @@ export default {
   data() {
     return {
       options: { 
-        inline: false, 
-        button: true, 
-        navbar: true, 
-        title: false, 
-        toolbar: true, 
-        tooltip: true, 
-        movable: true, 
-        zoomable: true, 
-        rotatable: true, 
+        title: false,  
         scalable: false, 
-        transition: true, 
-        fullscreen: true, 
-        keyboard: true, 
-        url: 'data-source' 
+        // url: 'data-source' 
       }
     };
   },
   props: {
     data: {
       type: Object,
+      required: true
+    },
+    isGroupChat: {
+      type: Boolean,
       required: true
     },
     author: [String],

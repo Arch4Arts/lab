@@ -19,10 +19,9 @@ export function mChatNotify(extOptions){
     close: false,
     closeOnClick: true,
     onClick: () => { // Открывает чат при нажатии на уведомление
-      store.commit('set_mChatShow', true);
       store.state.mChat.selectedChatID = extOptions.chatID
-      store.state.mChat.selectedChatAvatar = extOptions.chatAvatar
-      store.commit('mChatListShow');
+      store.commit('mChat/show', true);
+      store.commit('mChat/showChatList', false);
     },
     drag: true,
     // timeout: 15000,

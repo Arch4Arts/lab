@@ -29,7 +29,7 @@
       <div class="smartphone-screen">
         <!-- Страница со списком чатов -->
         <ChatList
-          v-if="$store.state.mChat.chatListShow"
+          v-if="$store.state.mChat.showChatList"
           class="chat-list" 
 
           :width="calcWidth"
@@ -40,12 +40,12 @@
           :mChatData="mChatData"
         />
         <!-- Отображаемый чат -->
-        <div v-if="!$store.state.mChat.chatListShow" class="message-list">
+        <div v-if="!$store.state.mChat.showChatList" class="message-list">
           <!-- Шапка -->
-          <MessageListToolbar :height="calcMessageList_ToolbarHeight" />
+          <MessageListToolbar :height="calcMessageList_ToolbarHeight" :chatData="chatData" />
           <!-- Область прокрутки с сообщениями -->
           <MessageList
-            :messages="messageList"
+            :chatData="chatData"
             :mChatData="mChatData"
             
             :width="calcWidth"
@@ -90,10 +90,10 @@ export default {
       type: Array,
       required: true
     },
-    messageList: {
-      type: Array,
+    chatData: {
+      type: Object,
       default: function () {
-        return []
+        return {}
       }
     }
   },

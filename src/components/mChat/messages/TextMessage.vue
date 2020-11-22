@@ -1,6 +1,6 @@
 <template>
 <div class="bubble-container">
-  <div class="message-title" v-if="$store.state.mChat.selectedChatIsGroup">{{ author }}</div>
+  <div class="message-title" v-if="isGroupChat">{{ author }}</div>
   <div class="text-message">
     <div v-html="getFormatMessage"></div>
     <div v-if="data.meta" class='message-meta text'>{{ data.meta }}</div>
@@ -17,6 +17,10 @@ export default {
   props: {
     data: {
       type: Object,
+      required: true
+    },
+    isGroupChat: {
+      type: Boolean,
       required: true
     },
     author: [String],

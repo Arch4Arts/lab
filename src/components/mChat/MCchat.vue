@@ -4,7 +4,7 @@
   <mChatFrame
     :mChatData="mChatData"
     :currentChatList="getCurrentChatList"
-    :messageList="getMessageList"
+    :chatData="getChatData"
   />
 </div>
 </template>
@@ -39,16 +39,16 @@ export default {
     getCurrentChatList(){
       return this.$store.state.mChatData.MC.сurrentChatList;
     },
-    getMessageList() {
+    getChatData() {
       const chatData = this.mChatData;
-      const selectedChat = this.$store.state.mChat.selectedChatID
+      const selectedChatID = this.$store.state.mChat.selectedChatID
       for (let chat of chatData.chatList) { // Перебираем для каждого пользователя
-        if (chat.chatID === selectedChat) {
+        if (chat.chatID === selectedChatID) {
           // Сбрасывает счётчик сообщений текущего выбранного чата, только если чат отображается
-          if (this.$store.state.mChat.show) 
-            chat.unreadMessageCount = 0 // Сбрасываем индивидуальный счётчик непрочитанных сообщений контакта
-          eventBus.emit('mChatScrollToBottom');
-          return chat.messagesHistory;
+          // if (this.$store.state.mChat.show)
+          //   chat.unreadMessageCount = 0
+          // eventBus.emit('mChatScrollToBottom');
+          return chat
         }
       }
     },
@@ -68,7 +68,7 @@ export default {
     closeChat(){
       // Если чат отображается и включена настройка по его закрытию кликом снаружи
       if (this.$store.state.mChat.show && this.$store.state.mChat.closeChatOnClickedOutside) 
-        this.$store.commit('set_mChatShow', false);
+        this.$store.commit('mChat/show', false);
     },
     middleware (event) {
       if (this.$store.state.mChat.show) { // Только при открытом чате
@@ -117,9 +117,9 @@ export default {
           message.content = this.vueRender(`<a-icon class="mchat-notify__message-container__message__icon" :icon="['fas', 'file-audio']" />`)
         }
 
-        // * если Suggestions, system и т.д, то отправка не происходит.
+        // * если не suggestions, system
         if (message.content != undefined) {
-          const template = `
+          const notyMSG = `
             <div class="mchat-notify__container">
               <div>
                 <img class="mchat-notify__avatar" src="${message.authorAvatar}" />
@@ -134,7 +134,10 @@ export default {
               </div>
             </div>
           `
-          mChatNotify({ message: template })
+          mChatNotify({ 
+            message: notyMSG, 
+            chatID: message.chatid,
+          })
           if (this.$store.state.sound.smartphoneSoundEnable) {
             soundPlay(this.$store.state.sound.smartphoneSound, this.$store.state.sound.smartphoneVolume)
           }
@@ -143,10 +146,11 @@ export default {
     },
     getAuthorInfo (message, charProfiles) {
       for (let char of charProfiles) {
-        if (char.charID === message.author) 
+        if (char.charID === message.author) {
           // Если используется псевдоним
           message.authorName = char.isAlias ? char.aliasName : char.name
-          message.authorAvatar = char.avatar;
+          message.authorAvatar = char.avatar;          
+        }
       }
     },
     vueRender (html) {
@@ -159,9 +163,6 @@ export default {
       el = new Vue({
         render: el.render,
         staticRenderFns: el.staticRenderFns,
-        beforeDestroy() {
-          console.log('before')
-        }
       })
       el.$options.components = this.$root.$options.components
       el.$mount()

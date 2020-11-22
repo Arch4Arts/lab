@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="message-title" v-if="$store.state.mChat.selectedChatIsGroup">{{ author }}</div>
+  <div class="message-title" v-if="isGroupChat">{{ author }}</div>
   <div @click="saveVolumeSettings()" class="audio-message"> 
     <vue-plyr ref="AudioMessagePlyr" id="plyr--audio" :options="options" :key="$store.state.reRender_mChatPlayersVolume">
       <audio>
@@ -86,6 +86,10 @@ export default {
   props: {
     data: {
       type: Object,
+      required: true
+    },
+    isGroupChat: {
+      type: Boolean,
       required: true
     },
     author: [String],

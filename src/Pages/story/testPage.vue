@@ -73,7 +73,14 @@ export default {
       })
     },
     test2(){
-      console.log(this.$store.state.mChatData.MC.chatList[1])
+      console.log(this.$store.state.mChatData.MC.chatList[0].chatAvatar)
+      this.$store.state.mChatCharProfiles[2].avatar = '123'
+      console.log(this.$store.state.mChatData.MC.chatList[0].chatAvatar)
+      console.log(globalThis.mChatCharProfiles)
+      setTimeout(() => {
+        this.$store.state.mChatCharProfiles[2].avatar = '321'
+        console.log(globalThis.mChatCharProfiles)
+      }, 2500)
     },
     test3(){
       eventBus.emit('specialCheck', 123)

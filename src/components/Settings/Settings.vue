@@ -160,21 +160,21 @@
         <v-list-item-group multiple>
           <!-- Закрывать чат кликом снаружи -->
           <v-list-item class="v-list-item">
-            <v-list-item-content @click="changeOption('closeChatOnClickedOutside')">
+            <v-list-item-content @click="changeOption('mChat/closeChatOnClickedOutside')">
               <v-list-item-title>{{ $t('list-item__mChat.1.title') }}</v-list-item-title>
             </v-list-item-content>
             <!-- Тумблер -->
             <v-list-item-action>
               <v-switch
                 v-model="$store.state.mChat.closeChatOnClickedOutside"
-                @click.stop="changeOption('closeChatOnClickedOutside')"
+                @click.stop="changeOption('mChat/closeChatOnClickedOutside')"
               ></v-switch>
             </v-list-item-action>
           </v-list-item>
           <v-divider />
           <!-- Автоматическое воспроизведение видео -->
           <v-list-item class="v-list-item">
-            <v-list-item-content @click="changeOption('autoplayVideoMessageOnHover')">
+            <v-list-item-content @click="changeOption('mChat/autoplayVideoMessageOnHover')">
               <v-list-item-title>{{ $t('list-item__mChat.2.title') }}</v-list-item-title>
               <v-list-item-subtitle>{{ $t('list-item__mChat.2.subtitle') }}</v-list-item-subtitle>
             </v-list-item-content>
@@ -182,14 +182,14 @@
             <v-list-item-action>
               <v-switch
                 v-model="$store.state.mChat.autoplayVideoMessageOnHover"
-                @click.stop="changeOption('autoplayVideoMessageOnHover')"
+                @click.stop="changeOption('mChat/autoplayVideoMessageOnHover')"
               ></v-switch>
             </v-list-item-action>
           </v-list-item>
           <v-divider />
           <!-- Имитация набора сообщения -->
           <v-list-item class="v-list-item">
-            <v-list-item-content @click="changeOption('typingIndicatorEnable')">
+            <v-list-item-content @click="changeOption('mChat/typingIndicatorEnable')">
               <v-list-item-title>{{ $t('list-item__mChat.3.title') }}</v-list-item-title>
               <v-list-item-subtitle>{{ $t('list-item__mChat.3.subtitle') }}</v-list-item-subtitle>
             </v-list-item-content>
@@ -197,14 +197,14 @@
             <v-list-item-action>
               <v-switch
                 v-model="$store.state.mChat.typingIndicatorEnable"
-                @click.stop="changeOption('typingIndicatorEnable')"
+                @click.stop="changeOption('mChat/typingIndicatorEnable')"
               ></v-switch>
             </v-list-item-action>
           </v-list-item>
           <v-divider />
           <!-- Отключение показа аватарок в чате -->
           <v-list-item class="v-list-item">
-            <v-list-item-content @click="changeOption('mChatShowAvatars')">
+            <v-list-item-content @click="changeOption('mChat/showAvatars')">
               <v-list-item-title>{{ $t('list-item__mChat.4.title') }}</v-list-item-title>
               <v-list-item-subtitle>{{ $t('list-item__mChat.4.subtitle') }}</v-list-item-subtitle>
             </v-list-item-content>
@@ -212,7 +212,7 @@
             <v-list-item-action>
               <v-switch
                 v-model="$store.state.mChat.showAvatars"
-                @click.stop="changeOption('mChatShowAvatars')"
+                @click.stop="changeOption('mChat/showAvatars')"
               ></v-switch>
             </v-list-item-action>
           </v-list-item>
@@ -234,7 +234,7 @@
           <v-divider />
           <!-- Отключение наборного элемента в чате -->
           <v-list-item class="v-list-item">
-            <v-list-item-content @click="changeOption('showDecorativeInputPanel')">
+            <v-list-item-content @click="changeOption('mChat/showDecorativeInputPanel')">
               <v-list-item-title>{{ $t('list-item__mChat.6.title') }}</v-list-item-title>
               <v-list-item-subtitle>{{ $t('list-item__mChat.6.subtitle') }}</v-list-item-subtitle>
             </v-list-item-content>
@@ -242,7 +242,7 @@
             <v-list-item-action>
               <v-switch
                 v-model="$store.state.mChat.showDecorativeInputPanel"
-                @click.stop="changeOption('showDecorativeInputPanel')"
+                @click.stop="changeOption('mChat/showDecorativeInputPanel')"
               ></v-switch>
             </v-list-item-action>
           </v-list-item>
@@ -272,7 +272,7 @@ export default {
     },
     mChatHideBarOnScrolling(){
       eventBus.emit('reRender_mChat')
-      this.$store.commit('showBarPanelPermanent')
+      this.$store.commit('mChat/showBarPanelPermanent')
     },
   },
   components: {

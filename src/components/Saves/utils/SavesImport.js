@@ -50,7 +50,7 @@ export async function loadFromDisk(event, savesList){
     _readFile(file)
       .then(saveFile => _loadSaves.call(this, saveFile, savesList))
       .then(() => this.updateSaveList())
-      .catch(err => this.$root.errNotify(err.toString()))   
+      .catch(err => this.$root.pushError(err.toString()))   
   }
 }
 

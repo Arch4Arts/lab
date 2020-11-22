@@ -17,8 +17,8 @@
     <v-spacer />
     <!-- ЗАГОЛОВОК ЧАТА преобразует tailor в Tailor -->
     <v-toolbar-title class="bar__title"> 
-      <img class="bar__title__avatar" :src="$store.state.mChat.selectedChatAvatar"> 
-      <div> {{ this.$store.state.mChat.selectedChatName }} </div> 
+      <img class="bar__title__avatar" :src="getChatAvatar"> 
+      <div> {{ getChatName }} </div> 
     </v-toolbar-title>
     <v-spacer />
     
@@ -36,10 +36,30 @@
 export default {
   props: {
     height: [Number, String],
+    chatData: {
+      type: Object,
+      required: true
+    },
+  },
+  computed: {
+    getChatName() {
+      if (this.chatData.chatName) {
+        return this.chatData.chatName
+      }
+      this.$root.pushError(this.$t('loadErrorChatData'));
+      return ''
+    },
+    getChatAvatar() {
+      if (this.chatData.chatAvatar) {
+        return this.chatData.chatAvatar
+      }
+      this.$root.pushError(this.$t('loadErrorChatData'));
+      return ''
+    }
   },
   methods: {
     backToContactsPage(){
-      this.$store.commit('mChatListShow');
+      this.$store.commit('mChat/showChatList', true);
     },
   }
 }
@@ -121,3 +141,14 @@ export default {
 }
 
 </style>
+
+<i18n>
+	{
+		"en": {
+			"loadErrorChatData": "Couldn't get any information about the chat"
+		},
+		"ru": {
+			"loadErrorChatData": "Не удалось получить информацию о чате"
+		}
+	}
+</i18n>

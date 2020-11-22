@@ -1,11 +1,11 @@
 import eventBus from "../../../js/eventBus"
 
 const mChat = {
-    namespaced: false,
+    namespaced: true,
     state: {
         enable: true,       // Вкл/Выкл чата
         show: false,        // Статус отображения чата
-        chatListShow: true, // Отображение списка контактов
+        showChatList: true, // Отображение списка контактов
 
         autoplayVideoMessageOnHover: false, // Воспроизводить ли видео при наведении мышки
         typingIndicatorEnable: true,        // Если true отображается имитация набора текста, если false, то ничего не отображаетсяm
@@ -25,11 +25,7 @@ const mChat = {
         videoVolume: 0.50, // Громкость видео плеера чата (По умолчанию выкл как и весь звук игры)
         audioVolume: 0.50, // Громкость видео плеера чата (По умолчанию вкл как и весь звук игры)
         
-
         selectedChatID: '', // ID выбранного чата (Который был выбран на странице контактов)
-        selectedChatName: '',  // Имя выбранного чата (Который был выбран на странице контактов)
-        selectedChatAvatar: '', // Аватар выбранного чата
-        selectedChatIsGroup: undefined, // Является ли выбранный чат групповым
 
         themesList: [
           { themeName: 'Minimalistic' },
@@ -38,16 +34,15 @@ const mChat = {
         ],
      },
     mutations: {      
-      mChatEnable(){
+      enable(){
         this.state.mChat.enable = !this.state.mChat.enable
       },
-      set_mChatShow(state, value){
+      show(state, value){
         this.state.mChat.show = value
       },
-      mChatListShow(){
-        this.state.mChat.chatListShow = !this.state.mChat.chatListShow
+      showChatList(state, value){
+        this.state.mChat.showChatList = value
       },
-
       closeChatOnClickedOutside(){
         this.state.mChat.closeChatOnClickedOutside = !this.state.mChat.closeChatOnClickedOutside
       },
@@ -57,7 +52,7 @@ const mChat = {
       typingIndicatorEnable(){
         this.state.mChat.typingIndicatorEnable = !this.state.mChat.typingIndicatorEnable
       },
-      mChatShowAvatars(){
+      showAvatars(){
         this.state.mChat.showAvatars = !this.state.mChat.showAvatars
       },
       showBarPanelPermanent(){

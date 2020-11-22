@@ -56,11 +56,11 @@ export default {
     },
     openChat() {
       if (!this.isDragNow) 
-        this.$store.commit('set_mChatShow', true);
+        this.$store.commit('mChat/show', true);
     },
     closeChat() {
       if (!this.isDragNow) 
-        this.$store.commit('set_mChatShow', false);
+        this.$store.commit('mChat/show', false);
     },
   },
   components: {

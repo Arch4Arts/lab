@@ -85,9 +85,9 @@ export default {
           // Открыть чат
           case keyShortcuts.mChatOpen: {
             if (!store.state.mChat.show)
-              store.commit('set_mChatShow', true);
+              store.commit('mChat/show', true);
             else 
-              store.commit('set_mChatShow', false);
+              store.commit('mChat/show', false);
             break;
           }
         }      

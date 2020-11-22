@@ -114,7 +114,7 @@ new Vue({
         document.webkitExitFullscreen();
       }
     },
-    errNotify(error){
+    pushError(error){
       SentryPush(error) // Отправка ошибки через Sentry
       console.error(error);
     }

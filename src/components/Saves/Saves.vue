@@ -371,7 +371,7 @@ export default {
           this.updateSaveList()
           this.closeDrawerAfterSaving()
         })
-        .catch(err => this.$root.errNotify(err.toString()))
+        .catch(err => this.$root.pushError(err.toString()))
     },
     async overwriteSave(saveName, saveTime, saveID, saveGameVersion){
       const oldSaveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`
@@ -384,7 +384,7 @@ export default {
       await WebCrypto.encrypt(saveHeader, JSON.serialize(this.$store.state))
         .then( encryptedData => localforage.setItem(saveHeader, encryptedData) )
         .then(() => savesNotify.save({message: this.$t('notify-overwrite-save')}))
-        .catch(err => this.$root.errNotify(err.toString()))
+        .catch(err => this.$root.pushError(err.toString()))
 
       // Удаляем старый
       localforage.removeItem(oldSaveHeader)
@@ -401,7 +401,7 @@ export default {
           this.clearSelectedSavesList()
           this.closeDrawerAfterSaving()
         })
-        .catch(err => this.$root.errNotify(err.toString()))
+        .catch(err => this.$root.pushError(err.toString()))
       this.updateSaveList()
     },
     async loadSave(saveName, saveTime, saveID, saveGameVersion){
@@ -420,7 +420,7 @@ export default {
           this.closeDrawerAfterSaving()
         })
         .then(() => savesNotify.load({message: this.$t('notify-load-save')}))
-        .catch(err => this.$root.errNotify(err.toString()))
+        .catch(err => this.$root.pushError(err.toString()))
     },
     async deleteSave(saveName, saveTime, saveID, saveGameVersion) {
       const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`
@@ -434,13 +434,13 @@ export default {
           this.updateSaveList()
           this.clearSelectedSavesList()          
         })
-        .catch(err => this.$root.errNotify(err.toString()))
+        .catch(err => this.$root.pushError(err.toString()))
     },
     async DeleteAllSaves(){
       // Очистка хранилища
       await localforage.clear()
         .then(() => savesNotify.delete({message: this.$t('notify-delete-all-save')}))
-        .catch(err => this.$root.errNotify(err.toString()))
+        .catch(err => this.$root.pushError(err.toString()))
       // Закрываем модальное окно
       this.showModalDelSavesAll = false
       // Обнуляем список сохранений (перерисовываем список)

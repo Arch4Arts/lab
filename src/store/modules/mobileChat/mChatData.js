@@ -39,10 +39,16 @@ const mChatData = {
           chatID: 'erza',
           chatName: undefined,
           chatAvatar: undefined,
+          get chatName() {
+            return globalThis.mChatCharProfiles[2].name;
+          },
+          get chatAvatar() {
+            return globalThis.mChatCharProfiles[2].avatar;
+          },
           isGroupChat: false,
           isDisabled: false,
           unreadMessageCount: 0,
-          messagesHistory: [
+          chatHistory: [
             { uid: '1k971ar09', type: 'text', author: `erza`, data: { text: `Lorem ipsum dolor 😄 sit **amet**?` } },
             { uid: '1k971bswh', type: 'system', data: { text: 'User changed security key', meta: '04-08-2018 15:57' } },
             { uid: '1k971bzux', type: 'emoji', author: `me`, data: { emoji: '😍' } },
@@ -57,15 +63,12 @@ const mChatData = {
         },
         {
           chatID: 'erza&arch',   
-          chatName: 'Беседка',    
-          get test() {
-            return globalThis.erza;
-          } ,     
+          chatName: 'Беседка',      
           chatAvatar: require('../../../media/img/preview - костыльки.jpeg'),      
           isGroupChat: true,
           isDisabled: false,
           unreadMessageCount: 3,
-          messagesHistory: [
+          chatHistory: [
             { uid: '1k971ar09', type: 'text', author: `erza`, data: { text: `Aenean massa. Cum sociis natoque penatibus et magnis dis parturient **_montes_**, nascetur ridiculus mus.` } },
             { uid: '1k971bswh', type: 'text', author: `arch`, data: { text: 'Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque' } },
             { uid: '1k971ar02', type: 'text', author: `erza`, data: { text: `Sed consequat, leo eget bibendum sodales` } },

@@ -21,9 +21,12 @@
     :keeps="30"
 
     data-key="uid"
-    :data-sources="messages"
-    :data-component="itemComponent"
-    :extra-props="{ mChatData: mChatData }"
+    :data-sources="chatHistory"
+    :data-component="messageComponent"
+    :extra-props="{ 
+      mChatData: mChatData,
+      chatData: chatData
+    }"
   />
 </div>
 </template>
@@ -38,12 +41,12 @@ import VirtualList from 'vue-virtual-scroll-list'
 export default {
   data () {
     return {
-      itemComponent: Message,
+      messageComponent: Message,
     }
   },
   props: {
-    messages: {
-      type: Array,
+    chatData: {
+      type: Object,
       required: true
     },
     mChatData: {
@@ -53,6 +56,17 @@ export default {
     width: [Number, String],
     height: [Number, String],
     ToolbarHeight: [Number, String],
+  },
+  computed: {
+    chatHistory() {
+      if (this.chatData.chatHistory) {
+        this.chatData.unreadMessageCount = 0;
+        eventBus.emit('mChatScrollToBottom');
+        return this.chatData.chatHistory;
+      }
+      this.$root.pushError(this.$t('loadErrorMessages'));
+      return []
+    }
   },
   mounted(){
     this.$refs.mChatMessageList.scrollToBottom()
@@ -91,3 +105,14 @@ export default {
 }
 
 </style>
+
+<i18n>
+	{
+		"en": {
+			"loadErrorMessages": "Failed to load messages"
+		},
+		"ru": {
+			"loadErrorMessages": "Не удалось загрузить сообщения"
+		}
+	}
+</i18n>

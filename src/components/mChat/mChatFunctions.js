@@ -10,7 +10,8 @@ export function sendMessage(ChatID, author, type, data) {
   // Если иммитация включан, не suggestion, список чатов не отображается, чат отображается
   if (store.state.mChat.typingIndicatorEnable && 
       type !== 'suggestion' && 
-      store.state.mChat.chatListShow === false && 
+      type !== 'system' && 
+      store.state.mChat.showChatList === false && 
       store.state.mChat.show === true) 
   {
     numberPendingMessages++;
@@ -19,43 +20,43 @@ export function sendMessage(ChatID, author, type, data) {
     if (type === 'text' && data.text.length <= 8) {
       setTimeout(() => { 
         numberPendingMessages--;
-        onMessageWasSent(ChatID, {uid: uniqid(), author: author, type: type, data: data})
+        onMessageWasSent(ChatID, {chatid: ChatID, uid: uniqid(), author: author, type: type, data: data})
       }, 600); // Длинное сообщение
     } 
     else if (type === 'text' && data.text.length <= 20) {
       setTimeout(() => { 
         numberPendingMessages--;
-        onMessageWasSent(ChatID, {uid: uniqid(), author: author, type: type, data: data})
+        onMessageWasSent(ChatID, {chatid: ChatID, uid: uniqid(), author: author, type: type, data: data})
       }, 1200); // Сообщение средней длинны
     }
     else
       setTimeout(() => { 
         numberPendingMessages--;
-        onMessageWasSent(ChatID, {uid: uniqid(), author: author, type: type, data: data})
+        onMessageWasSent(ChatID, {chatid: ChatID, uid: uniqid(), author: author, type: type, data: data})
       }, 3000); // Длинное сообщение
   }
-  else onMessageWasSent(ChatID, {uid: uniqid(), author: author, type: type, data: data})
+  else onMessageWasSent(ChatID, {chatid: ChatID, uid: uniqid(), author: author, type: type, data: data})
 }
 
 export function onMessageWasSent(ChatID, message){ // Импорт для userInput (Suggestions)
-  let users = store.state.mChatData.MC.chatList; // Не копируем массив, чтобы изменять оригинал
-  for (let user of users) { // Перебираем для каждого пользователя
-    if (user.chatID === ChatID) {
-      user.unreadMessageCount++
+  let chatList = store.state.mChatData.MC.chatList; // Не копируем массив, чтобы изменять оригинал
+  for (let chat of chatList) { // Перебираем для каждого пользователя
+    if (chat.chatID === ChatID) {
+      chat.unreadMessageCount++
       // Удаляем сообщение typing, если используется имитация набора
-      if (user.messagesHistory[user.messagesHistory.length - 1].type === 'typing') {
-        user.messagesHistory.pop()
+      if (chat.chatHistory[chat.chatHistory.length - 1].type === 'typing') {
+        chat.chatHistory.pop()
       }
       // Удаляем предложенные варианты ответов, если таковые есть
-      if (user.messagesHistory[user.messagesHistory.length - 1].type === 'suggestion') 
-        user.messagesHistory.pop()
+      if (chat.chatHistory[chat.chatHistory.length - 1].type === 'suggestion') 
+        chat.chatHistory.pop()
       
       // Добавляем сообщение
-      user.messagesHistory.push(message)
+      chat.chatHistory.push(message)
 
       // Добавляем имитацию набора если все еще присуствуют сообщения в очереди (setTimeout stack)
-      if (numberPendingMessages >= 1 && user.messagesHistory[user.messagesHistory.length - 1].type !== 'typing')
-        user.messagesHistory.push(typingMessageCopy);
+      if (numberPendingMessages >= 1 && chat.chatHistory[chat.chatHistory.length - 1].type !== 'typing')
+        chat.chatHistory.push(typingMessageCopy);
 
       store.commit('updateStore');
       eventBus.emit('mChatMessageWasSent');
@@ -66,12 +67,12 @@ export function onMessageWasSent(ChatID, message){ // Импорт для userIn
 
 export function addContactToChatList(newContact){
   let doubleDetect = false;
-  let contacts = store.state.mChat.сurrentChatList_MC
+  let contacts = store.state.mChatData.MC.сurrentChatList
   for (let contact of contacts) {
     if (contact === newContact) doubleDetect = true;
   }
   if (doubleDetect === false) {
-    store.state.mChat.сurrentChatList_MC.push(newContact);
+    store.state.mChatData.MC.сurrentChatList.push(newContact);
     store.commit('updateStore');
   }
 }

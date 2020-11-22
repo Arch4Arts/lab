@@ -1,6 +1,6 @@
 <template>
 <div class="bubble-container">
-  <div class="message-title" v-if="$store.state.mChat.selectedChatIsGroup">{{ author }}</div>
+  <div class="message-title" v-if="isGroupChat">{{ author }}</div>
   <div class="text-message">
     <span></span>
     <span></span>
@@ -14,6 +14,10 @@
 export default {
   props: {
     author: [String],
+    isGroupChat: {
+      type: Boolean,
+      required: true
+    },
   }
 }
 </script>

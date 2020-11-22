@@ -37,11 +37,11 @@ export default {
       if (this.$route.path != '/Journal') {
         if (this.$store.state.mChat.show) { // проверка открыт ли чат, если да то...
           // Открыта ли страница контактов, true - закрываем, false - возвращаемся к странице контактов, т.к открыт чат с контактом
-          if (this.$store.state.mChat.chatListShow)
-            this.$store.commit('set_mChatShow', false); // закрываем окно чата
+          if (this.$store.state.mChat.showChatList)
+            this.$store.commit('mChat/show', false); // закрываем окно чата
           // Закрывает чат с контактом если он открыт
           else 
-            this.$store.commit('mChatListShow');
+            this.$store.commit('mChat/showChatList', false);
         }
       }
     },
@@ -51,7 +51,7 @@ export default {
         if (this.$route.path != '/Journal') {
           // открываем окно чата, если оно не было открыто ранее
           if (!this.$store.state.mChat.show) 
-            this.$store.commit('set_mChatShow', true);
+            this.$store.commit('mChat/show', true);
         }
       }
     },

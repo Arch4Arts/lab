@@ -39,6 +39,7 @@ const rewriteFramesIntegration = new RewriteFrames({
   }
 });
 
+
 if (process.env.NODE_ENV === 'production') { // Включение Sentry только для продакшена
   Sentry.init({
     dsn: 'https://6b82c070a6874f70ad6e9fe5ebcb9fb8@sentry.io/1509214',
@@ -110,7 +111,7 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
   })
 };
 
-
+// * Vue
 if (process.env.NODE_ENV === 'production') {
   Vue.config.errorHandler = function(err, vm, info) { // Обработчик ошибок Vue
     Sentry.captureException(err, vm, info);
@@ -127,6 +128,7 @@ if (process.env.NODE_ENV === 'production') {
 // renderError - отключён по умолчанию в production
 // И т.д
 
+// * JS
 if (process.env.NODE_ENV === 'production') {
   window.onerror = function(message, source, line, column, error) {
     Sentry.captureException(message, source, line, column, error);

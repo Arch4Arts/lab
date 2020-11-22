@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="message-title" v-if="$store.state.mChat.selectedChatIsGroup">{{ author }}</div>
+    <div class="message-title" v-if="isGroupChat">{{ author }}</div>
     <div @mouseenter="play" @mouseleave="pause" class="video-message" @click="saveVolumeSettings()"> 
       <video ref="videoPlayer" class="video-js" :key="$store.state.reRender_mChatPlayersVolume" />
     </div>
@@ -16,6 +16,10 @@ export default {
   props: {
     data: {
       type: Object,
+      required: true
+    },
+    isGroupChat: {
+      type: Boolean,
       required: true
     },
     author: [String],

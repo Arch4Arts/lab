@@ -34,7 +34,7 @@
     </v-menu>
   </v-toolbar>
   <!-- Пространство под шапкой (чтобы туда не уходил список чатов) -->
-  <!-- <div :style="{ height: `${calcHeightToolbar}px` }" /> -->
+  <div :style="{ height: `${calcHeightToolbar}px` }" />
   <!-- Список контактов -->
   <v-list two-line class="chat-list__vlist">
     <template v-for="chat in getChatList">
@@ -57,21 +57,21 @@
             <div>{{ chat.chatName }}</div>
           </v-list-item-title>
           <!-- Текст последнего сообщения -->
-          <v-list-item-subtitle v-if="chat.messagesHistory.type === 'text'" class="chat-list__vlist--chat__subtitle-text"> 
-            <div v-html="getFormatMessage(chat.messagesHistory.data.text)" />
+          <v-list-item-subtitle v-if="chat.chatHistory.type === 'text'" class="chat-list__vlist--chat__subtitle-text"> 
+            <div v-html="getFormatMessage(chat.chatHistory.data.text)" />
           </v-list-item-subtitle>
           <!-- Смайлик -->
-          <v-list-item-subtitle v-else-if="chat.messagesHistory.type === 'emoji'"> 
-            <div v-html="getTwemoji(chat.messagesHistory.data.emoji)" />
+          <v-list-item-subtitle v-else-if="chat.chatHistory.type === 'emoji'"> 
+            <div v-html="getTwemoji(chat.chatHistory.data.emoji)" />
           </v-list-item-subtitle>
           <!-- Иконка фото/видео контента в сообщении -->
-          <v-list-item-subtitle v-else-if="chat.messagesHistory.type === 'image'"> 
+          <v-list-item-subtitle v-else-if="chat.chatHistory.type === 'image'"> 
             <a-icon class="chat-list__vlist--chat__subtitle-attachement-icon" :icon="['fas', 'file-image']"></a-icon>
           </v-list-item-subtitle>
-          <v-list-item-subtitle v-else-if="chat.messagesHistory.type === 'video'"> 
+          <v-list-item-subtitle v-else-if="chat.chatHistory.type === 'video'"> 
             <a-icon class="chat-list__vlist--chat__subtitle-attachement-icon" :icon="['fas', 'file-video']"></a-icon>
           </v-list-item-subtitle>
-          <v-list-item-subtitle v-else-if="chat.messagesHistory.type === 'audio'"> 
+          <v-list-item-subtitle v-else-if="chat.chatHistory.type === 'audio'"> 
             <a-icon class="chat-list__vlist--chat__subtitle-attachement-icon" :icon="['fas', 'file-audio']"></a-icon>
           </v-list-item-subtitle>
         </v-list-item-content>
@@ -131,13 +131,10 @@ export default {
       const charProfiles = mChatData.charProfiles;
       for (let chat of chatList) {
         if (chat.isGroupChat === false) {
-          // в групповом чат изначально заданы имя и аватар
-          // Для пользовательского чата данные загружаются из профиля
           charProfiles.find(char => {
             if (char.charID === chat.chatID) {
               // Если используется псевдоним
               chat.chatName = char.isAlias ? char.aliasName : char.name
-              chat.chatAvatar = char.avatar;
             }
           })
         }
@@ -146,24 +143,18 @@ export default {
     },
     getChatLastMessage(chatList){
       for (let chat of chatList) {
-        for (let i = chat.messagesHistory.length - 1; i >= 0; i--) {
-          if (chat.messagesHistory[i].type !== 'suggestion') {
-            chat.messagesHistory = chat.messagesHistory[i];
+        for (let i = chat.chatHistory.length - 1; i >= 0; i--) {
+          if (chat.chatHistory[i].type !== 'suggestion') {
+            chat.chatHistory = chat.chatHistory[i];
             break;
           }
         }
       }
       return chatList
     },
-    setSelectedChat(selectedChatID, selectedChatName, selectedChatAvatar, selectedChatIsGroup){
-      // Для MessageList
-      this.$store.state.mChat.selectedChatID = selectedChatID 
-      this.$store.state.mChat.selectedChatIsGroup = selectedChatIsGroup
-      // Для MessageListToolbar
-      this.$store.state.mChat.selectedChatName = selectedChatName
-      this.$store.state.mChat.selectedChatAvatar = selectedChatAvatar
-
-      this.$store.commit('mChatListShow');
+    setSelectedChat(selectedChatID){
+      this.$store.state.mChat.selectedChatID = selectedChatID
+      this.$store.commit('mChat/showChatList', false);
     },
     applySelectedTheme(select){
       this.mChatData.currentSelectedTheme = select;
@@ -234,7 +225,7 @@ export default {
 
   position: fixed;
   height: 6%;
-  // width: calc(100% - 6.24%);
+  width: calc(100% - 6.24%);
 
   background: var(--chat-list__bar--background) !important;
   box-shadow: 0px -1px 4px black; // Маленькая тень
