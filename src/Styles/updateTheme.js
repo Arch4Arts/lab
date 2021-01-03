@@ -12,11 +12,11 @@ export default function updateTheme(type){
   }
   // Оформление мобильного чата
   if (type === 'mChat') {
-    if (store.state.mChat.themesList[0].themeName === store.state.mChatData.MC.currentSelectedTheme)
+    if (store.state.mChat.themesList[0].themeName === store.state.mChatMeta.MC.userChatTheme)
       document.documentElement.setAttribute('mChatTheme', 'Minimalistic')
-    else if (store.state.mChat.themesList[1].themeName === store.state.mChatData.MC.currentSelectedTheme)
+    else if (store.state.mChat.themesList[1].themeName === store.state.mChatMeta.MC.userChatTheme)
       document.documentElement.setAttribute('mChatTheme', 'Dark-Minimalistic')
-    else if (store.state.mChat.themesList[2].themeName === store.state.mChatData.MC.currentSelectedTheme)
-      document.documentElement.setAttribute('mChatTheme', 'Scarlet')    
+    else if (store.state.mChat.themesList[2].themeName === store.state.mChatMeta.MC.userChatTheme)
+      document.documentElement.setAttribute('mChatTheme', 'Scarlet')
   }
 }

@@ -70,19 +70,19 @@ export default {
   computed: {
     getCharIDList() {
       let CharIDList = [];
-      let users = this.$store.state.mChatData.MC.charProfiles;
-      for (let user of users) { // Перебираем для каждого пользователя
-        CharIDList.push(user.charID)
+      let chars = this.$store.state.mChatCharProfiles;
+      for (let char of chars) { // Перебираем для каждого пользователя
+        CharIDList.push(char.charID)
       }
       return CharIDList
     },
     getChatIDList() {
-      let ChatIDList = [];
-      let users = this.$store.state.mChatData.MC.chatList;
-      for (let user of users) { // Перебираем для каждого пользователя
-        ChatIDList.push(user.chatID)
+      let chatIDList = [];
+      let chatList = this.$store.state.mChatList.MC;
+      for (let chat of chatList) { // Перебираем для каждого пользователя
+        chatIDList.push(chat.chatID)
       }
-      return ChatIDList
+      return chatIDList
     }
   },
   methods: {

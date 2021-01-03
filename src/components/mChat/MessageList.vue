@@ -24,8 +24,8 @@
     :data-sources="chatHistory"
     :data-component="messageComponent"
     :extra-props="{ 
-      mChatData: mChatData,
-      chatData: chatData
+      chatData: chatData,
+      charProfiles: charProfiles
     }"
   />
 </div>
@@ -49,9 +49,9 @@ export default {
       type: Object,
       required: true
     },
-    mChatData: {
-      type: Object,
-      required: true,
+    charProfiles: {
+      type: Array,
+      required: true
     },
     width: [Number, String],
     height: [Number, String],

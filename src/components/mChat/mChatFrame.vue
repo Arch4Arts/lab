@@ -30,14 +30,16 @@
         <!-- Страница со списком чатов -->
         <ChatList
           v-if="$store.state.mChat.showChatList"
-          class="chat-list" 
+          class="chat-list"
 
           :width="calcWidth"
           :height="calcHeight"
           :calcHeightToolbar="calcChatList_ToolbarHeight"
-
-          :currentChatList="currentChatList"
-          :mChatData="mChatData"
+          
+          :chatList="chatList"
+          :charProfiles="charProfiles"
+          :userChatList="userChatList"
+          :userChatTheme="userChatTheme"
         />
         <!-- Отображаемый чат -->
         <div v-if="!$store.state.mChat.showChatList" class="message-list">
@@ -46,7 +48,7 @@
           <!-- Область прокрутки с сообщениями -->
           <MessageList
             :chatData="chatData"
-            :mChatData="mChatData"
+            :charProfiles="charProfiles"
             
             :width="calcWidth"
             :height="calcMessageList_Height"
@@ -82,20 +84,27 @@ export default {
     }
   },
   props: {    
-    mChatData: {
-      type: Object,
-      required: true,
-    },    
-    currentChatList: {
-      type: Array,
-      required: true
-    },
     chatData: {
       type: Object,
       default: function () {
         return {}
       }
-    }
+    },
+    chatList: {
+      type: Array,
+      required: true,
+    },
+    charProfiles: {
+      type: Array,
+      required: true
+    },    
+    userChatList: {
+      type: Array,
+      required: true
+    },
+    userChatTheme: {
+      type: String
+    },
   },
   computed: {
     calcWidth() {

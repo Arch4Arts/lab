@@ -2,9 +2,11 @@
 <div v-click-outside="vConfig">
   <FloatingChatButton :unreadMessagesCount="getUnreadMessagesCount" />
   <mChatFrame
-    :mChatData="mChatData"
-    :currentChatList="getCurrentChatList"
     :chatData="getChatData"
+    :chatList="getChatList"
+    :charProfiles="getCharProfiles"
+    :userChatList="getUserChatIDList"
+    :userChatTheme="getUserChatTheme"
   />
 </div>
 </template>
@@ -22,7 +24,7 @@ import eventBus from '../../js/eventBus.js'
 import Vue from 'vue/dist/vue.js';
 
 export default {
-  name: 'MC_chat', // Экземпляр главного героя
+  name: 'MCChat', // Экземпляр главного героя
   data () {
     return {
       vConfig: {
@@ -33,30 +35,34 @@ export default {
     }
   },
   computed: {
-    mChatData(){
-      return this.$store.state.mChatData.MC;
-    },
-    getCurrentChatList(){
-      return this.$store.state.mChatData.MC.сurrentChatList;
+    getChatList(){
+      return this.$store.state.mChatList.MC;
     },
     getChatData() {
-      const chatData = this.mChatData;
+      const chatList = this.getChatList;
       const selectedChatID = this.$store.state.mChat.selectedChatID
-      for (let chat of chatData.chatList) { // Перебираем для каждого пользователя
+      for (let chat of chatList) { // Перебираем для каждого пользователя
         if (chat.chatID === selectedChatID) {
-          // Сбрасывает счётчик сообщений текущего выбранного чата, только если чат отображается
-          // if (this.$store.state.mChat.show)
-          //   chat.unreadMessageCount = 0
-          // eventBus.emit('mChatScrollToBottom');
           return chat
         }
       }
     },
+    getCharProfiles(){
+      return this.$store.state.mChatCharProfiles;
+    },
+    getUserChatIDList(){
+      return this.$store.state.mChatMeta.MC.userChatIDList;
+    },
+    getUserChatTheme(){
+      return this.$store.state.mChatMeta.MC.userChatTheme;
+    },
     getUnreadMessagesCount() {
+      const chatList = this.getChatList
+      const userChatIDList = this.getUserChatIDList
       let totalUnreadMessages = 0;
-      for (let currentChat of this.getCurrentChatList) {
-        for (let chat of this.mChatData.chatList) {
-          if (currentChat === chat.chatID) {
+      for (const chatID of userChatIDList) {
+        for (const chat of chatList) {
+          if (chatID === chat.chatID) {
             totalUnreadMessages += chat.unreadMessageCount;
           }
         }
@@ -92,8 +98,9 @@ export default {
     },
     sendNotify(message){
       if (!this.$store.state.mChat.show) {
-        const chatData = this.mChatData;
-        this.getAuthorInfo(message, chatData.charProfiles);
+        const chatData = this.mChatList;
+        const charProfiles = this.mChatCharProfiles
+        this.getAuthorInfo(message, charProfiles);
 
         if (message.type == 'text') {
           message.content = markdown(message.data.text) // Применение форматирования к тексту, демо: https://markdown-it.github.io
@@ -136,7 +143,7 @@ export default {
           `
           mChatNotify({ 
             message: notyMSG, 
-            chatID: message.chatid,
+            chatID: message.meta.chatid,
           })
           if (this.$store.state.sound.smartphoneSoundEnable) {
             soundPlay(this.$store.state.sound.smartphoneSound, this.$store.state.sound.smartphoneVolume)
@@ -145,6 +152,7 @@ export default {
       }
     },
     getAuthorInfo (message, charProfiles) {
+      console.log(charProfiles)
       for (let char of charProfiles) {
         if (char.charID === message.author) {
           // Если используется псевдоним

@@ -9,7 +9,6 @@
         system: source.type === 'system',
       }">
       <!-- Аватар отправителя -->
-      <!-- Если не системное msg, не предложение, включено отображение аватаров и это групповой чат -->
       <div 
         v-if="source.type !== 'system' && 
               source.type !== 'suggestion' && 
@@ -64,30 +63,25 @@ export default {
       type: Object,
       required: true,
     },
-    mChatData: {
-      type: Object,
-      required: true,
-    },
     chatData: {
       type: Object,
       required: true,
     },
+    charProfiles: {
+      type: Array,
+      required: true
+    }
   },
   methods: {
     submitSuggestion(suggestion){ 
-      let chatData = this.mChatData; // присваиваем ссылку, чтобы изменять оригинал
-      let selectedChatID = this.$store.state.mChat.selectedChatID // В какой чат отправлять
-      for (let chat of chatData.chatList) { // Перебираем для каждого пользователя
-        if (chat.chatID === selectedChatID) {
-          // если отправляемый suggestion автономен(т.е с type = suggestion), то нужно удалить его запись из истории, и добавить уже в виде ответа от From_me
-          if (chat.chatHistory[chat.chatHistory.length - 1].type === 'suggestion') 
-            chat.chatHistory.pop()
-          // В противном случае просто отправить ответ от From_me, т.к suggestion был привязан к From_them
-          chat.chatHistory.push(suggestion)
-          this.$store.commit('updateStore');
-          eventBus.emit('mChatMessageWasSent')
-        }
-      }
+      const chat = this.chatData;
+      // если отправляемый suggestion автономен(т.е с type = suggestion), то нужно удалить его запись из истории, и добавить уже в виде ответа от From_me
+      if (chat.chatHistory[chat.chatHistory.length - 1].type === 'suggestion') 
+        chat.chatHistory.pop()
+      // В противном случае просто отправить ответ от From_me, т.к suggestion был привязан к From_them
+      chat.chatHistory.push(suggestion)
+      this.$store.commit('updateStore');
+      eventBus.emit('mChatMessageWasSent')
     },
     _submitSuggestion(suggestion) {
       const uniqid = require('uniqid');
@@ -97,7 +91,7 @@ export default {
       return this.source.data.suggestions
     },
     profile(author) {
-      const profile = this.mChatData.charProfiles.find(profile => profile.charID === author)
+      const profile = this.charProfiles.find(profile => profile.charID === author)
       // A profile may not be found for system messages or messages by 'me'
       return profile || {avatar: '', contactName: ''}
     },

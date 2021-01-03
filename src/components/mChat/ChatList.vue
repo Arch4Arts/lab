@@ -34,7 +34,7 @@
     </v-menu>
   </v-toolbar>
   <!-- Пространство под шапкой (чтобы туда не уходил список чатов) -->
-  <div :style="{ height: `${calcHeightToolbar}px` }" />
+  <!-- <div :style="{ height: `${calcHeightToolbar}px` }" /> -->
   <!-- Список контактов -->
   <v-list two-line class="chat-list__vlist">
     <template v-for="chat in getChatList">
@@ -105,30 +105,35 @@ export default {
     width: [Number, String],
     height: [Number, String],
     calcHeightToolbar: [Number, String],
-    currentChatList: {
+    
+    chatList: {
       type: Array,
       required: true,
     },
-    mChatData: {
-      type: Object,
+    charProfiles: {
+      type: Array,
+      required: true
+    },
+    userChatList: {
+      type: Array,
       required: true,
     },
+    userChatTheme: {
+      type: String
+    } 
   },
   computed: {
     getChatList() {
-      const currentChatList = this.currentChatList; // Контакты в телефоне персонажа
-      const chatData = cloneDeep(this.mChatData); // Данные чатов
-      let chatList = []; // Список текущих чатов с информацией о чате с последнем сообщением
+      let chatList = cloneDeep(this.chatList); // клонируем чтобы не воздействовать на оригинал
 
-      chatList = this.getChatInfo(chatData);
+      chatList = this.getChatInfo(chatList);
       chatList = this.getChatLastMessage(chatList);
       return chatList;
     },
   },
   methods: {
-    getChatInfo(mChatData){
-      const chatList = mChatData.chatList;
-      const charProfiles = mChatData.charProfiles;
+    getChatInfo(chatList){
+      const charProfiles = this.charProfiles;
       for (let chat of chatList) {
         if (chat.isGroupChat === false) {
           charProfiles.find(char => {
@@ -157,7 +162,7 @@ export default {
       this.$store.commit('mChat/showChatList', false);
     },
     applySelectedTheme(select){
-      this.mChatData.currentSelectedTheme = select;
+      this.$store.state.mChatMeta.MC.userChatTheme = select;
       this.$store.commit('updateStore');
       updateTheme('mChat');
     },

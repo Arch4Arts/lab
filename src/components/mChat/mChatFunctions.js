@@ -20,26 +20,26 @@ export function sendMessage(ChatID, author, type, data) {
     if (type === 'text' && data.text.length <= 8) {
       setTimeout(() => { 
         numberPendingMessages--;
-        onMessageWasSent(ChatID, {chatid: ChatID, uid: uniqid(), author: author, type: type, data: data})
+        onMessageWasSent(ChatID, {meta: { chatid: ChatID }, uid: uniqid(), author: author, type: type, data: data})
       }, 600); // Длинное сообщение
     } 
     else if (type === 'text' && data.text.length <= 20) {
       setTimeout(() => { 
         numberPendingMessages--;
-        onMessageWasSent(ChatID, {chatid: ChatID, uid: uniqid(), author: author, type: type, data: data})
+        onMessageWasSent(ChatID, {meta: { chatid: ChatID }, uid: uniqid(), author: author, type: type, data: data})
       }, 1200); // Сообщение средней длинны
     }
     else
       setTimeout(() => { 
         numberPendingMessages--;
-        onMessageWasSent(ChatID, {chatid: ChatID, uid: uniqid(), author: author, type: type, data: data})
+        onMessageWasSent(ChatID, {meta: { chatid: ChatID }, uid: uniqid(), author: author, type: type, data: data})
       }, 3000); // Длинное сообщение
   }
-  else onMessageWasSent(ChatID, {chatid: ChatID, uid: uniqid(), author: author, type: type, data: data})
+  else onMessageWasSent(ChatID, {meta: { chatid: ChatID }, uid: uniqid(), author: author, type: type, data: data})
 }
 
 export function onMessageWasSent(ChatID, message){ // Импорт для userInput (Suggestions)
-  let chatList = store.state.mChatData.MC.chatList; // Не копируем массив, чтобы изменять оригинал
+  let chatList = store.state.mChatList.MC; // Не копируем массив, чтобы изменять оригинал
   for (let chat of chatList) { // Перебираем для каждого пользователя
     if (chat.chatID === ChatID) {
       chat.unreadMessageCount++
@@ -66,13 +66,13 @@ export function onMessageWasSent(ChatID, message){ // Импорт для userIn
 }
 
 export function addContactToChatList(newContact){
-  let doubleDetect = false;
-  let contacts = store.state.mChatData.MC.сurrentChatList
-  for (let contact of contacts) {
-    if (contact === newContact) doubleDetect = true;
-  }
-  if (doubleDetect === false) {
-    store.state.mChatData.MC.сurrentChatList.push(newContact);
-    store.commit('updateStore');
-  }
+  // let doubleDetect = false;
+  // let contacts = store.state.mChatData.MC.сurrentChatList
+  // for (let contact of contacts) {
+  //   if (contact === newContact) doubleDetect = true;
+  // }
+  // if (doubleDetect === false) {
+  //   store.state.mChatData.MC.сurrentChatList.push(newContact);
+  //   store.commit('updateStore');
+  // }
 }

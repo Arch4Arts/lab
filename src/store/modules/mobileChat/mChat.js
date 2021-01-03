@@ -1,5 +1,3 @@
-import eventBus from "../../../js/eventBus"
-
 const mChat = {
     namespaced: true,
     state: {

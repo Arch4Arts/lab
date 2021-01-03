@@ -1,7 +1,7 @@
 const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 const WebpackObfuscator = require('webpack-obfuscator');
 const RemovePlugin = require('remove-files-webpack-plugin');
-const packageJson = require('D:/Dev/lab/package.json');
+const packageJson = require('./package.json');
 const CopyPlugin = require('copy-webpack-plugin');
 
 const emojiFileList = require('./src/js/twemoji')

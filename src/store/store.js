@@ -3,7 +3,8 @@ import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 
 import mChat from './modules/mobileChat/mChat'
-import mChatData from './modules/mobileChat/mChatData'
+import mChatList from './modules/mobileChat/mChatList'
+import mChatMeta from './modules/mobileChat/mChatMeta'
 import mChatCharProfiles from './modules/mobileChat/mChatCharProfiles'
 import sound from './modules/sound'
 import chars from './modules/chars'
@@ -131,7 +132,8 @@ const store = new Vuex.Store({
   },
   modules: {
     mChat,
-    mChatData,
+    mChatList,
+    mChatMeta,
     mChatCharProfiles,
     sound,
     chars,

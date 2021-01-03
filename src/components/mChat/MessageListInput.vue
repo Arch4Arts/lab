@@ -62,7 +62,7 @@ export default {
   // padding-right: 2%;
   padding-left: 2%;
     // manual bottom border-radius
-  border-radius: 0px 0px calc(var(--mChatWidth) / 100 * 6) calc(var(--mChatWidth) / 100 * 6);
+  // border-radius: 0px 0px calc(var(--mChatWidth) / 100 * 6) calc(var(--mChatWidth) / 100 * 6);
   // padding-bottom: 1%;
 
   background: var(--message-list-input--background) !important;
