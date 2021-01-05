@@ -27,21 +27,17 @@ export default {
   name: 'App',
   methods: {
     swipeRight(){
-      // Открытие/Закрытие панели настроек
       if (this.$store.state.isOpenSettingsDrawer) 
         this.$store.commit('isOpenSettingsDrawer');
-      // Открытие/закрытие панели сохранений
       if (this.$store.state.isOpenSavesDrawer) 
         this.$store.commit('closeDrawerAfterSaving');
       // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
       if (this.$route.path != '/Journal') {
-        if (this.$store.state.mChat.show) { // проверка открыт ли чат, если да то...
-          // Открыта ли страница контактов, true - закрываем, false - возвращаемся к странице контактов, т.к открыт чат с контактом
+        if (this.$store.state.mChat.show) {
           if (this.$store.state.mChat.showChatList)
-            this.$store.commit('mChat/show', false); // закрываем окно чата
-          // Закрывает чат с контактом если он открыт
+            this.$store.commit('mChat/show', false);
           else 
-            this.$store.commit('mChat/showChatList', false);
+            this.$store.commit('mChat/showChatList', true);
         }
       }
     },
@@ -49,8 +45,9 @@ export default {
       if (this.$store.state.mChat.enable) {
         // Отключение свайпа на странице дневника (tabs использует переход по подстраницам на свайпах влево/вправо)
         if (this.$route.path != '/Journal') {
-          // открываем окно чата, если оно не было открыто ранее
-          if (!this.$store.state.mChat.show) 
+          if (this.$store.state.mChat.show) 
+            this.$store.commit('mChat/show', false);
+          else if (!this.$store.state.mChat.show) 
             this.$store.commit('mChat/show', true);
         }
       }
