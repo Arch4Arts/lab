@@ -228,7 +228,8 @@ export default {
   flex-direction: column;
   justify-content: center;
 
-  position: fixed;
+  // position: fixed;
+  position: relative;
   height: 6%;
   width: calc(100% - 6.24%);
 
