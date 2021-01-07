@@ -162,7 +162,7 @@
             <!-- Тумблер -->
             <v-list-item-action>
               <v-switch
-                v-model="$store.state.closeDrawerAfterSaving"
+                v-model="closeDrawerAfterSaving"
                 @click.stop="changeOption('closeDrawerAfterSaving')"
               ></v-switch>
             </v-list-item-action>
@@ -180,7 +180,7 @@
             <!-- Тумблер -->
             <v-list-item-action>
               <v-switch
-                v-model="$store.state.mChat.closeChatOnClickedOutside"
+                v-model="closeChatOnClickedOutside"
                 @click.stop="changeOption('mChat/closeChatOnClickedOutside')"
               ></v-switch>
             </v-list-item-action>
@@ -195,7 +195,7 @@
             <!-- Тумблер -->
             <v-list-item-action>
               <v-switch
-                v-model="$store.state.mChat.autoplayVideoMessageOnHover"
+                v-model="autoplayVideoMessageOnHover"
                 @click.stop="changeOption('mChat/autoplayVideoMessageOnHover')"
               ></v-switch>
             </v-list-item-action>
@@ -210,7 +210,7 @@
             <!-- Тумблер -->
             <v-list-item-action>
               <v-switch
-                v-model="$store.state.mChat.typingIndicatorEnable"
+                v-model="typingIndicatorEnable"
                 @click.stop="changeOption('mChat/typingIndicatorEnable')"
               ></v-switch>
             </v-list-item-action>
@@ -225,7 +225,7 @@
             <!-- Тумблер -->
             <v-list-item-action>
               <v-switch
-                v-model="$store.state.mChat.showAvatars"
+                v-model="showAvatars"
                 @click.stop="changeOption('mChat/showAvatars')"
               ></v-switch>
             </v-list-item-action>
@@ -240,7 +240,7 @@
             <!-- Тумблер -->
             <v-list-item-action>
               <v-switch
-                v-model="$store.state.mChat.showBarPanelPermanent"
+                v-model="showBarPanelPermanent"
                 @click.stop="mChatHideBarOnScrolling()"
               ></v-switch>
             </v-list-item-action>
@@ -255,7 +255,7 @@
             <!-- Тумблер -->
             <v-list-item-action>
               <v-switch
-                v-model="$store.state.mChat.showDecorativeInputPanel"
+                v-model="showDecorativeInputPanel"
                 @click.stop="changeOption('mChat/showDecorativeInputPanel')"
               ></v-switch>
             </v-list-item-action>
@@ -273,7 +273,7 @@
             <!-- Тумблер -->
             <v-list-item-action>
               <v-switch
-                v-model="$store.state.isHorizontalPos"
+                v-model="isHorizontalPos"
                 @click.stop="changeOption('isHorizontalPos')"
               ></v-switch>
             </v-list-item-action>
@@ -305,6 +305,29 @@ export default {
     mChatHideBarOnScrolling(){
       eventBus.emit('reRender_mChat')
       this.$store.commit('mChat/showBarPanelPermanent')
+    },
+  },
+  computed: {
+    closeDrawerAfterSaving() {
+      return this.$store.state.closeDrawerAfterSaving;
+    },
+    closeChatOnClickedOutside() {
+      return this.$store.state.mChat.closeChatOnClickedOutside;
+    },
+    autoplayVideoMessageOnHover() {
+      return this.$store.state.mChat.autoplayVideoMessageOnHover;
+    },
+    showAvatars() {
+      return this.$store.state.mChat.showAvatars;
+    },
+    showBarPanelPermanent() {
+      return this.$store.state.mChat.showBarPanelPermanent;
+    },
+    showDecorativeInputPanel() {
+      return this.$store.state.mChat.showDecorativeInputPanel;
+    },
+    isHorizontalPos() {
+      return this.$store.state.isHorizontalPos;
     },
   },
   components: {
