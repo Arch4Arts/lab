@@ -231,7 +231,7 @@ export default {
   // position: fixed;
   position: relative;
   height: 6%;
-  width: calc(100% - 6.24%);
+  // width: calc(100% - 6.24%);
 
   background: var(--chat-list__bar--background) !important;
   box-shadow: 0px -1px 4px black; // Маленькая тень
