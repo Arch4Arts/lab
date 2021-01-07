@@ -337,7 +337,7 @@ export default {
   position: relative;
   display: flex;
 
-  margin: 6px 0 0 0;
+  margin: 4px 0 0 0;
   opacity: .65;
   font-size: 0.950em;
   &:hover {

@@ -54,12 +54,12 @@ export default {
     },
     // Тригер для появления и исчезновения radialMenu
     swipeBottom(){
-      this.$store.state.radialMenuShow = true
+      this.$store.state.showQuickMenu = true
       this.$store.commit('updateStore');
     },
     // Тригер для появления и исчезновения radialMenu
     swipeTop(){
-      this.$store.state.radialMenuShow = false
+      this.$store.state.showQuickMenu = false
       this.$store.commit('updateStore');
     },    
     // updateCSSVars(){

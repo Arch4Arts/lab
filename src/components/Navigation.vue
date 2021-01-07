@@ -18,7 +18,7 @@
 <template>
 	<div>  
 		<!-- Плавающая кпнока для мобильной навигации -->
-		<Navigation-Floating-Button v-if="!$store.state.mChat.show" class="hidden-md-and-up"/> 
+		<NavigationQuickMenu v-if="!$store.state.mChat.show" class="hidden-md-and-up"/> 
 		<!-- КНОПКИ В МЕНЮ -->
 		<v-app-bar v-if="!(this.$vuetify.breakpoint.sm || this.$vuetify.breakpoint.xs)" app dense dark class="v-app-bar" elevation="14">
 			<!-- Название игры + версия -->
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import NavigationFloatingButton from './NavigationFloatingButton'
+import NavigationQuickMenu from './NavigationQuickMenu'
 
 export default {
 	methods: {
@@ -65,7 +65,7 @@ export default {
 		}
 	},
 	components: {
-		NavigationFloatingButton
+		NavigationQuickMenu
 	}
 }
 </script>

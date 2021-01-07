@@ -37,6 +37,13 @@
           "subtitle": "The lower decorative dial element of the chat"
         },
         "title": "Chat settings"
+      },
+      "list-item__quickMenu": {
+        "1": {
+          "title": "Horizontal layout",
+          "subtitle": "Horizontal layout of the quick menu"
+        },
+        "title": "Quick menu"
       }
     },
     "ru": {
@@ -76,6 +83,13 @@
           "subtitle": "Нижний декоративный наборный элемент чата"
         },
         "title": "Настройки чата"
+      },
+      "list-item__quickMenu": {
+        "1": {
+          "title": "Горизонтальная раскладка",
+          "subtitle": "Горизонтальная раскладка меню быстрого доступа"
+        },
+        "title": "Быстрое меню"
       }
     }
   }
@@ -243,6 +257,24 @@
               <v-switch
                 v-model="$store.state.mChat.showDecorativeInputPanel"
                 @click.stop="changeOption('mChat/showDecorativeInputPanel')"
+              ></v-switch>
+            </v-list-item-action>
+          </v-list-item>
+        </v-list-item-group>
+
+        <v-subheader class="v-list-item__header hidden-md-and-up">{{ $t('list-item__quickMenu.title') }}</v-subheader>
+        <!-- Быстрое меню -->
+        <v-list-item-group class="hidden-md-and-up" multiple>
+          <v-list-item class="v-list-item">
+            <v-list-item-content @click="changeOption('isHorizontalPos')">
+              <v-list-item-title>{{ $t('list-item__quickMenu.1.title') }}</v-list-item-title>
+              <v-list-item-subtitle>{{ $t('list-item__quickMenu.1.subtitle') }}</v-list-item-subtitle>
+            </v-list-item-content>
+            <!-- Тумблер -->
+            <v-list-item-action>
+              <v-switch
+                v-model="$store.state.isHorizontalPos"
+                @click.stop="changeOption('isHorizontalPos')"
               ></v-switch>
             </v-list-item-action>
           </v-list-item>

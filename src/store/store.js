@@ -60,8 +60,10 @@ const store = new Vuex.Store({
     gameDisplayingStartPage: true, // Для отображения StartPage
     gameAgeWarningDialog: true, // предупреждающее окно 18+
 
-    radialMenuShow: true, // Плавающая иконка с меню для мобильных устройств, при скрытой панели навигации
-    appHeaderEnable: false, // По умолчанию выкл, на время показа стартовой страницы с информацией об игре.
+    showQuickMenu: true, // Плавающая иконка с меню для мобильных устройств, при скрытой панели навигации
+    isHorizontalPos: false, // Горизонтальная ориентация панели быстрого доступа для мобильного представления
+
+    appHeaderEnable: false, // По умолчанию выкл, во время показа стартовой страницы с информацией об игре.
 
     closeDrawerAfterSaving: false, // Автоматически закрывать панель сохранений, после нового сохранения / перезаписи / загрузки
     isOpenSettingsDrawer: false, // Открытие/Закрытия панели настройек
@@ -103,30 +105,35 @@ const store = new Vuex.Store({
     gameAgeWarningDialog() {
       this.state.gameAgeWarningDialog = !this.state.gameAgeWarningDialog;
     },
-    gameFirstLoad(){
+    gameFirstLoad() {
       this.state.gameFirstLoad = !this.state.gameFirstLoad;
     },
-    gameDisplayingStartPage(){
+    gameDisplayingStartPage() {
       this.state.gameDisplayingStartPage = !this.state.gameDisplayingStartPage;
       this.state.appHeaderEnable = !this.state.appHeaderEnable;
     },
 
-    isOpenSettingsDrawer(){
-      this.state.isOpenSettingsDrawer = !this.state.isOpenSettingsDrawer;
-    },
-    isOpenSavesDrawer(){
-      this.state.isOpenSavesDrawer = !this.state.isOpenSavesDrawer;
-    },
-    closeDrawerAfterSaving(){
-      this.state.closeDrawerAfterSaving = !this.state.closeDrawerAfterSaving
+    isHorizontalPos() {
+      this.state.isHorizontalPos = !this.state.isHorizontalPos;
     },
 
+    closeDrawerAfterSaving() {
+      this.state.closeDrawerAfterSaving = !this.state.closeDrawerAfterSaving;
+    },
+    isOpenSettingsDrawer() {
+      this.state.isOpenSettingsDrawer = !this.state.isOpenSettingsDrawer;
+    },
+    isOpenSavesDrawer() {
+      this.state.isOpenSavesDrawer = !this.state.isOpenSavesDrawer;
+    },
+
+
     // Смена языка
-    langChange(state, lang){
+    langChange(state, lang) {
       this.state.gameLang = lang;
     },
 
-    gameHotkeysEnable(){
+    gameHotkeysEnable() {
       this.state.gameHotkeysEnable = !this.state.gameHotkeysEnable;
     }
   },
