@@ -5,7 +5,6 @@ const packageJson = require('./package.json');
 const CopyPlugin = require('copy-webpack-plugin');
 
 const emojiFileList = require('./src/js/twemoji')
-// const faviconPath = { from: './src/assets/favicon.png', to: 'assets/img/' }
 const fileList = [].concat(emojiFileList) 
 
 module.exports = {
@@ -88,7 +87,11 @@ module.exports = {
         new CopyPlugin({
           patterns: fileList
         }),
-      ] : [], // Development
+      ] : [
+        new CopyPlugin({
+          patterns: fileList
+        }),
+      ], // Development
   },
   pluginOptions: {
     i18n: {

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import testPage from './story/testPage'
+import testPage from './dev/testPage'
 
 export default {
 	mounted: function(){ 

@@ -8,9 +8,8 @@
     <h3>Пролог</h3>
     {{ $t('message') }}
 
-    <div v-html="text"/>
     <v-btn @click="test2()">getter</v-btn>
-    <v-btn @click="test()">Convert to twemoji</v-btn>
+    <emoji />
     <v-btn @click="toggleFullScreen123()">call error</v-btn>
 
     <!-- <img src="assets/img/info-circle.svg" height="65" width="68"> -->
@@ -40,15 +39,13 @@ import mc from '../../components/Chars/CharStyles/mc'
 import sister from '../../components/Chars/CharStyles/sister'
 import mcSettings from '../../components/Chars/CharSettings/mcSettings'
 import mChatTestPage from '../../components/mChat/TestPage'
+import emoji from './emoji'
 
 import eventBus from '../../js/eventBus.js'
-
-import twemoji from 'twemoji'
 
 export default {
   data() {
     return {
-      text: 'I 😄 emoji! and 😅 & ❤️',
     }
   },
   components: {
@@ -56,22 +53,9 @@ export default {
     sister,
     mcSettings,
     mChatTestPage,
+    emoji,
   },
   methods: {
-    test(){
-      console.log(twemoji.parse(this.text, {
-        base: 'assets/img/',         // default MaxCDN
-        ext: ".svg",          // default ".png"
-        className: "emoji-test",    // default "emoji"
-        folder: "twemoji"       // in case it's specified
-      }))
-      this.text = twemoji.parse(this.text, {
-        base: 'assets/img/',         // default MaxCDN
-        ext: ".svg",          // default ".png"
-        className: "emoji-test",    // default "emoji"
-        folder: "twemoji"       // in case it's specified
-      })
-    },
     test2(){
       console.log(this.$store.state.mChatData.MC.chatList[0].chatAvatar)
       this.$store.state.mChatCharProfiles[2].avatar = '123'
@@ -90,9 +74,5 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-
-.emoji-test {
-  height: 24px;
-}
 
 </style>
