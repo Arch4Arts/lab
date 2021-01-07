@@ -317,6 +317,9 @@ export default {
     autoplayVideoMessageOnHover() {
       return this.$store.state.mChat.autoplayVideoMessageOnHover;
     },
+    typingIndicatorEnable() {
+      return this.$store.state.mChat.typingIndicatorEnable;
+    },
     showAvatars() {
       return this.$store.state.mChat.showAvatars;
     },
