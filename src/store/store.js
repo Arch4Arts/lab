@@ -15,7 +15,7 @@ const PBKDF2 = require('crypto-js/pbkdf2')
 
 JSON.serialize = require('serialize-javascript');
 JSON.deserialize = function(serializedJavascript){
-  return eval('(' + serializedJavascript + ')');
+  return eval(`(${serializedJavascript})`);
 }
 
 Vue.use(Vuex)
