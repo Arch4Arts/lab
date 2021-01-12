@@ -21,7 +21,7 @@
 
 <template>
 <div class="text-center">
-  <v-dialog v-model="$store.state.gameAgeWarningDialog" persistent dark width="420">
+  <v-dialog v-model="$store.state.isShowAgeWarningDialog" persistent dark width="420">
     <v-card class="text-center">
       <v-card-title class="headline dark important-modal__header">{{ $t('v-card-title') }}</v-card-title>
         <v-card-text class="text--primary">
@@ -29,7 +29,7 @@
         </v-card-text>
 
       <v-card-actions class="buttons-container">
-        <v-btn class="important-modal__button" dark @click="$store.commit('gameAgeWarningDialog')">{{ $t('v-btn-enter') }}</v-btn>
+        <v-btn class="important-modal__button" dark @click="$store.commit('isShowAgeWarningDialog')">{{ $t('v-btn-enter') }}</v-btn>
         <v-btn class="leave-btn" text @click="Leave()">{{ $t('v-btn-leave') }}</v-btn>
       </v-card-actions>
     </v-card>

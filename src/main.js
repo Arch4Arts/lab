@@ -32,7 +32,6 @@ Vue.use(vueScrollBehavior, { router: router })
 // Сообственные функции и методы
 import './js/specialActivate'
 import updateTheme from './styles/updateTheme';
-import { checkSoundsEnable } from './js/gameSound'
 import hotkeySystem from './js/hotkeySystem'
 
 import { SentryPush } from './js/globalErrorsHandling';
@@ -55,19 +54,17 @@ new Vue({
     isTouchDevice: false, // Является ли устройство сенсорным
     isFullScreen: false, // Находится ли приложение в полноэкраном режиме
   },
-  mounted: function () { // Определение языка при первой загрузке / А также тип устройства
+  mounted: function () { // Init
     this.$nextTick(function () { // https://vuejsdevelopers.com/2019/01/22/vue-what-is-next-tick/
-      // Определение языка ТОЛЬКО при первой загрузке 
-      this.detectLanguage()
+      // Определение языка
+      this.checkLanguage()
       // Является ли устройство сенсорным
-      this.isTouchDevice = this.detectTouchDevice();
+      this.detectTouchDevice();
       // Обновляем оформление игры
       updateTheme('game');
       updateTheme('mChat');
       // Подключаем горячие клавиши (проверка внутри функции)
-      hotkeySystem.bindHotkeys();
-      // проверка состояния звука
-      checkSoundsEnable();
+      hotkeySystem.bind();
       
       const self = this;
       document.addEventListener("fullscreenchange", function () {
@@ -81,14 +78,14 @@ new Vue({
   },
   methods: {
     detectTouchDevice(){ // https://stackoverflow.com/a/4819886/11574854
-      return !!('ontouchstart' in window  // works on most browsers 
+      this.isTouchDevice = !!('ontouchstart' in window  // works on most browsers 
       || navigator.maxTouchPoints);       // works on IE10/11 and Surface
     },
-    detectLanguage(){
-      if (store.state.gameFirstLoad) {
+    checkLanguage(){
+      if (store.state.isFirstGameLaunch) {
         let lang = window.navigator ? (window.navigator.language || window.navigator.systemLanguage || window.navigator.userLanguage) : "ru";
         lang = lang.substr(0, 2).toLowerCase();
-        store.commit('gameFirstLoad');
+        store.commit('isFirstGameLaunch');
         lang == 'ru' ? store.commit('langChange', 'ru') : store.commit('langChange', 'en');
       }
     },
@@ -122,9 +119,9 @@ new Vue({
   watch: { // Клавиатурные сокращения
     '$store.state.keyboardShortcutsVersion': function () {
       // Отвязываем обработчик со старыми значениями
-      hotkeySystem.unbindHotkeys()
+      hotkeySystem.unbind()
       // Привязываем обработчик с новыми значениями
-      hotkeySystem.bindHotkeys()
+      hotkeySystem.bind()
     }
   },
   render: function (h) { return h(App) }

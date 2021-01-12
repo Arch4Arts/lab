@@ -16,7 +16,7 @@ import mChatFrame from './mChatFrame.vue'
 import FloatingChatButton from './FloatingChatButton.vue'
 
 import { mChatNotify } from '../../js/notificationSystem'
-import { soundPlay } from '../../js/gameSound'
+import { playSound } from '../../js/playSound'
 import { markdown } from './messages/drawdown'
 import twemoji from 'twemoji'
 
@@ -145,8 +145,8 @@ export default {
             message: notyMSG, 
             chatID: message.meta.chatid,
           })
-          if (this.$store.state.sound.smartphoneSoundEnable) {
-            soundPlay(this.$store.state.sound.smartphoneSound, this.$store.state.sound.smartphoneVolume)
+          if (this.$store.state.sound.isPlaySmartphoneSound) {
+            playSound(this.$store.state.sound.smartphoneSound, this.$store.state.sound.smartphoneVolume)
           }
         }        
       }
@@ -177,13 +177,30 @@ export default {
       const compiledHTML = el.$el.outerHTML;
       el.$destroy()
       return compiledHTML
+    },
+    setAudioState() {
+      // Mute
+      if (this.$store.state.sound.isPlaySoundsEnable) { 
+        document.querySelectorAll("video, audio").forEach(element => element.muted = false);
+      }
+      // Unmute
+      else { 
+        document.querySelectorAll("video, audio").forEach(element => element.muted = true);
+      } 
     }
   },
   mounted(){
+    this.setAudioState()
+
     eventBus.on('mChatMessageWasSent_Notify', this.sendNotify);
   },
   beforeDestroy(){
     eventBus.off('mChatMessageWasSent_Notify');
+  },
+  watch: { // Клавиатурные сокращения
+    '$store.state.sound.isPlaySoundsEnable': function () {
+      this.setAudioState();
+    }
   },
   components: {
     mChatFrame,

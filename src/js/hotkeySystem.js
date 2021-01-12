@@ -35,20 +35,20 @@ function _getKeyboardShortcuts(){
 }
 
 export default {
-  bindHotkeys: function(){
+  bind: function(){
     // Получаем текущие клавиатурные сокращения
     const keyShortcuts = _getKeyboardShortcuts()
     // Устанавливаем привязку на текущие клавиатурные сокращения
     hotkeys(keyShortcuts.allHotkeys, function (handler){
-      if (store.state.gameHotkeysEnable && !store.state.isOpenSettingsDrawer) {
+      if (store.state.gameHotkeysEnable && !store.state.showSettingsDrawer) {
         // console.log('if passed')
         switch (handler.key) {
           case keyShortcuts.settingsOpen: {
-            store.commit('isOpenSettingsDrawer')
+            store.commit('showSettingsDrawer')
             break;
           }
           case keyShortcuts.settingsToggleGlobalSoundEnable: {
-            store.commit('gameGlobalSoundsEnable')
+            store.commit('soundSettings/isPlaySoundsEnable')
             break;
           }
           case keyShortcuts.journalOpen: {
@@ -69,7 +69,7 @@ export default {
           }
           // Открыть сохранения
           case keyShortcuts.savesOpen: {
-            store.commit('isOpenSavesDrawer')
+            store.commit('showSavesDrawer')
             break;
           }
           // Быстрое сохранение
@@ -94,7 +94,7 @@ export default {
       }
     });
   },
-  unbindHotkeys: function(){
+  unbind: function(){
     // Удаляем ранее установленную привязку
     hotkeys.deleteScope('all');
   }

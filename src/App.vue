@@ -2,14 +2,14 @@
   <v-app> 
   <v-layout v-touch="{ right: () => swipeRight(), left: () => swipeLeft(), down: () => swipeBottom(), up: () => swipeTop() }">
   <v-main>
-    <StartPage v-if="$store.state.gameDisplayingStartPage" />
+    <StartPage v-if="$store.state.isShowStartPage" />
 
     <Settings />
     <Saves />
     <mc-chat />
     <navigation v-if="$store.state.appHeaderEnable" />
 
-    <router-view v-if="!$store.state.gameDisplayingStartPage">
+    <router-view v-if="!$store.state.isShowStartPage">
       <!-- Entry --> 
     </router-view>
   </v-main>
@@ -27,9 +27,9 @@ export default {
   name: 'App',
   methods: {
     swipeRight(){
-      if (this.$store.state.isOpenSettingsDrawer) 
-        this.$store.commit('isOpenSettingsDrawer');
-      if (this.$store.state.isOpenSavesDrawer) 
+      if (this.$store.state.showSettingsDrawer) 
+        this.$store.commit('showSettingsDrawer');
+      if (this.$store.state.showSavesDrawer) 
         this.$store.commit('closeDrawerAfterSaving');
       // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
       if (this.$route.path != '/Journal') {

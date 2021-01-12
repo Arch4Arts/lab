@@ -91,7 +91,7 @@
 
 <template>
   <v-navigation-drawer
-    v-model="$store.state.isOpenSavesDrawer"
+    v-model="$store.state.showSavesDrawer"
     temporary
     right
     app
@@ -452,10 +452,10 @@ export default {
       await location.reload()
     },
     closeDrawerAfterSaving(){
-      if (this.$store.state.isOpenSavesDrawer && this.$store.state.closeDrawerAfterSaving) 
-        this.$store.state.isOpenSavesDrawer = false;
+      if (this.$store.state.showSavesDrawer && this.$store.state.isCloseDrawerAfterSaving) 
+        this.$store.state.showSavesDrawer = false;
     },
-    // регистрация изменений $store.state.isOpenSavesDrawer из v-model
+    // регистрация изменений $store.state.showSavesDrawer из v-model
     updateDrawerState(isShow){
       if (!isShow) 
         this.$store.commit('updateStore')

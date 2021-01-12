@@ -6,7 +6,7 @@ import mChat from './modules/mobileChat/mChat'
 import mChatList from './modules/mobileChat/mChatList'
 import mChatMeta from './modules/mobileChat/mChatMeta'
 import mChatCharProfiles from './modules/mobileChat/mChatCharProfiles'
-import sound from './modules/sound'
+import soundSettings from './modules/soundSettings'
 import chars from './modules/chars'
 
 const AES = require("crypto-js/aes");
@@ -15,7 +15,7 @@ const PBKDF2 = require('crypto-js/pbkdf2')
 
 JSON.serialize = require('serialize-javascript');
 JSON.deserialize = function(serializedJavascript){
-  return eval(`(${serializedJavascript})`);
+  return eval(`( ${serializedJavascript} )`);
 }
 
 Vue.use(Vuex)
@@ -56,18 +56,19 @@ const store = new Vuex.Store({
     reRender_ColorPickerCanvas: 0, // Для перерисовски окна с выбором цвета (исчезает при изменении размера)
     reRender_SpecialComponents: 0, // Для обновления состояния Premium компонентов, при активации и деактивации
 
-    gameFirstLoad: true, // Проверка, первый ли запуск игры (Для определения языка) gameDisplayingStartPage
-    gameDisplayingStartPage: true, // Для отображения StartPage
-    gameAgeWarningDialog: true, // предупреждающее окно 18+
+    isFirstGameLaunch: true, // Проверка, первый ли запуск игры (Для определения языка) isShowStartPage
+    isShowStartPage: true, // Для отображения StartPage
+    isShowAgeWarningDialog: true, // предупреждающее окно 18+
 
     showQuickMenu: true, // Плавающая иконка с меню для мобильных устройств, при скрытой панели навигации
+    // ! нужен рефакторинг
     isHorizontalPos: false, // Горизонтальная ориентация панели быстрого доступа для мобильного представления
 
     appHeaderEnable: false, // По умолчанию выкл, во время показа стартовой страницы с информацией об игре.
 
-    closeDrawerAfterSaving: false, // Автоматически закрывать панель сохранений, после нового сохранения / перезаписи / загрузки
-    isOpenSettingsDrawer: false, // Открытие/Закрытия панели настройек
-    isOpenSavesDrawer: false,
+    isCloseDrawerAfterSaving: false, // Автоматически закрывать панель сохранений, после нового сохранения / перезаписи / загрузки
+    showSettingsDrawer: false,
+    showSavesDrawer: false,
 
     patreon_link: 'https://patreon',
     tfgames_link: 'https://tfgames.site',
@@ -102,14 +103,14 @@ const store = new Vuex.Store({
       this.state.gameName = this.state.gameName; // Пустышка
     },
 
-    gameAgeWarningDialog() {
-      this.state.gameAgeWarningDialog = !this.state.gameAgeWarningDialog;
+    isShowAgeWarningDialog() {
+      this.state.isShowAgeWarningDialog = !this.state.isShowAgeWarningDialog;
     },
-    gameFirstLoad() {
-      this.state.gameFirstLoad = !this.state.gameFirstLoad;
+    isFirstGameLaunch() {
+      this.state.isFirstGameLaunch = !this.state.isFirstGameLaunch;
     },
-    gameDisplayingStartPage() {
-      this.state.gameDisplayingStartPage = !this.state.gameDisplayingStartPage;
+    isShowStartPage() {
+      this.state.isShowStartPage = !this.state.isShowStartPage;
       this.state.appHeaderEnable = !this.state.appHeaderEnable;
     },
 
@@ -118,13 +119,13 @@ const store = new Vuex.Store({
     },
 
     closeDrawerAfterSaving() {
-      this.state.closeDrawerAfterSaving = !this.state.closeDrawerAfterSaving;
+      this.state.isCloseDrawerAfterSaving = !this.state.isCloseDrawerAfterSaving;
     },
-    isOpenSettingsDrawer() {
-      this.state.isOpenSettingsDrawer = !this.state.isOpenSettingsDrawer;
+    showSettingsDrawer() {
+      this.state.showSettingsDrawer = !this.state.showSettingsDrawer;
     },
-    isOpenSavesDrawer() {
-      this.state.isOpenSavesDrawer = !this.state.isOpenSavesDrawer;
+    showSavesDrawer() {
+      this.state.showSavesDrawer = !this.state.showSavesDrawer;
     },
 
 
@@ -142,7 +143,7 @@ const store = new Vuex.Store({
     mChatList,
     mChatMeta,
     mChatCharProfiles,
-    sound,
+    soundSettings,
     chars,
   }
 })

@@ -97,7 +97,7 @@
 
 <template>
   <v-navigation-drawer
-    v-model="$store.state.isOpenSettingsDrawer"
+    v-model="$store.state.showSettingsDrawer"
     temporary
     right
     app
@@ -113,7 +113,7 @@
         <v-expansion-panel>
           <v-expansion-panel-header>
             <div class="header">
-              <a-icon v-if="$store.state.sound.gameGlobalSoundsEnable" class="header__icon" :icon="['fas', 'volume']" />
+              <a-icon v-if="$store.state.sound.isPlaySoundsEnable" class="header__icon" :icon="['fas', 'volume']" />
               <a-icon v-else color="red" class="header__icon" :icon="['fas', 'volume-mute']" />
             </div> 
             {{ $t('panel-title__sound') }}
@@ -155,14 +155,14 @@
         <!-- Панель сохранений -->
         <v-list-item-group multiple>
           <v-list-item class="v-list-item">
-            <v-list-item-content @click="changeOption('closeDrawerAfterSaving')">
+            <v-list-item-content @click="changeOption('isCloseDrawerAfterSaving')">
               <v-list-item-title>{{ $t('list-item__saves.1.title') }}</v-list-item-title>
               <v-list-item-subtitle>{{ $t('list-item__saves.1.subtitle') }}</v-list-item-subtitle>
             </v-list-item-content>
             <!-- Тумблер -->
             <v-list-item-action>
               <v-switch
-                v-model="closeDrawerAfterSaving"
+                v-model="isCloseDrawerAfterSaving"
                 @click.stop="changeOption('closeDrawerAfterSaving')"
               ></v-switch>
             </v-list-item-action>
@@ -295,7 +295,7 @@ import eventBus from '../../js/eventBus'
 
 export default {
   methods: {
-    updateDrawerState(isShow){ // регистрация изменений $store.state.isOpenSettingsDrawer из v-model
+    updateDrawerState(isShow){ // регистрация изменений $store.state.showSettingsDrawer из v-model
       if (!isShow) 
         this.$store.commit('updateStore')
     },
@@ -308,8 +308,8 @@ export default {
     },
   },
   computed: {
-    closeDrawerAfterSaving() {
-      return this.$store.state.closeDrawerAfterSaving;
+    isCloseDrawerAfterSaving() {
+      return this.$store.state.isCloseDrawerAfterSaving;
     },
     closeChatOnClickedOutside() {
       return this.$store.state.mChat.closeChatOnClickedOutside;

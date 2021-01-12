@@ -3,7 +3,7 @@
   <div v-show="showQuickMenu" class="float-btns-container pos-vertical" :class="{ 'pos-horizontal': isHorizontalPos }">
     <!-- Toggle FullScreen Mode -->
     <div>
-      <v-btn v-if="this.$root.isFullScreen == false" icon dark class="btn" @click="$root.launchFullScreen()">
+      <v-btn v-if="this.$root.isFullScreen === false" icon dark class="btn" @click="$root.launchFullScreen()">
         <a-icon :icon="['fas', 'expand']" />
       </v-btn>
       <v-btn v-else icon dark class="btn" @click="$root.exitFullScreen()">
@@ -15,11 +15,11 @@
       <a-icon :icon="['fas', 'question-circle']" />
     </v-btn>
     <!-- Settings -->
-    <v-btn icon dark class="btn" @click="() => this.$store.state.isOpenSettingsDrawer = true">
+    <v-btn icon dark class="btn" @click="() => this.$store.state.showSettingsDrawer = true">
       <a-icon :icon="['fas', 'cog']" />
     </v-btn>
     <!-- Saves -->
-    <v-btn icon dark class="btn" @click="() => this.$store.state.isOpenSavesDrawer = true">
+    <v-btn icon dark class="btn" @click="() => this.$store.state.showSavesDrawer = true">
       <a-icon :icon="['fas', 'save']" />
     </v-btn>
     <!-- Journal -->

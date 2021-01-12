@@ -28,7 +28,7 @@
         <!-- Тумблер -->
         <v-list-item-action class="v-list-item__action">
           <v-switch
-            v-model="$store.state.sound.gameGlobalSoundsEnable"
+            v-model="$store.state.sound.isPlaySoundsEnable"
             @click.stop="changeGlobalSoundEnable()"
           ></v-switch>
         </v-list-item-action>
@@ -40,7 +40,7 @@
   <div class="sound-options-container">
     <p 
       :class="
-      ($store.state.sound.gameGlobalSoundsEnable && $store.state.sound.achievementSoundEnable)
+      ($store.state.sound.isPlaySoundsEnable && $store.state.sound.isPlayAchievementSound)
       ? 
       'sound-options-container__slider__name'
       :
@@ -56,15 +56,15 @@
       min="0"
       max="100"
       step="1"
-      @start="volumeChangePlayLoop($store.state.sound.achievementSound, $store.state.sound.achievementVolume)"
-      @end="volumeChangeStop()"
-      @input="realtimeVolumeChange($store.state.sound.achievementVolume)"
-      :disabled="!$store.state.sound.gameGlobalSoundsEnable || !$store.state.sound.achievementSoundEnable"
-      v-model="achievementVolumeSlider"
+      @start="startPlaySoundLoop($store.state.sound.achievementSound, $store.state.sound.achievementVolume)"
+      @end="stopPlaySoundLoop()"
+      @input="volumeSoundChange($store.state.sound.achievementVolume)"
+      :disabled="!$store.state.sound.isPlaySoundsEnable || !$store.state.sound.isPlayAchievementSound"
+      v-model="volumeSlider_Achievement"
     ></v-slider>
     <!-- Выбор звука + кнопка вкл / выкл -->
     <v-menu 
-      :disabled="!$store.state.sound.achievementSoundEnable" 
+      :disabled="!$store.state.sound.isPlayAchievementSound" 
       left 
       offset-x 
       open-on-hover
@@ -72,21 +72,21 @@
       >
       <template v-slot:activator="{ on }">
         <!-- Кнопка -->
-        <v-btn @click="changeSoundEnable('achievementSoundEnable')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.sound.gameGlobalSoundsEnable">
-          <a-icon v-if="$store.state.sound.achievementSoundEnable" :icon="['fas', 'music-alt']" />
+        <v-btn @click="setSoundState('soundSettings/isPlayAchievementSound')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.sound.isPlaySoundsEnable">
+          <a-icon v-if="$store.state.sound.isPlayAchievementSound" :icon="['fas', 'music-alt']" />
           <a-icon v-else color="red" :icon="['fas', 'music-alt-slash']" />
         </v-btn>
       </template>
       <!-- Список звуков / показывает текущий выбранный звук / воспроизводит звук при нажатии -->
       <v-list class="v-menu--background">
-        <v-list-item-group v-model="achievementSelectedSound">
+        <v-list-item-group v-model="soundList_Achievement">
         <v-list-item
           v-for="(sound, i) in $store.state.sound.soundsList"
           :key="i"
-          :value="sound.soundName"
-          @click="playbacSelectedSound(sound.soundName, $store.state.sound.achievementVolume)"
+          :value="sound"
+          @click="playSelectedSound(sound, $store.state.sound.achievementVolume)"
         >
-          <v-list-item-title>{{ sound.soundName }}</v-list-item-title>
+          <v-list-item-title>{{ sound }}</v-list-item-title>
         </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -97,7 +97,7 @@
   <div class="sound-options-container">
     <p 
       :class="
-      ($store.state.sound.gameGlobalSoundsEnable && $store.state.sound.diarySoundEnable)
+      ($store.state.sound.isPlaySoundsEnable && $store.state.sound.isPlayDiarySound)
       ? 
       'sound-options-container__slider__name'
       :
@@ -113,15 +113,15 @@
       min="0"
       max="100"
       step="1"
-      @start="volumeChangePlayLoop($store.state.sound.diarySound, $store.state.sound.diaryVolume)"
-      @end="volumeChangeStop()"
-      @input="realtimeVolumeChange($store.state.sound.diaryVolume)"
-      :disabled="!$store.state.sound.gameGlobalSoundsEnable || !$store.state.sound.diarySoundEnable"
-      v-model="diaryVolumeSlider"
+      @start="startPlaySoundLoop($store.state.sound.diarySound, $store.state.sound.diaryVolume)"
+      @end="stopPlaySoundLoop()"
+      @input="volumeSoundChange($store.state.sound.diaryVolume)"
+      :disabled="!$store.state.sound.isPlaySoundsEnable || !$store.state.sound.isPlayDiarySound"
+      v-model="volumeSlider_Diary"
     ></v-slider>
     <!-- Выбор звука + кнопка вкл / выкл -->
     <v-menu 
-      :disabled="!$store.state.sound.diarySoundEnable" 
+      :disabled="!$store.state.sound.isPlayDiarySound" 
       left 
       offset-x 
       open-on-hover
@@ -129,21 +129,21 @@
       >
       <template v-slot:activator="{ on }">
         <!-- Кнопка -->
-        <v-btn @click="changeSoundEnable('diarySoundEnable')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.sound.gameGlobalSoundsEnable">
-          <a-icon v-if="$store.state.sound.diarySoundEnable" :icon="['fas', 'music-alt']" />
+        <v-btn @click="setSoundState('soundSettings/isPlayDiarySound')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.sound.isPlaySoundsEnable">
+          <a-icon v-if="$store.state.sound.isPlayDiarySound" :icon="['fas', 'music-alt']" />
           <a-icon v-else color="red" :icon="['fas', 'music-alt-slash']" />
         </v-btn>
       </template>
       <!-- Список звуков / показывает текущий выбранный звук / воспроизводит звук при нажатии -->
       <v-list class="v-menu--background">
-        <v-list-item-group v-model="diarySelectedSound">
+        <v-list-item-group v-model="soundList_Diary">
         <v-list-item
           v-for="(sound, i) in $store.state.sound.soundsList"
           :key="i"
-          :value="sound.soundName"
-          @click="playbacSelectedSound(sound.soundName, $store.state.sound.diaryVolume)"
+          :value="sound"
+          @click="playSelectedSound(sound, $store.state.sound.diaryVolume)"
         >
-          <v-list-item-title>{{ sound.soundName }}</v-list-item-title>
+          <v-list-item-title>{{ sound }}</v-list-item-title>
         </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -154,7 +154,7 @@
   <div class="sound-options-container">
     <p 
       :class="
-      ($store.state.sound.gameGlobalSoundsEnable && $store.state.sound.smartphoneSoundEnable)
+      ($store.state.sound.isPlaySoundsEnable && $store.state.sound.isPlaySmartphoneSound)
       ? 
       'sound-options-container__slider__name'
       :
@@ -170,15 +170,15 @@
       min="0"
       max="100"
       step="1"
-      @start="volumeChangePlayLoop($store.state.sound.smartphoneSound, $store.state.sound.smartphoneVolume)"
-      @end="volumeChangeStop()"
-      @input="realtimeVolumeChange($store.state.sound.smartphoneVolume)"
-      :disabled="!$store.state.sound.gameGlobalSoundsEnable || !$store.state.sound.smartphoneSoundEnable"
-      v-model="smartphoneVolumeSlider"
+      @start="startPlaySoundLoop($store.state.sound.smartphoneSound, $store.state.sound.smartphoneVolume)"
+      @end="stopPlaySoundLoop()"
+      @input="volumeSoundChange($store.state.sound.smartphoneVolume)"
+      :disabled="!$store.state.sound.isPlaySoundsEnable || !$store.state.sound.isPlaySmartphoneSound"
+      v-model="volumeSlider_Smartphone"
     ></v-slider>
     <!-- Выбор звука + кнопка вкл / выкл -->
     <v-menu 
-      :disabled="!$store.state.sound.smartphoneSoundEnable" 
+      :disabled="!$store.state.sound.isPlaySmartphoneSound" 
       left 
       offset-x 
       open-on-hover
@@ -186,21 +186,21 @@
       >
       <template v-slot:activator="{ on }">
         <!-- Кнопка -->
-        <v-btn @click="changeSoundEnable('smartphoneSoundEnable')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.sound.gameGlobalSoundsEnable">
-          <a-icon v-if="$store.state.sound.smartphoneSoundEnable" :icon="['fas', 'music-alt']" />
+        <v-btn @click="setSoundState('soundSettings/isPlaySmartphoneSound')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.sound.isPlaySoundsEnable">
+          <a-icon v-if="$store.state.sound.isPlaySmartphoneSound" :icon="['fas', 'music-alt']" />
           <a-icon v-else color="red" :icon="['fas', 'music-alt-slash']" />
         </v-btn>
       </template>
       <!-- Список звуков / показывает текущий выбранный звук / воспроизводит звук при нажатии -->
       <v-list class="v-menu--background">
-        <v-list-item-group v-model="smartphoneSelectedSound">
+        <v-list-item-group v-model="soundList_Smartphone">
         <v-list-item
           v-for="(sound, i) in $store.state.sound.soundsList"
           :key="i"
-          :value="sound.soundName"
-          @click="playbacSelectedSound(sound.soundName, $store.state.sound.smartphoneVolume)"
+          :value="sound"
+          @click="playSelectedSound(sound, $store.state.sound.smartphoneVolume)"
         >
-          <v-list-item-title>{{ sound.soundName }}</v-list-item-title>
+          <v-list-item-title>{{ sound }}</v-list-item-title>
         </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -210,41 +210,42 @@
 </template>
 
 <script>
-import { checkSoundsEnable, soundPlay, soundPlayLoop } from '../../js/gameSound'
+import { playSound, playSoundLoop } from '../../js/playSound'
 
 export default {
   methods: {
     // Проиграть выбранный звук (для спика)
-    playbacSelectedSound(soundName, volume){
-      soundPlay(soundName, volume)
+    playSelectedSound(soundName, volume){
+      playSound(soundName, volume)
     },
     // Играть звук, пока мышь удерживает ползунок слайдера
-    volumeChangePlayLoop(soundName, volume){
-      soundPlayLoop(soundName, volume)
+    startPlaySoundLoop(soundName, volume){
+      playSoundLoop(soundName, volume)
     },
     // Перестать играть звук, когда мышь отпускает ползунок слайдера
-    volumeChangeStop(){
-      let soundPlayLoop = document.getElementById('soundPlayLoop')
-      soundPlayLoop.pause();
-      document.body.removeChild(soundPlayLoop); 
+    stopPlaySoundLoop(){
+      const soundLoop = document.getElementById('playbackSoundLoop')
+      soundLoop.pause();
+      document.body.removeChild(soundLoop); 
     },
     // Обновление уровня громкости в реальном времени при перетаскивании ползунка слайдера (во время проигрывании звука)      
-    realtimeVolumeChange(volume) { 
-      let soundPlayLoop = document.getElementById('soundPlayLoop')
-      if (soundPlayLoop != null) soundPlayLoop.volume = volume
+    volumeSoundChange(volume) { 
+      const soundLoop = document.getElementById('playbackSoundLoop')
+      if (soundLoop != null) 
+        soundLoop.volume = volume;
     },
     // Вкл / выкл всех звуков в игре по нажатию на v-list-item
     changeGlobalSoundEnable(){
-      this.$store.commit('gameGlobalSoundsEnable')
+      this.$store.commit('soundSettings/isPlaySoundsEnable')
     },
     // Вкл / Выкл звука по значку ноты
-    changeSoundEnable(commitName) {
+    setSoundState(commitName) {
       this.$store.commit(commitName)
     },
   },
   computed: {
     // Текущий выбранный звук, выбор нового звука
-    achievementSelectedSound: { 
+    soundList_Achievement: { 
       get: function () {
         return this.$store.state.sound.achievementSound
       },
@@ -253,7 +254,7 @@ export default {
         this.$store.commit('updateStore');
       } 
     },
-    diarySelectedSound: { 
+    soundList_Diary: { 
       get: function () {
         return this.$store.state.sound.diarySound
       },
@@ -262,7 +263,7 @@ export default {
         this.$store.commit('updateStore');
       } 
     },
-    smartphoneSelectedSound: { 
+    soundList_Smartphone: { 
       get: function () {
         return this.$store.state.sound.smartphoneSound
       },
@@ -272,30 +273,27 @@ export default {
       } 
     },
     // Изменение громкости на слайдере
-    achievementVolumeSlider: {
+    volumeSlider_Achievement: {
       get: function () {
-        let Volume = (this.$store.state.sound.achievementVolume * 100)
-        return Volume;
+        return (this.$store.state.sound.achievementVolume * 100)
       },
       set: function (level) {
         this.$store.state.sound.achievementVolume = (level /= 100)
         this.$store.commit("updateStore");
       } 
     },
-    diaryVolumeSlider: {
+    volumeSlider_Diary: {
       get: function () {
-        let Volume = (this.$store.state.sound.diaryVolume * 100)
-        return Volume;
+        return (this.$store.state.sound.diaryVolume * 100)
       },
       set: function (level) {
         this.$store.state.sound.diaryVolume = (level /= 100)
         this.$store.commit("updateStore");
       } 
     },
-    smartphoneVolumeSlider: {
+    volumeSlider_Smartphone: {
       get: function () {
-        let Volume = (this.$store.state.sound.smartphoneVolume * 100)
-        return Volume;
+        return (this.$store.state.sound.smartphoneVolume * 100)
       },
       set: function (level) {
         this.$store.state.sound.smartphoneVolume = (level /= 100)

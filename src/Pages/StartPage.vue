@@ -54,7 +54,7 @@ export default {
 			this.$root.$i18n.locale = lang
 		},
 		ClickStart(){
-			this.$store.commit('gameDisplayingStartPage');
+			this.$store.commit('isShowStartPage');
 		}
 	},
 	components: {

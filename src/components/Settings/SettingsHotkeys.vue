@@ -149,7 +149,7 @@
 </template>
 
 <script>
-// библиотека для конвертирования кода клавиши в имя !store.state.isOpenSettingsDrawer
+// библиотека для конвертирования кода клавиши в имя !store.state.showSettingsDrawer
 const keycode = require('keycode');
 
 export default {

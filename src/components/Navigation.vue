@@ -36,7 +36,7 @@
 						<div>{{ $t('FAQ') }}</div>
 				</v-btn>
 				<!-- Настройки -->
-				<v-btn shift text @click="() => this.$store.state.isOpenSettingsDrawer = true">
+				<v-btn shift text @click="() => this.$store.state.showSettingsDrawer = true">
 						<a-icon class="mr-2" :icon="['fas', 'cog']" />
 						<div>{{ $t('settings') }}</div>
 				</v-btn>
@@ -46,7 +46,7 @@
 						<div>{{ $t('journal') }}</div>
 				</v-btn>
 				<!-- Сохранения -->
-				<v-btn shift text @click="() => this.$store.state.isOpenSavesDrawer = true">
+				<v-btn shift text @click="() => this.$store.state.showSavesDrawer = true">
 						<a-icon class="mr-2" :icon="['fas', 'save']" />
 						<div>{{ $t('saves') }}</div>
 				</v-btn>
