@@ -7,7 +7,7 @@
     <Settings />
     <Saves />
     <mc-chat />
-    <navigation v-if="$store.state.appHeaderEnable" />
+    <NavigationBar v-if="$store.state.appHeaderEnable" />
 
     <router-view v-if="!$store.state.isShowStartPage">
       <!-- Entry --> 
@@ -19,7 +19,7 @@
 
 <script>
 import mcChat from './components/mChat/mcChat.vue'
-import Navigation from "./components/Navigation";
+import NavigationBar from "./components/NavigationBar";
 import StartPage from "./pages/StartPage";
 import Entry from "./pages/Entry";
 
@@ -77,7 +77,7 @@ export default {
   //   window.removeEventListener("resize", this.updateCSSVars);
   // },
   components: {
-    Navigation,
+    NavigationBar,
     StartPage,
     Entry,
     'mc-chat': mcChat,

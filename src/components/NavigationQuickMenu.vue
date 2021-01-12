@@ -1,6 +1,6 @@
 <template>
 <v-expand-x-transition>
-  <div v-show="showQuickMenu" class="float-btns-container pos-vertical" :class="{ 'pos-horizontal': isHorizontalPos }">
+  <div v-show="showQuickMenu" class="float-btns-container vertical" :class="{ 'horizontal': isQuickMenuHorizontalAlign }">
     <!-- Toggle FullScreen Mode -->
     <div>
       <v-btn v-if="this.$root.isFullScreen === false" icon dark class="btn" @click="$root.launchFullScreen()">
@@ -8,7 +8,7 @@
       </v-btn>
       <v-btn v-else icon dark class="btn" @click="$root.exitFullScreen()">
         <a-icon :icon="['fas', 'compress']" />
-      </v-btn>     
+      </v-btn>
     </div>
     <!-- FAQ -->
     <v-btn icon dark class="btn" to="/FAQ" @click="showBackspace = true">
@@ -44,8 +44,8 @@ export default {
       return this.$store.state.showQuickMenu;
     },
     // Горизонтальная ориентация панели быстрого доступа
-    isHorizontalPos(){
-      return this.$store.state.isHorizontalPos;
+    isQuickMenuHorizontalAlign(){
+      return this.$store.state.isQuickMenuHorizontalAlign;
     }
   },
 }
@@ -64,10 +64,10 @@ export default {
 
   width: none !important;
   z-index: 4;
-  &.pos-vertical {
+  &.vertical {
     flex-direction: column;
   }
-  &.pos-horizontal {
+  &.horizontal {
     flex-direction: row;
   }
 }

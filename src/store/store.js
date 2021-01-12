@@ -62,7 +62,7 @@ const store = new Vuex.Store({
 
     showQuickMenu: true, // Плавающая иконка с меню для мобильных устройств, при скрытой панели навигации
     // ! нужен рефакторинг
-    isHorizontalPos: false, // Горизонтальная ориентация панели быстрого доступа для мобильного представления
+    isQuickMenuHorizontalAlign: true, // True - horizontal, false - vertical
 
     appHeaderEnable: false, // По умолчанию выкл, во время показа стартовой страницы с информацией об игре.
 
@@ -114,8 +114,8 @@ const store = new Vuex.Store({
       this.state.appHeaderEnable = !this.state.appHeaderEnable;
     },
 
-    isHorizontalPos() {
-      this.state.isHorizontalPos = !this.state.isHorizontalPos;
+    isQuickMenuHorizontalAlign() {
+      this.state.isQuickMenuHorizontalAlign = !this.state.isQuickMenuHorizontalAlign;
     },
 
     closeDrawerAfterSaving() {
