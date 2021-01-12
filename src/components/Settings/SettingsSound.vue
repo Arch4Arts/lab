@@ -28,7 +28,7 @@
         <!-- Тумблер -->
         <v-list-item-action class="v-list-item__action">
           <v-switch
-            v-model="$store.state.sound.isPlaySoundsEnable"
+            v-model="isPlaySoundsEnable"
             @click.stop="changeGlobalSoundEnable()"
           ></v-switch>
         </v-list-item-action>
@@ -244,6 +244,9 @@ export default {
     },
   },
   computed: {
+    isPlaySoundsEnable() {
+      return this.$store.state.sound.isPlaySoundsEnable;
+    },
     // Текущий выбранный звук, выбор нового звука
     soundList_Achievement: { 
       get: function () {
