@@ -18,7 +18,7 @@ function getSoundByName(soundName) {
 }
 
 export function playSound(soundName, volumeState = 0.5) {
-  if (store.state.sound.isPlaySoundsEnable) {
+  if (store.state.soundSettings.isPlaySoundsEnable) {
     const audio = new Audio(getSoundByName(soundName));
     audio.volume = volumeState;
     audio.play();    
@@ -26,7 +26,7 @@ export function playSound(soundName, volumeState = 0.5) {
 }
 
 export function playSoundLoop(soundName, volumeState = 0.5) { 
-  if (store.state.sound.isPlaySoundsEnable) {
+  if (store.state.soundSettings.isPlaySoundsEnable) {
     const loopAudio = new Audio(getSoundByName(soundName));
     loopAudio.volume = volumeState;
     loopAudio.loop = true;

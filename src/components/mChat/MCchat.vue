@@ -145,8 +145,8 @@ export default {
             message: notyMSG, 
             chatID: message.meta.chatid,
           })
-          if (this.$store.state.sound.isPlaySmartphoneSound) {
-            playSound(this.$store.state.sound.smartphoneSound, this.$store.state.sound.smartphoneVolume)
+          if (this.$store.state.soundSettings.isPlaySmartphoneSound) {
+            playSound(this.$store.state.soundSettings.smartphoneSound, this.$store.state.soundSettings.smartphoneVolume)
           }
         }        
       }
@@ -180,7 +180,7 @@ export default {
     },
     setAudioState() {
       // Mute
-      if (this.$store.state.sound.isPlaySoundsEnable) { 
+      if (this.$store.state.soundSettings.isPlaySoundsEnable) { 
         document.querySelectorAll("video, audio").forEach(element => element.muted = false);
       }
       // Unmute
@@ -198,7 +198,7 @@ export default {
     eventBus.off('mChatMessageWasSent_Notify');
   },
   watch: { // Клавиатурные сокращения
-    '$store.state.sound.isPlaySoundsEnable': function () {
+    '$store.state.soundSettings.isPlaySoundsEnable': function () {
       this.setAudioState();
     }
   },

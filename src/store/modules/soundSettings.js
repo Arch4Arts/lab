@@ -31,16 +31,16 @@ const sound = {
   mutations: {
     // Вкл/Выкл звука
     isPlaySoundsEnable() {
-      this.state.sound.isPlaySoundsEnable = !this.state.sound.isPlaySoundsEnable;
+      this.state.soundSettings.isPlaySoundsEnable = !this.state.soundSettings.isPlaySoundsEnable;
     },
     isPlayAchievementSound() {
-      this.state.sound.isPlayAchievementSound = !this.state.sound.isPlayAchievementSound;
+      this.state.soundSettings.isPlayAchievementSound = !this.state.soundSettings.isPlayAchievementSound;
     },
     isPlayDiarySound() {
-      this.state.sound.isPlayDiarySound = !this.state.sound.isPlayDiarySound;
+      this.state.soundSettings.isPlayDiarySound = !this.state.soundSettings.isPlayDiarySound;
     },
     isPlaySmartphoneSound() {
-      this.state.sound.isPlaySmartphoneSound = !this.state.sound.isPlaySmartphoneSound;
+      this.state.soundSettings.isPlaySmartphoneSound = !this.state.soundSettings.isPlaySmartphoneSound;
     },
   },
 }

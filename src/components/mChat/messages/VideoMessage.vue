@@ -58,7 +58,7 @@ export default {
       // console.log('onPlayerReady', this);
     })
     this.player.volume(this.$store.state.mChat.videoVolume)
-    if (this.$store.state.sound.isPlaySoundsEnable === false) 
+    if (this.$store.state.soundSettings.isPlaySoundsEnable === false) 
       this.player.muted(true);
   },
   beforeDestroy() {

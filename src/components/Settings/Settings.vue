@@ -113,7 +113,7 @@
         <v-expansion-panel>
           <v-expansion-panel-header>
             <div class="header">
-              <a-icon v-if="$store.state.sound.isPlaySoundsEnable" class="header__icon" :icon="['fas', 'volume']" />
+              <a-icon v-if="$store.state.soundSettings.isPlaySoundsEnable" class="header__icon" :icon="['fas', 'volume']" />
               <a-icon v-else color="red" class="header__icon" :icon="['fas', 'volume-mute']" />
             </div> 
             {{ $t('panel-title__sound') }}
