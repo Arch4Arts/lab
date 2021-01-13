@@ -20,22 +20,34 @@ function str2ab(str) {
   return data;
 };
 
+function getHeaderSavesList(savesList) {
+  const saveHeaderList = [];
+  for (const save of savesList) {
+    saveHeaderList.push(`${save.saveName},${save.saveTime},${save.saveID},${save.saveGameVersion}`);
+  }
+  return saveHeaderList;
+}
+
 function _loadSaves(saveFile, savesList) {
   if (saveFile.includes('cipherData')) {
     saveFile = JSON.parse(saveFile)
+    const saveHeaderList = getHeaderSavesList(savesList)
     for (const save of saveFile) {
-      localforage.setItem(
-        save.saveHeader, 
-        { cipherData: str2ab(save.saveData.cipherData).buf, 
-          iv: str2ab(save.saveData.iv).bufView }
-      )
-      const saveHeader = save.saveHeader.split(',');
-      savesList.push({ 
-        saveName: saveHeader[0], 
-        saveTime: saveHeader[1], 
-        saveID: saveHeader[2], 
-        saveGameVersion: saveHeader[3]
-      })
+      // Проверка на дубликаты
+      if (saveHeaderList.includes(save.saveHeader) !== true) {
+        localforage.setItem(
+          save.saveHeader, 
+          { cipherData: str2ab(save.saveData.cipherData).buf, 
+            iv: str2ab(save.saveData.iv).bufView }
+        )
+        const saveHeader = save.saveHeader.split(',');
+        savesList.push({ 
+          saveName: saveHeader[0], 
+          saveTime: saveHeader[1], 
+          saveID: saveHeader[2], 
+          saveGameVersion: saveHeader[3]
+        })        
+      }
     }
     savesNotify.import({message: this.$t('notify-load-from-disk')})
   } 
@@ -44,7 +56,7 @@ function _loadSaves(saveFile, savesList) {
   }
 }
 
-export async function loadFromDisk(event, savesList){
+export async function loadFromDisk(event, savesList) {
   const files = event.target.files
   for (let file of files) {
     _readFile(file)

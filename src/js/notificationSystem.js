@@ -34,7 +34,7 @@ export function mChatNotify(extOptions){
 // Оповещения для компонента saves
 export const savesNotify = {
   OPTIONS: {
-    class: 'saves-notify__save',
+    // class: 'saves-notify__save',
     iconUrl: 'assets/img/info-circle.svg',
     position: 'bottomCenter',
     messageSize: '16',
@@ -45,26 +45,26 @@ export const savesNotify = {
     timeout: 2000,
   },
   save(message) {
-    iziToast.info(Object.assign(this.OPTIONS, message))
+    iziToast.info(Object.assign(this.OPTIONS, message, { class: 'saves-notify__save' }))
   },
   load(message) {
     iziToast.info(Object.assign(this.OPTIONS, message, { class: 'saves-notify__load' }))
   },
   delete(message) {
-    iziToast.info(Object.assign(this.OPTIONS, message, { iconUrl: 'assets/img/exclamation-triangle.svg', class: 'saves-notify__delete' }))
+    iziToast.info(Object.assign(this.OPTIONS, message, { class: 'saves-notify__delete', iconUrl: 'assets/img/exclamation-triangle.svg' }))
   },
 
   import(message) {
     iziToast.info(Object.assign(this.OPTIONS, message, { class: 'saves-notify__load' }))
   },
   importError(message) {
-    iziToast.info(Object.assign(this.OPTIONS, message, { iconUrl: 'assets/img/exclamation-triangle.svg', class: 'saves-notify__delete' }))
+    iziToast.info(Object.assign(this.OPTIONS, message, { class: 'saves-notify__error', iconUrl: 'assets/img/exclamation-triangle.svg' }))
   },
   export(message) {
-    iziToast.info(Object.assign(this.OPTIONS, message))
+    iziToast.info(Object.assign(this.OPTIONS, message, { class: 'saves-notify__save' }))
   },
   exportError(message) {
-    iziToast.info(Object.assign(this.OPTIONS, message, { iconUrl: 'assets/img/exclamation-triangle.svg', class: 'saves-notify__error' }))
+    iziToast.info(Object.assign(this.OPTIONS, message, { class: 'saves-notify__error', iconUrl: 'assets/img/exclamation-triangle.svg' }))
   },
 }
 
