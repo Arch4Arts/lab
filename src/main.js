@@ -32,7 +32,7 @@ Vue.use(vueScrollBehavior, { router: router })
 // Сообственные функции и методы
 import './js/specialActivate'
 import updateTheme from './styles/updateTheme';
-import hotkeySystem from './js/hotkeySystem'
+import './js/hotkeyHandler'
 
 import { SentryPush } from './js/globalErrorsHandling';
 import './js/globalErrorsHandling'
@@ -63,8 +63,6 @@ new Vue({
       // Обновляем оформление игры
       updateTheme('game');
       updateTheme('mChat');
-      // Подключаем горячие клавиши (проверка внутри функции)
-      hotkeySystem.bind();
       
       const self = this;
       document.addEventListener("fullscreenchange", function () {
@@ -114,14 +112,6 @@ new Vue({
     pushError(error){
       SentryPush(error) // Отправка ошибки через Sentry
       console.error(error);
-    }
-  },
-  watch: { // Клавиатурные сокращения
-    '$store.state.keyboardShortcutsVersion': function () {
-      // Отвязываем обработчик со старыми значениями
-      hotkeySystem.unbind()
-      // Привязываем обработчик с новыми значениями
-      hotkeySystem.bind()
     }
   },
   render: function (h) { return h(App) }

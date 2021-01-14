@@ -60,88 +60,96 @@
     <v-list-item-group multiple>
       <v-list-item class="v-list-item">
         <!-- Надпись -->
-        <v-list-item-content @click="gameHotkeysEnable" class="v-list-item__content">
+        <v-list-item-content @click="setHotkeyEnableState()" class="v-list-item__content">
           <v-list-item-title>{{ $t('main-toggle-title') }}</v-list-item-title>
         </v-list-item-content>
         <!-- Тумблер -->
         <v-list-item-action class="v-list-item__action">
           <v-switch
-            v-model="$store.state.gameHotkeysEnable"
-            @click.stop="gameHotkeysEnable"
+            v-model="$store.state.hotkeySettings.isEnable"
+            @click.stop="setHotkeyEnableState()"
           ></v-switch>
         </v-list-item-action>
       </v-list-item>
     </v-list-item-group>
   </v-list>
   <!-- Настройки -->
-  <v-card v-model="settings" class="hotkey-section" :disabled="!$store.state.gameHotkeysEnable" elevation="0">
-    <p :class="($store.state.gameHotkeysEnable) ? 'hotkey-section__name' : 'hotkey-section__name disabled'">{{ $t('settings.title') }}</p>
+  <v-card v-model="settings" class="hotkey-section" :disabled="!$store.state.hotkeySettings.isEnable" elevation="0">
+    <p :class="($store.state.hotkeySettings.isEnable) ? 'hotkey-section__name' : 'hotkey-section__name disabled'">
+      {{ $t('settings.title') }}
+    </p>
     <div 
       class="hotkey-section-option"
-      :class="{'disabled': !$store.state.gameHotkeysEnable, highlight:settings.key == selected.key}"
-      v-for="settings in settingsHotkeys" :key="settings.key" 
-      @click="hotkeySelected('settings', settings.key)"
+      :class="{ 'disabled': !$store.state.hotkeySettings.isEnable, highlight: settings.hotkey == hotkeySelected }"
+      v-for="settings in hotkeys.settings" :key="settings.hotkey" 
+      @click="hotkeyChange(settings.hotkey)"
     >
       <div class="hotkey-section-option__desc">
-        {{settings.description}}
+        {{ settings.description }}
       </div>
-      <div class="hotkey-section-option__key" :class="{highlight:settings.key == selected.key}">
+      <div class="hotkey-section-option__key" :class="{ highlight: settings.hotkey == hotkeySelected }">
         <!-- Преобразуем первуб букву в заглавную -->
-        {{settings.hotkey.charAt(0).toUpperCase() + settings.hotkey.slice(1)}}
+        {{ settings.key.charAt(0).toUpperCase() + settings.key.slice(1) }}
       </div>
     </div>
   </v-card>
   <!-- Журнал -->
-  <v-card v-model="journal" class="hotkey-section" :disabled="!$store.state.gameHotkeysEnable" elevation="0">
-    <p :class="($store.state.gameHotkeysEnable) ? 'hotkey-section__name' : 'hotkey-section__name disabled'">{{ $t('journal.title') }}</p>
+  <v-card v-model="journal" class="hotkey-section" :disabled="!$store.state.hotkeySettings.isEnable" elevation="0">
+    <p :class="($store.state.hotkeySettings.isEnable) ? 'hotkey-section__name' : 'hotkey-section__name disabled'">
+      {{ $t('journal.title') }}
+    </p>
     <div 
       class="hotkey-section-option"
-      :class="{'disabled': !$store.state.gameHotkeysEnable, highlight:journal.key == selected.key}"
-      v-for="journal in journalHotkeys" :key="journal.key" 
-      @click="hotkeySelected('journal', journal.key)"
+      :class="{ 'disabled': !$store.state.hotkeySettings.isEnable, highlight: journal.hotkey == hotkeySelected }"
+      v-for="journal in hotkeys.journal" :key="journal.hotkey" 
+      @click="hotkeyChange(journal.hotkey)"
     >
       <div class="hotkey-section-option__desc">
-        {{journal.description}}
+        {{ journal.description }}
       </div>
-      <div class="hotkey-section-option__key" :class="{highlight:journal.key == selected.key}">
+      <div class="hotkey-section-option__key" :class="{ highlight: journal.hotkey == hotkeySelected }">
         <!-- Преобразуем первуб букву в заглавную -->
-        {{journal.hotkey.charAt(0).toUpperCase() + journal.hotkey.slice(1)}}
+        {{ journal.key.charAt(0).toUpperCase() + journal.key.slice(1) }}
       </div>
     </div>
   </v-card>
   <!-- Сохранения -->
-  <v-card v-model="saves" class="hotkey-section" :disabled="!$store.state.gameHotkeysEnable" elevation="0">
-    <p :class="($store.state.gameHotkeysEnable) ? 'hotkey-section__name' : 'hotkey-section__name disabled'">{{ $t('saves.title') }}</p>
+  <v-card v-model="saves" class="hotkey-section" :disabled="!$store.state.hotkeySettings.isEnable" elevation="0">
+    <p :class="($store.state.hotkeySettings.isEnable) ? 'hotkey-section__name' : 'hotkey-section__name disabled'">
+      {{ $t('saves.title') }}
+    </p>
     <div 
       class="hotkey-section-option"
-      :class="{'disabled': !$store.state.gameHotkeysEnable, highlight:saves.key == selected.key}"
-      v-for="saves in savesHotkeys" :key="saves.key" 
-      @click="hotkeySelected('saves', saves.key)"
+      :class="{ 'disabled': !$store.state.hotkeySettings.isEnable, highlight: saves.hotkey == hotkeySelected }"
+      v-for="saves in hotkeys.saves" :key="saves.hotkey" 
+      @click="hotkeyChange(saves.hotkey)"
     >
-      <div class="hotkey-section-option__desc">
-        {{saves.description}}
+      <div class="hotkey-section-option__desc" :class="{ highlight: saves.hotkey == hotkeySelected }">
+        {{ saves.description }}
       </div>
-      <div class="hotkey-section-option__key" :class="{highlight:saves.key == selected.key}">
+      <div class="hotkey-section-option__key" :class="{ highlight: saves.hotkey == hotkeySelected }">
         <!-- Преобразуем первуб букву в заглавную -->
-        {{saves.hotkey.charAt(0).toUpperCase() + saves.hotkey.slice(1)}}
+        {{ saves.key.charAt(0).toUpperCase() + saves.key.slice(1) }}
       </div>
     </div>
   </v-card>
   <!-- Чат -->
-  <v-card v-model="mChat" class="hotkey-section" :disabled="!$store.state.gameHotkeysEnable" elevation="0">
-    <p :class="($store.state.gameHotkeysEnable) ? 'hotkey-section__name' : 'hotkey-section__name disabled'">{{ $t('mChat.title') }}</p>
+  <v-card v-model="mChat" class="hotkey-section" :disabled="!$store.state.hotkeySettings.isEnable" elevation="0">
+    <p :class="($store.state.hotkeySettings.isEnable) ? 'hotkey-section__name' : 'hotkey-section__name disabled'">
+      {{ $t('mChat.title') }}
+    </p>
     <div 
       class="hotkey-section-option"
-      :class="{'disabled': !$store.state.gameHotkeysEnable, highlight:mChat.key == selected.key}"
-      v-for="mChat in mChatHotkeys" :key="mChat.key" 
-      @click="hotkeySelected('mChat', mChat.key)"
+      :class="{ 'disabled': !$store.state.hotkeySettings.isEnable, highlight: mChat.hotkey == hotkeySelected }"
+      v-for="mChat in hotkeys.mChat" :key="mChat.hotkey" 
+      @click="hotkeyChange(mChat.hotkey)"
     >
-      <div class="hotkey-section-option__desc">
-        {{mChat.description}}
+      <div class="hotkey-section-option__desc" :class="{ highlight: mChat.hotkey == hotkeySelected }">
+        {{ mChat.description }}
       </div>
-      <div class="hotkey-section-option__key" :class="{highlight:mChat.key == selected.key}">
+      <div class="hotkey-section-option__key" :class="{ highlight: mChat.hotkey == hotkeySelected}">
         <!-- Преобразуем первуб букву в заглавную -->
-        {{mChat.hotkey.charAt(0).toUpperCase() + mChat.hotkey.slice(1)}}
+        {{ mChat.key.charAt(0).toUpperCase() + mChat.key.slice(1) }}
       </div>
     </div>
   </v-card>
@@ -149,158 +157,126 @@
 </template>
 
 <script>
-// библиотека для конвертирования кода клавиши в имя !store.state.showSettingsDrawer
 const keycode = require('keycode');
 
 export default {
   data(){
     return {
-    settingsHotkeys: [
-      { // Открыть журнал
-        description: this.$t('settings.1'),
-        hotkey: '',
-        key: 'settingsOpen'
-      },
-      { // Открыть вкладку с персонажами 
-        description:this.$t('settings.2'),
-        hotkey: '',
-        key: 'settingsToggleGlobalSoundEnable'
-      },
-    ],
-    journalHotkeys: [
-      { // Открыть журнал
-        description: this.$t('journal.1'),
-        hotkey: '',
-        key: 'journalOpen'
-      },
-      { // Открыть вкладку с персонажами 
-        description: this.$t('journal.2'),
-        hotkey: '',
-        key: 'journalTabCharacters'
-      },
-      { // Открыть вкладку с дневником
-        description: this.$t('journal.3'),
-        hotkey: '',
-        key: 'journalTabDiary'
-      },
-      { // Открыть вкладку с достижениями
-        description: this.$t('journal.4'),
-        hotkey: '',
-        key: 'journalTabAchievements'
-      },
-    ],
-    savesHotkeys: [
-      { // Открыть журнал
-        description: this.$t('saves.1'),
-        hotkey: '',
-        key: 'savesOpen'
-      },
-      { // Открыть вкладку с персонажами 
-        description: this.$t('saves.2'),
-        hotkey: '',
-        key: 'savesQuickSave'
-      },
-      { // Открыть вкладку с дневником
-        description: this.$t('saves.3'),
-        hotkey: '',
-        key: 'savesQuickLoad'
-      },
-    ],
-    mChatHotkeys: [
-      { // Открыть журнал
-        description: this.$t('mChat.1'),
-        hotkey: '',
-        key: 'mChatOpen'
-      },
-    ],
+    hotkeys: {
+      settings: [
+        { // Открыть журнал
+          description: this.$t('settings.1'),
+          hotkey: 'settingsOpen',
+          key: ''
+        },
+        { // Открыть вкладку с персонажами 
+          description:this.$t('settings.2'),
+          hotkey: 'settingsToggleGlobalSoundEnable',
+          key: ''
+        },
+      ],
+      journal: [
+        { // Открыть журнал
+          description: this.$t('journal.1'),
+          hotkey: 'journalOpen',
+          key: ''
+        },
+        { // Открыть вкладку с персонажами 
+          description: this.$t('journal.2'),
+          hotkey: 'journalTabCharacters',
+          key: ''
+        },
+        { // Открыть вкладку с дневником
+          description: this.$t('journal.3'),
+          hotkey: 'journalTabDiary',
+          key: ''
+        },
+        { // Открыть вкладку с достижениями
+          description: this.$t('journal.4'),
+          hotkey: 'journalTabAchievements',
+          key: ''
+        },
+      ],
+      saves: [
+        { // Открыть журнал
+          description: this.$t('saves.1'),
+          hotkey: 'savesOpen',
+          key: ''
+        },
+        { // Открыть вкладку с персонажами 
+          description: this.$t('saves.2'),
+          hotkey: 'savesQuickSave',
+          key: ''
+        },
+        { // Открыть вкладку с дневником
+          description: this.$t('saves.3'),
+          hotkey: 'savesQuickLoad',
+          key: ''
+        },
+      ],
+      mChat: [
+        { // Открыть журнал
+          description: this.$t('mChat.1'),
+          hotkey: 'mChatOpen',
+          key: ''
+        },
+      ],
+    },
 
-    selected: {
-      section: '',
-      i: '',
-      key: '',
-    }
+    hotkeySelected: '',
     }
   },
   methods: {
-    gameHotkeysEnable(){
-      this.$store.commit('gameHotkeysEnable')
+    setHotkeyEnableState(){
+      this.$store.commit('hotkeySettings/isEnable');
     },
-    hotkeySelected(section, key){
+    hotkeyChange(hotkey){
       // Секция горячих клавиш
-      this.selected.section = section;
-      // Горячая клавиша
-      this.selected.key = key;
-      // document.body.addEventListener('keyup', this.hotkeyChange, { once: true })
-      // Запуск отслеживания нажатия кнопки
-      hotkeys('*', this.hotkeyChange);
+      this.hotkeySelected = hotkey;
+      document.body.addEventListener('keyup', (e) => {
+        if (this.$store.state.showSettingsDrawer && (keycode(e) !== undefined)) { 
+          this.checkDuplicateKey(keycode(e))
+          this.hotkeySelected = '';
+          this.$store.state.hotkeySettings.hotkeys[hotkey] = {
+            key: keycode(e),
+            code: e.code,
+          }          
+        }
+        else this.hotkeySelected = '';
+      }, { once: true })
     },
-    // Обработка нажатия кнопки
-    hotkeyChange(e){
-      // Записываем код нажатой клавиши
-      let keyCode = hotkeys.getPressedKeyCodes()
-      switch (this.selected.section) {
-        case 'settings': {        
-          // Конвертируем код в имя клавиши
-          let keyName = keycode(keyCode[0]);
-          // Записываем данные в хранилище
-          this.$store.state.settingsHotkeys[this.selected.key] = keyName
-          this.$store.commit('updateStore');
-          break;
-        }
-        case 'journal': {
-          // Конвертируем код в имя клавиши
-          let keyName = keycode(keyCode[0]);
-          // Записываем данные в хранилище
-          this.$store.state.journalHotkeys[this.selected.key] = keyName
-          this.$store.commit('updateStore');
-          break;
-        }
-        case 'saves': {
-          // Конвертируем код в имя клавиши
-          let keyName = keycode(keyCode[0]);
-          // Записываем данные в хранилище
-          this.$store.state.savesHotkeys[this.selected.key] = keyName
-          this.$store.commit('updateStore');
-          break;
-        }
-        case 'mChat': {
-          // Конвертируем код в имя клавиши
-          let keyName = keycode(keyCode[0]);
-          // Записываем данные в хранилище
-          this.$store.state.mChatHotkeys[this.selected.key] = keyName
-          this.$store.commit('updateStore');
-          break;
+    checkDuplicateKey(key) {
+      const hotkeyList = this.$store.state.hotkeySettings.hotkeys;
+      for (const hotkey in hotkeyList) {
+        if (hotkeyList[hotkey].key === key) { // Clean Up
+          hotkeyList[hotkey].key = '';
+          hotkeyList[hotkey].code = '';
         }
       }
-      // Очищаем selected
-      for (let key in this.selected) {
-        this.selected[key] = undefined;
-      }
-      // Прекращаем отслеживать нажатие клавиш
-      hotkeys.unbind('*');
-      // Увеличиваем версию сочетания клавиш, для перепривязки hotkeys
-      this.$store.state.keyboardShortcutsVersion++;
     }
   },
   computed: {
     settings(){
-      this.settingsHotkeys[0].hotkey = this.$store.state.settingsHotkeys['settingsOpen'];
-      this.settingsHotkeys[1].hotkey = this.$store.state.settingsHotkeys['settingsToggleGlobalSoundEnable'];
+      this.hotkeys.settings[0].key = this.$store.state.hotkeySettings.hotkeys['settingsOpen'].key;
+      this.hotkeys.settings[1].key = this.$store.state.hotkeySettings.hotkeys['settingsToggleGlobalSoundEnable'].key;
     },
     journal(){
-      this.journalHotkeys[0].hotkey = this.$store.state.journalHotkeys['journalOpen'];
-      this.journalHotkeys[1].hotkey = this.$store.state.journalHotkeys['journalTabCharacters'];
-      this.journalHotkeys[2].hotkey = this.$store.state.journalHotkeys['journalTabDiary'];
-      this.journalHotkeys[3].hotkey = this.$store.state.journalHotkeys['journalTabAchievements'];
+      this.hotkeys.journal[0].key = this.$store.state.hotkeySettings.hotkeys['journalOpen'].key;
+      this.hotkeys.journal[1].key = this.$store.state.hotkeySettings.hotkeys['journalTabCharacters'].key;
+      this.hotkeys.journal[2].key = this.$store.state.hotkeySettings.hotkeys['journalTabDiary'].key;
+      this.hotkeys.journal[3].key = this.$store.state.hotkeySettings.hotkeys['journalTabAchievements'].key;
     },
     saves(){
-      this.savesHotkeys[0].hotkey = this.$store.state.savesHotkeys['savesOpen'];
-      this.savesHotkeys[1].hotkey = this.$store.state.savesHotkeys['savesQuickSave'];
-      this.savesHotkeys[2].hotkey = this.$store.state.savesHotkeys['savesQuickLoad'];
+      this.hotkeys.saves[0].key = this.$store.state.hotkeySettings.hotkeys['savesOpen'].key;
+      this.hotkeys.saves[1].key = this.$store.state.hotkeySettings.hotkeys['savesQuickSave'].key;
+      this.hotkeys.saves[2].key = this.$store.state.hotkeySettings.hotkeys['savesQuickLoad'].key;
     },
     mChat(){
-      this.mChatHotkeys[0].hotkey = this.$store.state.mChatHotkeys['mChatOpen'];
+      this.hotkeys.mChat[0].key = this.$store.state.hotkeySettings.hotkeys['mChatOpen'].key;
     },
+  },
+  watch: {
+    '$store.state.showSettingsDrawer': function () { this.hotkeySelected = '' }
   }
 }
 </script>
@@ -328,7 +304,7 @@ export default {
   margin: 0 8px !important;
   opacity: 1;
   &.disabled {
-  opacity: .4;
+    opacity: .4;
   }
 }
 
@@ -345,7 +321,7 @@ export default {
     cursor: pointer;
   }
   &.disabled {
-  opacity: .4;
+    opacity: .4;
   }
   &.highlight {
     opacity: 1;
@@ -361,6 +337,10 @@ export default {
   margin-left: 16px;
 
   background: #242933;
+  &.highlight {
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+  }
 }
 
 .hotkey-section-option__key {

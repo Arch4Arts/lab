@@ -6,6 +6,7 @@ import mChat from './modules/mobileChat/mChat'
 import mChatList from './modules/mobileChat/mChatList'
 import mChatMeta from './modules/mobileChat/mChatMeta'
 import mChatCharProfiles from './modules/mobileChat/mChatCharProfiles'
+import hotkeySettings from './modules/hotkeySettings'
 import soundSettings from './modules/soundSettings'
 import chars from './modules/chars'
 
@@ -31,26 +32,7 @@ const store = new Vuex.Store({
       { themeName: 'NordDark' },
       { themeName: 'CustomDark' },
     ],
-    gameHotkeysEnable: true, // Горячие клавиши в игре 
-    keyboardShortcutsVersion: '0',   
-    settingsHotkeys: {
-      settingsOpen: 'o',                    // Открыть журнала
-      settingsToggleGlobalSoundEnable: 'p', // Вкл / выкл звук глобально
-    },
-    journalHotkeys: {
-      journalOpen: 'q',            // Открыть журнала
-      journalTabCharacters: 'w',   // Открыть вкладку с персонажами 
-      journalTabDiary: 'e',        // Открыть вкладку с дневником
-      journalTabAchievements: 'r', // Открыть вкладку с достижениями   
-    },
-    savesHotkeys: {
-      savesOpen: 'a',      // Открыть сохранения
-      savesQuickSave: '1', // Быстрое сохранение
-      savesQuickLoad: '3', // Быстрая загрузка
-    },
-    mChatHotkeys: {
-      mChatOpen: 'd',      // Открыть чат
-    },
+
     
     reRender_mChatPlayersVolume: 0, // Используется для перерендера плееров в чате, изменяется в Saves.vue 
     reRender_ColorPickerCanvas: 0, // Для перерисовски окна с выбором цвета (исчезает при изменении размера)
@@ -143,6 +125,7 @@ const store = new Vuex.Store({
     mChatList,
     mChatMeta,
     mChatCharProfiles,
+    hotkeySettings,
     soundSettings,
     chars,
   }
