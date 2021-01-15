@@ -37,39 +37,31 @@ module.exports = {
           test: /specialActivate.js/,
           enforce: 'post',
           use: { 
-              loader: WebpackObfuscator.loader, 
-              options: {
-                controlFlowFlattening: true,
-                controlFlowFlatteningThreshold: 1,
-                deadCodeInjection: true,
-                deadCodeInjectionThreshold: 1,
-                identifierNamesGenerator: 'hexadecimal',
-                numbersToExpressions: true,
-                rotateStringArray: true,
-                selfDefending: true,
-                shuffleStringArray: true,
-                simplify: true,
-                splitStrings: true,
-                splitStringsChunkLength: 5,
-                stringArray: true,
-                stringArrayEncoding: ['rc4'],
-                stringArrayWrappersCount: 5,
-                stringArrayWrappersChainedCalls: true,
-                stringArrayWrappersType: 'function',
-                stringArrayThreshold: 1,
-                transformObjectKeys: true,
-              }
+            loader: WebpackObfuscator.loader, 
+            options: {
+              controlFlowFlattening: true,
+              controlFlowFlatteningThreshold: 1,
+              deadCodeInjection: true,
+              deadCodeInjectionThreshold: 1,
+              identifierNamesGenerator: 'hexadecimal',
+              numbersToExpressions: true,
+              rotateStringArray: true,
+              selfDefending: true,
+              shuffleStringArray: true,
+              simplify: true,
+              splitStrings: true,
+              splitStringsChunkLength: 5,
+              stringArray: true,
+              stringArrayEncoding: ['rc4'],
+              stringArrayWrappersCount: 5,
+              stringArrayWrappersChainedCalls: true,
+              stringArrayWrappersType: 'function',
+              stringArrayThreshold: 1,
+              transformObjectKeys: true,
+            }
           }
         },
-        {
-          test: /\.tsx?$/,
-          loader: 'ts-loader',
-          options: {
-            appendTsSuffixTo: [/\.vue$/],
-          },
-          exclude: /node_modules/,
-        },
-    ]
+      ]
     },
     plugins: (process.env.NODE_ENV !== 'development' && process.env.FORMAT !== 'library') ? // Production
       [
