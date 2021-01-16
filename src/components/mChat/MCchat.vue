@@ -98,8 +98,7 @@ export default {
     },
     sendNotify(message){
       if (!this.$store.state.mChat.show) {
-        const chatData = this.mChatList;
-        const charProfiles = this.mChatCharProfiles
+        const charProfiles = this.getCharProfiles;
         this.getAuthorInfo(message, charProfiles);
 
         if (message.type == 'text') {
@@ -152,7 +151,6 @@ export default {
       }
     },
     getAuthorInfo (message, charProfiles) {
-      console.log(charProfiles)
       for (const char of charProfiles) {
         if (char.charID === message.author) {
           // Если используется псевдоним
