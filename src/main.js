@@ -14,11 +14,6 @@ Vue.use(vClickOutside)
 
 import i18n from './i18n'
 
-// Открывает картинку в новом окне ( аналог просмоторщика Picasa )
-import 'viewerjs/dist/viewer.css'
-import Viewer from 'v-viewer'
-Vue.use(Viewer)
-
 // Видео/Аудио плеер
 import VuePlyr from 'vue-plyr'
 import 'plyr/dist/plyr.css'

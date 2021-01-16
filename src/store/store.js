@@ -25,7 +25,7 @@ const store = new Vuex.Store({
   state: {
     gameLang: 'ru',
     gameFont: 'Roboto',
-    gameFontSize: '14pt',
+    gameFontSize: '14',
     gameCurrentTheme: 'NordDark',
     gameThemesList: [
       { themeName: 'NordLight' },

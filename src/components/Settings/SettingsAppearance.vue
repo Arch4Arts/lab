@@ -46,8 +46,6 @@
 </template>
 
 <script>
-import extractNumbers from 'extract-numbers' // Для FontSize
-
 export default {
   data(){
     return {
@@ -64,27 +62,27 @@ export default {
   computed: {
     // Для кнопки смены языка, чтобы было выделение на текущем выбранном языке
 		getCurrentLanguage() { 
-			return this.$store.state.gameLang == 'ru' ? 0 : 1;
+			return this.$store.state.gameLang === 'ru' ? 0 : 1;
 		},
     // Шрифт
     fontFamily: {
       get: function () {
         return this.$store.state.gameFont;
       },
-      set: function (selected) {
-        this.$store.state.gameFont = selected;
-        document.getElementById("StoryTextArea").style.fontFamily = selected;
+      set: function (selectedFontFamily) {
+        this.$store.state.gameFont = selectedFontFamily;
+        document.getElementById("StoryTextArea").style.fontFamily = selectedFontFamily;
         this.$store.commit("updateStore");
       }
     },
     // Размер шрифта
     fontSize: {
       get: function () {
-        return extractNumbers(this.$store.state.gameFontSize)[0];
+        return this.$store.state.gameFontSize;
       },
-      set: function (selected) {
-        this.$store.state.gameFontSize = `${selected}pt`;
-        document.getElementById("StoryTextArea").style.fontSize = `${selected}pt`;
+      set: function (fontSize) {
+        this.$store.state.gameFontSize = fontSize;
+        document.getElementById("StoryTextArea").style.fontSize = `${fontSize}pt`;
         this.$store.commit("updateStore");
       } 
     }
