@@ -73,8 +73,12 @@ export default {
 }
 
 .btn {
-  background: var(--RadialMenu--btns--background) !important;
-  color: var(--RadialMenu--btns--color) !important;
+  background: var(--RadialMenu--btn--background) !important;
+  color: var(--RadialMenu--btn--color) !important;
+}
+
+.v-btn:hover {
+  background: var(--RadialMenu--btn_hover--background) !important;
 }
 
 // Отключение ripple эффекта после нажатия кнопки
