@@ -297,7 +297,6 @@ export default {
     this.updateSaveList()
   },
   mounted(){
-    console.log(this.savesList)
     eventBus.on('QuickSave', this.quickSave)
     eventBus.on('QuickLoad', this.quickLoad)
   },
@@ -325,34 +324,19 @@ export default {
       setTimeout(() => this.listSelectedSaves.length = 0, 100)
     },
     quickSave() {
-      let isExist = false;
       for (const save of this.savesList) {
-        if (save.saveName == 'Quick Save' || save.saveName == 'Быстрое сохранение') {
-          isExist = true
-          this.overwriteSave(
-            save.saveName, 
-            save.saveTime, 
-            save.saveID, 
-            save.saveGameVersion
-          )
-          break;
+        if (save.saveName === 'Quick Save' || save.saveName === 'Быстрое сохранение') {
+          this.overwriteSave(save.saveName, save.saveTime, save.saveID, save.saveGameVersion)
+          return;
         }
       }
-      // Если быстрого сохранения нет, делаем новое
-      if (!isExist) {
-        this.saveGame(this.$t('default-quick-save-name'))
-      }
+      this.saveGame(this.$t('default-quick-save-name'))
     },
     quickLoad() {
       for (const save of this.savesList) {
-        if (save.saveName == 'Quick Save' || save.saveName == 'Быстрое сохранение') {
-          this.loadSave(
-            save.saveName, 
-            save.saveTime, 
-            save.saveID, 
-            save.saveGameVersion
-          )
-          break;
+        if (save.saveName === 'Quick Save' || save.saveName === 'Быстрое сохранение') {
+          this.loadSave(save.saveName, save.saveTime, save.saveID, save.saveGameVersion)
+          return;
         }
       }
     },
@@ -426,7 +410,7 @@ export default {
     },
     async deleteSave(saveName, saveTime, saveID, saveGameVersion) {
       const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`
-      const saveIndex = this.savesList.findIndex(save => {(save.saveID === saveID)})
+      const saveIndex = this.savesList.findIndex(save => { return (save.saveID === saveID) })
       if (saveIndex > -1) {
         this.savesList.splice(saveIndex, 1);
         localforage.removeItem(saveHeader)
