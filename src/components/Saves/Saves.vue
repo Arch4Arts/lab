@@ -107,6 +107,7 @@
       <v-flex class="input-area">
         <v-text-field dark
           class="save-name__input"
+          autocomplete="dont delete this hack"
           color="grey lighten-2"
           :autofocus="(this.$root.isTouchDevice) ? false : true"
           :placeholder="$t('default-save-name')"
@@ -296,6 +297,7 @@ export default {
     this.updateSaveList()
   },
   mounted(){
+    console.log(this.savesList)
     eventBus.on('QuickSave', this.quickSave)
     eventBus.on('QuickLoad', this.quickLoad)
   },
@@ -316,12 +318,13 @@ export default {
       if (this.savesList.length) {
         this.savesList.sort(this.sortBy('saveID'))
       }
-      this.savesNumber = await localforage.length().then(length => length);
+      localforage.length()
+        .then(length => this.savesNumber = length);
     },
-    async clearSelectedSavesList(){
-      setTimeout(() => this.listSelectedSaves = [], 100)
+    async clearSelectedSavesList() {
+      setTimeout(() => this.listSelectedSaves.length = 0, 100)
     },
-    quickSave(){
+    quickSave() {
       let isExist = false;
       for (const save of this.savesList) {
         if (save.saveName == 'Quick Save' || save.saveName == 'Быстрое сохранение') {
@@ -340,7 +343,7 @@ export default {
         this.saveGame(this.$t('default-quick-save-name'))
       }
     },
-    quickLoad(){
+    quickLoad() {
       for (const save of this.savesList) {
         if (save.saveName == 'Quick Save' || save.saveName == 'Быстрое сохранение') {
           this.loadSave(
@@ -353,7 +356,7 @@ export default {
         }
       }
     },
-    async saveGame(saveName){
+    async saveGame(saveName) {
       saveName = saveName || this.$t('default-save-name')
       this.saveNameInput = ''; // Очищаем поле ввода
       this.$store.state.saveName = saveName;
@@ -370,9 +373,9 @@ export default {
           this.updateSaveList()
           this.closeDrawerAfterSaving()
         })
-        .catch(err => this.$root.pushError(err.toString()))
+        .catch(err => this.$root.pushError(err))
     },
-    async overwriteSave(saveName, saveTime, saveID, saveGameVersion){
+    async overwriteSave(saveName, saveTime, saveID, saveGameVersion) {
       const oldSaveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`
       saveTime = this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm");
       saveID = this.$store.state.saveID = dayjs().format("x");
@@ -383,7 +386,7 @@ export default {
       await WebCrypto.encrypt(saveHeader, JSON.serialize(this.$store.state))
         .then( encryptedData => localforage.setItem(saveHeader, encryptedData) )
         .then(() => savesNotify.save({message: this.$t('notify-overwrite-save')}))
-        .catch(err => this.$root.pushError(err.toString()))
+        .catch(err => this.$root.pushError(err))
 
       // Удаляем старый
       localforage.removeItem(oldSaveHeader)
@@ -400,10 +403,10 @@ export default {
           this.clearSelectedSavesList()
           this.closeDrawerAfterSaving()
         })
-        .catch(err => this.$root.pushError(err.toString()))
+        .catch(err => this.$root.pushError(err))
       this.updateSaveList()
     },
-    async loadSave(saveName, saveTime, saveID, saveGameVersion){
+    async loadSave(saveName, saveTime, saveID, saveGameVersion) {
       const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`
       const encryptedData = await localforage.getItem(saveHeader).then( data => data )
       await WebCrypto.decrypt(saveHeader, encryptedData)
@@ -419,43 +422,43 @@ export default {
           this.closeDrawerAfterSaving()
         })
         .then(() => savesNotify.load({message: this.$t('notify-load-save')}))
-        .catch(err => this.$root.pushError(err.toString()))
+        .catch(err => this.$root.pushError(err))
     },
     async deleteSave(saveName, saveTime, saveID, saveGameVersion) {
       const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`
-      await localforage.removeItem(saveHeader)
-        .then(() => savesNotify.delete({message: this.$t('notify-delete-save')}))
-        .then(() => {
-          const saveIndex = this.savesList.findIndex(function(save) {
-            return (save.saveID === saveID)
+      const saveIndex = this.savesList.findIndex(save => {(save.saveID === saveID)})
+      if (saveIndex > -1) {
+        this.savesList.splice(saveIndex, 1);
+        localforage.removeItem(saveHeader)
+          .then(() => savesNotify.delete({message: this.$t('notify-delete-save')}))
+          .then(() => {
+            localforage.length().then(length => this.savesNumber = length);
+            this.clearSelectedSavesList()
           })
-          this.savesList.splice(saveIndex, 1);
-          this.updateSaveList()
-          this.clearSelectedSavesList()          
-        })
-        .catch(err => this.$root.pushError(err.toString()))
+          .catch(err => this.$root.pushError(err))        
+      }
     },
-    async DeleteAllSaves(){
+    async DeleteAllSaves() {
       // Очистка хранилища
       await localforage.clear()
         .then(() => savesNotify.delete({message: this.$t('notify-delete-all-save')}))
-        .catch(err => this.$root.pushError(err.toString()))
+        .catch(err => this.$root.pushError(err))
       // Закрываем модальное окно
       this.showModalDelSavesAll = false
       // Обнуляем список сохранений (перерисовываем список)
-      this.savesList = [];
+      this.savesList.length = 0;
       this.updateSaveList()
     },
-    async restartGame(){
+    async restartGame() {
       await localStorage.removeItem(`vuex`);
       await location.reload()
     },
-    closeDrawerAfterSaving(){
+    closeDrawerAfterSaving() {
       if (this.$store.state.showSavesDrawer && this.$store.state.isCloseDrawerAfterSaving) 
         this.$store.state.showSavesDrawer = false;
     },
     // регистрация изменений $store.state.showSavesDrawer из v-model
-    updateDrawerState(isShow){
+    updateDrawerState(isShow) {
       if (!isShow) 
         this.$store.commit('updateStore')
     },

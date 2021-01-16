@@ -110,6 +110,7 @@ new Vue({
       }
     },
     pushError(error){
+      error = error.toString();
       SentryPush(error) // Отправка ошибки через Sentry
       console.error(error);
     }

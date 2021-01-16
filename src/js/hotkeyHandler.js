@@ -3,7 +3,7 @@ import router from '../router'
 import eventBus from './eventBus'
 
 document.body.addEventListener('keyup', function(e) {
-  if (store.state.hotkeySettings.isEnable && !store.state.showSettingsDrawer) {
+  if (store.state.hotkeySettings.isEnable && !store.state.showSettingsDrawer && !store.state.showSavesDrawer) {
     const hotkeys = store.state.hotkeySettings.hotkeys;
     switch (e.code) {
       case hotkeys.settingsOpen.code: {

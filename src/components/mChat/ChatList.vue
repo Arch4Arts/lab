@@ -148,7 +148,7 @@ export default {
     },
     getChatLastMessage(chatList){
       for (const chat of chatList) {
-        for (const i = chat.chatHistory.length - 1; i >= 0; i--) {
+        for (let i = chat.chatHistory.length - 1; i >= 0; i--) {
           if (chat.chatHistory[i].type !== 'suggestion') {
             chat.chatHistory = chat.chatHistory[i];
             break;
