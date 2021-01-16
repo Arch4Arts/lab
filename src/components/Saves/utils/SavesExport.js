@@ -45,7 +45,7 @@ async function _getSaveData(save) {
 
 async function _writeSaveFile(savesList) {
   const saveFile = [];
-  for (let save of savesList) {
+  for (const save of savesList) {
     await _getSaveData(save).then(saveData => saveFile.push(saveData))
   }
   _writeToDisk(`${this.$root.gameName}-${dayjs().format("DD.MM.YYYY - HH:mm")}.${(saveFile.length > 1 ? 'saves' : 'save')}`, JSON.stringify(saveFile, null, 2))

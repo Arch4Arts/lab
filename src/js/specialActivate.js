@@ -11,14 +11,14 @@ const specialComponentList = {
 }
 
 {
-  for (let component in specialComponentList) {
+  for (const component in specialComponentList) {
     Vue.component(`${component}`, () => null)
   }
   Store.state.reRender_SpecialComponents += 1;    
 }
 
 eventBus.on('specialCheck', (code) => {
-  for (let component in specialComponentList) {
+  for (const component in specialComponentList) {
     Vue.component(`${component}`, specialComponentList[component])
   }
   Store.state.reRender_SpecialComponents += 1;  

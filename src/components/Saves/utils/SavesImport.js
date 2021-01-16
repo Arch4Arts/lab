@@ -14,7 +14,7 @@ function str2ab(str) {
   let data = new Object();
   data.buf = new ArrayBuffer(str.length);
   data.bufView = new Uint8Array(data.buf);
-  for (let i = 0, strLen = str.length; i < strLen; i++) {
+  for (const i = 0, strLen = str.length; i < strLen; i++) {
     data.bufView[i] = str.charCodeAt(i);
   }
   return data;
@@ -58,7 +58,7 @@ function _loadSaves(saveFile, savesList) {
 
 export async function loadFromDisk(event, savesList) {
   const files = event.target.files
-  for (let file of files) {
+  for (const file of files) {
     _readFile(file)
       .then(saveFile => _loadSaves.call(this, saveFile, savesList))
       .then(() => this.updateSaveList())

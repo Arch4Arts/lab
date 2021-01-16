@@ -296,7 +296,6 @@ export default {
     this.updateSaveList()
   },
   mounted(){
-    // Подписываемся на события
     eventBus.on('QuickSave', this.quickSave)
     eventBus.on('QuickLoad', this.quickLoad)
   },
@@ -324,7 +323,7 @@ export default {
     },
     quickSave(){
       let isExist = false;
-      for (let save of this.savesList) {
+      for (const save of this.savesList) {
         if (save.saveName == 'Quick Save' || save.saveName == 'Быстрое сохранение') {
           isExist = true
           this.overwriteSave(
@@ -342,7 +341,7 @@ export default {
       }
     },
     quickLoad(){
-      for (let save of this.savesList) {
+      for (const save of this.savesList) {
         if (save.saveName == 'Quick Save' || save.saveName == 'Быстрое сохранение') {
           this.loadSave(
             save.saveName, 

@@ -41,7 +41,7 @@ export default {
     getChatData() {
       const chatList = this.getChatList;
       const selectedChatID = this.$store.state.mChat.selectedChatID
-      for (let chat of chatList) { // Перебираем для каждого пользователя
+      for (const chat of chatList) { // Перебираем для каждого пользователя
         if (chat.chatID === selectedChatID) {
           return chat
         }
@@ -153,7 +153,7 @@ export default {
     },
     getAuthorInfo (message, charProfiles) {
       console.log(charProfiles)
-      for (let char of charProfiles) {
+      for (const char of charProfiles) {
         if (char.charID === message.author) {
           // Если используется псевдоним
           message.authorName = char.isAlias ? char.aliasName : char.name

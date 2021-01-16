@@ -40,7 +40,7 @@ export function sendMessage(ChatID, author, type, data) {
 
 export function onMessageWasSent(ChatID, message){ // Импорт для userInput (Suggestions)
   let chatList = store.state.mChatList.MC; // Не копируем массив, чтобы изменять оригинал
-  for (let chat of chatList) { // Перебираем для каждого пользователя
+  for (const chat of chatList) { // Перебираем для каждого пользователя
     if (chat.chatID === ChatID) {
       chat.unreadMessageCount++
       // Удаляем сообщение typing, если используется имитация набора
@@ -68,7 +68,7 @@ export function onMessageWasSent(ChatID, message){ // Импорт для userIn
 export function addContactToChatList(newContact){
   // let doubleDetect = false;
   // let contacts = store.state.mChatData.MC.сurrentChatList
-  // for (let contact of contacts) {
+  // for (const contact of contacts) {
   //   if (contact === newContact) doubleDetect = true;
   // }
   // if (doubleDetect === false) {

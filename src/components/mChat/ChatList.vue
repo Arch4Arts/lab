@@ -134,7 +134,7 @@ export default {
   methods: {
     getChatInfo(chatList){
       const charProfiles = this.charProfiles;
-      for (let chat of chatList) {
+      for (const chat of chatList) {
         if (chat.isGroupChat === false) {
           charProfiles.find(char => {
             if (char.charID === chat.chatID) {
@@ -147,8 +147,8 @@ export default {
       return chatList
     },
     getChatLastMessage(chatList){
-      for (let chat of chatList) {
-        for (let i = chat.chatHistory.length - 1; i >= 0; i--) {
+      for (const chat of chatList) {
+        for (const i = chat.chatHistory.length - 1; i >= 0; i--) {
           if (chat.chatHistory[i].type !== 'suggestion') {
             chat.chatHistory = chat.chatHistory[i];
             break;

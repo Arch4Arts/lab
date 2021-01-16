@@ -71,7 +71,7 @@ export default {
     getCharIDList() {
       let CharIDList = [];
       let chars = this.$store.state.mChatCharProfiles;
-      for (let char of chars) { // Перебираем для каждого пользователя
+      for (const char of chars) { // Перебираем для каждого пользователя
         CharIDList.push(char.charID)
       }
       return CharIDList
@@ -79,7 +79,7 @@ export default {
     getChatIDList() {
       let chatIDList = [];
       let chatList = this.$store.state.mChatList.MC;
-      for (let chat of chatList) { // Перебираем для каждого пользователя
+      for (const chat of chatList) { // Перебираем для каждого пользователя
         chatIDList.push(chat.chatID)
       }
       return chatIDList
