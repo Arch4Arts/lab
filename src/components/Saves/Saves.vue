@@ -320,7 +320,7 @@ export default {
       localforage.length().then(length => this.savesNumber = length);
     },
     async clearSelectedSavesList() {
-      setTimeout(() => this.listSelectedSaves.length = 0, 100)
+      setTimeout(() => this.listSelectedSaves = [], 100)
     },
     quickSave() {
       for (const save of this.savesList) {
@@ -359,25 +359,19 @@ export default {
         .catch(err => this.$root.pushError(err))
     },
     overwriteSave(saveName, saveTime, saveID, saveGameVersion) {
-      const oldSaveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`
+      const oldSaveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`;
       saveTime = this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm");
       saveID = this.$store.state.saveID = dayjs().format("x");
       saveGameVersion = this.$store.state.saveGameVersion = this.$root.gameVersion;
-      
-      // Добавляем новый
       const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`;
+
       WebCrypto.encrypt(saveHeader, JSON.serialize(this.$store.state))
         .then( encryptedData => localforage.setItem(saveHeader, encryptedData) )
-        .then(() => savesNotify.save({message: this.$t('notify-overwrite-save')}))
-        .catch(err => this.$root.pushError(err))
-
-      // Удаляем старый
-      localforage.removeItem(oldSaveHeader)
+        .then(() => localforage.removeItem(oldSaveHeader))
         .then(() => {
-          const oldSave = oldSaveHeader.split(',')
-          const saveID = oldSave[2]
+          const oldSaveID = oldSaveHeader.split(',')[2]
           this.savesList.find(function(save) {
-            if (save.saveID === saveID) {
+            if (save.saveID === oldSaveID) {
               save.saveTime = saveTime
               save.saveID = saveID;
             }
@@ -386,8 +380,9 @@ export default {
           this.clearSelectedSavesList()
           this.closeDrawerAfterSaving()
         })
+        .then(() => savesNotify.save({message: this.$t('notify-overwrite-save')}))
         .catch(err => this.$root.pushError(err))
-      this.updateSaveList()
+        .finally(() => this.updateSaveList())
     },
     loadSave(saveName, saveTime, saveID, saveGameVersion) {
       const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`
@@ -433,11 +428,9 @@ export default {
         .catch(err => this.$root.pushError(err))
     },
     restartGame() {
-      localStorage.removeItem(`vuex`)
-        .then(() => {
-          location.reload()
-        })
-        .catch(err => this.$root.pushError(err))
+      localStorage.removeItem('vuex');
+      if (!localStorage.getItem('vuex'))
+        location.reload();
     },
     closeDrawerAfterSaving() {
       if (this.$store.state.showSavesDrawer && this.$store.state.isCloseDrawerAfterSaving) 
