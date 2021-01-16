@@ -4,6 +4,23 @@ const sound = {
     // Вкл/выкл звука
     isPlaySoundsEnable: false,
 
+    // ! пример будущей структуры
+    // sounds: {
+    //   journal: {
+    //     diary: {
+    //       enable: true,
+    //       volume: 0.50,
+    //       sound: 'soundName'
+    //     },
+    //     another: {
+    //       ...
+    //     }
+    //   },
+    //   anotherSectionSound: {
+    //     ...
+    //   }
+    // },
+
     isPlayAchievementSound: true,
     isPlayDiarySound: true,
     isPlaySmartphoneSound: true,
@@ -30,16 +47,16 @@ const sound = {
   },
   mutations: {
     // Вкл/Выкл звука
-    isPlaySoundsEnable() {
+    changePlaySoundsEnableState() {
       this.state.soundSettings.isPlaySoundsEnable = !this.state.soundSettings.isPlaySoundsEnable;
     },
-    isPlayAchievementSound() {
+    changeAchievementSoundEnableState() {
       this.state.soundSettings.isPlayAchievementSound = !this.state.soundSettings.isPlayAchievementSound;
     },
-    isPlayDiarySound() {
+    changeDiarySoundEnableState() {
       this.state.soundSettings.isPlayDiarySound = !this.state.soundSettings.isPlayDiarySound;
     },
-    isPlaySmartphoneSound() {
+    changeSmartphoneSoundEnableState() {
       this.state.soundSettings.isPlaySmartphoneSound = !this.state.soundSettings.isPlaySmartphoneSound;
     },
   },

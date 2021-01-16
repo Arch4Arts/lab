@@ -72,7 +72,7 @@
       >
       <template v-slot:activator="{ on }">
         <!-- Кнопка -->
-        <v-btn @click="setSoundState('soundSettings/isPlayAchievementSound')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.soundSettings.isPlaySoundsEnable">
+        <v-btn @click="setSoundState('soundSettings/changeAchievementSoundEnableState')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.soundSettings.isPlaySoundsEnable">
           <a-icon v-if="$store.state.soundSettings.isPlayAchievementSound" :icon="['fas', 'music-alt']" />
           <a-icon v-else color="red" :icon="['fas', 'music-alt-slash']" />
         </v-btn>
@@ -129,7 +129,7 @@
       >
       <template v-slot:activator="{ on }">
         <!-- Кнопка -->
-        <v-btn @click="setSoundState('soundSettings/isPlayDiarySound')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.soundSettings.isPlaySoundsEnable">
+        <v-btn @click="setSoundState('soundSettings/changeDiarySoundEnableState')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.soundSettings.isPlaySoundsEnable">
           <a-icon v-if="$store.state.soundSettings.isPlayDiarySound" :icon="['fas', 'music-alt']" />
           <a-icon v-else color="red" :icon="['fas', 'music-alt-slash']" />
         </v-btn>
@@ -186,7 +186,7 @@
       >
       <template v-slot:activator="{ on }">
         <!-- Кнопка -->
-        <v-btn @click="setSoundState('soundSettings/isPlaySmartphoneSound')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.soundSettings.isPlaySoundsEnable">
+        <v-btn @click="setSoundState('soundSettings/changeSmartphoneSoundEnableState')" class="sound-options-container__btn" icon v-on="on" :disabled="!$store.state.soundSettings.isPlaySoundsEnable">
           <a-icon v-if="$store.state.soundSettings.isPlaySmartphoneSound" :icon="['fas', 'music-alt']" />
           <a-icon v-else color="red" :icon="['fas', 'music-alt-slash']" />
         </v-btn>
@@ -236,7 +236,7 @@ export default {
     },
     // Вкл / выкл всех звуков в игре по нажатию на v-list-item
     changeGlobalSoundEnable(){
-      this.$store.commit('soundSettings/isPlaySoundsEnable')
+      this.$store.commit('soundSettings/changePlaySoundsEnableState')
     },
     // Вкл / Выкл звука по значку ноты
     setSoundState(commitName) {

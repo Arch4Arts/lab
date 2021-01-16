@@ -11,7 +11,7 @@ document.body.addEventListener('keyup', function(e) {
         break;
       }
       case hotkeys.settingsToggleGlobalSoundEnable.code: {
-        store.commit('soundSettings/isPlaySoundsEnable')
+        store.commit('soundSettings/changePlaySoundsEnableState')
         break;
       }
       case hotkeys.journalOpen.code: {

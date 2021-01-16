@@ -198,7 +198,7 @@ export default {
     eventBus.off('mChatMessageWasSent_Notify');
   },
   watch: { // Клавиатурные сокращения
-    '$store.state.soundSettings.isPlaySoundsEnable': function () {
+    '$store.state.soundSettings.changePlaySoundsEnableState': function () {
       this.setAudioState();
     }
   },

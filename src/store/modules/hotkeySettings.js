@@ -47,7 +47,7 @@ const hotkeySettings = {
     },
   },
   mutations: {
-    isEnable() {
+    changeEnableState() {
       this.state.hotkeySettings.isEnable = !this.state.hotkeySettings.isEnable;
     }
   },

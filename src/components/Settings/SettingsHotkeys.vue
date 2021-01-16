@@ -228,7 +228,7 @@ export default {
   },
   methods: {
     setHotkeyEnableState(){
-      this.$store.commit('hotkeySettings/isEnable');
+      this.$store.commit('hotkeySettings/changeEnableState');
     },
     hotkeyChange(hotkey){
       // Секция горячих клавиш
