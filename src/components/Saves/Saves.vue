@@ -296,11 +296,11 @@ export default {
     }
     this.updateSaveList()
   },
-  mounted(){
+  mounted() {
     eventBus.on('QuickSave', this.quickSave)
     eventBus.on('QuickLoad', this.quickLoad)
   },
-  beforeDestroy(){
+  beforeDestroy() {
     eventBus.off('QuickSave')
     eventBus.off('QuickLoad')
   },
@@ -309,7 +309,7 @@ export default {
     chooseFiles: () => chooseFiles,
     saveToDisk: () => saveToDisk,
   },
-  methods:{
+  methods: {
     sortBy(key) { // (убыванию) < desc, asc > (возрастанию)
       return (a, b) => (a[key] < b[key]) ? 1 : ((b[key] < a[key]) ? -1 : 0);
     },
@@ -317,8 +317,7 @@ export default {
       if (this.savesList.length) {
         this.savesList.sort(this.sortBy('saveID'))
       }
-      localforage.length()
-        .then(length => this.savesNumber = length);
+      localforage.length().then(length => this.savesNumber = length);
     },
     async clearSelectedSavesList() {
       setTimeout(() => this.listSelectedSaves.length = 0, 100)
@@ -340,7 +339,7 @@ export default {
         }
       }
     },
-    async saveGame(saveName) {
+    saveGame(saveName) {
       saveName = saveName || this.$t('default-save-name')
       this.saveNameInput = ''; // Очищаем поле ввода
       this.$store.state.saveName = saveName;
@@ -349,7 +348,7 @@ export default {
       const saveGameVersion = this.$store.state.saveGameVersion = this.$root.gameVersion;
 
       const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`;
-      await WebCrypto.encrypt(saveHeader, JSON.serialize(this.$store.state))
+      WebCrypto.encrypt(saveHeader, JSON.serialize(this.$store.state))
         .then(encryptedData => localforage.setItem(saveHeader, encryptedData))
         .then(() => savesNotify.save({message: this.$t('notify-save')}))
         .then(() => {
@@ -359,7 +358,7 @@ export default {
         })
         .catch(err => this.$root.pushError(err))
     },
-    async overwriteSave(saveName, saveTime, saveID, saveGameVersion) {
+    overwriteSave(saveName, saveTime, saveID, saveGameVersion) {
       const oldSaveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`
       saveTime = this.$store.state.saveTime = dayjs().format("DD.MM.YYYY - HH:mm");
       saveID = this.$store.state.saveID = dayjs().format("x");
@@ -367,7 +366,7 @@ export default {
       
       // Добавляем новый
       const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`;
-      await WebCrypto.encrypt(saveHeader, JSON.serialize(this.$store.state))
+      WebCrypto.encrypt(saveHeader, JSON.serialize(this.$store.state))
         .then( encryptedData => localforage.setItem(saveHeader, encryptedData) )
         .then(() => savesNotify.save({message: this.$t('notify-overwrite-save')}))
         .catch(err => this.$root.pushError(err))
@@ -390,15 +389,14 @@ export default {
         .catch(err => this.$root.pushError(err))
       this.updateSaveList()
     },
-    async loadSave(saveName, saveTime, saveID, saveGameVersion) {
+    loadSave(saveName, saveTime, saveID, saveGameVersion) {
       const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`
-      const encryptedData = await localforage.getItem(saveHeader).then( data => data )
-      await WebCrypto.decrypt(saveHeader, encryptedData)
+      localforage.getItem(saveHeader)
+        .then(encryptedData => WebCrypto.decrypt(saveHeader, encryptedData))
         .then(decryptedData => JSON.deserialize(decryptedData))
-        .then(state => this.$store.replaceState(state))
+        .then(saveState => this.$store.replaceState(saveState))
         .then(() => {
-          // Перерисовываем компоненты
-          this.$store.state.reRender_mChatPlayersVolume++;
+          this.$store.state.reRender_mChatPlayersVolume++; // Перерисовываем компоненты
           updateTheme('game');
           updateTheme('mChat');
           this.$store.commit('updateStore');
@@ -408,7 +406,7 @@ export default {
         .then(() => savesNotify.load({message: this.$t('notify-load-save')}))
         .catch(err => this.$root.pushError(err))
     },
-    async deleteSave(saveName, saveTime, saveID, saveGameVersion) {
+    deleteSave(saveName, saveTime, saveID, saveGameVersion) {
       const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`
       const saveIndex = this.savesList.findIndex(save => { return (save.saveID === saveID) })
       if (saveIndex > -1) {
@@ -422,24 +420,28 @@ export default {
           .catch(err => this.$root.pushError(err))        
       }
     },
-    async DeleteAllSaves() {
-      // Очистка хранилища
-      await localforage.clear()
+    DeleteAllSaves() {
+      localforage.clear()
         .then(() => savesNotify.delete({message: this.$t('notify-delete-all-save')}))
+        .then(() => {
+          // Закрываем модальное окно
+          this.showModalDelSavesAll = false;
+          // Обнуляем список сохранений (перерисовываем список)
+          this.savesList.length = 0;
+          this.updateSaveList();
+        })
         .catch(err => this.$root.pushError(err))
-      // Закрываем модальное окно
-      this.showModalDelSavesAll = false
-      // Обнуляем список сохранений (перерисовываем список)
-      this.savesList.length = 0;
-      this.updateSaveList()
     },
-    async restartGame() {
-      await localStorage.removeItem(`vuex`);
-      await location.reload()
+    restartGame() {
+      localStorage.removeItem(`vuex`)
+        .then(() => {
+          location.reload()
+        })
+        .catch(err => this.$root.pushError(err))
     },
     closeDrawerAfterSaving() {
       if (this.$store.state.showSavesDrawer && this.$store.state.isCloseDrawerAfterSaving) 
-        this.$store.state.showSavesDrawer = false;
+        store.commit('showSavesDrawer');
     },
     // регистрация изменений $store.state.showSavesDrawer из v-model
     updateDrawerState(isShow) {

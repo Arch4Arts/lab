@@ -155,7 +155,7 @@
         <!-- Панель сохранений -->
         <v-list-item-group multiple>
           <v-list-item class="v-list-item">
-            <v-list-item-content @click="changeOption('isCloseDrawerAfterSaving')">
+            <v-list-item-content @click="changeOption('closeDrawerAfterSaving')">
               <v-list-item-title>{{ $t('list-item__saves.1.title') }}</v-list-item-title>
               <v-list-item-subtitle>{{ $t('list-item__saves.1.subtitle') }}</v-list-item-subtitle>
             </v-list-item-content>
