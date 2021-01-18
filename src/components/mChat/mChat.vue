@@ -89,7 +89,7 @@ export default {
         const charProfiles = this.charProfiles;
         this.getAuthorInfo(message, charProfiles);
 
-        if (message.type == 'text') {
+        if (message.type === 'text') {
           message.content = markdown(message.data.text) // Применение форматирования к тексту, демо: https://markdown-it.github.io
           message.content = twemoji.parse(message.content, {
             base: 'assets/img/',                                          // default MaxCDN
@@ -97,22 +97,22 @@ export default {
             className: "mchat-notify__message-container__message__emoji", // default "emoji"
             folder: "twemoji"
           })
-        } else if (message.type == 'emoji') {
+        } else if (message.type === 'emoji') {
           message.content = twemoji.parse(message.data.emoji, {
             base: 'assets/img/',                                          // default MaxCDN
             ext: ".svg",                                                  // default ".png"
             folder: "twemoji"
           })
-        } else if (message.type == 'image') {
+        } else if (message.type === 'image') {
           message.content = this.vueRender(`<a-icon class="mchat-notify__message-container__message__icon" :icon="['fas', 'file-image']" />`)
-        } else if (message.type == 'video') {
+        } else if (message.type === 'video') {
           message.content = this.vueRender(`<a-icon class="mchat-notify__message-container__message__icon" :icon="['fas', 'file-video']" />`)
-        } else if (message.type == 'audio') {
+        } else if (message.type === 'audio') {
           message.content = this.vueRender(`<a-icon class="mchat-notify__message-container__message__icon" :icon="['fas', 'file-audio']" />`)
         }
 
         // * если не suggestions, system
-        if (message.content != undefined) {
+        if (message.content !== undefined) {
           const notyMSG = `
             <div class="mchat-notify__container">
               <div>

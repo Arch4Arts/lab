@@ -231,7 +231,7 @@ export default {
     // Обновление уровня громкости в реальном времени при перетаскивании ползунка слайдера (во время проигрывании звука)      
     volumeSoundChange(volume) { 
       const soundLoop = document.getElementById('playbackSoundLoop')
-      if (soundLoop != null) 
+      if (soundLoop !== null) 
         soundLoop.volume = volume;
     },
     // Вкл / выкл всех звуков в игре по нажатию на v-list-item

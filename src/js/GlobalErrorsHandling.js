@@ -60,7 +60,7 @@ if (process.env.NODE_ENV === 'production') { // Включение Sentry тол
       .then(result => {
         console.log(`Sentry fetch status: ${result.status}\nmsg: ${result.statusText}\nOK: ${result.ok}`)
         if (result.status === 400) { // 400 значит работает
-          if (event.exception && store.state.gameLang == 'ru') {
+          if (event.exception && store.state.gameLang === 'ru') {
             Sentry.showReportDialog({ 
               eventId: event.event_id,
               lang: 'ru',

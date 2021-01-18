@@ -80,14 +80,14 @@
     </p>
     <div 
       class="hotkey-section-option"
-      :class="{ 'disabled': !$store.state.hotkeySettings.isEnable, highlight: settings.hotkey == hotkeySelected }"
+      :class="{ 'disabled': !$store.state.hotkeySettings.isEnable, highlight: settings.hotkey === hotkeySelected }"
       v-for="settings in hotkeys.settings" :key="settings.hotkey" 
       @click="hotkeyChange(settings.hotkey)"
     >
       <div class="hotkey-section-option__desc">
         {{ settings.description }}
       </div>
-      <div class="hotkey-section-option__key" :class="{ highlight: settings.hotkey == hotkeySelected }">
+      <div class="hotkey-section-option__key" :class="{ highlight: settings.hotkey === hotkeySelected }">
         <!-- Преобразуем первуб букву в заглавную -->
         {{ settings.key.charAt(0).toUpperCase() + settings.key.slice(1) }}
       </div>
@@ -100,14 +100,14 @@
     </p>
     <div 
       class="hotkey-section-option"
-      :class="{ 'disabled': !$store.state.hotkeySettings.isEnable, highlight: journal.hotkey == hotkeySelected }"
+      :class="{ 'disabled': !$store.state.hotkeySettings.isEnable, highlight: journal.hotkey === hotkeySelected }"
       v-for="journal in hotkeys.journal" :key="journal.hotkey" 
       @click="hotkeyChange(journal.hotkey)"
     >
       <div class="hotkey-section-option__desc">
         {{ journal.description }}
       </div>
-      <div class="hotkey-section-option__key" :class="{ highlight: journal.hotkey == hotkeySelected }">
+      <div class="hotkey-section-option__key" :class="{ highlight: journal.hotkey === hotkeySelected }">
         <!-- Преобразуем первуб букву в заглавную -->
         {{ journal.key.charAt(0).toUpperCase() + journal.key.slice(1) }}
       </div>
@@ -120,14 +120,14 @@
     </p>
     <div 
       class="hotkey-section-option"
-      :class="{ 'disabled': !$store.state.hotkeySettings.isEnable, highlight: saves.hotkey == hotkeySelected }"
+      :class="{ 'disabled': !$store.state.hotkeySettings.isEnable, highlight: saves.hotkey === hotkeySelected }"
       v-for="saves in hotkeys.saves" :key="saves.hotkey" 
       @click="hotkeyChange(saves.hotkey)"
     >
-      <div class="hotkey-section-option__desc" :class="{ highlight: saves.hotkey == hotkeySelected }">
+      <div class="hotkey-section-option__desc" :class="{ highlight: saves.hotkey === hotkeySelected }">
         {{ saves.description }}
       </div>
-      <div class="hotkey-section-option__key" :class="{ highlight: saves.hotkey == hotkeySelected }">
+      <div class="hotkey-section-option__key" :class="{ highlight: saves.hotkey === hotkeySelected }">
         <!-- Преобразуем первуб букву в заглавную -->
         {{ saves.key.charAt(0).toUpperCase() + saves.key.slice(1) }}
       </div>
@@ -140,14 +140,14 @@
     </p>
     <div 
       class="hotkey-section-option"
-      :class="{ 'disabled': !$store.state.hotkeySettings.isEnable, highlight: mChat.hotkey == hotkeySelected }"
+      :class="{ 'disabled': !$store.state.hotkeySettings.isEnable, highlight: mChat.hotkey === hotkeySelected }"
       v-for="mChat in hotkeys.mChat" :key="mChat.hotkey" 
       @click="hotkeyChange(mChat.hotkey)"
     >
-      <div class="hotkey-section-option__desc" :class="{ highlight: mChat.hotkey == hotkeySelected }">
+      <div class="hotkey-section-option__desc" :class="{ highlight: mChat.hotkey === hotkeySelected }">
         {{ mChat.description }}
       </div>
-      <div class="hotkey-section-option__key" :class="{ highlight: mChat.hotkey == hotkeySelected}">
+      <div class="hotkey-section-option__key" :class="{ highlight: mChat.hotkey === hotkeySelected}">
         <!-- Преобразуем первуб букву в заглавную -->
         {{ mChat.key.charAt(0).toUpperCase() + mChat.key.slice(1) }}
       </div>

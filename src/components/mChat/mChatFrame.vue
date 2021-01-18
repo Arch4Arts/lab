@@ -194,11 +194,11 @@ export default {
   methods: {
     changeCSSVars(width, height){
       let element = document.querySelector('html');
-      if (width != undefined) {
+      if (width !== undefined) {
         element.style.setProperty("--mChatWidth", `${width}px`);
         element.style.setProperty("--mChatFontSize", `${width / 18}px`);
       }
-      if (height != undefined) {
+      if (height !== undefined) {
         element.style.setProperty("--mChatHeight", `${height}px`);
       }
     },

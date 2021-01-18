@@ -79,7 +79,7 @@ new Vue({
         let lang = window.navigator ? (window.navigator.language || window.navigator.systemLanguage || window.navigator.userLanguage) : "ru";
         lang = lang.substr(0, 2).toLowerCase();
         store.commit('isFirstGameLaunch');
-        lang == 'ru' ? store.commit('langChange', 'ru') : store.commit('langChange', 'en');
+        lang === 'ru' ? store.commit('langChange', 'ru') : store.commit('langChange', 'en');
       }
     },
     launchFullScreen() {

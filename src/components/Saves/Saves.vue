@@ -145,7 +145,7 @@
         </v-list-item-group>
       </v-list>
       <!-- Если нет сохранений -->
-      <div v-show="savesNumber == 0" class="saves-list">
+      <div v-show="savesNumber === 0" class="saves-list">
         <div class="text-center"><br>{{ $t('no-saves') }}<br><br></div>
       </div>
     </v-card>
@@ -183,10 +183,10 @@
       <!-- Удаление всех сохранений -->
       <v-tooltip top>
         <template v-slot:activator="{ on }">
-          <v-btn class="delete-all-saves-btn" @click="showModalDelSavesAll = !showModalDelSavesAll" :disabled="(savesNumber == 0) ? true : false" v-on="on" icon>
+          <v-btn class="delete-all-saves-btn" @click="showModalDelSavesAll = !showModalDelSavesAll" :disabled="(savesNumber === 0) ? true : false" v-on="on" icon>
             <a-icon 
               class="delete-all-saves-btn__color" 
-              :class="{ 'delete-all-saves-btn__color__disabled': (savesNumber == 0) }" 
+              :class="{ 'delete-all-saves-btn__color__disabled': (savesNumber === 0) }" 
               :icon="['fas', 'trash-alt']" 
             />
           </v-btn>

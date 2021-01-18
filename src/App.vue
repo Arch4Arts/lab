@@ -32,7 +32,7 @@ export default {
       if (this.$store.state.showSavesDrawer) 
         this.$store.commit('closeDrawerAfterSaving');
       // Отключение свайпа на странице дневника (там переход по подстраницам тоже на свайпах)
-      if (this.$route.path != '/Journal') {
+      if (this.$route.path !== '/Journal') {
         if (this.$store.state.mChat.show) {
           if (this.$store.state.mChat.showChatList)
             this.$store.commit('mChat/show', false);
@@ -44,7 +44,7 @@ export default {
     swipeLeft(){
       if (this.$store.state.mChat.enable) {
         // Отключение свайпа на странице дневника (tabs использует переход по подстраницам на свайпах влево/вправо)
-        if (this.$route.path != '/Journal') {
+        if (this.$route.path !== '/Journal') {
           if (this.$store.state.mChat.show) 
             this.$store.commit('mChat/show', false);
           else if (!this.$store.state.mChat.show) 
