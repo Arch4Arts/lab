@@ -9,9 +9,6 @@ import vuetify from './styles/vuetify'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 Vue.component('a-icon', FontAwesomeIcon)
 
-import vClickOutside from 'v-click-outside'
-Vue.use(vClickOutside)
-
 import i18n from './i18n'
 
 // Видео/Аудио плеер

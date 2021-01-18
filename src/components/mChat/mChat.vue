@@ -15,6 +15,9 @@
 import mChatFrame from './mChatFrame.vue'
 import FloatingChatButton from './FloatingChatButton.vue'
 
+import vClickOutside from 'v-click-outside'
+Vue.use(vClickOutside)
+
 import { mChatNotify } from '../../js/notificationSystem'
 import { playSound } from '../../js/playSound'
 import { markdown } from './messages/drawdown'
@@ -184,7 +187,7 @@ export default {
     eventBus.off('mChatMessageWasSent_Notify');
   },
   watch: { // Клавиатурные сокращения
-    '$store.state.soundSettings.changePlaySoundsEnableState': function () {
+    '$store.state.soundSettings.isPlaySoundsEnable': function () {
       this.setAudioState();
     }
   },
