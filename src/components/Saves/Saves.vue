@@ -263,7 +263,6 @@ import VirtualList from 'vue-virtual-scroll-list';
 import savesListComponent from './SavesList';
 
 localforage.config({
-  name: 'vuex',
   storeName: 'saves'
 });
 

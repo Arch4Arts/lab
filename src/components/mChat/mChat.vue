@@ -180,7 +180,6 @@ export default {
   },
   mounted(){
     this.setAudioState()
-
     eventBus.on('mChatMessageWasSent_Notify', this.sendNotify);
   },
   beforeDestroy(){

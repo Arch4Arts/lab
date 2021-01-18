@@ -8,7 +8,7 @@ import infoCircle from '../assets/info-circle.svg'
 
 import store from '../store/store'
 
-// Оповещения для globalErrorsHandling.js
+// Оповещения для errorHandler.js
 export function mChatNotify(extOptions){
   // Параметры по умолчанию
   const OPTIONS = {
@@ -68,7 +68,7 @@ export const savesNotify = {
   },
 }
 
-// Оповещения для globalErrorsHandling.js
+// Оповещения для errorHandler.js
 export function errorsHandlingNotify(extOptions){
   // Параметры по умолчанию
   const OPTIONS = {

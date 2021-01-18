@@ -11,23 +11,24 @@ Vue.component('a-icon', FontAwesomeIcon)
 
 import i18n from './i18n'
 
+import localforage from 'localforage';
+localforage.config({
+  name: gameName,
+});
+
 // Видео/Аудио плеер
 import VuePlyr from 'vue-plyr'
 import 'plyr/dist/plyr.css'
 Vue.use(VuePlyr)
-
-// Сохранение положения прокрутки
-import vueScrollBehavior from 'vue-scroll-behavior'
-Vue.use(vueScrollBehavior, { router: router })
 
 
 // Сообственные функции и методы
 import './js/specialActivate'
 import updateTheme from './styles/updateTheme';
 import './js/hotkeyHandler'
+import './js/scrollHandler'
 
-import { SentryPush } from './js/globalErrorsHandling';
-import './js/globalErrorsHandling'
+import './js/errorHandler'
 
 
 import { name as gameName } from  '../package.json';

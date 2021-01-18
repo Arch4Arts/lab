@@ -2,13 +2,13 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 
+import chars from './modules/chars'
 import mChat from './modules/mobileChat/mChat'
 import mChatList from './modules/mobileChat/mChatList'
 import mChatMeta from './modules/mobileChat/mChatMeta'
 import mChatCharProfiles from './modules/mobileChat/mChatCharProfiles'
 import hotkeySettings from './modules/hotkeySettings'
 import soundSettings from './modules/soundSettings'
-import chars from './modules/chars'
 
 const AES = require("crypto-js/aes");
 const UTF8 = require('crypto-js/enc-utf8')

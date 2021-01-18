@@ -15,7 +15,8 @@
 	<v-app>
 	<v-layout class="v-layout" justify-center>
 	<v-flex md8 class="Page" style="padding: 2% 0px 2% 0px">
-	
+	<StartPage />
+	<StartPage />
 	<v-expansion-panels accordion dark>
 		<!-- Об игре -->
 		<v-expansion-panel>
@@ -58,6 +59,7 @@
 
 <script>
 import AboutGame from './AboutGame'
+import StartPage from './StartPage'
 
 export default {
 	data() {
@@ -75,7 +77,8 @@ export default {
 		}
 	},
 	components: {
-		AboutGame
+		AboutGame,
+		StartPage
 	},
 	methods: {
 	}
