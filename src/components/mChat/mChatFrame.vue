@@ -38,7 +38,7 @@
           
           :chatList="chatList"
           :charProfiles="charProfiles"
-          :userChatList="userChatList"
+          :userChatIDList="userChatIDList"
           :userChatTheme="userChatTheme"
         />
         <!-- Отображаемый чат -->
@@ -98,7 +98,7 @@ export default {
       type: Array,
       required: true
     },    
-    userChatList: {
+    userChatIDList: {
       type: Array,
       required: true
     },

@@ -6,7 +6,7 @@
 
     <Settings />
     <Saves />
-    <mc-chat />
+    <MC-chat />
     <NavigationBar v-if="$store.state.appHeaderEnable" />
 
     <router-view v-if="!$store.state.isShowStartPage">
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import mcChat from './components/mChat/mcChat.vue'
+import MC from './components/Chars/mChat/MC';
 import NavigationBar from "./components/NavigationBar";
 import StartPage from "./pages/StartPage";
 import Entry from "./pages/Entry";
@@ -80,7 +80,7 @@ export default {
     NavigationBar,
     StartPage,
     Entry,
-    'mc-chat': mcChat,
+    'MC-chat': MC,
     // Ленивая загрузка компонентов (Dynamic Imports) для повышения производительности
     Settings: () => import('./components/Settings/Settings'),
     Saves: () => import('./components/Saves/Saves'),

@@ -369,7 +369,7 @@ export default {
         .then( encryptedData => localforage.setItem(saveHeader, encryptedData) )
         .then(() => localforage.removeItem(oldSaveHeader))
         .then(() => {
-          const oldSaveID = oldSaveHeader.split(',')[2]
+          const [, , oldSaveID] = oldSaveHeader.split(',')
           this.savesList.find(function(save) {
             if (save.saveID === oldSaveID) {
               save.saveTime = saveTime

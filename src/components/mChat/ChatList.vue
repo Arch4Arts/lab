@@ -26,7 +26,7 @@
           class="chat-list__palette-menu--hover"
           v-for="(ThemesList, index) in $store.state.mChat.themesList"
           :key="index"
-          @click="applySelectedTheme(ThemesList.themeName)"
+          @click="setSelectedTheme(ThemesList.themeName)"
         >
           <v-list-item-title class="chat-list__palette-menu-font">{{ ThemesList.themeName }}</v-list-item-title>
         </v-list-item>
@@ -114,18 +114,17 @@ export default {
       type: Array,
       required: true
     },
-    userChatList: {
-      type: Array,
-      required: true,
-    },
+    // userChatIDList: {
+    //   type: Array,
+    //   required: true,
+    // },
     userChatTheme: {
       type: String
     } 
   },
   computed: {
     getChatList() {
-      let chatList = cloneDeep(this.chatList); // клонируем чтобы не воздействовать на оригинал
-
+      let chatList = cloneDeep(this.chatList);
       chatList = this.getChatInfo(chatList);
       chatList = this.getChatLastMessage(chatList);
       return chatList;
@@ -161,7 +160,7 @@ export default {
       this.$store.state.mChat.selectedChatID = selectedChatID
       this.$store.commit('mChat/showChatList', false);
     },
-    applySelectedTheme(select){
+    setSelectedTheme(select){
       this.$store.state.mChatMeta.MC.userChatTheme = select;
       this.$store.commit('updateStore');
       updateTheme('mChat');
