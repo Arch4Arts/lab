@@ -47,7 +47,7 @@
 
 <script>
 export default {
-  data(){
+  data() {
     return {
       fontList: ['Roboto', 'Roboto Slab', 'Open Sans', 'Lato', 'Merriweather', 'Minion Pro'],
       fontListRu: ['Roboto', 'Roboto Slab', 'Open Sans', 'Merriweather', 'Minion Pro'],

@@ -83,7 +83,7 @@ import ColorPicker from "./ColorPicker"
 import RussianName from "./DeclensionRussianNames.js"
 
 export default {
-  data(){
+  data() {
   return {
     validation: true,
     parentBlockNameID: 'container',

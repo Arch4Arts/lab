@@ -60,7 +60,7 @@
 import AboutGame from './AboutGame'
 
 export default {
-	data(){
+	data() {
 		return {
 			FAQ: [
 				{

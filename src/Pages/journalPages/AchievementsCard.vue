@@ -27,10 +27,12 @@
 <script>
 export default {
   props: ['dataImage'],
-  data: () => ({
-    width: 0,
-    height: 0,
-  }),
+  data: function () {
+    return {
+      width: 0,
+      height: 0,      
+    }
+  },
   computed: {
     cardBgImage() {
       return {

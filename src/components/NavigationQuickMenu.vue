@@ -36,9 +36,11 @@
 
 <script>
 export default {
-  data: () => ({
-    showBackspace: false // Отображение кнопки назад (домой)
-  }),
+  data: function () {
+    return {
+      showBackspace: false // Отображение кнопки назад (домой)
+    }
+  },
   computed: {
     showQuickMenu(){
       return this.$store.state.showQuickMenu;

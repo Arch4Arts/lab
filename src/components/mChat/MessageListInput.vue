@@ -35,10 +35,12 @@ import mdi from './assets/mdi.vue'
 import { mdiSend, mdiPaperclip } from '@mdi/js'
 
 export default {
-  data: () => ({
+  data: function () {
+    return {
     send: mdiSend,
-    paperclip: mdiPaperclip
-  }),
+    paperclip: mdiPaperclip      
+    }
+  },
   props: {
     width: [Number, String],
     height: [Number, String],

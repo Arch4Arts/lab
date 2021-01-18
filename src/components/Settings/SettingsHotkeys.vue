@@ -160,7 +160,7 @@
 const keycode = require('keycode');
 
 export default {
-  data(){
+  data() {
     return {
     hotkeys: {
       settings: [

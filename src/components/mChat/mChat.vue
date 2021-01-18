@@ -26,7 +26,7 @@ import Vue from 'vue/dist/vue.js';
 export default {
   data () {
     return {
-      vConfig: {
+      vConfig: { // v-click-outside
         handler: this.closeChat, // Обработчик
         middleware: this.middleware, // Промежуточный слой проверки объекта попавшего под клик
         isActive: true,

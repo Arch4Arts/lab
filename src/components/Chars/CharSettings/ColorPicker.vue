@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  data(){
+  data() {
     return {
       color: this.currentColor,
       calcWidth: 440 // Default

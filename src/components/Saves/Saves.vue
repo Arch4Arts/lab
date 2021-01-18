@@ -268,7 +268,7 @@ localforage.config({
 });
 
 export default {
-  data () {
+  data() {
     return {
       component: savesListComponent,
 
@@ -403,7 +403,7 @@ export default {
     },
     deleteSave(saveName, saveTime, saveID, saveGameVersion) {
       const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`
-      const saveIndex = this.savesList.findIndex(save => { return (save.saveID === saveID) })
+      const saveIndex = this.savesList.findIndex(save => save.saveID === saveID )
       if (saveIndex > -1) {
         this.savesList.splice(saveIndex, 1);
         localforage.removeItem(saveHeader)
