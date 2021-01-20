@@ -68,12 +68,12 @@ export default {
       return []
     }
   },
-  mounted(){
+  mounted() {
     this.$refs.mChatMessageList.scrollToBottom()
     eventBus.on('mChatScrollToBottom', this.$refs.mChatMessageList.scrollToBottom);
     eventBus.on('mChatMessageWasSent', this.$refs.mChatMessageList.scrollToBottom);
   },
-  beforeDestroy(){
+  beforeDestroy() {
     eventBus.off('mChatScrollToBottom')
     eventBus.off('mChatMessageWasSent')
   },

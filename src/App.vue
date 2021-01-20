@@ -26,7 +26,7 @@ import Entry from "./pages/Entry";
 export default {
   name: 'App',
   methods: {
-    swipeRight(){
+    swipeRight() {
       if (this.$store.state.showSettingsDrawer) 
         this.$store.commit('showSettingsDrawer');
       if (this.$store.state.showSavesDrawer) 
@@ -41,7 +41,7 @@ export default {
         }
       }
     },
-    swipeLeft(){
+    swipeLeft() {
       if (this.$store.state.mChat.enable) {
         // Отключение свайпа на странице дневника (tabs использует переход по подстраницам на свайпах влево/вправо)
         if (this.$route.path !== '/Journal') {
@@ -53,16 +53,16 @@ export default {
       }
     },
     // Тригер для появления и исчезновения radialMenu
-    swipeBottom(){
+    swipeBottom() {
       this.$store.state.showQuickMenu = true
       this.$store.commit('updateStore');
     },
     // Тригер для появления и исчезновения radialMenu
-    swipeTop(){
+    swipeTop() {
       this.$store.state.showQuickMenu = false
       this.$store.commit('updateStore');
     },    
-    // updateCSSVars(){
+    // updateCSSVars() {
     //   let element = document.querySelector('html');
     //   element.style.setProperty("--AppWidth", `${window.innerWidth}px`);
     //   element.style.setProperty("--AppFontSize", `${window.innerWidth / 18}px`);

@@ -9,7 +9,7 @@ import infoCircle from '../assets/info-circle.svg'
 import store from '../store/store'
 
 // Оповещения для errorHandler.js
-export function mChatNotify(extOptions){
+export function mChatNotify(extOptions) {
   // Параметры по умолчанию
   const OPTIONS = {
     class: 'mchat-notify',
@@ -69,7 +69,7 @@ export const savesNotify = {
 }
 
 // Оповещения для errorHandler.js
-export function errorsHandlingNotify(extOptions){
+export function errorsHandlingNotify(extOptions) {
   // Параметры по умолчанию
   const OPTIONS = {
     class: 'errors-handling-notify',

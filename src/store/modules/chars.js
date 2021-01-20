@@ -27,13 +27,13 @@ const chars = {
     roommateName: '',
     roommateColor: 'hsl(100, 100%, 50%)',
   },
-  mutations:{
+  mutations: {
     // Сохранение имен при настройке
-    saveColorChars(){
+    saveColorChars() {
       this.state.mcColor = this.state.mcColor;
       this.state.sisterColor = this.state.sisterColor;
     },
-    saveCharsName(state, lang){
+    saveCharsName(state, lang) {
       if ( lang === 'ru' ) { // если ru, сохраняем имена с учетом склонения
         this.state.mcIm = this.state.mcIm;
         this.state.mcRod = this.state.mcRod;

@@ -42,14 +42,14 @@ export default {
     }
   },
   methods: {
-    saveVolumeSettings(){
+    saveVolumeSettings() {
       this.$store.state.mChat.videoVolume = this.player.volume();
       this.$store.commit('updateStore');
     },
-    play(){
+    play() {
       if (this.$store.state.mChat.autoplayVideoMessageOnHover) this.$refs.videoPlayer.play()
     },
-    pause(){
+    pause() {
       if (this.$store.state.mChat.autoplayVideoMessageOnHover) this.$refs.videoPlayer.pause();
     }
   },

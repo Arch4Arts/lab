@@ -15,14 +15,14 @@ export function markdown(src) {
     }
 
     function blockquote(src) {
-        return src.replace(/\n *&gt; *([^]*?)(?=(\n|$){2})/g,
+        return src.replace(/\n *&gt; *([^]*?)(?=(\n|$) {2})/g,
         function(all, content) {
             return element("blockquote", blockquote(content.replace(/^ *&gt; */gm,"")));
         });
     }
 
     function list(src) {
-        return src.replace(/\n( *)([*\-+]|((\d+)|([a-z])|[A-Z])[.)]) +([^]*?)(?=(\n|$){2})/g,
+        return src.replace(/\n( *)([*\-+]|((\d+)|([a-z])|[A-Z])[.)]) +([^]*?)(?=(\n|$) {2})/g,
         function(all, ind, _, ol, num, low, content) {
             var rind = "\n {0," + (ind.length+1) + "}";
             var entry = content.split(
@@ -61,7 +61,7 @@ export function markdown(src) {
     src = blockquote(src);
 
     // horizontal rule
-    replace(/^([*\-=_] *){3,}$/gm, "<hr/>");
+    replace(/^([*\-=_] *) {3,}$/gm, "<hr/>");
 
     // list
     src = list(src);

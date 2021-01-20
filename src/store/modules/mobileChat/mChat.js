@@ -32,31 +32,31 @@ const mChat = {
         ],
      },
     mutations: {      
-      enable(){
+      enable() {
         this.state.mChat.enable = !this.state.mChat.enable
       },
-      show(state, value){
+      show(state, value) {
         this.state.mChat.show = value
       },
-      showChatList(state, value){
+      showChatList(state, value) {
         this.state.mChat.showChatList = value
       },
-      closeChatOnClickedOutside(){
+      closeChatOnClickedOutside() {
         this.state.mChat.closeChatOnClickedOutside = !this.state.mChat.closeChatOnClickedOutside
       },
-      autoplayVideoMessageOnHover(){
+      autoplayVideoMessageOnHover() {
         this.state.mChat.autoplayVideoMessageOnHover = !this.state.mChat.autoplayVideoMessageOnHover
       },
-      typingIndicatorEnable(){
+      typingIndicatorEnable() {
         this.state.mChat.typingIndicatorEnable = !this.state.mChat.typingIndicatorEnable
       },
-      showAvatars(){
+      showAvatars() {
         this.state.mChat.showAvatars = !this.state.mChat.showAvatars
       },
-      showBarPanelPermanent(){
+      showBarPanelPermanent() {
         this.state.mChat.showBarPanelPermanent = !this.state.mChat.showBarPanelPermanent
       },
-      showDecorativeInputPanel(){
+      showDecorativeInputPanel() {
         this.state.mChat.showDecorativeInputPanel = !this.state.mChat.showDecorativeInputPanel
       },
      },

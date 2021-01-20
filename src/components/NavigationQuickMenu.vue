@@ -42,11 +42,11 @@ export default {
     }
   },
   computed: {
-    showQuickMenu(){
+    showQuickMenu() {
       return this.$store.state.showQuickMenu;
     },
     // Горизонтальная ориентация панели быстрого доступа
-    isQuickMenuHorizontalAlign(){
+    isQuickMenuHorizontalAlign() {
       return this.$store.state.isQuickMenuHorizontalAlign;
     }
   },

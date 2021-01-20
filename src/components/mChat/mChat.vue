@@ -62,7 +62,7 @@ export default {
     },
   },
   methods: {
-    closeChat(){
+    closeChat() {
       // Если чат отображается и включена настройка по его закрытию кликом снаружи
       if (this.$store.state.mChat.show && this.$store.state.mChat.closeChatOnClickedOutside) 
         this.$store.commit('mChat/show', false);
@@ -79,7 +79,7 @@ export default {
         ];
 
         // Проверяет содержится ли целевой класс в списке исключений
-        function checkClickTarget(exception){
+        function checkClickTarget(exception) {
           if (typeof event.target.className === 'string')
             return event.target.className.includes(exception);
         }
@@ -87,7 +87,7 @@ export default {
         return exceptionList.some(checkClickTarget) === false        
       }
     },
-    sendNotify(message){
+    sendNotify(message) {
       if (!this.$store.state.mChat.show) {
         const charProfiles = this.charProfiles;
         this.getAuthorInfo(message, charProfiles);
@@ -178,11 +178,11 @@ export default {
       } 
     }
   },
-  mounted(){
+  mounted() {
     this.setAudioState()
     eventBus.on('mChatMessageWasSent_Notify', this.sendNotify);
   },
-  beforeDestroy(){
+  beforeDestroy() {
     eventBus.off('mChatMessageWasSent_Notify');
   },
   watch: { // Клавиатурные сокращения

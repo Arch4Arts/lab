@@ -161,7 +161,7 @@ export default {
   },
   },
   methods: {
-    applyColorChange(color){ // Обработчик сообытия из дочернего элемента (ColorPicker)
+    applyColorChange(color) { // Обработчик сообытия из дочернего элемента (ColorPicker)
       this.color = color
       this.$store.state.chars.mcColor = this.color;
       this.$store.commit('saveColorChars');

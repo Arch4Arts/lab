@@ -60,7 +60,7 @@ import NavigationQuickMenu from './NavigationQuickMenu'
 
 export default {
 	methods: {
-		routeChange(route){
+		routeChange(route) {
 			this.$router.push(`/${route}`)
 		}
 	},

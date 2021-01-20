@@ -16,7 +16,7 @@ import mChat from '../../mChat/mChat'
 export default {
   name: 'MCChat', // Экземпляр главного героя
   computed: {
-    getChatList(){
+    getChatList() {
       return this.$store.state.mChatList.MC;
     },
     getChatData() {
@@ -28,13 +28,13 @@ export default {
         }
       }
     },
-    getCharProfiles(){
+    getCharProfiles() {
       return this.$store.state.mChatCharProfiles;
     },
-    getUserChatIDList(){
+    getUserChatIDList() {
       return this.$store.state.mChatMeta.MC.userChatIDList;
     },
-    getUserChatTheme(){
+    getUserChatTheme() {
       return this.$store.state.mChatMeta.MC.userChatTheme;
     },
     getUnreadMessagesCount() {

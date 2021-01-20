@@ -86,7 +86,7 @@ export default {
     }
   },
   methods: {
-    genUID(){
+    genUID() {
       let uniqid = require('uniqid');
       this.uniqid = uniqid()
     }

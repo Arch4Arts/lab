@@ -35,7 +35,7 @@ export default {
         '<img'
       ];
 
-      function checkMessageWasFormatted(exception){
+      function checkMessageWasFormatted(exception) {
         return message.includes(exception);
       }
       // Было ли сообщение отформитированно ранее (Для предотвращения повторной обработки после перерендера)

@@ -131,7 +131,7 @@ export default {
     },
   },
   methods: {
-    getChatInfo(chatList){
+    getChatInfo(chatList) {
       const charProfiles = this.charProfiles;
       for (const chat of chatList) {
         if (chat.isGroupChat === false) {
@@ -145,7 +145,7 @@ export default {
       }
       return chatList
     },
-    getChatLastMessage(chatList){
+    getChatLastMessage(chatList) {
       for (const chat of chatList) {
         for (let i = chat.chatHistory.length - 1; i >= 0; i--) {
           if (chat.chatHistory[i].type !== 'suggestion') {
@@ -156,11 +156,11 @@ export default {
       }
       return chatList
     },
-    setSelectedChat(selectedChatID){
+    setSelectedChat(selectedChatID) {
       this.$store.state.mChat.selectedChatID = selectedChatID
       this.$store.commit('mChat/showChatList', false);
     },
-    setSelectedTheme(select){
+    setSelectedTheme(select) {
       this.$store.state.mChatMeta.MC.userChatTheme = select;
       this.$store.commit('updateStore');
       updateTheme('mChat');
@@ -173,7 +173,7 @@ export default {
         '<img'
       ];
 
-      function checkMessageWasFormatted(exception){
+      function checkMessageWasFormatted(exception) {
         return message.includes(exception);
       }
       // Было ли сообщение отформитированно ранее (Для предотвращения повторной обработки после перерендера)
@@ -196,7 +196,7 @@ export default {
         '<img'
       ];
 
-      function checkEmojiWasGet(exception){
+      function checkEmojiWasGet(exception) {
         return message.includes(exception);
       }
       // Было ли сообщение отформитированно ранее (Для предотвращения повторной обработки после перерендера)

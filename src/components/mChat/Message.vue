@@ -73,7 +73,7 @@ export default {
     }
   },
   methods: {
-    submitSuggestion(suggestion){ 
+    submitSuggestion(suggestion) { 
       const chat = this.chatData;
       // если отправляемый suggestion автономен(т.е с type = suggestion), то нужно удалить его запись из истории, и добавить уже в виде ответа от From_me
       if (chat.chatHistory[chat.chatHistory.length - 1].type === 'suggestion') 
@@ -87,7 +87,7 @@ export default {
       const uniqid = require('uniqid');
       this.submitSuggestion({ uid: uniqid(), type: 'text', author: 'me', data: { text: suggestion } })
     },
-    getSuggestions(){
+    getSuggestions() {
       return this.source.data.suggestions
     },
     profile(author) {

@@ -68,11 +68,11 @@ new Vue({
     })
   },
   methods: {
-    detectTouchDevice(){ // https://stackoverflow.com/a/4819886/11574854
+    detectTouchDevice() { // https://stackoverflow.com/a/4819886/11574854
       this.isTouchDevice = !!('ontouchstart' in window  // works on most browsers 
       || navigator.maxTouchPoints);       // works on IE10/11 and Surface
     },
-    checkLanguage(){
+    checkLanguage() {
       if (store.state.isFirstGameLaunch) {
         let lang = window.navigator ? (window.navigator.language || window.navigator.systemLanguage || window.navigator.userLanguage) : "ru";
         lang = lang.substr(0, 2).toLowerCase();
@@ -102,7 +102,7 @@ new Vue({
         document.webkitExitFullscreen();
       }
     },
-    pushError(error){
+    pushError(error) {
       error = error.toString();
       SentryPush(error) // Отправка ошибки через Sentry
       console.error(error);

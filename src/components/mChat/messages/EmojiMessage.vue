@@ -29,7 +29,7 @@ export default {
         '<img'
       ];
 
-      function checkEmojiWasGet(exception){
+      function checkEmojiWasGet(exception) {
         return message.includes(exception);
       }
       // Было ли сообщение отформитированно ранее (Для предотвращения повторной обработки после перерендера)

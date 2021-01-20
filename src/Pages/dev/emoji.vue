@@ -16,7 +16,7 @@ export default {
     }
   },
   methods: {
-    test(){
+    test() {
       // console.log(twemoji.parse(emojiText, { callback: twemojiCode => { twemojiCode } }))
       console.log(twemoji.parse(this.emojiText, {
         base: 'assets/img/',         // default MaxCDN

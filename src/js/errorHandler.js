@@ -7,11 +7,11 @@ import SentryRRWeb from "@sentry/rrweb";
 
 import { errorsHandlingNotify } from './notificationSystem'
 
-function errorMessage(msg_ru, msg){
+function errorMessage(msg_ru, msg) {
   errorsHandlingNotify({ message: store.state.gameLang === 'ru' ? msg_ru : msg })
 }
 
-export function SentryPush(error){
+export function SentryPush(error) {
   Sentry.captureException(error);
   errorMessage(error, error)
 }

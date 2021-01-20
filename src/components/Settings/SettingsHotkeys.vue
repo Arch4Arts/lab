@@ -227,10 +227,10 @@ export default {
     }
   },
   methods: {
-    setHotkeyEnableState(){
+    setHotkeyEnableState() {
       this.$store.commit('hotkeySettings/changeEnableState');
     },
-    hotkeyChange(hotkey){
+    hotkeyChange(hotkey) {
       // Секция горячих клавиш
       this.hotkeySelected = hotkey;
       document.body.addEventListener('keyup', (e) => {
@@ -256,22 +256,22 @@ export default {
     }
   },
   computed: {
-    settings(){
+    settings() {
       this.hotkeys.settings[0].key = this.$store.state.hotkeySettings.hotkeys['settingsOpen'].key;
       this.hotkeys.settings[1].key = this.$store.state.hotkeySettings.hotkeys['settingsToggleGlobalSoundEnable'].key;
     },
-    journal(){
+    journal() {
       this.hotkeys.journal[0].key = this.$store.state.hotkeySettings.hotkeys['journalOpen'].key;
       this.hotkeys.journal[1].key = this.$store.state.hotkeySettings.hotkeys['journalTabCharacters'].key;
       this.hotkeys.journal[2].key = this.$store.state.hotkeySettings.hotkeys['journalTabDiary'].key;
       this.hotkeys.journal[3].key = this.$store.state.hotkeySettings.hotkeys['journalTabAchievements'].key;
     },
-    saves(){
+    saves() {
       this.hotkeys.saves[0].key = this.$store.state.hotkeySettings.hotkeys['savesOpen'].key;
       this.hotkeys.saves[1].key = this.$store.state.hotkeySettings.hotkeys['savesQuickSave'].key;
       this.hotkeys.saves[2].key = this.$store.state.hotkeySettings.hotkeys['savesQuickLoad'].key;
     },
-    mChat(){
+    mChat() {
       this.hotkeys.mChat[0].key = this.$store.state.hotkeySettings.hotkeys['mChatOpen'].key;
     },
   },

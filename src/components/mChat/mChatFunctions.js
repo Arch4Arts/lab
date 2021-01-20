@@ -38,7 +38,7 @@ export function sendMessage(ChatID, author, type, data) {
   else onMessageWasSent(ChatID, {meta: { chatid: ChatID }, uid: uniqid(), author: author, type: type, data: data})
 }
 
-export function onMessageWasSent(ChatID, message){ // Импорт для userInput (Suggestions)
+export function onMessageWasSent(ChatID, message) { // Импорт для userInput (Suggestions)
   let chatList = store.state.mChatList.MC; // Не копируем массив, чтобы изменять оригинал
   for (const chat of chatList) { // Перебираем для каждого пользователя
     if (chat.chatID === ChatID) {
@@ -65,7 +65,7 @@ export function onMessageWasSent(ChatID, message){ // Импорт для userIn
   }
 }
 
-export function addContactToChatList(newContact){
+export function addContactToChatList(newContact) {
   // let doubleDetect = false;
   // let contacts = store.state.mChatData.MC.сurrentChatList
   // for (const contact of contacts) {

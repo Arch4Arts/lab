@@ -215,15 +215,15 @@ import { playSound, playSoundLoop } from '../../js/playSound'
 export default {
   methods: {
     // Проиграть выбранный звук (для спика)
-    playSelectedSound(soundName, volume){
+    playSelectedSound(soundName, volume) {
       playSound(soundName, volume)
     },
     // Играть звук, пока мышь удерживает ползунок слайдера
-    startPlaySoundLoop(soundName, volume){
+    startPlaySoundLoop(soundName, volume) {
       playSoundLoop(soundName, volume)
     },
     // Перестать играть звук, когда мышь отпускает ползунок слайдера
-    stopPlaySoundLoop(){
+    stopPlaySoundLoop() {
       const soundLoop = document.getElementById('playbackSoundLoop')
       soundLoop.pause();
       document.body.removeChild(soundLoop); 
@@ -235,7 +235,7 @@ export default {
         soundLoop.volume = volume;
     },
     // Вкл / выкл всех звуков в игре по нажатию на v-list-item
-    changeGlobalSoundEnable(){
+    changeGlobalSoundEnable() {
       this.$store.commit('soundSettings/changePlaySoundsEnableState')
     },
     // Вкл / Выкл звука по значку ноты

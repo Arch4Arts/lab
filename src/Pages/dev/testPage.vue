@@ -56,7 +56,7 @@ export default {
     emoji,
   },
   methods: {
-    test2(){
+    test2() {
       console.log(this.$store.state.mChatData.MC.chatList[0].chatAvatar)
       this.$store.state.mChatCharProfiles[2].avatar = '123'
       console.log(this.$store.state.mChatData.MC.chatList[0].chatAvatar)
@@ -66,7 +66,7 @@ export default {
         console.log(globalThis.mChatCharProfiles)
       }, 2500)
     },
-    test3(){
+    test3() {
       eventBus.emit('specialCheck', 123)
     },
   }

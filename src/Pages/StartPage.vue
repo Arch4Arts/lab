@@ -49,11 +49,11 @@ export default {
 		}
 	},
 	methods: {
-		changeLanguage(lang){
+		changeLanguage(lang) {
 			this.$store.commit('langChange', lang)
 			this.$root.$i18n.locale = lang
 		},
-		ClickStart(){
+		ClickStart() {
 			this.$store.commit('isShowStartPage');
 		}
 	},

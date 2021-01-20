@@ -95,7 +95,7 @@ export default {
     author: [String],
   },
   methods: {
-    saveVolumeSettings(){
+    saveVolumeSettings() {
       this.$store.state.mChat.audioVolume = this.$refs.AudioMessagePlyr.player.volume
       this.$store.commit('updateStore');
     },    

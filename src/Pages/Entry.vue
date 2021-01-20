@@ -15,7 +15,7 @@
 import testPage from './dev/testPage'
 
 export default {
-	mounted: function(){ 
+	mounted: function() { 
 		document.getElementById("StoryTextArea").style.fontFamily = this.$store.state.gameFont;
 		document.getElementById("StoryTextArea").style.fontSize = `${this.$store.state.gameFontSize}`;
 	},

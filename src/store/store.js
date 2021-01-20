@@ -15,7 +15,7 @@ const UTF8 = require('crypto-js/enc-utf8')
 const PBKDF2 = require('crypto-js/pbkdf2')
 
 JSON.serialize = require('serialize-javascript');
-JSON.deserialize = function(serializedJavascript){
+JSON.deserialize = function(serializedJavascript) {
   return eval(`( ${serializedJavascript} )`);
 }
 
@@ -76,11 +76,11 @@ const store = new Vuex.Store({
       return undefined;
     },
     // Функция слияния значений по умолчанию, и пользовательским store.
-    // arrayMerger(store, saved){ 
+    // arrayMerger(store, saved) { 
     //   return assign(store, saved)
     // }
   })],
-  mutations:{
+  mutations: {
     updateStore() { // Используется только для закрепления изменений во всех Store's
       this.state.gameName = this.state.gameName; // Пустышка
     },
@@ -131,7 +131,7 @@ const store = new Vuex.Store({
   }
 })
 
-function keyGen(saveName){ // Генерация уникального ключа
+function keyGen(saveName) { // Генерация уникального ключа
   const salt = '3F4428472B4B6250';
   return PBKDF2(saveName, salt, { keySize: 256 / 32 , iterations: 1}).toString();
 }

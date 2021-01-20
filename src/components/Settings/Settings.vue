@@ -295,14 +295,14 @@ import eventBus from '../../js/eventBus'
 
 export default {
   methods: {
-    updateDrawerState(isShow){ // регистрация изменений $store.state.showSettingsDrawer из v-model
+    updateDrawerState(isShow) { // регистрация изменений $store.state.showSettingsDrawer из v-model
       if (!isShow) 
         this.$store.commit('updateStore')
     },
-    changeOption(commitName){
+    changeOption(commitName) {
       this.$store.commit(commitName)
     },
-    mChatHideBarOnScrolling(){
+    mChatHideBarOnScrolling() {
       eventBus.emit('reRender_mChat')
       this.$store.commit('mChat/showBarPanelPermanent')
     },

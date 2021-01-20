@@ -40,7 +40,7 @@
 <script>
 export default {
   methods: {
-    Leave(){
+    Leave() {
       location.href = "https://google.com"
     },
   }

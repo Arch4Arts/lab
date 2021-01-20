@@ -1,6 +1,6 @@
 import store from '../store/store';
 
-export default function updateTheme(type){
+export default function updateTheme(type) {
   // Оформление интерфейса игры
   if (type === 'game') {
     if (store.state.gameThemesList[0].themeName === store.state.gameCurrentTheme)

@@ -47,7 +47,7 @@ export default {
       this.y = y
       this.isDragNow = true
     },
-    savePosition(x, y){
+    savePosition(x, y) {
       this.$store.state.mChat.posX_floatButton = x
       this.$store.state.mChat.posY_floatButton = y
       this.$store.commit('updateStore');

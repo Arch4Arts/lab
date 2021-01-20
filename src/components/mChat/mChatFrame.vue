@@ -192,7 +192,7 @@ export default {
     },
   },
   methods: {
-    changeCSSVars(width, height){
+    changeCSSVars(width, height) {
       let element = document.querySelector('html');
       if (width !== undefined) {
         element.style.setProperty("--mChatWidth", `${width}px`);
@@ -206,7 +206,7 @@ export default {
       this.x = x
       this.y = y
     },
-    savePosition(x, y){
+    savePosition(x, y) {
       this.$store.state.mChat.posX = x
       this.$store.state.mChat.posY = y
       this.$store.commit('updateStore');
@@ -228,7 +228,7 @@ export default {
       this.$store.state.mChat.height = size.height
       this.$store.commit('updateStore');
     },
-    getSmartphoneSize(){ // Получение размеров smartphoneMockup
+    getSmartphoneSize() { // Получение размеров smartphoneMockup
       let element = document.getElementById('smartphone-mockup');
       let elementInfo = element.getBoundingClientRect();
       let device = {
@@ -237,7 +237,7 @@ export default {
       }
       return device
     },
-    getCurrentPosition(){ // Определение начальной позиции чата
+    getCurrentPosition() { // Определение начальной позиции чата
       // Если мобильное представление, устанавливаем в начало координат (выравнивание по левому краю)
       if (this.$vuetify.breakpoint.xsOnly) return 0;
       // Если позиция не задана, присваиваем по ширине окна (выравнивание по правому краю)

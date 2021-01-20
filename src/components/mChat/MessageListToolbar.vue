@@ -58,7 +58,7 @@ export default {
     }
   },
   methods: {
-    backToContactsPage(){
+    backToContactsPage() {
       this.$store.commit('mChat/showChatList', true);
     },
   }
