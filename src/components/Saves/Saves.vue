@@ -347,7 +347,7 @@ export default {
       const saveGameVersion = this.$store.state.saveGameVersion = this.$root.gameVersion;
 
       const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`;
-      WebCrypto.encrypt(saveHeader, JSON.serialize(this.$store.state))
+      WebCrypto.encrypt(saveHeader, JSON.stringify(this.$store.state))
         .then(encryptedData => localforage.setItem(saveHeader, encryptedData))
         .then(() => savesNotify.save({message: this.$t('notify-save')}))
         .then(() => {
@@ -364,7 +364,7 @@ export default {
       saveGameVersion = this.$store.state.saveGameVersion = this.$root.gameVersion;
       const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`;
 
-      WebCrypto.encrypt(saveHeader, JSON.serialize(this.$store.state))
+      WebCrypto.encrypt(saveHeader, JSON.stringify(this.$store.state))
         .then( encryptedData => localforage.setItem(saveHeader, encryptedData) )
         .then(() => localforage.removeItem(oldSaveHeader))
         .then(() => {
@@ -387,7 +387,7 @@ export default {
       const saveHeader = `${saveName},${saveTime},${saveID},${saveGameVersion}`
       localforage.getItem(saveHeader)
         .then(encryptedData => WebCrypto.decrypt(saveHeader, encryptedData))
-        .then(decryptedData => JSON.deserialize(decryptedData))
+        .then(decryptedData => JSON.parse(decryptedData))
         .then(saveState => this.$store.replaceState(saveState))
         .then(() => {
           this.$store.state.reRender_mChatPlayersVolume++; // Перерисовываем компоненты
