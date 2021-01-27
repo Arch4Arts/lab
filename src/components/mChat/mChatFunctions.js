@@ -2,9 +2,9 @@ import store from '../../store/store'
 import eventBus from '../../js/eventBus'
 
 let numberPendingMessages = 0;
-let typingMessageCopy = undefined;
+let typingMessageCopy = null;
 
-// Для suggestion ONLY нужно указать type: suggestion и data: undefined
+// Для suggestion ONLY нужно указать type: suggestion и data: null
 export function sendMessage(ChatID, author, type, data) { 
   const uniqid = require('uniqid');
   // Если иммитация включан, не suggestion, список чатов не отображается, чат отображается

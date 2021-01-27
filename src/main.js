@@ -28,7 +28,8 @@ import updateTheme from './styles/updateTheme';
 import './js/hotkeyHandler'
 import './js/scrollHandler'
 
-import './js/errorHandler'
+import './js/errorHandler';
+import { SentryPush } from './js/errorHandler';
 
 
 import { name as gameName } from  '../package.json';

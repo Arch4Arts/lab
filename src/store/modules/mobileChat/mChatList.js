@@ -4,8 +4,8 @@ const mChatList = {
     MC: [
           {
             chatID: 'erza',
-            chatName: undefined,
-            chatAvatar: undefined,
+            chatName: null,
+            chatAvatar: null,
             get chatName() {
               return globalThis.mChatCharProfiles[2].name;
             },

@@ -126,12 +126,12 @@ export default {
       this.updateSize;
       if (this.$vuetify.breakpoint.xsOnly) {
         this.height = window.innerHeight;
-        this.changeCSSVars(undefined, this.height);
+        this.changeCSSVars(null, this.height);
         return this.height
       }
       // Desktop
       else {
-        this.changeCSSVars(undefined, this.height- (this.height / 100 * 11.32));
+        this.changeCSSVars(null, this.height- (this.height / 100 * 11.32));
         return this.height- (this.height / 100 * 11.32)
       } 
     },
@@ -194,11 +194,11 @@ export default {
   methods: {
     changeCSSVars(width, height) {
       let element = document.querySelector('html');
-      if (width !== undefined) {
+      if (width !== null) {
         element.style.setProperty("--mChatWidth", `${width}px`);
         element.style.setProperty("--mChatFontSize", `${width / 18}px`);
       }
-      if (height !== undefined) {
+      if (height !== null) {
         element.style.setProperty("--mChatHeight", `${height}px`);
       }
     },
@@ -242,7 +242,7 @@ export default {
       if (this.$vuetify.breakpoint.xsOnly) return 0;
       // Если позиция не задана, присваиваем по ширине окна (выравнивание по правому краю)
       else { 
-        if (this.$store.state.mChat.posX === undefined) 
+        if (this.$store.state.mChat.posX === null) 
           return window.innerWidth - this.width;
         else // Если задана, возвращаем значение
           return this.$store.state.mChat.posX;
