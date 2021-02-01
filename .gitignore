@@ -32,7 +32,7 @@ yarn-error.log*
 *.svg
 *.mp4
 *.webm
-*.mp3
+# *.mp3
 
 # шрифты
 *.eot

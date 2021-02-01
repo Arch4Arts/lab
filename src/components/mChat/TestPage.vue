@@ -38,7 +38,7 @@
   <v-btn class="test-chat" 
     @click='sendMessage(selectedChatID, selectedCharID, "video", { src: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4", poster: require("../../media/img/video test preview.jpeg") })'>video...</v-btn>
   <v-btn class="test-chat" 
-    @click='sendMessage(selectedChatID, selectedCharID, "audio", { src: require("../../media/audio/test.mp3") })'>audio..</v-btn>
+    @click='sendMessage(selectedChatID, selectedCharID, "audio", { src: require("../../media/audio/ecstatic-piano-melody-smooth-loop_147bpm_D_minor.aac") })'>audio..</v-btn>
   <v-btn class="test-chat" 
     @click='sendMessage(selectedChatID, selectedCharID, "emoji", { emoji: "😍" })'>emoji..</v-btn>
   <v-btn class="test-chat" 
@@ -95,5 +95,9 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+
+.theme--dark.v-list {
+  background: var(--Page--background);
+}
 
 </style>

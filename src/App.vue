@@ -90,7 +90,7 @@ export default {
 
 <style lang='scss'>
 @import '../node_modules/normalize.css';
-@import './styles/main.scss';
+@import './styles/index.scss';
 
 // убирает подчёркивание у ссылок и делаем их жирнее
 a {

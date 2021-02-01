@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="orange1">// Horo is naughty wolf \\</p>
+    <p class="orange1">// wolf \\</p>
   </div>
 </template>
 
