@@ -26,7 +26,7 @@
  
   <br>
   <br><br>
-  <p>Send</p>
+  <p>Send to chat</p>
   <v-btn class="test-chat" 
     @click='sendMessage(selectedChatID, selectedCharID, "text", { text: "lorum! 😍" })'>short text...</v-btn>
   <v-btn class="test-chat" 
@@ -46,7 +46,7 @@
     <v-btn class="test-chat" 
     @click='sendMessage(selectedChatID, selectedCharID, "system", { text: "SYS lorum" })'>system</v-btn>
   <br>
-  <v-btn class="test-chat" text @click="addContactToChatList('mc_erza')">Добавить mc в контакты</v-btn>
+  <!-- <v-btn class="test-chat" text @click="addContactToChatList('mc_erza')">Добавить mc в контакты</v-btn> -->
   <br><br>
   <v-btn class="test-chat" @click="genUID()">Gen UID</v-btn>
   {{ uniqid }}  
