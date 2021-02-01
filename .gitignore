@@ -5,6 +5,7 @@ dist
 Other
 source_files/*
 !source_files/iziToast/
+!source_files/iziToast/dist/
 
 
 # local env files
@@ -30,7 +31,7 @@ yarn-error.log*
 # *.gif
 *.webp
 # *.png
-*.svg
+# *.svg
 *.mp4
 *.webm
 # *.mp3
