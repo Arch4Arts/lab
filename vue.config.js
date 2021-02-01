@@ -4,9 +4,9 @@ const RemovePlugin = require('remove-files-webpack-plugin');
 const packageJson = require('./package.json');
 const CopyPlugin = require('copy-webpack-plugin');
 
-const emojiFileList = require('./src/js/twemoji')
+// const emojiFileList = require('./src/js/twemoji')
 const favicon = { from: './src/assets/favicon.png', to: 'assets/img/' }
-const fileList = [].concat(emojiFileList, favicon) 
+const fileList = [].concat(favicon)
 
 module.exports = {
   chainWebpack: config => {
@@ -15,29 +15,29 @@ module.exports = {
       .rule('i18n-loader')
       .test(/.\.yaml$/)
       .use('json')
-        .loader('json-loader')
+      .loader('json-loader')
       .end()
       .use('yaml')
-        .loader('yaml-loader')
+      .loader('yaml-loader')
       .end();
 
-      // Удаляет комментарии из chunk-vendors.js
-      config.optimization.minimizer('terser').tap((args) => {
-        args[0].terserOptions.output = {
-          ...args[0].terserOptions.output,
-          comments: false
-        }
-        return args
-      })
+    // Удаляет комментарии из chunk-vendors.js
+    config.optimization.minimizer('terser').tap((args) => {
+      args[0].terserOptions.output = {
+        ...args[0].terserOptions.output,
+        comments: false
+      }
+      return args
+    })
   },
   configureWebpack: {
     module: {
-      rules: [ 
+      rules: [
         {
           test: /specialActivate.js/,
           enforce: 'post',
-          use: { 
-            loader: WebpackObfuscator.loader, 
+          use: {
+            loader: WebpackObfuscator.loader,
             options: {
               controlFlowFlattening: true,
               controlFlowFlatteningThreshold: 1,

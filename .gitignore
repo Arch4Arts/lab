@@ -1,9 +1,10 @@
 .DS_Store
 .sentryclirc
 node_modules
-/dist
-/Other
-/source_files
+dist
+Other
+source_files/*
+!source_files/iziToast/
 
 
 # local env files
@@ -24,19 +25,19 @@ yarn-error.log*
 *.sln
 *.sw?
 # Изображения/звуки/видео
-*.jpg
-*.jpeg
-*.gif
+# *.jpg
+# *.jpeg
+# *.gif
 *.webp
-*.png
+# *.png
 *.svg
 *.mp4
 *.webm
 # *.mp3
 
 # шрифты
-*.eot
-*.ttf
-*.woff
-*.woff2
+# *.eot
+# *.ttf
+# *.woff
+# *.woff2
 
