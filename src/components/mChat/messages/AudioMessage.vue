@@ -2,8 +2,8 @@
 <div>
   <div class="message-title" v-if="isGroupChat">{{ author }}</div>
   <div @click="saveVolumeSettings()" class="audio-message"> 
-    <vue-plyr ref="AudioMessagePlyr" id="plyr--audio" :options="options" :key="$store.state.reRender_mChatPlayersVolume">
-      <audio>
+    <vue-plyr id="plyr--audio" :options="options" :key="$store.state.reRender_mChatPlayersVolume">
+      <audio ref="audioPlayer">
         <source :type="data.type" preload="none" :src="data.src" /> 
         <!-- audio/mp3 -->
       </audio>
@@ -71,6 +71,8 @@
 </template>
 
 <script>
+import eventBus from '../../../js/eventBus'
+
 export default {
   data() {
     return {
@@ -78,7 +80,7 @@ export default {
         loadSprite: false,
         controls: ['play','progress','mute','volume'],
         muted: !this.$store.state.soundSettings.isPlaySoundsEnable,
-        volume: this.$store.state.mChat.audioVolume, // Значение по умолчанию, потом плеер берёт данные из plyr-audio
+        volume: this.$store.state.mChat.audioVolume,
         storage: { enabled: false, key: 'plyr-audio' }
       }
     };
@@ -96,9 +98,15 @@ export default {
   },
   methods: {
     saveVolumeSettings() {
-      this.$store.state.mChat.audioVolume = this.$refs.AudioMessagePlyr.player.volume
+      this.$store.state.mChat.audioVolume = this.$refs.audioPlayer.volume
       this.$store.commit('updateStore');
     },    
+  },
+  mounted() {
+    eventBus.on('setAudioVolumeMute', state => this.$refs.audioPlayer.muted = state)
+  },
+  beforeDestroy() {
+    eventBus.off('setAudioVolumeMute');
   }
 };
 </script>

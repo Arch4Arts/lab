@@ -168,14 +168,9 @@ export default {
       return compiledHTML
     },
     setAudioState() {
-      // Mute
-      if (this.$store.state.soundSettings.isPlaySoundsEnable) { 
-        document.querySelectorAll("video, audio").forEach(element => element.muted = false);
-      }
-      // Unmute
-      else { 
-        document.querySelectorAll("video, audio").forEach(element => element.muted = true);
-      } 
+      const isMute = this.$store.state.soundSettings.isPlaySoundsEnable;
+      eventBus.emit('setVideoVolumeMute', isMute);
+      eventBus.emit('setAudioVolumeMute', isMute);
     }
   },
   mounted() {

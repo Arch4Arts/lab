@@ -11,6 +11,8 @@
 import videojs from 'video.js/dist/alt/video.core.novtt.min.js';
 import 'video.js/dist/video-js.css'
 
+import eventBus from '../../../js/eventBus'
+
 export default {
   name: "videojs",
   props: {
@@ -32,6 +34,8 @@ export default {
         loop: true,
         preload: 'none',
         // responsive: true,
+        muted: !this.$store.state.soundSettings.isPlaySoundsEnable,
+        volume: this.$store.state.mChat.videoVolume,
         poster: this.data.poster,
         sources: [
           {
@@ -57,14 +61,18 @@ export default {
     this.player = videojs(this.$refs.videoPlayer, this.options, function onPlayerReady() {
       // console.log('onPlayerReady', this);
     })
-    this.player.volume(this.$store.state.mChat.videoVolume)
-    if (this.$store.state.soundSettings.isPlaySoundsEnable === false) 
-      this.player.muted(true);
+
+    // this.player.volume(this.$store.state.mChat.videoVolume)
+    // if (this.$store.state.soundSettings.isPlaySoundsEnable === false) 
+    //   this.player.muted(true);
+    
+    eventBus.on('setVideoVolumeMute', state => this.player.muted(state))
   },
   beforeDestroy() {
     if (this.player) {
       this.player.dispose()
     }
+    eventBus.off('setVideoVolumeMute');
   }
 }
 </script>
