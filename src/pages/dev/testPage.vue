@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import mc from '../../components/Chars/CharStyles/mc'
-import sister from '../../components/Chars/CharStyles/sister'
+import mc from '../../components/Chars/CharStyles/MC'
+import sister from '../../components/Chars/CharStyles/Sister'
 import mcSettings from '../../components/Chars/CharSettings/mcSettings'
 import mChatTestPage from '../../components/mChat/TestPage'
 import emoji from './emoji'
