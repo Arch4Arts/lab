@@ -60,7 +60,9 @@ export default {
   computed: {
     chatHistory() {
       if (this.chatData.chatHistory) {
-        this.chatData.unreadMessageCount = 0;
+        if (this.$store.state.mChat.show) {
+          this.chatData.unreadMessageCount = 0;
+        }
         eventBus.emit('mChatScrollToBottom');
         return this.chatData.chatHistory;
       }
