@@ -4,6 +4,7 @@
     <v-flex md8 class="Page">
       <section id="StoryTextArea">
         <h1>Entry</h1>
+        <about-app />
         <test-page />
       </section>
     </v-flex>
@@ -13,6 +14,7 @@
 
 <script>
 import testPage from './dev/testPage'
+import aboutApp from './dev/aboutApp'
 
 export default {
 	mounted: function() { 
@@ -20,7 +22,8 @@ export default {
 		document.getElementById("StoryTextArea").style.fontSize = `${this.$store.state.gameFontSize}`;
 	},
 	components: {
-		'test-page': testPage
+		testPage,
+    aboutApp,
 	},
 }
 </script>

@@ -1,6 +1,6 @@
 {
   "name": "lab",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -12,8 +12,8 @@
     "@fortawesome/vue-fontawesome": "^0.1.10",
     "@mdi/js": "^5.8.55",
     "@mdi/svg": "^5.8.55",
-    "@sentry/browser": "^6.0.1",
-    "@sentry/integrations": "^6.0.1",
+    "@sentry/browser": "^6.1.0",
+    "@sentry/integrations": "^6.1.0",
     "@sentry/rrweb": "^0.2.0",
     "@vue/cli": "^4.5.8",
     "@vue/cli-service": "^4.5.8",
@@ -28,7 +28,7 @@
     "twemoji": "^13.0.1",
     "uniqid": "^5.2.0",
     "v-click-outside": "^3.1.2",
-    "video.js": "^7.10.2",
+    "video.js": "^7.11.4",
     "viewerjs": "^1.9.0",
     "vue": "^2.6.12",
     "vue-draggable-resizable": "^2.2.0",

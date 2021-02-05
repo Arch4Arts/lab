@@ -6,20 +6,21 @@
     <h1>Пролог</h1>
     <h2>Пролог</h2>
     <h3>Пролог</h3>
-    {{ $t('message') }}
+    <!-- {{ $t('message') }} -->
+
 
     <!-- <emoji /> -->
-    <v-btn @click="toggleFullScreen123()">call error</v-btn>
 
     <!-- <img src="assets/img/info-circle.svg" height="65" width="68"> -->
     <!-- <img src="@/assets/info-circle.svg" height="65" width="68"> -->
     <h4>Пролог</h4>
+    <v-btn @click="toggleFullScreen123()">call error</v-btn>
     <v-btn @click="test()">Загрузить компонент</v-btn>
     <test-special :key="$store.state.reRender_SpecialComponents" />
     <wolf :key="$store.state.reRender_SpecialComponents" />
     <p>Мы с ней как раз по видеосвязи общались. Точнее, уже заканчивали общаться.</p>
     <p>- <mc>Я тебе в четвёртый раз говорю - всё прекрасно. Глянь на меня</mc>, - развёл я руки в стороны. - <mc>Разве похоже, что со мной что-то не так?</mc></p>
-  {{this.$store.state.mcIm}}
+    {{  this.$store.state.mcIm  }}
   <mcSettings/>
 </section>
 </template>
