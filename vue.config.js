@@ -4,9 +4,9 @@ const RemovePlugin = require('remove-files-webpack-plugin');
 const packageJson = require('./package.json');
 const CopyPlugin = require('copy-webpack-plugin');
 
-const emojiFileList = require('./src/js/twemoji')
+// const emojiFileList = require('./src/js/twemoji')
 const favicon = { from: './src/assets/favicon.png', to: 'assets/img/' }
-const fileList = [].concat(emojiFileList, favicon)
+const fileList = [].concat(favicon)
 
 module.exports = {
   chainWebpack: config => {
