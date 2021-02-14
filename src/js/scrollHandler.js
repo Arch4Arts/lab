@@ -1,10 +1,7 @@
 import localforage from 'localforage';
 
-const getScrollPos = () => {
+addEventListener('beforeunload', () => {
   const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
   localStorage.setItem('scrollPosition', scrollTop);
-}
-const setScrollPos = () => localforage.getItem('scrollPosition').then((y) => window.scrollTo(0, y));
-
-addEventListener('beforeunload', getScrollPos);
-addEventListener('DOMContentLoaded', setScrollPos);
+});
+addEventListener('DOMContentLoaded', () => localforage.getItem('scrollPosition').then((y) => window.scrollTo(0, y)));
