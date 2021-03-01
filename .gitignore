@@ -3,9 +3,11 @@
 node_modules
 dist
 Other
-source_files/*
-!source_files/iziToast/
-!source_files/iziToast/dist/
+other_sources/*
+other_sources/vendor/*
+!other_sources/vendor
+!other_sources/vendor/iziToast
+!other_sources/vendor/iziToast/**
 
 
 # local env files

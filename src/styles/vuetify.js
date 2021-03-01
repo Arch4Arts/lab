@@ -63,8 +63,8 @@ import {
   faFileVideo, // Для чата (иконка в списке чатов (содержимое сообщения))
   faFileAudio, // Для чата (иконка в списке чатов (содержимое сообщения)) 
   
-} from '../../source_files/pro-solid-svg-icons'   // fas
-import { faHdd as faHdd2 } from '../../source_files/pro-regular-svg-icons' // far
+} from '../../other_sources/vendor/vendor/pro-solid-svg-icons'   // fas
+import { faHdd as faHdd2 } from '../../other_sources/vendor/pro-regular-svg-icons' // far
 
 import { 
   
@@ -72,8 +72,8 @@ import {
   faPlus,       // Плюс
   faSmile,      // Смайлик
 
-} from '../../source_files/pro-regular-svg-icons' // far
-// import { fal } from '../../source_files/pro-light-svg-icons'   // fal
+} from '../../other_sources/vendor/pro-regular-svg-icons' // far
+// import { fal } from '../../other_sources/vendor/pro-light-svg-icons'   // fal
 
 library.add({
   faQuestionCircle, // FAQ

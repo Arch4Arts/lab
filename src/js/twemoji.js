@@ -9,7 +9,7 @@ const EMOJI_LIST = [
   '❤️',
 ]
 
-// Получаем Twemoji CodePaint (название файлов в twemoji-assets) из EMOJI_LIST
+// Получаем Twemoji CodePaint (название файлов в vendor/twemoji-assets) из EMOJI_LIST
 const twemojiCodeList = EMOJI_LIST.map(emoji => {
   let result;
   twemoji.parse(emoji, { callback: twemojiCode => { result = twemojiCode } });
@@ -18,7 +18,7 @@ const twemojiCodeList = EMOJI_LIST.map(emoji => {
 
 // Формирование массива путей для копирования файлов в сбоку
 const copyPluginPaths = twemojiCodeList.map((twemojiCode) => {
-  return { from: `./source_files/twemoji-assets/svg/${twemojiCode}.svg`, to: 'assets/img/twemoji/' }
+  return { from: `./other_sources/vendor/twemoji-assets/svg/${twemojiCode}.svg`, to: 'assets/img/twemoji/' }
 })
 
 // экспорт в vue.config.js
