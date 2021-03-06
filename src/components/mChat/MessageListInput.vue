@@ -11,7 +11,7 @@
 
 <template>
 <div>
-  <div class="input-area" :style="{ width: `${width}px`, height: `${height}px`}">
+  <div class="input-area" :style="{ height: `${height}px`}">
     <div
       :placeholder="$t('placeholder')"
       class="text-input" />
@@ -58,7 +58,8 @@ export default {
   position: fixed;
   align-items: center;
   // bottom: 5.5%;
-  width: 100%;
+  // ! нужен рефакторинг
+  width: 99%;
   // height: 8%;
 
   // padding-right: 2%;

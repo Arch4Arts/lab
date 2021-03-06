@@ -4,8 +4,7 @@
   <!-- // ! id НЕ МЕНЯТЬ! -->
   <virtual-list
     class="virtual-list"
-    :style="{ 
-      width: `${width}px`, 
+    :style="{
       height: `${height}px`, 
       'padding-top': `${ToolbarHeight + 10}px`,
       // manual bottom border-radius
