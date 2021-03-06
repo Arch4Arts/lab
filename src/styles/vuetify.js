@@ -63,8 +63,8 @@ import {
   faFileVideo, // Для чата (иконка в списке чатов (содержимое сообщения))
   faFileAudio, // Для чата (иконка в списке чатов (содержимое сообщения)) 
   
-} from '../../other_sources/vendor/vendor/pro-solid-svg-icons'   // fas
-import { faHdd as faHdd2 } from '../../other_sources/vendor/pro-regular-svg-icons' // far
+} from '../../other_sources/vendor/pro-solid-svg-icons'   // fas
+import { faHdd as faHdd2 } from '../../other_sources/vendor/pro-solid-svg-icons' // far
 
 import { 
   

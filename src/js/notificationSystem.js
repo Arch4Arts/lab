@@ -1,5 +1,5 @@
 import '../../other_sources/vendor/iziToast/dist/css/iziToast.min.css';
-import iziToast from '../../other_sources/vendor/iziToast/dist/js/iziToast.js.js.js';
+import iziToast from '../../other_sources/vendor/iziToast/dist/js/iziToast.js';
 import vuetify from '../styles/vuetify'
 
 // загрузка файла webpack'ом
