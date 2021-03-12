@@ -14,9 +14,9 @@ Vue.use(Vuetify, {
 
 // https://github.com/minddocdev/npm-packages/tree/master/%40fortawesome
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-Vue.component('a-icon', FontAwesomeIcon)
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+Vue.component('a-icon', FontAwesomeIcon);
 
 import { 
   faQuestionCircle, // FAQ
@@ -63,10 +63,10 @@ import {
   faFileVideo, // Для чата (иконка в списке чатов (содержимое сообщения))
   faFileAudio, // Для чата (иконка в списке чатов (содержимое сообщения)) 
   
-} from '../../other_sources/vendor/pro-solid-svg-icons'   // fas
-import { faHdd as faHdd2 } from '../../other_sources/vendor/pro-solid-svg-icons' // far
+} from '../../other_sources/vendor/pro-solid-svg-icons';   // fas
+// import { faHdd } from '../../other_sources/vendor/pro-solid-svg-icons'; // far
 
-import { 
+import {
   
   faBars,     // Меню (список чатов)
   faPlus,       // Плюс
@@ -91,8 +91,7 @@ library.add({
   faTrash,    // Удалить
 
   faPowerOff, // перезапуск
-  faHdd,      // Сохранить на диск
-  faHdd2,     // Загрузить на диск
+  faHdd,      // Сохранить на диск | Загрузить на диск
   faTrashAlt, // Удаление всех сохранений
 
   faMusicAlt,      // Нота

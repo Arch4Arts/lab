@@ -106,6 +106,6 @@ module.exports = {
   publicPath: './',
   outputDir: `./dist/${packageJson.name} ${packageJson.version}`,
   assetsDir: 'assets',        // Каталог для хранения сгенерированных статических ресурсов (js, css, img, fonts).
-  filenameHashing: false,
+  // filenameHashing: false,
   productionSourceMap: true,
 }

@@ -175,7 +175,7 @@
         <template v-slot:activator="{ on }">
           <v-btn class="load-from-disk-btn" @click="chooseFiles()" v-on="on" icon>
             <input type="file" id="saveUpload" @change="loadFromDisk($event, savesList)" multiple hidden />
-            <a-icon class="load-from-disk-btn__color" :icon="['far', 'hdd']" />
+            <a-icon class="load-from-disk-btn__color" :icon="['fas', 'hdd']" />
           </v-btn>
         </template>
           <span>{{ $t('tooltip__load-from-disk') }}</span>
